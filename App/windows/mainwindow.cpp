@@ -13,7 +13,10 @@ MainWindow::MainWindow(QWidget *parent)
    // setWindowIcon(QIcon(":/res/icons/logo.ico"));
     //设置左侧侧边栏样式
     ui->leftBar->setStyleSheet(QString("QAbstractButton{min-height:%1px;max-height:%1px;margin:0px;border:none;}").arg(17));
-    ui->titleBar->setStyleSheet("QAbstractButton{min-height:25px;max-height:25px;margin:0px;} QWidget#titleBar{background-color:#FFFFFF}");
+    ui->titleBar->setStyleSheet("QToolButton{border:none;} "
+                                "QToolButton:checked{background-color:rgb(218, 218, 218)}"
+                                "QToolButton:hover{background-color:rgb(218, 218, 218)}"
+                                "QWidget#titleBar{background-color:#FFFFFF}");
 
     //set titleLineEdit stylesheet
     ui->titleLineEdit->setStyleSheet("border: 0px;");
@@ -55,7 +58,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->italicBtn->setIcon(QIcon(":/res/icons/italic.png"));
     ui->colorBtn->setIcon(QIcon(":/res/icons/color.png"));
     ui->underlineBtn->setIcon(QIcon(":/res/icons/underline.png"));
-
     initRightMenu();
 
     //设置信号槽

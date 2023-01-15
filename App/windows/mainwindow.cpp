@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
    // setWindowIcon(QIcon(":/res/icons/logo.ico"));
     //设置左侧侧边栏样式
     ui->leftBar->setStyleSheet(QString("QAbstractButton{min-height:%1px;max-height:%1px;margin:0px;border:none;}").arg(17));
-    ui->titleBar->setStyleSheet(QString("QAbstractButton{min-height:%1px;max-height:%1px;margin:0px;}").arg(25));
+    ui->titleBar->setStyleSheet("QAbstractButton{min-height:25px;max-height:25px;margin:0px;} QWidget#titleBar{background-color:#FFFFFF}");
 
     //set titleLineEdit stylesheet
     ui->titleLineEdit->setStyleSheet("border: 0px;");
@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->treeWidget->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     //隐藏标题栏
     ui->treeWidget->header()->setVisible(false);
+
 
     //设置背景色为透明
     ui->treeWidget->setStyleSheet("background-color:transparent;");
@@ -240,7 +241,7 @@ void MainWindow::onDeleteNoteItemClick()
     ExtraQTreeWidgetItem* currentNode=dynamic_cast<ExtraQTreeWidgetItem*>(ui->treeWidget->currentItem());
     auto currentPath= QCoreApplication::applicationDirPath();
     auto fullPath= util::treeItemToFullFilePath(currentNode); //如d:/sotrage/xxx.html
-    bool isRecycle=currentNode->parent()->text(0)==RECYLE; //is recycle Node
+    bool isRecycle=currentNode->parent()->text(0)==NODENAME_RECYLE; //is recycle Node
     //if is recycleNode's child node ,delete directly
     if(isRecycle)
     {
@@ -257,7 +258,7 @@ void MainWindow::onDeleteNoteItemClick()
         }
         //移动本地存储文件到回收站
         QString fileName = util::treeItemToFileName(currentNode); //文件名称，如xxx.html
-        auto recyclePath=QString("%1/storage/%2/%3").arg(currentPath,RECYLE,fileName);
+        auto recyclePath=QString("%1/storage/%2/%3").arg(currentPath,NODENAME_RECYLE,fileName);
         bool moveResult= QFile::rename(fullPath,recyclePath); //A路径移动到B路径
         std::cout<<"delete node and move file "<<(moveResult ? "true": "false")  <<std::endl;
     }
@@ -367,7 +368,7 @@ void MainWindow::onMenuToShow()
     else
     {
         deleteNoteAction->setVisible(true);
-        bool isRecycle=item->parent()->text(0)==RECYLE; //is recycle Node
+        bool isRecycle=item->parent()->text(0)==NODENAME_RECYLE; //is recycle Node
         if(isRecycle)
         {
              recoverNoteAction->setVisible(true);
@@ -462,7 +463,7 @@ void MainWindow::initRecycleNode()
     for (int i = 0; i < size; i++)
     {
         child = ui->treeWidget->topLevelItem(i);
-        if(child->text(0)==RECYLE)
+        if(child->text(0)==NODENAME_RECYLE)
         {
             recycleNode=child;
             break;
@@ -487,11 +488,11 @@ void MainWindow::setItemIcon(ExtraQTreeWidgetItem* child)
     int childCount = child->childCount();
     if(childCount>0||child->nodeType==BaseInfo::Parent)
     {
-         if(child->parent()==NULL&&child->text(0)==COLLECT) //顶级系统节点-收藏
+         if(child->parent()==NULL&&child->text(0)==NODENAME_COLLECT) //顶级系统节点-收藏
          {
              child->setIcon(0,QIcon(":/res/icons/save.png"));
          }
-         else if(child->parent()==NULL&&child->text(0)==RECYLE)//顶级系统节点-废纸篓
+         else if(child->parent()==NULL&&child->text(0)==NODENAME_RECYLE)//顶级系统节点-废纸篓
          {
              child->setIcon(0,QIcon(":/res/icons/recycle.png"));
          }
@@ -529,7 +530,7 @@ void MainWindow::onTitleLineEditEditingFinished()
   auto currentItem=ui->treeWidget->currentItem();
   if(currentItem->parent()==NULL)
   {
-      if(currentItem->text(0)==COLLECT||currentItem->text(0)==RECYLE)
+      if(currentItem->text(0)==NODENAME_COLLECT||currentItem->text(0)==NODENAME_RECYLE)
       {
           QMessageBox::warning(this, tr("警告"),tr("\n系统节点无法重命名!"),QMessageBox::Ok);
           return;

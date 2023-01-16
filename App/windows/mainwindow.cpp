@@ -58,6 +58,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->italicBtn->setIcon(QIcon(":/res/icons/italic.png"));
     ui->colorBtn->setIcon(QIcon(":/res/icons/color.png"));
     ui->underlineBtn->setIcon(QIcon(":/res/icons/underline.png"));
+    ui->pictureBtn->setIcon(QIcon(":/res/icons/img.png"));
+    ui->saveBtn->setIcon(QIcon(":/res/icons/save.png"));
+     ui->undoBtn->setIcon(QIcon(":/res/icons/undo.png"));
     initRightMenu();
 
     //设置信号槽
@@ -73,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(rightMenu,&QMenu::aboutToShow,this,&MainWindow::onMenuToShow);
     connect(newNoteAction, SIGNAL(triggered(bool)), this , SLOT(onNewNoteItemClick()));
     connect(newNoteGroupAction, SIGNAL(triggered(bool)), this , SLOT(onNewNoteGroupItemClick()));
-    connect(saveNoteAction, SIGNAL(triggered(bool)), this , SLOT(onSaveNoteItemClick()));
+    connect(collectNoteAction, SIGNAL(triggered(bool)), this , SLOT(onCollectNoteItemClick()));
     connect(moveNoteAction, SIGNAL(triggered(bool)), this , SLOT(onMoveNoteItemClick()));
     connect(lockAction, SIGNAL(triggered(bool)), this , SLOT(onLockItemClick()));
     connect(deleteNoteAction, SIGNAL(triggered(bool)), this , SLOT(onDeleteNoteItemClick()));
@@ -300,7 +303,7 @@ void MainWindow::onRecoverNoteItemClick()
     std::cout<<"recycle Recover:  "<<( moveResult ? "true": "false")  <<std::endl;*/
 }
 
-void MainWindow::onSaveNoteItemClick()
+void MainWindow::onCollectNoteItemClick()
 {
     std::cout<<"save menu"<<std::endl;
 }
@@ -332,7 +335,7 @@ void MainWindow::initRightMenu()
 {
     newNoteAction = new QAction("新建笔记", ui->treeWidget);
     newNoteGroupAction = new QAction("新建笔记本", ui->treeWidget);
-    saveNoteAction = new QAction("收藏笔记", ui->treeWidget);
+    collectNoteAction = new QAction("收藏笔记", ui->treeWidget);
     moveNoteAction = new QAction("移动笔记", ui->treeWidget);
     lockAction = new QAction("添加密码锁", ui->treeWidget);
     deleteNoteAction = new QAction("删除笔记", ui->treeWidget);
@@ -340,7 +343,7 @@ void MainWindow::initRightMenu()
     rightMenu=new QMenu(ui->treeWidget);
     rightMenu->addAction(newNoteAction);
     rightMenu->addAction(newNoteGroupAction);
-    rightMenu->addAction(saveNoteAction);
+    rightMenu->addAction(collectNoteAction);
     rightMenu->addAction(moveNoteAction);
     rightMenu->addAction(lockAction);
     rightMenu->addAction(deleteNoteAction);
@@ -355,13 +358,13 @@ void MainWindow::onMenuToShow()
     {
         newNoteAction->setVisible(false);
         newNoteGroupAction->setVisible(false);
-        saveNoteAction->setVisible(true);
+        collectNoteAction->setVisible(true);
     }
     else
     {
         newNoteAction->setVisible(true);
         newNoteGroupAction->setVisible(true);
-        saveNoteAction->setVisible(false);
+        collectNoteAction->setVisible(false);
     }
     if(item->parent()==NULL)
     {
@@ -492,7 +495,7 @@ void MainWindow::setItemIcon(ExtraQTreeWidgetItem* child)
     {
          if(child->parent()==NULL&&child->text(0)==NODENAME_COLLECT) //顶级系统节点-收藏
          {
-             child->setIcon(0,QIcon(":/res/icons/save.png"));
+             child->setIcon(0,QIcon(":/res/icons/collect.png"));
          }
          else if(child->parent()==NULL&&child->text(0)==NODENAME_RECYLE)//顶级系统节点-废纸篓
          {

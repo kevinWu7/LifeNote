@@ -44,7 +44,7 @@ private:
     QAction * newNoteGroupAction;
     QAction * deleteNoteAction;
     QAction * recoverNoteAction;
-    QAction * saveNoteAction;
+    QAction * collectNoteAction;
     QAction * moveNoteAction;
     QAction * lockAction;
     nodeconfig *config ;
@@ -69,7 +69,7 @@ public slots:
 
     void onNewNoteItemClick();
     void onNewNoteGroupItemClick();
-    void onSaveNoteItemClick();
+    void onCollectNoteItemClick();
     void onMoveNoteItemClick();
     void onLockItemClick();
     void onDeleteNoteItemClick();

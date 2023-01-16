@@ -12,5 +12,8 @@
         <file>icons/color.png</file>
         <file>icons/childnote.png</file>
         <file>icons/parentnote.png</file>
+        <file>icons/img.png</file>
+        <file>icons/collect.png</file>
+        <file>icons/undo.png</file>
     </qresource>
 </RCC>

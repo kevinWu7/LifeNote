@@ -117,7 +117,8 @@ void MainWindow::underlineBtn_clicked()
 void MainWindow::colorBtn_clicked()
 {
     QColor color = QColorDialog::getColor(Qt::blue,this);
-    if(color.isValid()){
+    if(color.isValid())
+    {
         QTextCharFormat fmt;
         fmt=ui->textEdit->currentCharFormat();
         fmt.setForeground(color);
@@ -169,11 +170,10 @@ void MainWindow::onPictureBtn_clicked()
 
 void MainWindow::InsertImageDialog()
 {
+    QString selectFilter="IMAGE (*.png *.jpg *jpeg *.bmp *.gif)\n";
     QString file = QFileDialog::getOpenFileName(this, tr("Select an image"),
-                                                ".", tr("Bitmap Files (*.bmp)\n"
-                                                        "JPEG (*.jpg *jpeg)\n"
-                                                        "GIF (*.gif)\n"
-                                                        "PNG (*.png)\n"));
+                                                "/", tr("IMAGE (*.png *.jpg *jpeg *.bmp *.gif)\n"),&selectFilter);
+
     QUrl Uri ( QString ( "file://%1" ).arg ( file ) );
     QImage image = QImageReader ( file ).read();
 

@@ -145,7 +145,7 @@
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>40</height>
+              <height>30</height>
              </size>
             </property>
             <property name="autoFillBackground">
@@ -169,6 +169,12 @@
                <property name="text">
                 <string/>
                </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
                <property name="checkable">
                 <bool>false</bool>
                </property>
@@ -178,6 +184,12 @@
               <widget class="QToolButton" name="undoBtn">
                <property name="text">
                 <string/>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
                </property>
                <property name="checkable">
                 <bool>false</bool>
@@ -196,7 +208,13 @@
                 <enum>Qt::LeftToRight</enum>
                </property>
                <property name="text">
-                <string>...</string>
+                <string/>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>14</height>
+                </size>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -224,7 +242,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>...</string>
+                <string/>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -240,7 +258,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>...</string>
+                <string/>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -255,8 +273,20 @@
                  <height>0</height>
                 </size>
                </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
                <property name="text">
-                <string>...</string>
+                <string/>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>14</width>
+                 <height>16</height>
+                </size>
                </property>
                <property name="checkable">
                 <bool>false</bool>

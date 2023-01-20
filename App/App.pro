@@ -29,7 +29,6 @@ HEADERS += \
     windows/mainwindow.h \
     nodeconfig.h \
     controls/svgtextlabel.h \
-
     util/util.h
 
 FORMS += \

@@ -137,21 +137,7 @@ void MainWindow::onSaveBtn_clicked()
     {
         return;
     }
-    if(ui->treeWidget->currentItem()->childCount()>0)
-    {
-        return;
-    }
     QString fullPath=util::treeItemToFullFilePath(ui->treeWidget->currentItem());
-    //解析出路径（不含文件名）和文件名
-    int first = fullPath.lastIndexOf ("/");
-    QString fileName = fullPath.right(fullPath.length ()-first-1); //xxxx.html
-    QString dirPath = fullPath.left (first); //文件夹路径
-
-    //如果路径不存在，则创建
-    QDir* dir = new QDir();
-    if(!dir->exists(dirPath)){
-        dir->mkpath(dirPath);
-    }
 
     //创建一个输出文件的文档
     QFile  myfile(fullPath);

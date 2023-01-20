@@ -439,11 +439,27 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
          ui->titleLineEdit->setText(current->text(0));
          //not allow to edit the Nodegroup
          ui->textEdit->setReadOnly(true);
+         for(auto child_toolBtn :ui->titleBar->children())
+         {
+              QToolButton* btn=dynamic_cast<QToolButton*>(child_toolBtn);
+             if(btn!=NULL)
+             {
+                btn->setEnabled(false);
+             }
+         }
          return;
     }
     else
     {
          ui->textEdit->setReadOnly(false);
+         for(auto child_toolBtn :ui->titleBar->children())
+         {
+              QToolButton* btn=dynamic_cast<QToolButton*>(child_toolBtn);
+             if(btn!=NULL)
+             {
+                btn->setEnabled(true);
+             }
+         }
     }
     //load current node‘s title to right-titleLineEdit title
     ui->titleLineEdit->setText(current->text(0));

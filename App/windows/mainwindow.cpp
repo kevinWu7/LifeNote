@@ -128,7 +128,7 @@ void MainWindow::colorBtn_clicked()
 
 void MainWindow::onUndoBtn_clicked()
 {
-
+    ui->textEdit->undo();
 }
 
 void MainWindow::onSaveBtn_clicked()

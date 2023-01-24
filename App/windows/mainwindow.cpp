@@ -8,25 +8,32 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    ui->mainPage->setStyleSheet("QWidget#mainPage{background-color:#FFFFFF}");
+   this->setStyleSheet("QTreeWidget::item{height:25px;}");
     //this->setWindowIcon(QIcon(":/res/icons/logo.ico"));
    // setWindowIcon(QIcon(":/res/icons/logo.ico"));
+
     //设置左侧侧边栏样式
-    ui->leftBar->setStyleSheet(QString("QAbstractButton{min-height:%1px;max-height:%1px;margin:0px;border:none;}").arg(17));
+    ui->leftBar->setStyleSheet(QString("QAbstractButton{min-height:%1px;max-height:%1px;margin:0px;border:none;} "
+                                       "QWidget#leftBar{background-color:#FFFFFF} ").arg(17));
     ui->titleBar->setStyleSheet("QToolButton{border:none;} "
                                 "QToolButton:checked{background-color:rgb(218, 218, 218)}"
                                 "QToolButton:hover{background-color:rgb(218, 218, 218)}"
                                 "QWidget#titleBar{background-color:#FFFFFF}");
 
+    ui->editWidget->setStyleSheet("QWidget#editWidget{background-color:#FFFFFF}");
     //set titleLineEdit stylesheet
     ui->titleLineEdit->setStyleSheet("border: 0px;");
     ui->textEdit->setStyleSheet("border:0px;");
     ui->editWidget->layout()->setSpacing(0);
-
+    //设置mainPage内部控件间距为5
+    ui->mainPage->layout()->setSpacing(5);
+    //设置editWidget内部左侧边距
+    ui->editWidget->setContentsMargins(5,0,0,0);
     ui->treeWidget->setColumnCount(1);
+    ui->treeWidget->setColumnWidth(0,40);
 
     ui->treeWidget->setHeaderLabels(QStringList()<<"first");
-    //ui->treeWidget->setColumnWidth(0, 40);  //设置列宽
     ui->treeWidget->header()->setStretchLastSection(false);
     ui->treeWidget->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     //隐藏标题栏
@@ -35,12 +42,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     //设置背景色为透明
     ui->treeWidget->setStyleSheet("background-color:transparent;");
-    setStyleSheet("QTreeWidget::item{height:25px;} ");
+
     //下面这句代码 修改选中行的颜色，但是改的不是很完美，故先注释
     //setStyleSheet("QTreeWidget::item{height:25px;} QTreeView::branch::selected{background-color:#5087E5;} QTreeView::item::selected{background-color:#5087E5;}");
 
     //设置不同层次菜单的缩进
     ui->treeWidget->setIndentation(9);
+    //设置左侧容器内部margin
+    ui->leftBar->setContentsMargins(10,10,0,0);
     //设置边框不可见
     ui->treeWidget->setFrameStyle(QFrame::NoFrame);
     //通过配置文件，创建node

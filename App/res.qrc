@@ -15,5 +15,6 @@
         <file>icons/img.png</file>
         <file>icons/collect.png</file>
         <file>icons/undo.png</file>
+        <file>icons/addnew.png</file>
     </qresource>
 </RCC>

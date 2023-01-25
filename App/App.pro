@@ -18,6 +18,7 @@ INCLUDEPATH += \
 SOURCES += \
     controls/extraqtreewidgetitem.cpp \
     main.cpp \
+    windows/newnotegroupform.cpp \
     windows/mainwindow.cpp \
     nodeconfig.cpp \
     controls/svgtextlabel.cpp \
@@ -26,12 +27,14 @@ SOURCES += \
 HEADERS += \
     base/baseinfo.h \
     controls/extraqtreewidgetitem.h \
+    windows/newnotegroupform.h \
     windows/mainwindow.h \
     nodeconfig.h \
     controls/svgtextlabel.h \
     util/util.h
 
 FORMS += \
+    windows/newnotegroupform.ui \
     windows/mainwindow.ui \
     controls/svgtextlabel.ui
 

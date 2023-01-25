@@ -16,6 +16,7 @@
 #include<QImageReader>
 #include "nodeconfig.h"
 #include "extraqtreewidgetitem.h"
+#include "newnotegroupform.h"
 
 
 
@@ -56,6 +57,9 @@ private:
     void initRightMenu();
     void InsertImageDialog();
     void initRecycleNode();
+
+    NewNoteGroupForm * newGroupForm;
+
 public slots:
     void boldBtn_clicked();
     void italicBtn_clicked();
@@ -64,6 +68,7 @@ public slots:
     void onPictureBtn_clicked();
     void onUndoBtn_clicked();
     void onSaveBtn_clicked();
+    void onAddnewBtn_clicked();
     void right_item_pressed(QTreeWidgetItem *item, int column);//右键菜单点击
     void currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
@@ -77,6 +82,8 @@ public slots:
     void onMenuToShow();
 
     void onTitleLineEditEditingFinished();
+    //接收新建笔记本子窗体的消息
+    void onReceiveNewGroupFormData(QString data);
 
 };
 #endif // MAINWINDOW_H

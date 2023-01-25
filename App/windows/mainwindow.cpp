@@ -9,13 +9,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->mainPage->setStyleSheet("QWidget#mainPage{background-color:#FFFFFF}");
-   this->setStyleSheet("QTreeWidget::item{height:25px;}");
-    //this->setWindowIcon(QIcon(":/res/icons/logo.ico"));
-   // setWindowIcon(QIcon(":/res/icons/logo.ico"));
+    this->setStyleSheet("QTreeWidget::item{height:25px;}");
 
     //设置左侧侧边栏样式
-    ui->leftBar->setStyleSheet(QString("QAbstractButton{min-height:%1px;max-height:%1px;margin:0px;border:none;} "
-                                       "QWidget#leftBar{background-color:#FFFFFF} ").arg(17));
+    ui->leftBar->setStyleSheet("QAbstractButton{min-height:17px;max-height:17px;margin:0px;border:none;} "
+                               "QAbstractButton#addnewBtn{min-height:20px;max-height:20px;}"
+                                "QWidget#leftBar{background-color:#FFFFFF} ");
     ui->titleBar->setStyleSheet("QToolButton{border:none;} "
                                 "QToolButton:checked{background-color:rgb(218, 218, 218)}"
                                 "QToolButton:hover{background-color:rgb(218, 218, 218)}"
@@ -49,7 +48,8 @@ MainWindow::MainWindow(QWidget *parent)
     //设置不同层次菜单的缩进
     ui->treeWidget->setIndentation(9);
     //设置左侧容器内部margin
-    ui->leftBar->setContentsMargins(10,10,0,0);
+    ui->leftBar->setContentsMargins(10,20,0,0);
+    ui->leftBar->layout()->setSpacing(15);
     //设置边框不可见
     ui->treeWidget->setFrameStyle(QFrame::NoFrame);
     //通过配置文件，创建node
@@ -59,8 +59,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     initRecycleNode();
     //设置左侧按钮icon
-    ui->searchBtn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    ui->searchBtn->setIcon(QIcon(":/res/icons/search.png"));
+    ui->addnewBtn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    ui->addnewBtn->setIcon(QIcon(":/res/icons/addnew.png"));
+    ui->addnewBtn->setIconSize(QSize(22, 22));
+    ui->addnewBtn->setCursor(Qt::PointingHandCursor);
 
     //设置标题栏按钮
     ui->boldBtn->setIcon(QIcon(":/res/icons/bold.png"));
@@ -80,6 +82,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pictureBtn,&QToolButton::clicked,this,&MainWindow::onPictureBtn_clicked);
     connect(ui->undoBtn,&QToolButton::clicked,this,&MainWindow::onUndoBtn_clicked);
     connect(ui->saveBtn,&QToolButton::clicked,this,&MainWindow::onSaveBtn_clicked);
+    connect(ui->addnewBtn,&QToolButton::clicked,this,&MainWindow::onAddnewBtn_clicked);
     connect(ui->treeWidget,&QTreeWidget::currentItemChanged,this,&MainWindow::currentTreeItemChanged);
     connect(ui->treeWidget,&QTreeWidget::itemPressed,this,&MainWindow::right_item_pressed);
     connect(rightMenu,&QMenu::aboutToShow,this,&MainWindow::onMenuToShow);
@@ -181,7 +184,21 @@ void MainWindow::InsertImageDialog()
     imageFormat.setName( Uri.toString() );
     cursor.insertImage(imageFormat);
 }
+
+void MainWindow::onAddnewBtn_clicked()
+{
+    if(this->newGroupForm==NULL)
+    {
+       newGroupForm=new NewNoteGroupForm;
+       newGroupForm->setWindowFlags(Qt::FramelessWindowHint);
+       connect(newGroupForm,&NewNoteGroupForm::sendParentWindowData,this, &MainWindow::onReceiveNewGroupFormData);
+    }
+    newGroupForm->show();
+}
+
 #pragma endregion }
+
+
 
 #pragma region Menu-Function{
 //right click Menu, new NoteGroup
@@ -314,6 +331,11 @@ void MainWindow::onLockItemClick()
 }
 
 #pragma endregion}
+
+void MainWindow::onReceiveNewGroupFormData(QString data)
+{
+    qDebug()<<data;
+}
 
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {

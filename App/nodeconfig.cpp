@@ -14,7 +14,7 @@ struct node_info
     ExtraQTreeWidgetItem *widgetitem;
 };
 
-//currentNode is The node that is being operated
+//currentNode is The node which is being operated
 //newNode is the Node in the Add  OperationType and UPDATE
 void nodeconfig::updateXml(BaseInfo::OperationType type,QTreeWidgetItem *currentNode,QTreeWidgetItem *newNode)
 {
@@ -74,6 +74,41 @@ void nodeconfig::updateXml(BaseInfo::OperationType type,QTreeWidgetItem *current
     file.close();
 }
 
+void nodeconfig::updateXmlAddTopLevelNode(QTreeWidgetItem *newNode,QTreeWidgetItem *recycleNode)
+{
+    QFile file(CONFIG_PATH);
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        std::cout<<"open local xml failed";
+        return;
+    }
+    QDomDocument doc;
+    if(!doc.setContent(&file))//从字节数组中解析XML文档，并将其设置为文档的内容
+    {
+        std::cout<<"set doc content form file failed";
+        file.close();
+        return;
+    }
+    file.close();
+    auto path=util::treeItemToNodePath(recycleNode);
+    QDomNode parentDomElement=selectSingleNode(path,&doc);
+    bool startWithDigit=util::isStartWidthDigit(newNode->text(0));
+    QDomElement newDomElement=doc.createElement(startWithDigit?(START_FLAG+newNode->text(0)):newNode->text(0));
+
+    if(startWithDigit)
+    {
+        newDomElement.setAttribute(ATTRIBUTE_STARTFLAG,"true");
+    }
+    doc.documentElement().insertBefore(newDomElement,parentDomElement);
+    newDomElement.setAttribute(ATTRIBUTE_NOTETYPE,1);
+    if(!file.open(QFile::WriteOnly|QFile::Truncate))//重写文件，如果不用truncate就是在后面追加内容，就无效了
+    {
+        return;
+    }
+    QTextStream out_stream(&file);
+    doc.save(out_stream,4);
+    file.close();
+}
 
 void nodeconfig::updateXmlRenameNode(const QString& oldPath,QTreeWidgetItem *currentNode)
 {

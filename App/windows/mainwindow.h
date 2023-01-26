@@ -83,7 +83,7 @@ public slots:
 
     void onTitleLineEditEditingFinished();
     //接收新建笔记本子窗体的消息
-    void onReceiveNewGroupFormData(QString data);
+    void onReceiveNewGroupFormData(QString nodeName);
 
 };
 #endif // MAINWINDOW_H

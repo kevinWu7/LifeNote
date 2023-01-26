@@ -332,9 +332,24 @@ void MainWindow::onLockItemClick()
 
 #pragma endregion}
 
-void MainWindow::onReceiveNewGroupFormData(QString data)
+void MainWindow::onReceiveNewGroupFormData(QString nodeName)
 {
-    qDebug()<<data;
+    //treewidget添加节点
+    int count=ui->treeWidget->topLevelItemCount();
+    auto newTopNode=new ExtraQTreeWidgetItem(BaseInfo::Parent);
+    newTopNode->setText(0,nodeName);
+    ui->treeWidget->insertTopLevelItem(count-1,newTopNode);
+    setAllItemIcon();
+    //添加xml节点
+    config->updateXmlAddTopLevelNode(newTopNode,recycleNode);
+    //添加本地文件夹
+    auto currentPath= QCoreApplication::applicationDirPath();
+    QString dirpath =QString("%1/storage/%2").arg(currentPath,nodeName);
+    QDir *dir = new QDir();
+    if (!dir->exists(dirpath))
+    {
+      dir->mkpath(dirpath);
+    }
 }
 
 void MainWindow::keyPressEvent(QKeyEvent* event)

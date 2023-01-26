@@ -34,11 +34,14 @@ void NewNoteGroupForm::mouseMoveEvent(QMouseEvent *event)
 
 void NewNoteGroupForm::okBtn_clicked()
 {
-    sendParentWindowData(ui->nameLineEdit->text());
+    emit sendParentWindowData(ui->nameLineEdit->text());
+    ui->nameLineEdit->setText("");
+    this->setVisible(false);
 }
 
 void NewNoteGroupForm::cancleBtn_clicked()
 {
+    ui->nameLineEdit->setText("");
     this->setVisible(false);
 }
 

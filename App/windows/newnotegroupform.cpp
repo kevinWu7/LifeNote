@@ -6,6 +6,7 @@ NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
     ui(new Ui::NewNoteGroupForm)
 {
     ui->setupUi(this);
+    this->setStyleSheet("QLabel{color:rgb(110,111,111);} QWidget#NewNoteGroupForm{background-color:#FFFFFF}");
     InitEvent();
 }
 

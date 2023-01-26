@@ -193,7 +193,10 @@ void MainWindow::onAddnewBtn_clicked()
        newGroupForm->setWindowFlags(Qt::FramelessWindowHint);
        connect(newGroupForm,&NewNoteGroupForm::sendParentWindowData,this, &MainWindow::onReceiveNewGroupFormData);
     }
+    newGroupForm->setWindowModality(Qt::ApplicationModal);
+    newGroupForm->move(this->frameGeometry().topLeft() +this->rect().center() -newGroupForm->rect().center());//使子窗体居中
     newGroupForm->show();
+
 }
 
 #pragma endregion }

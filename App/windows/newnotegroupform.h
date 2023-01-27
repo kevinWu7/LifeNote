@@ -17,7 +17,8 @@ public:
     ~NewNoteGroupForm();
 
     void InitEvent();
-
+    //设置圆角
+    void InitRoundRadius();
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
 

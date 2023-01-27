@@ -94,6 +94,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(deleteNoteAction, SIGNAL(triggered(bool)), this , SLOT(onDeleteNoteItemClick()));
     connect(recoverNoteAction, SIGNAL(triggered(bool)), this , SLOT(onRecoverNoteItemClick()));
     connect(ui->titleLineEdit,&QLineEdit::editingFinished,this,&MainWindow::onTitleLineEditEditingFinished);
+    connect(qApp, &QApplication::aboutToQuit,this ,&MainWindow::onApplicationQuit);
 }
 
 
@@ -190,10 +191,9 @@ void MainWindow::onAddnewBtn_clicked()
     if(this->newGroupForm==NULL)
     {
        newGroupForm=new NewNoteGroupForm;
-       newGroupForm->setWindowFlags(Qt::FramelessWindowHint);
        connect(newGroupForm,&NewNoteGroupForm::sendParentWindowData,this, &MainWindow::onReceiveNewGroupFormData);
     }
-    newGroupForm->setWindowModality(Qt::ApplicationModal);
+
     newGroupForm->move(this->frameGeometry().topLeft() +this->rect().center() -newGroupForm->rect().center());//使子窗体居中
     newGroupForm->show();
 
@@ -662,6 +662,11 @@ void MainWindow::onTitleLineEditEditingFinished()
     }
     extraItem->isNewNode=0;//reset isNewNode status
   }
+}
+
+void MainWindow::onApplicationQuit()
+{
+    this->newGroupForm->close();
 }
 
 MainWindow::~MainWindow()

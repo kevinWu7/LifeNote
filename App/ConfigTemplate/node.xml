@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <root>
     <笔记本 nodetype="1">
-        <人生感悟 nodetype="1">
-            <学习的方式 nodetype="0"/>
-        </人生感悟>
+        <生活随笔 nodetype="1">
+            <学习方式 nodetype="0"/>
+        </生活随笔>
     </笔记本>
     <收藏 nodetype="1">
-        <人情记录 nodetype="0"/>
+        <工作笔记 nodetype="0"/>
     </收藏>
     <废纸篓 nodetype="1">
     </废纸篓>

@@ -27,16 +27,24 @@ NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
                                                   "    margin: 0;"
                                                   "}"
                                                   "QToolButton:checked {"
-                                                  "    border: 2px solid green; "
+                                                  "    border: 2px solid blue; "
                                                   "}").arg("16px").arg("8px"));
-
-
-
     ui->nameLineEdit->setText(NewNoteGroupTip);
-    //InitColorPushBtn();
+    InitColorPushBtn();
     InitRoundRadius();
     InitEvent();
 
+}
+
+void NewNoteGroupForm::InitColorPushBtn()
+{
+    for(int i=0;i<ui->colorLayout->count();i++)
+    {
+       QToolButton* toolBtn= dynamic_cast<QToolButton*>(ui->colorLayout->itemAt(i)->widget());
+       QString color=QString::fromStdString(colorBtnMap.at(i));
+       QString style=QString("background-color:%1;").arg(color);
+       toolBtn->setStyleSheet(style);
+    }
 }
 
 void NewNoteGroupForm::InitRoundRadius()

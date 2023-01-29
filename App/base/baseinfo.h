@@ -9,8 +9,7 @@
 #define  ATTRIBUTE_NOTETYPE "nodetype"
 #define  ATTRIBUTE_STARTFLAG "isStartWithDigit"
 #define  WINDOW_TITLE "理想之城"
-#define  ROUND_RADIUS 5
-#define  NewNoteGroupTip "未命名笔记本"
+
 
 
 class BaseInfo

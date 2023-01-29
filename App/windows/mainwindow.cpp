@@ -666,7 +666,10 @@ void MainWindow::onTitleLineEditEditingFinished()
 
 void MainWindow::onApplicationQuit()
 {
-    this->newGroupForm->close();
+    if(this->newGroupForm!=NULL)
+    {
+       this->newGroupForm->close();
+    }
 }
 
 MainWindow::~MainWindow()

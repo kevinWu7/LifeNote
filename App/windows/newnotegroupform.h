@@ -31,6 +31,7 @@ public:
 
     void cancleBtn_clicked();
     void okBtn_clicked();
+    void onColorToolBtn_clicked();
 
 signals:
     void sendParentWindowData(QString);

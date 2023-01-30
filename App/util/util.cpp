@@ -1,6 +1,9 @@
 #include "util.h"
 #include "baseinfo.h"
 #include <QApplication>
+#include<QFile>
+#include<QSvgRenderer>
+#include<QPainter>
 util::util()
 {
 
@@ -92,5 +95,52 @@ bool util::isStartWidthDigit(const QString& nodeName)
     return false;
 }
 
+
+QIcon util::ChangeSVGColor(const QString &path)
+{
+    // open svg resource load contents to qbytearray
+    QFile file(path);
+    file.open(QIODevice::ReadOnly);
+    QByteArray baData = file.readAll();
+    // load svg contents to xml document and edit contents
+    QDomDocument doc;
+    doc.setContent(baData);
+    auto domelement=doc.documentElement();
+    // recurivelly change color
+    QDomElement element=doc.documentElement();
+    util::SetDomAttrRecur(element, "path", "fill", "rgb(168,119,199)");
+    // create svg renderer with edited contents
+    QSvgRenderer svgRenderer(doc.toByteArray());
+    // create pixmap target (could be a QImage)
+    QPixmap pix(svgRenderer.defaultSize());
+    pix.fill(Qt::transparent);
+    // create painter to act over pixmap
+    QPainter pixPainter(&pix);
+    // use renderer to render over painter which paints on pixmap
+    svgRenderer.render(&pixPainter);
+    QIcon myicon(pix);
+    // Use icon ....
+    return myicon;
+}
+
+
+void util::SetDomAttrRecur( QDomElement &elem, QString strtagname, QString strattr, QString strattrval)
+{
+    // if it has the tagname then overwritte desired attribute
+    if (elem.tagName().compare(strtagname) == 0)
+    {
+        elem.setAttribute(strattr, strattrval);
+    }
+    // loop all children
+    for (int i = 0; i < elem.childNodes().count(); i++)
+    {
+        if (!elem.childNodes().at(i).isElement())
+        {
+            continue;
+        }
+        auto ele=elem.childNodes().at(i).toElement();
+        util::SetDomAttrRecur(ele, strtagname, strattr, strattrval);
+    }
+}
 //
 

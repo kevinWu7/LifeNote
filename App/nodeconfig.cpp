@@ -2,6 +2,7 @@
 #include "extraqtreewidgetitem.h"
 #include "util.h"
 
+
 #define CONFIG_PATH "../../../ConfigTemplate/node.xml"
 
 nodeconfig::nodeconfig()

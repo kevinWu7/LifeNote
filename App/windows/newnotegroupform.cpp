@@ -26,8 +26,6 @@ NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
                                                   "    padding: 0;"
                                                   "    margin: 0;"
                                                   "}"
-                                                  "QToolButton:checked {"
-                                                  "    border: 2px solid blue; "
                                                   "}").arg("16px").arg("8px"));
     ui->nameLineEdit->setText(NewNoteGroupTip);
     InitColorPushBtn();
@@ -42,8 +40,27 @@ void NewNoteGroupForm::InitColorPushBtn()
     {
        QToolButton* toolBtn= dynamic_cast<QToolButton*>(ui->colorLayout->itemAt(i)->widget());
        QString color=QString::fromStdString(colorBtnMap.at(i));
-       QString style=QString("background-color:%1;").arg(color);
+       //动态设置颜色，从map中取值，并设置checked后的样式
+       QString style=QString("QToolButton{background-color:%1;}"
+                             "QToolButton:checked {border:2px solid %1;background-color:#FFFFFF;}").arg(color);
        toolBtn->setStyleSheet(style);
+       connect(toolBtn,&QToolButton::clicked,this,&NewNoteGroupForm::onColorToolBtn_clicked);
+    }
+}
+
+void NewNoteGroupForm::onColorToolBtn_clicked()
+{
+    QToolButton* button = dynamic_cast<QToolButton*>(QObject::sender());
+    if(button->isChecked())
+    {
+        for(int i=0;i<ui->colorLayout->count();i++)
+        {
+           QToolButton* toolBtn= dynamic_cast<QToolButton*>(ui->colorLayout->itemAt(i)->widget());
+           if(toolBtn!=button)
+           {
+                toolBtn->setChecked(false);
+           }
+        }
     }
 }
 

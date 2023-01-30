@@ -65,6 +65,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->addnewBtn->setCursor(Qt::PointingHandCursor);
 
     //设置标题栏按钮
+   // auto icon=util::ChangeSVGColor(":/res/icons/noteparent.svg");
     ui->boldBtn->setIcon(QIcon(":/res/icons/bold.png"));
     ui->italicBtn->setIcon(QIcon(":/res/icons/italic.png"));
     ui->colorBtn->setIcon(QIcon(":/res/icons/color.png"));
@@ -404,6 +405,7 @@ void MainWindow::onMenuToShow()
     if(item->parent()==NULL)
     {
         deleteNoteAction->setVisible(false);
+        recoverNoteAction->setVisible(false);
     }
     else
     {

@@ -17,5 +17,6 @@
         <file>icons/today.png</file>
         <file>icons/underline.png</file>
         <file>icons/undo.png</file>
+        <file>icons/notechild.svg</file>
     </qresource>
 </RCC>

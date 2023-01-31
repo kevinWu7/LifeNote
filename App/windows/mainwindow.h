@@ -83,7 +83,7 @@ public slots:
 
     void onTitleLineEditEditingFinished();
     //接收新建笔记本子窗体的消息
-    void onReceiveNewGroupFormData(QString nodeName);
+    void onReceiveNewGroupFormData(QString nodeName,int color_index);
     void onApplicationQuit();
 
 };

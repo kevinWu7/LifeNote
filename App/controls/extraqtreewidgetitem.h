@@ -17,6 +17,8 @@ public:
     //defaule is 0
     int isNewNode=0;
 
+    QString colorIndex="0";
+
     //this is to distinguish menu add note（新建笔记） or menu add node group（新建笔记本）
     BaseInfo::NodeType nodeType=BaseInfo::Child;
 

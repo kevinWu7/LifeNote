@@ -96,7 +96,7 @@ bool util::isStartWidthDigit(const QString& nodeName)
 }
 
 
-QIcon util::ChangeSVGColor(const QString &path)
+QIcon util::ChangeSVGColor(const QString &path,const QString &color)
 {
     // open svg resource load contents to qbytearray
     QFile file(path);
@@ -108,7 +108,7 @@ QIcon util::ChangeSVGColor(const QString &path)
     auto domelement=doc.documentElement();
     // recurivelly change color
     QDomElement element=doc.documentElement();
-    util::SetDomAttrRecur(element, "path", "fill", "rgb(168,119,199)");
+    util::SetDomAttrRecur(element, "path", "fill", color);
     // create svg renderer with edited contents
     QSvgRenderer svgRenderer(doc.toByteArray());
     // create pixmap target (could be a QImage)

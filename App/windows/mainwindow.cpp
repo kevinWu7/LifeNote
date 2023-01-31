@@ -65,7 +65,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->addnewBtn->setCursor(Qt::PointingHandCursor);
 
     //设置标题栏按钮
-   // auto icon=util::ChangeSVGColor(":/res/icons/noteparent.svg");
     ui->boldBtn->setIcon(QIcon(":/res/icons/bold.png"));
     ui->italicBtn->setIcon(QIcon(":/res/icons/italic.png"));
     ui->colorBtn->setIcon(QIcon(":/res/icons/color.png"));
@@ -212,11 +211,12 @@ void MainWindow::onNewNoteGroupItemClick()
     {
         return;
     }
-    QTreeWidgetItem *newItem=new ExtraQTreeWidgetItem(BaseInfo::Parent);
+    ExtraQTreeWidgetItem *newItem=new ExtraQTreeWidgetItem(BaseInfo::Parent);
     ((ExtraQTreeWidgetItem*)newItem)->isNewNode=1;
     QString newNodeGroupName=util::NoRepeatNodeName(ui->treeWidget->currentItem(),"新建笔记本");
     newItem->setText(0,newNodeGroupName);
     auto currentNode=ui->treeWidget->currentItem();
+    newItem->colorIndex= dynamic_cast<ExtraQTreeWidgetItem*>(currentNode)->colorIndex;
     currentNode->addChild(newItem);
 
     //set selectedItem to the newItem
@@ -336,16 +336,20 @@ void MainWindow::onLockItemClick()
 
 #pragma endregion}
 
-void MainWindow::onReceiveNewGroupFormData(QString nodeName)
+void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
 {
     //treewidget添加节点
     int count=ui->treeWidget->topLevelItemCount();
     auto newTopNode=new ExtraQTreeWidgetItem(BaseInfo::Parent);
+  //  QString realName=util::NoRepeatNodeName()
     newTopNode->setText(0,nodeName);
+    newTopNode->colorIndex= QString::number(color_index);
     ui->treeWidget->insertTopLevelItem(count-1,newTopNode);
-    setAllItemIcon();
+
     //添加xml节点
     config->updateXmlAddTopLevelNode(newTopNode,recycleNode);
+
+    setAllItemIcon();
     //添加本地文件夹
     auto currentPath= QCoreApplication::applicationDirPath();
     QString dirpath =QString("%1/storage/%2").arg(currentPath,nodeName);
@@ -544,6 +548,7 @@ void MainWindow::setAllItemIcon()
 void MainWindow::setItemIcon(ExtraQTreeWidgetItem* child)
 {
     int childCount = child->childCount();
+    auto color=util::colorBtnMap[child->colorIndex.toInt()];
     if(childCount>0||child->nodeType==BaseInfo::Parent)
     {
          if(child->parent()==NULL&&child->text(0)==NODENAME_COLLECT) //顶级系统节点-收藏
@@ -556,19 +561,20 @@ void MainWindow::setItemIcon(ExtraQTreeWidgetItem* child)
          }
          else
          {
-             child->setIcon(0,QIcon(":/res/icons/parentnote.png"));
+             QIcon icon= util::ChangeSVGColor(":/res/icons/noteparent.svg", QString::fromStdString(color));
+             child->setIcon(0,icon);
          }
          for (int j = 0; j < childCount; ++j)
          {
              ExtraQTreeWidgetItem * grandson = dynamic_cast<ExtraQTreeWidgetItem*>(child->child(j));
              if(grandson->childCount()>0||grandson->nodeType==BaseInfo::Parent)
              {
-                 grandson->setIcon(0,QIcon(":/res/icons/parentnote.png"));
                  setItemIcon(grandson);
              }
              else
              {
-                 grandson->setIcon(0,QIcon(":/res/icons/childnote.png"));
+                 QIcon icon= util::ChangeSVGColor(":/res/icons/notechild.svg", QString::fromStdString(color));
+                 grandson->setIcon(0,QIcon(icon));
              }
          }
     }

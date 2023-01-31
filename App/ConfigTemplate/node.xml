@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <root>
-    <笔记本 nodetype="1">
-        <生活随笔 nodetype="1">
+    <笔记本 nodetype="1" colorindex="0">
+        <生活随笔 nodetype="1"  colorindex="0">
             <学习方式 nodetype="0"/>
         </生活随笔>
     </笔记本>

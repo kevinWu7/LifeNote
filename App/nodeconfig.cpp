@@ -47,6 +47,10 @@ void nodeconfig::updateXml(BaseInfo::OperationType type,QTreeWidgetItem *current
         }
         parentDomElement.appendChild(newDomElement);
         newDomElement.setAttribute(ATTRIBUTE_NOTETYPE,type==BaseInfo::AddNode?0:1);
+        if(type==BaseInfo::AddNodeGroup&&currentNode!=NULL)
+        {
+            newDomElement.setAttribute(ATTRIBUTE_COLORINDEX,dynamic_cast<ExtraQTreeWidgetItem*>(currentNode)->colorIndex);
+        }
     }
     else if(type==BaseInfo::MoveNode)
     {
@@ -75,7 +79,7 @@ void nodeconfig::updateXml(BaseInfo::OperationType type,QTreeWidgetItem *current
     file.close();
 }
 
-void nodeconfig::updateXmlAddTopLevelNode(QTreeWidgetItem *newNode,QTreeWidgetItem *recycleNode)
+void nodeconfig::updateXmlAddTopLevelNode(ExtraQTreeWidgetItem *newNode,QTreeWidgetItem *recycleNode)
 {
     QFile file(CONFIG_PATH);
     if(!file.open(QIODevice::ReadOnly))
@@ -102,6 +106,7 @@ void nodeconfig::updateXmlAddTopLevelNode(QTreeWidgetItem *newNode,QTreeWidgetIt
     }
     doc.documentElement().insertBefore(newDomElement,parentDomElement);
     newDomElement.setAttribute(ATTRIBUTE_NOTETYPE,1);
+    newDomElement.setAttribute(ATTRIBUTE_COLORINDEX,newNode->colorIndex);
     if(!file.open(QFile::WriteOnly|QFile::Truncate))//重写文件，如果不用truncate就是在后面追加内容，就无效了
     {
         return;
@@ -172,6 +177,7 @@ void nodeconfig::loadConfigXML(QTreeWidget *tree_widget)
                 node_info *node = new node_info();
                 node->node_name=reader.name().toString();
                 BaseInfo::NodeType isParent=BaseInfo::Child;
+                node->widgetitem=new ExtraQTreeWidgetItem(isParent);
                 foreach (const QXmlStreamAttribute & attribute, reader.attributes())
                 {
                     qDebug()<<attribute.name();
@@ -179,6 +185,10 @@ void nodeconfig::loadConfigXML(QTreeWidget *tree_widget)
                     if(attribute.name().toString()==ATTRIBUTE_NOTETYPE)
                     {
                         isParent= attribute.value().toString()=="0"?BaseInfo::Child:BaseInfo::Parent;
+                    }
+                    else if(attribute.name().toString()==ATTRIBUTE_COLORINDEX)
+                    {
+                          node->widgetitem->colorIndex=attribute.value().toString();
                     }
                     else if(attribute.name().toString()==ATTRIBUTE_STARTFLAG)//若是有startflag标记的，还原成原来的字符串
                     {
@@ -188,7 +198,7 @@ void nodeconfig::loadConfigXML(QTreeWidget *tree_widget)
                         }
                     }
                 }
-                node->widgetitem=new ExtraQTreeWidgetItem(isParent);
+                node->widgetitem->nodeType=isParent;
                 if( node->node_name=="root")
                 {
                     continue;

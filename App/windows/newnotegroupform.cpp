@@ -1,6 +1,7 @@
 #include "newnotegroupform.h"
 #include "ui_newnotegroupform.h"
 #include<QPainterPath>
+#include "util.h"
 
 #define  ROUND_RADIUS 5
 #define  NewNoteGroupTip "未命名笔记本"
@@ -31,7 +32,6 @@ NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
     InitColorPushBtn();
     InitRoundRadius();
     InitEvent();
-
 }
 
 void NewNoteGroupForm::InitColorPushBtn()
@@ -39,7 +39,8 @@ void NewNoteGroupForm::InitColorPushBtn()
     for(int i=0;i<ui->colorLayout->count();i++)
     {
        QToolButton* toolBtn= dynamic_cast<QToolButton*>(ui->colorLayout->itemAt(i)->widget());
-       QString color=QString::fromStdString(colorBtnMap.at(i));
+       QString color=QString::fromStdString(util::colorBtnMap.at(i));
+
        //动态设置颜色，从map中取值，并设置checked后的样式
        QString style=QString("QToolButton{background-color:%1;}"
                              "QToolButton:checked {border:2px solid %1;background-color:#FFFFFF;}").arg(color);
@@ -60,7 +61,15 @@ void NewNoteGroupForm::onColorToolBtn_clicked()
            {
                 toolBtn->setChecked(false);
            }
+           else
+           {
+                color_index=i;
+           }
         }
+    }
+    else
+    {
+        color_index=0;
     }
 }
 
@@ -98,13 +107,15 @@ void NewNoteGroupForm::mouseMoveEvent(QMouseEvent *event)
 
 void NewNoteGroupForm::okBtn_clicked()
 {
-    emit sendParentWindowData(ui->nameLineEdit->text());
+    emit sendParentWindowData(ui->nameLineEdit->text(),color_index);
     ui->nameLineEdit->setText(NewNoteGroupTip);
     this->setVisible(false);
+    color_index=0;
 }
 
 void NewNoteGroupForm::cancleBtn_clicked()
 {
+    color_index=0;
     ui->nameLineEdit->setText(NewNoteGroupTip);
     this->setVisible(false);
 }

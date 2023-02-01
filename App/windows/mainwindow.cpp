@@ -341,7 +341,7 @@ void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
     //treewidget添加节点
     int count=ui->treeWidget->topLevelItemCount();
     auto newTopNode=new ExtraQTreeWidgetItem(BaseInfo::Parent);
-  //  QString realName=util::NoRepeatNodeName()
+    //QString realName=util::NoRepeatNodeName()  todo 这里修改下，防止新建顶级节点重名，否则有bug
     newTopNode->setText(0,nodeName);
     newTopNode->colorIndex= QString::number(color_index);
     ui->treeWidget->insertTopLevelItem(count-1,newTopNode);

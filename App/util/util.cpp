@@ -109,6 +109,8 @@ QIcon util::ChangeSVGColor(const QString &path,const QString &color)
     // recurivelly change color
     QDomElement element=doc.documentElement();
     util::SetDomAttrRecur(element, "path", "fill", color);
+    //set opacity
+    util::SetDomAttrRecur(element, "path", "fill-opacity", "1");
     // create svg renderer with edited contents
     QSvgRenderer svgRenderer(doc.toByteArray());
     // create pixmap target (could be a QImage)

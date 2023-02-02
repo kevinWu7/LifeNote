@@ -12,7 +12,7 @@
 #include <QDomElement>
 #include <iostream>
 #include "baseinfo.h"
-#include "extraqtreewidgetitem.h""
+#include "extraqtreewidgetitem.h"
 
 
 

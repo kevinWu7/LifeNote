@@ -40,8 +40,6 @@ signals:
 
 private:
     Ui::NewNoteGroupForm *ui;
-
-
     int color_index=0;
 };
 

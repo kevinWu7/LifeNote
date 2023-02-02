@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     //设置左侧侧边栏样式
     ui->leftBar->setStyleSheet("QAbstractButton{min-height:17px;max-height:17px;margin:0px;border:none;} "
                                "QAbstractButton#addnewBtn{min-height:20px;max-height:20px;}"
-                                "QWidget#leftBar{background-color:#FFFFFF} ");
+                               "QWidget#leftBar{background-color:#FFFFFF} ");
     ui->titleBar->setStyleSheet("QToolButton{border:none;} "
                                 "QToolButton:checked{background-color:rgb(218, 218, 218)}"
                                 "QToolButton:hover{background-color:rgb(218, 218, 218)}"
@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->underlineBtn->setIcon(QIcon(":/res/icons/underline.png"));
     ui->pictureBtn->setIcon(QIcon(":/res/icons/img.png"));
     ui->saveBtn->setIcon(QIcon(":/res/icons/save.png"));
-     ui->undoBtn->setIcon(QIcon(":/res/icons/undo.png"));
+    ui->undoBtn->setIcon(QIcon(":/res/icons/undo.png"));
     initRightMenu();
 
     //设置信号槽
@@ -190,8 +190,8 @@ void MainWindow::onAddnewBtn_clicked()
 {
     if(this->newGroupForm==NULL)
     {
-       newGroupForm=new NewNoteGroupForm;
-       connect(newGroupForm,&NewNoteGroupForm::sendParentWindowData,this, &MainWindow::onReceiveNewGroupFormData);
+        newGroupForm=new NewNoteGroupForm;
+        connect(newGroupForm,&NewNoteGroupForm::sendParentWindowData,this, &MainWindow::onReceiveNewGroupFormData);
     }
 
     newGroupForm->move(this->frameGeometry().topLeft() +this->rect().center() -newGroupForm->rect().center());//使子窗体居中
@@ -213,7 +213,19 @@ void MainWindow::onNewNoteGroupItemClick()
     }
     ExtraQTreeWidgetItem *newItem=new ExtraQTreeWidgetItem(BaseInfo::Parent);
     ((ExtraQTreeWidgetItem*)newItem)->isNewNode=1;
-    QString newNodeGroupName=util::NoRepeatNodeName(ui->treeWidget->currentItem(),"新建笔记本");
+    //todo 搞清楚，为什么传入这个，执行完函数后就被清空了？ 答：因为takeChildren这个方法就是移除的作用，一般不要用
+   // auto childrens=ui->treeWidget->currentItem()->takeChildren();
+    int count=ui->treeWidget->currentItem()->childCount();
+    QList<QTreeWidgetItem*> qlist;
+    auto f=[&]()
+    {
+        for(int i=0;i<count;i++)
+        {
+            qlist.append(ui->treeWidget->currentItem()->child(i));
+        }
+    };
+    f();
+    QString newNodeGroupName=util::NoRepeatNodeName(qlist,"新建笔记本");
     newItem->setText(0,newNodeGroupName);
     auto currentNode=ui->treeWidget->currentItem();
     newItem->colorIndex= dynamic_cast<ExtraQTreeWidgetItem*>(currentNode)->colorIndex;
@@ -240,7 +252,18 @@ void MainWindow::onNewNoteItemClick()
     }
     QTreeWidgetItem *newItem=new ExtraQTreeWidgetItem(BaseInfo::Child);
     ((ExtraQTreeWidgetItem*)newItem)->isNewNode=1;
-    QString newNodeName=util::NoRepeatNodeName(ui->treeWidget->currentItem(),"无标题");
+    int count=ui->treeWidget->currentItem()->childCount();
+    QList<QTreeWidgetItem*> qlist;
+    auto f=[&]()
+    {
+        for(int i=0;i<count;i++)
+        {
+            qlist.append(ui->treeWidget->currentItem()->child(i));
+        }
+    };
+    f();
+
+    QString newNodeName=util::NoRepeatNodeName(qlist,"无标题");
     newItem->setText(0,newNodeName);
     auto currentNode=ui->treeWidget->currentItem();
     currentNode->addChild(newItem);
@@ -299,7 +322,7 @@ void MainWindow::onDeleteNoteItemClick()
     extraCurrentNode->deleteType=0;
     if(!isRecycle) //if parentNode is recycle,not need to add
     {
-       recycleNode->addChild(extraCurrentNode);
+        recycleNode->addChild(extraCurrentNode);
     }
     setAllItemIcon();
 }
@@ -341,8 +364,17 @@ void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
     //treewidget添加节点
     int count=ui->treeWidget->topLevelItemCount();
     auto newTopNode=new ExtraQTreeWidgetItem(BaseInfo::Parent);
-    //QString realName=util::NoRepeatNodeName()  todo 这里修改下，防止新建顶级节点重名，否则有bug
-    newTopNode->setText(0,nodeName);
+    QList<QTreeWidgetItem*> qlist;
+    auto f=[&]()
+    {
+        for(int i=0;i<count;i++)
+        {
+            qlist.append(ui->treeWidget->topLevelItem(i));
+        }
+    };
+    f();
+    QString realName=util::NoRepeatNodeName(qlist, nodeName);  //防止新建顶级节点重名，否则有bug
+    newTopNode->setText(0,realName);
     newTopNode->colorIndex= QString::number(color_index);
     ui->treeWidget->insertTopLevelItem(count-1,newTopNode);
 
@@ -356,7 +388,7 @@ void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
     QDir *dir = new QDir();
     if (!dir->exists(dirpath))
     {
-      dir->mkpath(dirpath);
+        dir->mkpath(dirpath);
     }
 }
 
@@ -417,11 +449,11 @@ void MainWindow::onMenuToShow()
         bool isRecycle=item->parent()->text(0)==NODENAME_RECYLE; //is recycle Node
         if(isRecycle)
         {
-             recoverNoteAction->setVisible(true);
+            recoverNoteAction->setVisible(true);
         }
         else
         {
-             recoverNoteAction->setVisible(false);
+            recoverNoteAction->setVisible(false);
         }
     }
 }
@@ -470,37 +502,37 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
         myfile.close();
     }
     if(current==NULL)
-    {  
+    {
         return;
     }
     //若是笔记本group，则将文本清空
     if(((ExtraQTreeWidgetItem*)current)->nodeType==BaseInfo::Parent)
     {
-         ui->textEdit->setHtml("");
-         ui->titleLineEdit->setText(current->text(0));
-         //not allow to edit the Nodegroup
-         ui->textEdit->setReadOnly(true);
-         for(auto child_toolBtn :ui->titleBar->children())
-         {
-              QToolButton* btn=dynamic_cast<QToolButton*>(child_toolBtn);
-             if(btn!=NULL)
-             {
+        ui->textEdit->setHtml("");
+        ui->titleLineEdit->setText(current->text(0));
+        //not allow to edit the Nodegroup
+        ui->textEdit->setReadOnly(true);
+        for(auto child_toolBtn :ui->titleBar->children())
+        {
+            QToolButton* btn=dynamic_cast<QToolButton*>(child_toolBtn);
+            if(btn!=NULL)
+            {
                 btn->setEnabled(false);
-             }
-         }
-         return;
+            }
+        }
+        return;
     }
     else
     {
-         ui->textEdit->setReadOnly(false);
-         for(auto child_toolBtn :ui->titleBar->children())
-         {
-              QToolButton* btn=dynamic_cast<QToolButton*>(child_toolBtn);
-             if(btn!=NULL)
-             {
+        ui->textEdit->setReadOnly(false);
+        for(auto child_toolBtn :ui->titleBar->children())
+        {
+            QToolButton* btn=dynamic_cast<QToolButton*>(child_toolBtn);
+            if(btn!=NULL)
+            {
                 btn->setEnabled(true);
-             }
-         }
+            }
+        }
     }
     //load current node‘s title to right-titleLineEdit title
     ui->titleLineEdit->setText(current->text(0));
@@ -551,132 +583,132 @@ void MainWindow::setItemIcon(ExtraQTreeWidgetItem* child)
     auto color=util::colorBtnMap[child->colorIndex.toInt()];
     if(childCount>0||child->nodeType==BaseInfo::Parent)
     {
-         if(child->parent()==NULL&&child->text(0)==NODENAME_COLLECT) //顶级系统节点-收藏
-         {
-             child->setIcon(0,QIcon(":/res/icons/collect.png"));
-         }
-         else if(child->parent()==NULL&&child->text(0)==NODENAME_RECYLE)//顶级系统节点-废纸篓
-         {
-             child->setIcon(0,QIcon(":/res/icons/recycle.png"));
-         }
-         else
-         {
-             QIcon icon= util::ChangeSVGColor(":/res/icons/noteparent.svg", QString::fromStdString(color));
-             child->setIcon(0,icon);
-         }
-         for (int j = 0; j < childCount; ++j)
-         {
-             ExtraQTreeWidgetItem * grandson = dynamic_cast<ExtraQTreeWidgetItem*>(child->child(j));
-             if(grandson->childCount()>0||grandson->nodeType==BaseInfo::Parent)
-             {
-                 setItemIcon(grandson);
-             }
-             else
-             {
-                 QIcon icon= util::ChangeSVGColor(":/res/icons/notechild.svg", QString::fromStdString(color));
-                 grandson->setIcon(0,QIcon(icon));
-             }
-         }
+        if(child->parent()==NULL&&child->text(0)==NODENAME_COLLECT) //顶级系统节点-收藏
+        {
+            child->setIcon(0,QIcon(":/res/icons/collect.png"));
+        }
+        else if(child->parent()==NULL&&child->text(0)==NODENAME_RECYLE)//顶级系统节点-废纸篓
+        {
+            child->setIcon(0,QIcon(":/res/icons/recycle.png"));
+        }
+        else
+        {
+            QIcon icon= util::ChangeSVGColor(":/res/icons/noteparent.svg", QString::fromStdString(color));
+            child->setIcon(0,icon);
+        }
+        for (int j = 0; j < childCount; ++j)
+        {
+            ExtraQTreeWidgetItem * grandson = dynamic_cast<ExtraQTreeWidgetItem*>(child->child(j));
+            if(grandson->childCount()>0||grandson->nodeType==BaseInfo::Parent)
+            {
+                setItemIcon(grandson);
+            }
+            else
+            {
+                QIcon icon= util::ChangeSVGColor(":/res/icons/notechild.svg", QString::fromStdString(color));
+                grandson->setIcon(0,QIcon(icon));
+            }
+        }
     }
     else
     {
-         child->setIcon(0,QIcon(":/res/icons/childnote.png"));
+        child->setIcon(0,QIcon(":/res/icons/childnote.png"));
     }
 }
 
 void MainWindow::onTitleLineEditEditingFinished()
 {
-  qDebug("onTitleLineEditEditingFinished");
-  if (ui->titleLineEdit->text().length() == 0)
-  {
-     return;
-  }
-  auto currentItem=ui->treeWidget->currentItem();
-  if(currentItem->parent()==NULL)
-  {
-      if(currentItem->text(0)==NODENAME_COLLECT||currentItem->text(0)==NODENAME_RECYLE)
-      {
-          QMessageBox::warning(this, tr("警告"),tr("\n系统节点无法重命名!"),QMessageBox::Ok);
-          return;
-      }
-  }
+    qDebug("onTitleLineEditEditingFinished");
+    if (ui->titleLineEdit->text().length() == 0)
+    {
+        return;
+    }
+    auto currentItem=ui->treeWidget->currentItem();
+    if(currentItem->parent()==NULL)
+    {
+        if(currentItem->text(0)==NODENAME_COLLECT||currentItem->text(0)==NODENAME_RECYLE)
+        {
+            QMessageBox::warning(this, tr("警告"),tr("\n系统节点无法重命名!"),QMessageBox::Ok);
+            return;
+        }
+    }
 
-  auto oldPath=util::treeItemToNodePath(currentItem);
-  auto fileFullPath=util::treeItemToFullFilePath(currentItem);
-  auto fileNewPath=util::treeItemToNodeDirPath(currentItem);
-  auto oldName=currentItem->text(0);
+    auto oldPath=util::treeItemToNodePath(currentItem);
+    auto fileFullPath=util::treeItemToFullFilePath(currentItem);
+    auto fileNewPath=util::treeItemToNodeDirPath(currentItem);
+    auto oldName=currentItem->text(0);
 
-  currentItem->setText(0, ui->titleLineEdit->text());
+    currentItem->setText(0, ui->titleLineEdit->text());
 
 
-  // update the local file change
-  auto extraItem =dynamic_cast<ExtraQTreeWidgetItem *>(currentItem);
-  BaseInfo::OperationType type = extraItem->isNewNode==1?
-              (extraItem->nodeType == BaseInfo::Child ?
-                   BaseInfo::AddNode:
-                   BaseInfo::AddNodeGroup)
+    // update the local file change
+    auto extraItem =dynamic_cast<ExtraQTreeWidgetItem *>(currentItem);
+    BaseInfo::OperationType type = extraItem->isNewNode==1?
+                (extraItem->nodeType == BaseInfo::Child ?
+                     BaseInfo::AddNode:
+                     BaseInfo::AddNodeGroup)
               :BaseInfo::RenameNode;
-  if(type==BaseInfo::RenameNode)
-  {
-      if(((ExtraQTreeWidgetItem*)currentItem)->nodeType==BaseInfo::Child)
-      {
-          QFile file(fileFullPath);
-          file.rename(fileNewPath+"/"+ui->titleLineEdit->text()+".html");
-      }
-      else
-      {
-          QString parentFullPath = QString("%1/storage").arg(QCoreApplication::applicationDirPath());
-
-          if(currentItem->parent()!=NULL)
-          {
-              parentFullPath=util::treeItemToFullFilePath(currentItem->parent(),BaseInfo::Parent);
-          }
-          QString newDir=QString("%1/%2").arg(parentFullPath,ui->titleLineEdit->text());
-          QString oldDir=QString("%1/%2").arg(parentFullPath,oldName);
-          QDir _dir(oldDir);
-          qDebug()<<oldDir;
-          qDebug()<<newDir;
-          if (_dir.exists())
-          {
-             _dir.rename(oldDir, newDir);
-          }
-      }
-      config->updateXmlRenameNode(oldPath,currentItem);
-      return;
-  }
-
-  config->updateXml(type, currentItem->parent(),currentItem);
-
-  if (type == BaseInfo::AddNodeGroup)
-  {
-    //新增本地文件夹
-    QString dirpath = util::treeItemToFullFilePath(extraItem, BaseInfo::Parent);
-    QDir *dir = new QDir();
-    if (!dir->exists(dirpath))
+    if(type==BaseInfo::RenameNode)
     {
-      dir->mkpath(dirpath);
+        if(((ExtraQTreeWidgetItem*)currentItem)->nodeType==BaseInfo::Child)
+        {
+            QFile file(fileFullPath);
+            file.rename(fileNewPath+"/"+ui->titleLineEdit->text()+".html");
+        }
+        else
+        {
+            QString parentFullPath = QString("%1/storage").arg(QCoreApplication::applicationDirPath());
+
+            if(currentItem->parent()!=NULL)
+            {
+                parentFullPath=util::treeItemToFullFilePath(currentItem->parent(),BaseInfo::Parent);
+            }
+            QString newDir=QString("%1/%2").arg(parentFullPath,ui->titleLineEdit->text());
+            QString oldDir=QString("%1/%2").arg(parentFullPath,oldName);
+            QDir _dir(oldDir);
+            qDebug()<<oldDir;
+            qDebug()<<newDir;
+            if (_dir.exists())
+            {
+                _dir.rename(oldDir, newDir);
+            }
+        }
+        config->updateXmlRenameNode(oldPath,currentItem);
+        return;
     }
-    extraItem->isNewNode=0;//reset isNewNode status
-  }
-  else if (type == BaseInfo::AddNode)
-  {
-    //创建本地空文档html
-    QString filePath = util::treeItemToFullFilePath(currentItem, BaseInfo::Child);
-    QFile myfile(filePath);
-    //注意WriteOnly是往文本中写入的时候用，ReadOnly是在读文本中内容的时候用，Truncate表示将原来文件中的内容清空
-    if (myfile.open(QFile::WriteOnly))
+
+    config->updateXml(type, currentItem->parent(),currentItem);
+
+    if (type == BaseInfo::AddNodeGroup)
     {
-      myfile.close();
+        //新增本地文件夹
+        QString dirpath = util::treeItemToFullFilePath(extraItem, BaseInfo::Parent);
+        QDir *dir = new QDir();
+        if (!dir->exists(dirpath))
+        {
+            dir->mkpath(dirpath);
+        }
+        extraItem->isNewNode=0;//reset isNewNode status
     }
-    extraItem->isNewNode=0;//reset isNewNode status
-  }
+    else if (type == BaseInfo::AddNode)
+    {
+        //创建本地空文档html
+        QString filePath = util::treeItemToFullFilePath(currentItem, BaseInfo::Child);
+        QFile myfile(filePath);
+        //注意WriteOnly是往文本中写入的时候用，ReadOnly是在读文本中内容的时候用，Truncate表示将原来文件中的内容清空
+        if (myfile.open(QFile::WriteOnly))
+        {
+            myfile.close();
+        }
+        extraItem->isNewNode=0;//reset isNewNode status
+    }
 }
 
 void MainWindow::onApplicationQuit()
 {
     if(this->newGroupForm!=NULL)
     {
-       this->newGroupForm->close();
+        this->newGroupForm->close();
     }
 }
 

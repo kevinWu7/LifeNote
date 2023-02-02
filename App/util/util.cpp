@@ -9,14 +9,21 @@ util::util()
 
 }
 
+std::map<int, std::string> util::colorBtnMap = {
+    {0, "rgb(125,180,255)"}, {1, "rgb(212,171,128)"}, {2, "rgb(168,119,199)"},
+    {3, "rgb(110,207,101)"}, {4, "rgb(241,92,228)"},  {5, "rgb(162,171,178)"},
+    {6, "rgb(252,100,110)"}, {7, "rgb(252,77,6)"},    {8, "rgb(156,184,120)"},
+    {9, "rgb(181,169,70)"},  {10, "rgb(57,179,173)"}, {11, "rgb(107,105,141)"},
+};
+
 //获取节点的路径xml记录的path,如 笔记本/每日工作/无标题.html ，返回 笔记本/每日工作/无标题
-QString util::treeItemToNodePath(QTreeWidgetItem* treeItem)
+QString util::treeItemToNodePath(QTreeWidgetItem *treeItem)
 {
-    QString fullPath= treeItem->text(0);
+    QString fullPath = treeItem->text(0);
 
     while (treeItem->parent() != NULL)
     {
-        fullPath= treeItem->parent()->text(0) + "/" + fullPath;
+        fullPath = treeItem->parent()->text(0) + "/" + fullPath;
         treeItem = treeItem->parent();
     }
     return fullPath;
@@ -25,8 +32,8 @@ QString util::treeItemToNodePath(QTreeWidgetItem* treeItem)
 //获取节点的物理路径， 如笔记本/每日工作/无标题.html， 返回笔记本/每日工作
 QString util::treeItemToNodeDirPath(QTreeWidgetItem *treeItem)
 {
-    auto path=treeItemToFullFilePath(treeItem);
-    int first = path.lastIndexOf ("/");
+    auto path = treeItemToFullFilePath(treeItem);
+    int first = path.lastIndexOf("/");
     QString fileName = path.left(first); //文件名称，如xxx.html
     return fileName;
 }
@@ -59,9 +66,9 @@ QString util::treeItemToFullFilePath(QTreeWidgetItem* treeItem,BaseInfo::NodeTyp
 }
 
 //传入parentnode,输出一个不重复的标题
-QString util::NoRepeatNodeName(QTreeWidgetItem* parentNode,QString nodeName)
+QString util::NoRepeatNodeName( QList<QTreeWidgetItem*> &listNode,QString nodeName)
 {
-    int count=parentNode->childCount();
+    int count=listNode.count();
     int index=0;
     while(true)
     {
@@ -69,7 +76,7 @@ QString util::NoRepeatNodeName(QTreeWidgetItem* parentNode,QString nodeName)
         QString Name=nodeName+(index==0?"":QString::number(index));
         for(int i=0;i<count;i++)
         {
-            auto child= parentNode->child(i);
+            auto child= listNode.at(i);
             if(child->text(0)==Name)
             {
                 index++;

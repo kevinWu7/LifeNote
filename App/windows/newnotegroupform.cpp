@@ -15,19 +15,20 @@ NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setWindowModality(Qt::ApplicationModal);
     this->setStyleSheet(QString("QLabel{color:rgb(110,111,111);} "
-                       "QWidget#NewNoteGroupForm{background-color:rgb(255,255,255)}"
-                       "QLineEdit{background-color:rgb(244,244,246);border:none}"
-                        "QLabel{font-size:11px}"
-                        "QToolButton {"
-                                                  "    border: 1px;"
-                                                  "    width: %1 ; min-width: %1; max-width: %1;"
-                                                  "    height: %1 ; min-height: %1; max-height: %1;"
-                                                  "    border-radius: %2;"
-                                                  "    color: white;"
-                                                  "    padding: 0;"
-                                                  "    margin: 0;"
-                                                  "}"
-                                                  "}").arg("16px").arg("8px"));
+                                "QWidget#NewNoteGroupForm {background-color:rgb(255,255,255)}"
+                                "QLineEdit {background-color:rgb(244,244,246);border:none}"
+                                "QLabel{font-size:11px}"
+                                "QToolButton "
+                                "{"
+                                "border: 1px;"
+                                "width: %1 ; min-width: %1; max-width: %1;"
+                                "height: %1 ; min-height: %1; max-height: %1;"
+                                "border-radius: %2;"
+                                "color: white;"
+                                "padding: 0;"
+                                "margin: 0;"
+                                "}"
+                                ).arg("16px").arg("8px"));
     ui->nameLineEdit->setText(NewNoteGroupTip);
     InitColorPushBtn();
     InitRoundRadius();
@@ -38,14 +39,14 @@ void NewNoteGroupForm::InitColorPushBtn()
 {
     for(int i=0;i<ui->colorLayout->count();i++)
     {
-       QToolButton* toolBtn= dynamic_cast<QToolButton*>(ui->colorLayout->itemAt(i)->widget());
-       QString color=QString::fromStdString(util::colorBtnMap.at(i));
+        QToolButton* toolBtn= dynamic_cast<QToolButton*>(ui->colorLayout->itemAt(i)->widget());
+        QString color=QString::fromStdString(util::colorBtnMap.at(i));
 
-       //动态设置颜色，从map中取值，并设置checked后的样式
-       QString style=QString("QToolButton{background-color:%1;}"
-                             "QToolButton:checked {border:2px solid %1;background-color:#FFFFFF;}").arg(color);
-       toolBtn->setStyleSheet(style);
-       connect(toolBtn,&QToolButton::clicked,this,&NewNoteGroupForm::onColorToolBtn_clicked);
+        //动态设置颜色，从map中取值，并设置checked后的样式
+        QString style=QString("QToolButton{background-color:%1;}"
+                              "QToolButton:checked {border:2px solid %1;background-color:#FFFFFF;}").arg(color);
+        toolBtn->setStyleSheet(style);
+        connect(toolBtn,&QToolButton::clicked,this,&NewNoteGroupForm::onColorToolBtn_clicked);
     }
 }
 
@@ -56,15 +57,15 @@ void NewNoteGroupForm::onColorToolBtn_clicked()
     {
         for(int i=0;i<ui->colorLayout->count();i++)
         {
-           QToolButton* toolBtn= dynamic_cast<QToolButton*>(ui->colorLayout->itemAt(i)->widget());
-           if(toolBtn!=button)
-           {
+            QToolButton* toolBtn= dynamic_cast<QToolButton*>(ui->colorLayout->itemAt(i)->widget());
+            if(toolBtn!=button)
+            {
                 toolBtn->setChecked(false);
-           }
-           else
-           {
+            }
+            else
+            {
                 color_index=i;
-           }
+            }
         }
     }
     else

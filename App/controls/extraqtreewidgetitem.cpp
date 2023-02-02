@@ -2,5 +2,5 @@
 
 ExtraQTreeWidgetItem::ExtraQTreeWidgetItem(BaseInfo::NodeType type)
 {
-   nodeType=type;
+    nodeType=type;
 }

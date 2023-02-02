@@ -12,17 +12,16 @@
 #define  WINDOW_TITLE "理想之城"
 
 
-
 class BaseInfo
 {
 public:
     enum OperationType
     {
-       AddNode,
-       AddNodeGroup,
-       DeleteNode,
-       MoveNode,
-       RenameNode,
+        AddNode,
+        AddNodeGroup,
+        DeleteNode,
+        MoveNode,
+        RenameNode,
     };
 
     enum NodeType

@@ -1,6 +1,8 @@
 #include "nodeconfig.h"
 #include "extraqtreewidgetitem.h"
 #include "util.h"
+#include "logger.h"
+
 
 
 #define CONFIG_PATH "../../../ConfigTemplate/node.xml"
@@ -23,13 +25,13 @@ void nodeconfig::updateXml(BaseInfo::OperationType type,QTreeWidgetItem *current
 
     if(!file.open(QIODevice::ReadOnly))
     {
-        std::cout<<"open local xml failed";
+        logger->log(QString("updateXml:open local xml failed"));
         return;
     }
     QDomDocument doc;
     if(!doc.setContent(&file))//从字节数组中解析XML文档，并将其设置为文档的内容
     {
-        std::cout<<"set doc content form file failed";
+        logger->log(QString("updateXml:set doc content form file failed"));
         file.close();
         return;
     }
@@ -84,13 +86,13 @@ void nodeconfig::updateXmlAddTopLevelNode(ExtraQTreeWidgetItem *newNode,QTreeWid
     QFile file(CONFIG_PATH);
     if(!file.open(QIODevice::ReadOnly))
     {
-        std::cout<<"open local xml failed";
+        logger->log(QString("updateXmlAddTopLevelNode:open local xml failed"));
         return;
     }
     QDomDocument doc;
     if(!doc.setContent(&file))//从字节数组中解析XML文档，并将其设置为文档的内容
     {
-        std::cout<<"set doc content form file failed";
+        logger->log(QString("updateXmlAddTopLevelNode:set doc content form file failed"));
         file.close();
         return;
     }
@@ -122,13 +124,13 @@ void nodeconfig::updateXmlRenameNode(const QString& oldPath,QTreeWidgetItem *cur
 
     if(!file.open(QIODevice::ReadOnly))
     {
-        std::cout<<"open local xml failed";
+        logger->log(QString("updateXmlRenameNode: open local xml failed"));
         return;
     }
     QDomDocument doc;
     if(!doc.setContent(&file))//从字节数组中解析XML文档，并将其设置为文档的内容
     {
-        std::cout<<"set doc content form file failed";
+        logger->log(QString("updateXmlRenameNode: set doc content form file failed"));
         file.close();
         return;
     }
@@ -153,10 +155,10 @@ void nodeconfig::loadConfigXML(QTreeWidget *tree_widget)
 {
     //设置输入文件
     QFile inputfile(CONFIG_PATH);
-    qDebug()<<QDir::currentPath();
+    logger->log(QDir::currentPath());
     if(!inputfile.open(QIODevice::ReadOnly))
     {
-        qDebug() << "Open node.xml file failed";
+        logger->log(QString("loadConfigXML: Open node.xml file failed"));
         return ;
     }
     QXmlStreamReader reader(&inputfile);
@@ -180,8 +182,8 @@ void nodeconfig::loadConfigXML(QTreeWidget *tree_widget)
                 node->widgetitem=new ExtraQTreeWidgetItem(isParent);
                 foreach (const QXmlStreamAttribute & attribute, reader.attributes())
                 {
-                    qDebug()<<attribute.name();
-                    qDebug()<<attribute.value();
+                    logger->log(attribute.name().toString());
+                    logger->log(attribute.value().toString());
                     if(attribute.name().toString()==ATTRIBUTE_NOTETYPE)
                     {
                         isParent= attribute.value().toString()=="0"?BaseInfo::Child:BaseInfo::Parent;
@@ -241,7 +243,10 @@ void nodeconfig::loadConfigXML(QTreeWidget *tree_widget)
     //是否是正常结束
     if (reader.error())
     {
-        qDebug() << "Error: " << reader.errorString() << "in file test.xml at line " << reader.lineNumber() << ", column " << reader.columnNumber();
+        QString str="Error: "+reader.errorString()+"in file test.xml "
+                     "at line "+QString::number(reader.lineNumber())+
+                     ",column "+QString::number(reader.columnNumber());
+        logger->log(str);
         return ;
     }
 

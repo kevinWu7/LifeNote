@@ -1,7 +1,11 @@
 #include "mainwindow.h"
+#include "logger.h"
 #include "ui_mainwindow.h"
 #include "util.h"
 #include <QMouseEvent>
+#include "logger.h"
+
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -213,7 +217,7 @@ void MainWindow::onNewNoteGroupItemClick()
     }
     ExtraQTreeWidgetItem *newItem=new ExtraQTreeWidgetItem(BaseInfo::Parent);
     ((ExtraQTreeWidgetItem*)newItem)->isNewNode=1;
-    //todo 搞清楚，为什么传入这个，执行完函数后就被清空了？ 答：因为takeChildren这个方法就是移除的作用，一般不要用
+    //Q:为什么传入这个，执行完函数后nodes就被清空了？ A：因为takeChildren这个方法就是移除的作用，一般不要用
    // auto childrens=ui->treeWidget->currentItem()->takeChildren();
     int count=ui->treeWidget->currentItem()->childCount();
     QList<QTreeWidgetItem*> qlist;
@@ -304,7 +308,8 @@ void MainWindow::onDeleteNoteItemClick()
         QString fileName = util::treeItemToFileName(currentNode); //文件名称，如xxx.html
         auto recyclePath=QString("%1/storage/%2/%3").arg(currentPath,NODENAME_RECYLE,fileName);
         bool moveResult= QFile::rename(fullPath,recyclePath); //A路径移动到B路径
-        std::cout<<"delete node and move file "<<(moveResult ? "true": "false")  <<std::endl;
+        std::string str="delete node and move file "+ std::string(moveResult ? "true": "false") ;
+        logger->log(str);
     }
     //delete doc(updateXml) must be ahead of the QTreeWidget'Node delete
     //because updateXml function is depend on the Node struct
@@ -338,23 +343,22 @@ void MainWindow::onRecoverNoteItemClick()
     /*
     QString fileName = util::treeItemToFileName(ui->treeWidget->currentItem()); //文件名称，如xxx.html
     auto recyclePath=QString("%1/storage/回收站/%2").arg(currentPath,fileName);
-    bool moveResult= QFile::rename(recyclePath,""); //A路径移动到B路径
-    std::cout<<"recycle Recover:  "<<( moveResult ? "true": "false")  <<std::endl;*/
+    bool moveResult= QFile::rename(recyclePath,""); //A路径移动到B路径*/
 }
 
 void MainWindow::onCollectNoteItemClick()
 {
-    std::cout<<"save menu"<<std::endl;
+    logger->log(QString("save menu"));
 }
 
 void MainWindow::onMoveNoteItemClick()
 {
-    std::cout<<"move menu"<<std::endl;
+    logger->log(QString("move menu"));
 }
 
 void MainWindow::onLockItemClick()
 {
-    std::cout<<"lock menu"<<std::endl;
+    //std::cout<<"lock menu"<<std::endl;
 }
 
 #pragma endregion}
@@ -464,14 +468,14 @@ void MainWindow::right_item_pressed(QTreeWidgetItem *item, int column)
     {
         return;
     }
-    std::cout<<"right clicked"<<std::endl;
+    logger->log(QString("right clicked"));
     rightMenu->exec(QCursor::pos());   //菜单弹出位置为鼠标点击位置
 }
 
 //切换左侧节点时，保存上一个节点的内容，加载当前节点的内容
 void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
-    std::cout<<"currentTreeItemChanged tirggerd"<<std::endl;
+    logger->log(QString("currentTreeItemChanged tirggerd"));
     ExtraQTreeWidgetItem* extraPreviousNode= dynamic_cast<ExtraQTreeWidgetItem*>(previous);
 
     //save previous node content to local file
@@ -618,7 +622,7 @@ void MainWindow::setItemIcon(ExtraQTreeWidgetItem* child)
 
 void MainWindow::onTitleLineEditEditingFinished()
 {
-    qDebug("onTitleLineEditEditingFinished");
+    logger->log(QString("onTitleLineEditEditingFinished"));
     if (ui->titleLineEdit->text().length() == 0)
     {
         return;
@@ -666,8 +670,8 @@ void MainWindow::onTitleLineEditEditingFinished()
             QString newDir=QString("%1/%2").arg(parentFullPath,ui->titleLineEdit->text());
             QString oldDir=QString("%1/%2").arg(parentFullPath,oldName);
             QDir _dir(oldDir);
-            qDebug()<<oldDir;
-            qDebug()<<newDir;
+            logger->log(oldDir.toStdString());
+            logger->log(newDir.toStdString());
             if (_dir.exists())
             {
                 _dir.rename(oldDir, newDir);

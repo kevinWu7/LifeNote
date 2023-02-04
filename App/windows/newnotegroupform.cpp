@@ -1,6 +1,6 @@
 #include "newnotegroupform.h"
 #include "ui_newnotegroupform.h"
-#include<QPainterPath>
+#include <QPainterPath>
 #include "util.h"
 
 #define  ROUND_RADIUS 5
@@ -14,12 +14,10 @@ NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
     //this->setAttribute(Qt::WA_TranslucentBackground);
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setWindowModality(Qt::ApplicationModal);
-    this->setStyleSheet(QString("QLabel{color:rgb(110,111,111);} "
+    this->setStyleSheet(QString("QLabel{color:rgb(110,111,111);font-size:11px} "
                                 "QWidget#NewNoteGroupForm {background-color:rgb(255,255,255)}"
                                 "QLineEdit {background-color:rgb(244,244,246);border:none}"
-                                "QLabel{font-size:11px}"
-                                "QToolButton "
-                                "{"
+                                "QToolButton{"
                                 "border: 1px;"
                                 "width: %1 ; min-width: %1; max-width: %1;"
                                 "height: %1 ; min-height: %1; max-height: %1;"
@@ -28,7 +26,17 @@ NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
                                 "padding: 0;"
                                 "margin: 0;"
                                 "}"
-                                ).arg("16px").arg("8px"));
+                                "QPushButton#okBtn{"
+                                "background-color:rgb(235,181,67);"
+                                "width: %3 ; min-width: %3; max-width: %3;"
+                                "height: %4 ; min-height: %4; max-height: %4;"
+                                "border-style: solid; "
+                                "border-color:rgb(235,181,67); "
+                                "border-width: 1px; "
+                                "border-radius: 5px; "
+                                "color:rgb(255,255,255)"
+                                "}"
+                                ).arg("16px").arg("8px").arg("85px").arg("18px"));
     ui->nameLineEdit->setText(NewNoteGroupTip);
     InitColorPushBtn();
     InitRoundRadius();

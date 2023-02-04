@@ -5,7 +5,6 @@
 #include <QFile>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
-#include <QDebug>
 #include <QDir>
 #include <vector>
 #include <QTreeWidgetItem>

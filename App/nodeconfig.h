@@ -24,7 +24,7 @@ public:
     //newNode is the Node in the Add  OperationType
     void updateXml(BaseInfo::OperationType type,QTreeWidgetItem *currenttNode,QTreeWidgetItem *newNode=NULL);//节点发生改变时，重新生成配置文件
     void updateXmlRenameNode(const QString& oldName,QTreeWidgetItem *currentNode);
-    void updateXmlAddTopLevelNode(ExtraQTreeWidgetItem *newNode,QTreeWidgetItem *recycleNode);
+    void updateXmlAddTopLevelNode(ExtraQTreeWidgetItem *newNode,QTreeWidgetItem *collectNode);
     QDomNode selectSingleNode(const QString& path,QDomDocument* doc) const;
 
 };

@@ -415,7 +415,7 @@ void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
     ui->treeWidget->insertTopLevelItem(count-2,newTopNode);
 
     //添加xml节点
-    config->updateXmlAddTopLevelNode(newTopNode,recycleNode);
+    config->updateXmlAddTopLevelNode(newTopNode,collectNode);
 
     setAllItemIcon();
     //添加本地文件夹
@@ -656,7 +656,8 @@ void MainWindow::setItemIcon(ExtraQTreeWidgetItem* child)
         }
         else
         {
-            QIcon icon= util::ChangeSVGColor(":/res/icons/noteparent.svg", QString::fromStdString(color));
+           // QIcon icon= util::CreateColorSvgIcon(":/res/icons/noteparent.svg",QString::fromStdString(color),"0.8");
+            auto icon=QIcon(":/res/icons/parentnote.png");
             child->setIcon(0,icon);
         }
         for (int j = 0; j < childCount; ++j)
@@ -668,7 +669,7 @@ void MainWindow::setItemIcon(ExtraQTreeWidgetItem* child)
             }
             else
             {
-                QIcon icon= util::ChangeSVGColor(":/res/icons/notechild.svg", QString::fromStdString(color));
+                QIcon icon= util::CreateColorSvgIcon(":/res/icons/notechild.svg", QString::fromStdString(color));
                 grandson->setIcon(0,QIcon(icon));
             }
         }

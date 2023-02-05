@@ -119,12 +119,11 @@ void NewNoteGroupForm::okBtn_clicked()
     emit sendParentWindowData(ui->nameLineEdit->text(),color_index);
     ui->nameLineEdit->setText(NewNoteGroupTip);
     this->setVisible(false);
-    color_index=0;
+    //color_index=0;
 }
 
 void NewNoteGroupForm::cancleBtn_clicked()
 {
-    color_index=0;
     ui->nameLineEdit->setText(NewNoteGroupTip);
     this->setVisible(false);
 }

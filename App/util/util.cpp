@@ -103,7 +103,7 @@ bool util::isStartWidthDigit(const QString& nodeName)
 }
 
 
-QIcon util::ChangeSVGColor(const QString &path,const QString &color)
+QIcon util::CreateColorSvgIcon(const QString &path,const QString &color,const QString &opacity)
 {
     // open svg resource load contents to qbytearray
     QFile file(path);
@@ -117,7 +117,8 @@ QIcon util::ChangeSVGColor(const QString &path,const QString &color)
     QDomElement element=doc.documentElement();
     util::SetDomAttrRecur(element, "path", "fill", color);
     //set opacity
-    util::SetDomAttrRecur(element, "path", "fill-opacity", "1");
+    util::SetDomAttrRecur(element, "path", "fill-opacity", opacity);
+
     // create svg renderer with edited contents
     QSvgRenderer svgRenderer(doc.toByteArray());
     // create pixmap target (could be a QImage)

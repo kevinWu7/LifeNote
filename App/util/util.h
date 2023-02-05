@@ -17,7 +17,7 @@ public:
     static QString NoRepeatNodeName( QList<QTreeWidgetItem*> &listNode,QString nodeName);
     static bool isStartWidthDigit(const QString& nodeName);
     static void SetDomAttrRecur(QDomElement &elem, QString strtagname, QString strattr, QString strattrval);
-    static QIcon ChangeSVGColor(const QString &path,const QString &color);
+    static QIcon CreateColorSvgIcon(const QString &path,const QString &color,const QString& opacity="1");
     static std::map<int,std::string> colorBtnMap;
 
 };

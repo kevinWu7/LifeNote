@@ -81,7 +81,7 @@ void nodeconfig::updateXml(BaseInfo::OperationType type,QTreeWidgetItem *current
     file.close();
 }
 
-void nodeconfig::updateXmlAddTopLevelNode(ExtraQTreeWidgetItem *newNode,QTreeWidgetItem *recycleNode)
+void nodeconfig::updateXmlAddTopLevelNode(ExtraQTreeWidgetItem *newNode,QTreeWidgetItem *collectNode)
 {
     QFile file(CONFIG_PATH);
     if(!file.open(QIODevice::ReadOnly))
@@ -97,7 +97,7 @@ void nodeconfig::updateXmlAddTopLevelNode(ExtraQTreeWidgetItem *newNode,QTreeWid
         return;
     }
     file.close();
-    auto path=util::treeItemToNodePath(recycleNode);
+    auto path=util::treeItemToNodePath(collectNode);
     QDomNode parentDomElement=selectSingleNode(path,&doc);
     bool startWithDigit=util::isStartWidthDigit(newNode->text(0));
     QDomElement newDomElement=doc.createElement(startWithDigit?(START_FLAG+newNode->text(0)):newNode->text(0));

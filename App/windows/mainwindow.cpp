@@ -288,7 +288,28 @@ void MainWindow::onDeleteNoteItemClick()
 {
     ExtraQTreeWidgetItem* currentNode=dynamic_cast<ExtraQTreeWidgetItem*>(ui->treeWidget->currentItem());
     auto currentPath= QCoreApplication::applicationDirPath();
-    auto fullPath= util::treeItemToFullFilePath(currentNode); //如d:/sotrage/xxx.html
+    auto fullPath= util::treeItemToFullFilePath(currentNode,currentNode->nodeType); //如d:/sotrage/xxx.html
+    //if node is toplevelNode
+    if(currentNode->parent()==NULL)
+    {
+        if(currentNode->childCount()==0)
+        {
+            int topIndex= ui->treeWidget->indexOfTopLevelItem(currentNode);
+            logger->log( QString::number(topIndex));
+            ui->treeWidget->takeTopLevelItem(topIndex);
+            config->updateXml(BaseInfo::DeleteNode,currentNode);
+            //delete local floder
+            QDir dir(fullPath);
+            dir.removeRecursively();
+            return;
+        }
+        else
+        {
+             QMessageBox::warning(this, tr("警告"),tr("\n顶级节点下内容不为空,请先删除子节点后重试!"),QMessageBox::Ok);
+             return;
+        }
+    }
+
     bool isRecycle=currentNode->parent()->text(0)==NODENAME_RECYLE; //is recycle Node
     //if is recycleNode's child node ,delete directly
     if(isRecycle)
@@ -299,21 +320,33 @@ void MainWindow::onDeleteNoteItemClick()
     else
     {
         //若是非回收站的数据
-        if(currentNode->nodeType==BaseInfo::Parent&&currentNode->childCount()>0)
+        if(currentNode->nodeType==BaseInfo::Parent)//父节点
         {
-            QMessageBox::warning(this, tr("警告"),tr("\n无法批量删除,请选中单个笔记进行删除!"),QMessageBox::Ok);
-            return;
+            if(currentNode->childCount()>0)
+            {
+                QMessageBox::warning(this, tr("警告"),tr("\n无法批量删除,请选中单个笔记进行删除!"),QMessageBox::Ok);
+                return;
+            }
+            else
+            {
+                QDir dir(fullPath);
+                dir.removeRecursively();
+            }
         }
-        //移动本地存储文件到回收站
-        QString fileName = util::treeItemToFileName(currentNode); //文件名称，如xxx.html
-        auto recyclePath=QString("%1/storage/%2/%3").arg(currentPath,NODENAME_RECYLE,fileName);
-        bool moveResult= QFile::rename(fullPath,recyclePath); //A路径移动到B路径
-        std::string str="delete node and move file "+ std::string(moveResult ? "true": "false") ;
-        logger->log(str);
+        else
+        {
+            //移动本地存储文件到回收站
+            QString fileName = util::treeItemToFileName(currentNode); //文件名称，如xxx.html
+            auto recyclePath=QString("%1/storage/%2/%3").arg(currentPath,NODENAME_RECYLE,fileName);
+            bool moveResult= QFile::rename(fullPath,recyclePath); //A路径移动到B路径
+            std::string str="delete node and move file "+ std::string(moveResult ? "true": "false") ;
+            logger->log(str);
+        }
     }
     //delete doc(updateXml) must be ahead of the QTreeWidget'Node delete
     //because updateXml function is depend on the Node struct
-    if(isRecycle)
+    //delete directly if node is parentNode
+    if(isRecycle||currentNode->nodeType==BaseInfo::Parent)
     {
         config->updateXml(BaseInfo::DeleteNode,currentNode);
     }
@@ -321,13 +354,12 @@ void MainWindow::onDeleteNoteItemClick()
     {
         config->updateXml(BaseInfo::MoveNode,currentNode,recycleNode);
     }
-    ExtraQTreeWidgetItem* extraCurrentNode= dynamic_cast<ExtraQTreeWidgetItem*>(currentNode);
-    extraCurrentNode->deleteType=1;
-    currentNode->parent()->removeChild(extraCurrentNode);//this line will trigger currentTreeItemChanged immediately
-    extraCurrentNode->deleteType=0;
-    if(!isRecycle) //if parentNode is recycle,not need to add
+    currentNode->deleteType=1;
+    currentNode->parent()->removeChild(currentNode);//this line will trigger currentTreeItemChanged immediately
+    currentNode->deleteType=0;
+    if(!isRecycle && currentNode->nodeType==BaseInfo::Child) //if parentNode is recycle,not need to add
     {
-        recycleNode->addChild(extraCurrentNode);
+        recycleNode->addChild(currentNode);
     }
     setAllItemIcon();
 }
@@ -380,7 +412,7 @@ void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
     QString realName=util::NoRepeatNodeName(qlist, nodeName);  //防止新建顶级节点重名，否则有bug
     newTopNode->setText(0,realName);
     newTopNode->colorIndex= QString::number(color_index);
-    ui->treeWidget->insertTopLevelItem(count-1,newTopNode);
+    ui->treeWidget->insertTopLevelItem(count-2,newTopNode);
 
     //添加xml节点
     config->updateXmlAddTopLevelNode(newTopNode,recycleNode);
@@ -388,7 +420,7 @@ void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
     setAllItemIcon();
     //添加本地文件夹
     auto currentPath= QCoreApplication::applicationDirPath();
-    QString dirpath =QString("%1/storage/%2").arg(currentPath,nodeName);
+    QString dirpath =QString("%1/storage/%2").arg(currentPath,realName);
     QDir *dir = new QDir();
     if (!dir->exists(dirpath))
     {
@@ -444,12 +476,11 @@ void MainWindow::onMenuToShow()
     }
     if(item->parent()==NULL)
     {
-        deleteNoteAction->setVisible(false);
         recoverNoteAction->setVisible(false);
     }
     else
     {
-        deleteNoteAction->setVisible(true);
+        //deleteNoteAction->setVisible(true);
         bool isRecycle=item->parent()->text(0)==NODENAME_RECYLE; //is recycle Node
         if(isRecycle)
         {

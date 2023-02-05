@@ -50,13 +50,14 @@ private:
     QAction * lockAction;
     nodeconfig *config ;
     QTreeWidgetItem *recycleNode; //回收站顶级节点，构造函数给其赋值
+    QTreeWidgetItem *collectNode; //收藏顶级节点，构造函数给其赋值
 
     QMenu *rightMenu;
     void setAllItemIcon();
     void setItemIcon(ExtraQTreeWidgetItem* child_item);
     void initRightMenu();
     void InsertImageDialog();
-    void initRecycleNode();
+    void initTopLevelNode();
 
     NewNoteGroupForm * newGroupForm;
 

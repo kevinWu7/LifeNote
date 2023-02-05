@@ -61,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     setAllItemIcon();
 
-    initRecycleNode();
+    initTopLevelNode();
     //设置左侧按钮icon
     ui->addnewBtn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     ui->addnewBtn->setIcon(QIcon(":/res/icons/addnew.png"));
@@ -460,8 +460,17 @@ void MainWindow::initRightMenu()
 
 void MainWindow::onMenuToShow()
 {
+    newNoteAction->setVisible(true);
+    newNoteGroupAction->setVisible(true);
+    recoverNoteAction->setVisible(true);
+    moveNoteAction->setVisible(true);
+    lockAction->setVisible(true);
+    deleteNoteAction->setVisible(true);
+    collectNoteAction->setVisible(true);
+
     auto item=ui->treeWidget->currentItem();
     auto extraItem=dynamic_cast<ExtraQTreeWidgetItem*>(item);
+
     if(extraItem->nodeType==BaseInfo::Child)
     {
         newNoteAction->setVisible(false);
@@ -474,22 +483,38 @@ void MainWindow::onMenuToShow()
         newNoteGroupAction->setVisible(true);
         collectNoteAction->setVisible(false);
     }
+
     if(item->parent()==NULL)
     {
         recoverNoteAction->setVisible(false);
     }
     else
     {
-        //deleteNoteAction->setVisible(true);
         bool isRecycle=item->parent()->text(0)==NODENAME_RECYLE; //is recycle Node
         if(isRecycle)
         {
             recoverNoteAction->setVisible(true);
+            collectNoteAction->setVisible(false);
+            moveNoteAction->setVisible(false);
+            lockAction->setVisible(false);
         }
         else
         {
             recoverNoteAction->setVisible(false);
         }
+    }
+    if(extraItem==recycleNode)
+    {
+        newNoteAction->setVisible(false);
+        newNoteGroupAction->setVisible(false);
+        recoverNoteAction->setVisible(false);
+        moveNoteAction->setVisible(false);
+        lockAction->setVisible(false);
+        deleteNoteAction->setVisible(false);
+    }
+    if(extraItem==collectNode)
+    {
+        deleteNoteAction->setVisible(false);
     }
 }
 
@@ -584,8 +609,8 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
     ui->textEdit->setHtml(allStr);
 }
 
-//给回收站node赋值
-void MainWindow::initRecycleNode()
+//给回收站&收藏node赋值
+void MainWindow::initTopLevelNode()
 {
     int size = ui->treeWidget->topLevelItemCount();
     QTreeWidgetItem *child;
@@ -595,7 +620,10 @@ void MainWindow::initRecycleNode()
         if(child->text(0)==NODENAME_RECYLE)
         {
             recycleNode=child;
-            break;
+        }
+        if(child->text(0)==NODENAME_COLLECT)
+        {
+            collectNode=child;
         }
     }
 }

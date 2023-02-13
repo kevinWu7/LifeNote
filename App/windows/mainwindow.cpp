@@ -27,7 +27,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->editWidget->setStyleSheet("QWidget#editWidget{background-color:#FFFFFF}");
     //set titleLineEdit stylesheet
     ui->titleLineEdit->setStyleSheet("border: 0px;");
-    ui->textEdit->setStyleSheet("border:0px;");
+    ui->textEdit->setStyleSheet("border:0px; background-color:#FFFFFF");
+
     ui->editWidget->layout()->setSpacing(0);
     //设置mainPage内部控件间距为5
     ui->mainPage->layout()->setSpacing(5);
@@ -571,7 +572,7 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
         ui->textEdit->setHtml("");
         ui->titleLineEdit->setText(current->text(0));
         //not allow to edit the Nodegroup
-        ui->textEdit->setReadOnly(true);
+        ui->textEdit->setEnabled(false);
         for(auto child_toolBtn :ui->titleBar->children())
         {
             QToolButton* btn=dynamic_cast<QToolButton*>(child_toolBtn);
@@ -584,7 +585,7 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
     }
     else
     {
-        ui->textEdit->setReadOnly(false);
+        ui->textEdit->setEnabled(true);
         for(auto child_toolBtn :ui->titleBar->children())
         {
             QToolButton* btn=dynamic_cast<QToolButton*>(child_toolBtn);

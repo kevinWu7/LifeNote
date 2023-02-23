@@ -71,12 +71,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     //设置标题栏按钮
     ui->boldBtn->setIcon(QIcon(":/res/icons/bold.png"));
+    ui->boldBtn->setToolTip("加粗");
     ui->italicBtn->setIcon(QIcon(":/res/icons/italic.png"));
+    ui->italicBtn->setToolTip("斜体");
     ui->colorBtn->setIcon(QIcon(":/res/icons/color.png"));
+    ui->colorBtn->setToolTip("颜色");
     ui->underlineBtn->setIcon(QIcon(":/res/icons/underline.png"));
+    ui->underlineBtn->setToolTip("下划线");
     ui->pictureBtn->setIcon(QIcon(":/res/icons/img.png"));
+    ui->pictureBtn->setToolTip("添加图片");
     ui->saveBtn->setIcon(QIcon(":/res/icons/save.png"));
+    ui->saveBtn->setToolTip("保存");
     ui->undoBtn->setIcon(QIcon(":/res/icons/undo.png"));
+    ui->undoBtn->setToolTip("撤回");
     initRightMenu();
 
     //设置信号槽

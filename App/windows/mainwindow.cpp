@@ -84,7 +84,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->saveBtn->setToolTip("保存");
     ui->undoBtn->setIcon(QIcon(":/res/icons/undo.png"));
     ui->undoBtn->setToolTip("撤回");
+    initfontCombobox();
     initRightMenu();
+
 
     //设置信号槽
     connect(ui->boldBtn,SIGNAL(clicked()),this,SLOT(boldBtn_clicked()));
@@ -96,6 +98,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->saveBtn,&QToolButton::clicked,this,&MainWindow::onSaveBtn_clicked);
     connect(ui->addnewBtn,&QToolButton::clicked,this,&MainWindow::onAddnewBtn_clicked);
     connect(ui->treeWidget,&QTreeWidget::currentItemChanged,this,&MainWindow::currentTreeItemChanged);
+    connect(ui->fontComboBox, &QComboBox::currentIndexChanged,this, &MainWindow::comboBoxCurrentIndexChanged);
+    connect(ui->textEdit,&QTextEdit::cursorPositionChanged,this,&MainWindow::textEditCursorPositionChanged);
     connect(ui->treeWidget,&QTreeWidget::itemPressed,this,&MainWindow::right_item_pressed);
     connect(rightMenu,&QMenu::aboutToShow,this,&MainWindow::onMenuToShow);
     connect(newNoteAction, SIGNAL(triggered(bool)), this , SLOT(onNewNoteItemClick()));
@@ -209,6 +213,39 @@ void MainWindow::onAddnewBtn_clicked()
     newGroupForm->move(this->frameGeometry().topLeft() +this->rect().center() -newGroupForm->rect().center());//使子窗体居中
     newGroupForm->show();
 
+}
+
+void MainWindow::initfontCombobox()
+{
+    ui->fontComboBox->clear();
+    for(const QString &afont : util::fontVector)
+    {
+        ui->fontComboBox->addItem(afont);
+    }
+}
+
+//change comboBox's selectIndex when move cursor
+void MainWindow::textEditCursorPositionChanged()
+{
+    QTextCursor cursor=ui->textEdit->textCursor();
+    QFont font=cursor.charFormat().font();
+    QString font_size =QString::number(font.pointSize());
+    auto index=std::find(util::fontVector.begin(),util::fontVector.end(),font_size);
+    if(index!= util::fontVector.end())
+    {
+         int realIndex=std::distance(util::fontVector.begin(),index);
+         ui->fontComboBox->setCurrentIndex(realIndex);
+    }
+}
+
+//update current cursor font-size when change comboBox's selectIndex
+void MainWindow::comboBoxCurrentIndexChanged()
+{
+    auto current_font= ui->fontComboBox->currentText();
+    logger->log("current font:" +current_font);
+    QFont font = ui->textEdit->currentFont();
+    font.setPointSize(current_font.toInt());
+    ui->textEdit->setCurrentFont(font);
 }
 
 #pragma endregion }

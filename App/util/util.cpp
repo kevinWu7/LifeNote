@@ -16,6 +16,10 @@ std::map<int, std::string> util::colorBtnMap = {
     {9, "rgb(181,169,70)"},  {10, "rgb(57,179,173)"}, {11, "rgb(107,105,141)"},
 };
 
+std::vector<QString> util::fontVector={
+    "7","8","9","10","13","15","17","20","24","28","32","36","40","44"
+};
+
 //获取节点的路径xml记录的path,如 笔记本/每日工作/无标题.html ，返回 笔记本/每日工作/无标题
 QString util::treeItemToNodePath(QTreeWidgetItem *treeItem)
 {

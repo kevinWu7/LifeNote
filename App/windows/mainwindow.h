@@ -58,6 +58,7 @@ private:
     void initRightMenu();
     void InsertImageDialog();
     void initTopLevelNode();
+    void initfontCombobox();
 
     NewNoteGroupForm * newGroupForm;
 
@@ -72,7 +73,8 @@ public slots:
     void onAddnewBtn_clicked();
     void right_item_pressed(QTreeWidgetItem *item, int column);//右键菜单点击
     void currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
-
+    void comboBoxCurrentIndexChanged();
+    void textEditCursorPositionChanged();
     void onNewNoteItemClick();
     void onNewNoteGroupItemClick();
     void onCollectNoteItemClick();

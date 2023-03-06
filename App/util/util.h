@@ -19,6 +19,7 @@ public:
     static void SetDomAttrRecur(QDomElement &elem, QString strtagname, QString strattr, QString strattrval);
     static QIcon CreateColorSvgIcon(const QString &path,const QString &color,const QString& opacity="1");
     static std::map<int,std::string> colorBtnMap;
+    static std::vector<QString> fontVector;
 
 };
 

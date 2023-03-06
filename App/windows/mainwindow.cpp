@@ -228,6 +228,13 @@ void MainWindow::initfontCombobox()
 void MainWindow::textEditCursorPositionChanged()
 {
     QTextCursor cursor=ui->textEdit->textCursor();
+    if(cursor.hasSelection())
+    {
+        //prevent font be same when user All selection text
+        //because selection will change the cursor,then change the combobox's selectedIndex.
+        //then trigger the comboBoxCurrentIndexChanged function,and all the text'font will be same
+        return;
+    }
     QFont font=cursor.charFormat().font();
     QString font_size =QString::number(font.pointSize());
     auto index=std::find(util::fontVector.begin(),util::fontVector.end(),font_size);
@@ -236,6 +243,7 @@ void MainWindow::textEditCursorPositionChanged()
          int realIndex=std::distance(util::fontVector.begin(),index);
          ui->fontComboBox->setCurrentIndex(realIndex);
     }
+    logger->log(std::string("textEditCursorPositionChanged"));
 }
 
 //update current cursor font-size when change comboBox's selectIndex

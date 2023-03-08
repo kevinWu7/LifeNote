@@ -59,3 +59,6 @@ transfer.path = $$OUT_PWD/
 # 配置COPIES
 COPIES += transfer
 
+DISTFILES += \
+    todoList.txt
+

@@ -230,8 +230,8 @@ void MainWindow::textEditCursorPositionChanged()
     QTextCursor cursor=ui->textEdit->textCursor();
     if(cursor.hasSelection())
     {
-        //prevent font be same when user All selection text
-        //because selection will change the cursor,then change the combobox's selectedIndex.
+        //prevent font be same when user  select All text
+        //because select texts will change the cursor,then change the combobox's selectedIndex.
         //then trigger the comboBoxCurrentIndexChanged function,and all the text'font will be same
         return;
     }

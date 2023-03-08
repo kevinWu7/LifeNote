@@ -6,3 +6,7 @@ todo functionList：
 3、MoveItem
 4、LockItem - set password 
 
+xml struct
+1、标题名称包含空格，会导致加载xml失败
+2、标题名称若以数字开头，则通过startFLag来做判断，其实不合理
+上面两个点，改动起来需要话费点时间，对结构有较大改动。找时间改掉

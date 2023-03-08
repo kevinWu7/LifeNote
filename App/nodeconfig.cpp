@@ -139,7 +139,10 @@ void nodeconfig::updateXmlRenameNode(const QString& oldPath,QTreeWidgetItem *cur
     //Check whether the node name starts with a digit， xml nodename is invaild start with digit
     bool startWithDigit=util::isStartWidthDigit(currentNode->text(0));
     currentDomElement.toElement().setTagName(startWithDigit?(START_FLAG+currentNode->text(0)):currentNode->text(0));
-
+    if(startWithDigit)
+    {
+        currentDomElement.toElement().setAttribute(ATTRIBUTE_STARTFLAG,"true");
+    }
     if(!file.open(QFile::WriteOnly|QFile::Truncate))//重写文件，如果不用truncate就是在后面追加内容，就无效了
     {
         return;

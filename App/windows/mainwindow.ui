@@ -188,6 +188,9 @@
              <bool>true</bool>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="spacing">
+              <number>5</number>
+             </property>
              <property name="leftMargin">
               <number>1</number>
              </property>
@@ -358,6 +361,20 @@
                  <width>75</width>
                  <height>16777215</height>
                 </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="fontAddBtn">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="fontReduceBtn">
+               <property name="text">
+                <string/>
                </property>
               </widget>
              </item>

@@ -71,6 +71,8 @@ public slots:
     void onUndoBtn_clicked();
     void onSaveBtn_clicked();
     void onAddnewBtn_clicked();
+    void onFontAddBtn_clicked();
+    void onFontReduceBtn_clicked();
     void right_item_pressed(QTreeWidgetItem *item, int column);//右键菜单点击
     void currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void comboBoxCurrentIndexChanged();

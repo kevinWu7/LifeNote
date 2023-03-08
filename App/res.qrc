@@ -5,8 +5,6 @@
         <file>icons/childnote.png</file>
         <file>icons/collect.png</file>
         <file>icons/color.png</file>
-        <file>icons/fontlarge.png</file>
-        <file>icons/fontsmall.png</file>
         <file>icons/img.png</file>
         <file>icons/italic.png</file>
         <file>icons/noteparent.svg</file>
@@ -18,5 +16,7 @@
         <file>icons/underline.png</file>
         <file>icons/undo.png</file>
         <file>icons/notechild.svg</file>
+        <file>icons/fontAdd.png</file>
+        <file>icons/fontReduce.png</file>
     </qresource>
 </RCC>

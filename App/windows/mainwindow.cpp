@@ -84,6 +84,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->saveBtn->setToolTip("保存");
     ui->undoBtn->setIcon(QIcon(":/res/icons/undo.png"));
     ui->undoBtn->setToolTip("撤回");
+    ui->fontAddBtn->setIcon(QIcon(":/res/icons/fontAdd.png"));
+    ui->fontAddBtn->setToolTip("增大字号");
+    ui->fontReduceBtn->setIcon(QIcon(":/res/icons/fontReduce.png"));
+    ui->fontReduceBtn->setToolTip("减小字号");
     initfontCombobox();
     initRightMenu();
 
@@ -97,8 +101,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->undoBtn,&QToolButton::clicked,this,&MainWindow::onUndoBtn_clicked);
     connect(ui->saveBtn,&QToolButton::clicked,this,&MainWindow::onSaveBtn_clicked);
     connect(ui->addnewBtn,&QToolButton::clicked,this,&MainWindow::onAddnewBtn_clicked);
-    connect(ui->treeWidget,&QTreeWidget::currentItemChanged,this,&MainWindow::currentTreeItemChanged);
+    connect(ui->fontAddBtn,&QToolButton::clicked,this,&MainWindow::onFontAddBtn_clicked);
+    connect(ui->fontReduceBtn,&QToolButton::clicked,this,&MainWindow::onFontReduceBtn_clicked);
     connect(ui->fontComboBox, &QComboBox::currentIndexChanged,this, &MainWindow::comboBoxCurrentIndexChanged);
+    connect(ui->treeWidget,&QTreeWidget::currentItemChanged,this,&MainWindow::currentTreeItemChanged);
     connect(ui->textEdit,&QTextEdit::cursorPositionChanged,this,&MainWindow::textEditCursorPositionChanged);
     connect(ui->treeWidget,&QTreeWidget::itemPressed,this,&MainWindow::right_item_pressed);
     connect(rightMenu,&QMenu::aboutToShow,this,&MainWindow::onMenuToShow);
@@ -213,6 +219,18 @@ void MainWindow::onAddnewBtn_clicked()
     newGroupForm->move(this->frameGeometry().topLeft() +this->rect().center() -newGroupForm->rect().center());//使子窗体居中
     newGroupForm->show();
 
+}
+
+void MainWindow::onFontAddBtn_clicked()
+{
+    int realIndex=ui->fontComboBox->currentIndex();
+    ui->fontComboBox->setCurrentIndex(realIndex==util::fontVector.size()-1?realIndex:realIndex+1);
+}
+
+void MainWindow::onFontReduceBtn_clicked()
+{
+    int realIndex=ui->fontComboBox->currentIndex();
+    ui->fontComboBox->setCurrentIndex(realIndex==0?0:realIndex-1);
 }
 
 void MainWindow::initfontCombobox()

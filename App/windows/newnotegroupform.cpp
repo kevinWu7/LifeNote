@@ -2,6 +2,7 @@
 #include "ui_newnotegroupform.h"
 #include <QPainterPath>
 #include "util.h"
+#include "logger.h"
 
 #define  ROUND_RADIUS 5
 #define  NewNoteGroupTip "未命名笔记本"
@@ -38,7 +39,7 @@ NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
                                 "}"
                                 ).arg("16px").arg("8px").arg("85px").arg("18px"));
     ui->nameLineEdit->setText(NewNoteGroupTip);
-    InitColorPushBtn();
+    InitColorPushBtn();   
     InitRoundRadius();
     InitEvent();
 }

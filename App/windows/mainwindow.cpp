@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    logger->log(QDir::currentPath());
+    logger->log(QString("start the application....."));
     ui->mainPage->setStyleSheet("QWidget#mainPage{background-color:#FFFFFF}");
     this->setStyleSheet("QTreeWidget::item{height:25px;}");
 
@@ -210,15 +212,20 @@ void MainWindow::InsertImageDialog()
 
 void MainWindow::onAddnewBtn_clicked()
 {
-    if(this->newGroupForm==NULL)
+    try
     {
-        newGroupForm=new NewNoteGroupForm;
-        connect(newGroupForm,&NewNoteGroupForm::sendParentWindowData,this, &MainWindow::onReceiveNewGroupFormData);
+        if(!this->newGroupForm)
+        {
+            newGroupForm=new NewNoteGroupForm;
+            connect(newGroupForm,&NewNoteGroupForm::sendParentWindowData,this, &MainWindow::onReceiveNewGroupFormData);
+        }
+        newGroupForm->move(this->frameGeometry().topLeft() +this->rect().center() -newGroupForm->rect().center());//使子窗体居中
+        newGroupForm->show();
     }
-
-    newGroupForm->move(this->frameGeometry().topLeft() +this->rect().center() -newGroupForm->rect().center());//使子窗体居中
-    newGroupForm->show();
-
+    catch(...)
+    {
+        logger->log(QString("error"));
+    }
 }
 
 void MainWindow::onFontAddBtn_clicked()
@@ -282,7 +289,7 @@ void MainWindow::comboBoxCurrentIndexChanged()
 //right click Menu, new NoteGroup
 void MainWindow::onNewNoteGroupItemClick()
 {
-    if(ui->treeWidget->currentItem()==NULL)
+    if(ui->treeWidget->currentItem()==nullptr)
     {
         return;
     }
@@ -305,7 +312,6 @@ void MainWindow::onNewNoteGroupItemClick()
     auto currentNode=ui->treeWidget->currentItem();
     newItem->colorIndex= dynamic_cast<ExtraQTreeWidgetItem*>(currentNode)->colorIndex;
     currentNode->addChild(newItem);
-
     //set selectedItem to the newItem
     ui->treeWidget->setCurrentItem(newItem);
     //set focus to the right-titleLineEdit, Convenient for users to modify the title
@@ -321,7 +327,7 @@ void MainWindow::onNewNoteGroupItemClick()
 //right click Menu ,new note
 void MainWindow::onNewNoteItemClick()
 {
-    if(ui->treeWidget->currentItem()==NULL)
+    if(ui->treeWidget->currentItem()==nullptr)
     {
         return;
     }
@@ -361,7 +367,7 @@ void MainWindow::onDeleteNoteItemClick()
     auto currentPath= QCoreApplication::applicationDirPath();
     auto fullPath= util::treeItemToFullFilePath(currentNode,currentNode->nodeType); //如d:/sotrage/xxx.html
     //if node is toplevelNode
-    if(currentNode->parent()==NULL)
+    if(currentNode->parent()==nullptr)
     {
         if(currentNode->childCount()==0)
         {
@@ -555,7 +561,7 @@ void MainWindow::onMenuToShow()
         collectNoteAction->setVisible(false);
     }
 
-    if(item->parent()==NULL)
+    if(item->parent()==nullptr)
     {
         recoverNoteAction->setVisible(false);
     }
@@ -609,7 +615,7 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
     //when delete node,the focus will be changed,and this function will be trigger.
     //so when the previous node is deleted, it's deletetype is 1 , don't save the previous node content.
     //otherwise, delete node, the local file will be create again.
-    if(previous!=NULL && extraPreviousNode->deleteType==0 && ((ExtraQTreeWidgetItem*)previous)->nodeType==BaseInfo::Child)
+    if(previous!=nullptr && extraPreviousNode->deleteType==0 && ((ExtraQTreeWidgetItem*)previous)->nodeType==BaseInfo::Child)
     {
         auto previewFullPath=util::treeItemToFullFilePath(previous); //如d:/sotrage/xxx.html
         //解析出路径（不含文件名）和文件名
@@ -632,7 +638,7 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
         }
         myfile.close();
     }
-    if(current==NULL)
+    if(current==nullptr)
     {
         return;
     }
@@ -646,7 +652,7 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
         for(auto child_toolBtn :ui->titleBar->children())
         {
             QToolButton* btn=dynamic_cast<QToolButton*>(child_toolBtn);
-            if(btn!=NULL)
+            if(btn!=nullptr)
             {
                 btn->setEnabled(false);
             }
@@ -659,7 +665,7 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
         for(auto child_toolBtn :ui->titleBar->children())
         {
             QToolButton* btn=dynamic_cast<QToolButton*>(child_toolBtn);
-            if(btn!=NULL)
+            if(btn!=nullptr)
             {
                 btn->setEnabled(true);
             }
@@ -717,11 +723,11 @@ void MainWindow::setItemIcon(ExtraQTreeWidgetItem* child)
     auto color=util::colorBtnMap[child->colorIndex.toInt()];
     if(childCount>0||child->nodeType==BaseInfo::Parent)
     {
-        if(child->parent()==NULL&&child->text(0)==NODENAME_COLLECT) //顶级系统节点-收藏
+        if(child->parent()==nullptr&&child->text(0)==NODENAME_COLLECT) //顶级系统节点-收藏
         {
             child->setIcon(0,QIcon(":/res/icons/collect.png"));
         }
-        else if(child->parent()==NULL&&child->text(0)==NODENAME_RECYLE)//顶级系统节点-废纸篓
+        else if(child->parent()==nullptr&&child->text(0)==NODENAME_RECYLE)//顶级系统节点-废纸篓
         {
             child->setIcon(0,QIcon(":/res/icons/recycle.png"));
         }
@@ -759,7 +765,7 @@ void MainWindow::onTitleLineEditEditingFinished()
         return;
     }
     auto currentItem=ui->treeWidget->currentItem();
-    if(currentItem->parent()==NULL)
+    if(currentItem->parent()==nullptr)
     {
         if(currentItem->text(0)==NODENAME_COLLECT||currentItem->text(0)==NODENAME_RECYLE)
         {
@@ -794,7 +800,7 @@ void MainWindow::onTitleLineEditEditingFinished()
         {
             QString parentFullPath = QString("%1/storage").arg(QCoreApplication::applicationDirPath());
 
-            if(currentItem->parent()!=NULL)
+            if(currentItem->parent()!=nullptr)
             {
                 parentFullPath=util::treeItemToFullFilePath(currentItem->parent(),BaseInfo::Parent);
             }
@@ -841,7 +847,7 @@ void MainWindow::onTitleLineEditEditingFinished()
 
 void MainWindow::onApplicationQuit()
 {
-    if(this->newGroupForm!=NULL)
+    if(this->newGroupForm!=nullptr)
     {
         this->newGroupForm->close();
     }

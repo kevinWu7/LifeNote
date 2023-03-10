@@ -60,7 +60,7 @@ private:
     void initTopLevelNode();
     void initfontCombobox();
 
-    NewNoteGroupForm * newGroupForm;
+    NewNoteGroupForm * newGroupForm=nullptr;
 
 public slots:
     void boldBtn_clicked();

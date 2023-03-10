@@ -54,7 +54,7 @@ CONFIG += file_copies
 # 配置需要复制的文件或目录(支持通配符)
 transfer.files = $$PWD/ConfigTemplate #$$PWD表示工程源代码所在目录
 # 配置需要复制的目标目录, $$OUT_PWD含义为程序输出目录
-transfer.path = $$OUT_PWD/
+transfer.path = $$OUT_PWD/App.app/Contents/MacOS
 
 # 配置COPIES
 COPIES += transfer

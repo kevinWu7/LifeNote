@@ -54,3 +54,7 @@ compile_commands.json
 #mac system file
 *DS_Store
 .qtc_clangd
+
+#shadow build floder
+debug_build
+release_build

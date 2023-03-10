@@ -2,10 +2,11 @@
 #include "extraqtreewidgetitem.h"
 #include "util.h"
 #include "logger.h"
+#include <QCoreApplication>
 
 
 
-#define CONFIG_PATH "../../../ConfigTemplate/node.xml"
+#define CONFIG_PATH "/ConfigTemplate/node.xml"
 
 nodeconfig::nodeconfig()
 {
@@ -17,148 +18,14 @@ struct node_info
     ExtraQTreeWidgetItem *widgetitem;
 };
 
-//currentNode is The node which is being operated
-//newNode is the Node in the Add  OperationType and UPDATE
-void nodeconfig::updateXml(BaseInfo::OperationType type,QTreeWidgetItem *currentNode,QTreeWidgetItem *newNode)
-{
-    QFile file(CONFIG_PATH);
-
-    if(!file.open(QIODevice::ReadOnly))
-    {
-        logger->log(QString("updateXml:open local xml failed"));
-        return;
-    }
-    QDomDocument doc;
-    if(!doc.setContent(&file))//从字节数组中解析XML文档，并将其设置为文档的内容
-    {
-        logger->log(QString("updateXml:set doc content form file failed"));
-        file.close();
-        return;
-    }
-    file.close();
-    if(type==BaseInfo::AddNode||type==BaseInfo::AddNodeGroup)
-    {
-        auto path=util::treeItemToNodePath(currentNode);
-        QDomNode parentDomElement=selectSingleNode(path,&doc);
-        //Check whether the node name starts with a digit， xml nodename is invaild start with digit
-        bool startWithDigit=util::isStartWidthDigit(newNode->text(0));
-        QDomElement newDomElement=doc.createElement(startWithDigit?(START_FLAG+newNode->text(0)):newNode->text(0));
-        if(startWithDigit)
-        {
-            newDomElement.setAttribute(ATTRIBUTE_STARTFLAG,"true");
-        }
-        parentDomElement.appendChild(newDomElement);
-        newDomElement.setAttribute(ATTRIBUTE_NOTETYPE,type==BaseInfo::AddNode?0:1);
-        if(type==BaseInfo::AddNodeGroup&&currentNode!=NULL)
-        {
-            newDomElement.setAttribute(ATTRIBUTE_COLORINDEX,dynamic_cast<ExtraQTreeWidgetItem*>(currentNode)->colorIndex);
-        }
-    }
-    else if(type==BaseInfo::MoveNode)
-    {
-        auto path=util::treeItemToNodePath(currentNode);
-        QDomNode domElement=selectSingleNode(path,&doc);
-        //remove the currentNode
-        domElement.parentNode().removeChild(domElement);
-        //recyledomNode  add the current
-        auto recylePath=util::treeItemToNodePath(newNode);
-        QDomNode recyleDomNode=selectSingleNode(recylePath,&doc);
-        recyleDomNode.appendChild(domElement);
-    }
-    else if(type==BaseInfo::DeleteNode)
-    {
-        auto path=util::treeItemToNodePath(currentNode);
-        QDomNode domElement=selectSingleNode(path,&doc);
-        domElement.parentNode().removeChild(domElement);
-    }
-
-    if(!file.open(QFile::WriteOnly|QFile::Truncate))//重写文件，如果不用truncate就是在后面追加内容，就无效了
-    {
-        return;
-    }
-    QTextStream out_stream(&file);
-    doc.save(out_stream,4);
-    file.close();
-}
-
-void nodeconfig::updateXmlAddTopLevelNode(ExtraQTreeWidgetItem *newNode,QTreeWidgetItem *collectNode)
-{
-    QFile file(CONFIG_PATH);
-    if(!file.open(QIODevice::ReadOnly))
-    {
-        logger->log(QString("updateXmlAddTopLevelNode:open local xml failed"));
-        return;
-    }
-    QDomDocument doc;
-    if(!doc.setContent(&file))//从字节数组中解析XML文档，并将其设置为文档的内容
-    {
-        logger->log(QString("updateXmlAddTopLevelNode:set doc content form file failed"));
-        file.close();
-        return;
-    }
-    file.close();
-    auto path=util::treeItemToNodePath(collectNode);
-    QDomNode parentDomElement=selectSingleNode(path,&doc);
-    bool startWithDigit=util::isStartWidthDigit(newNode->text(0));
-    QDomElement newDomElement=doc.createElement(startWithDigit?(START_FLAG+newNode->text(0)):newNode->text(0));
-
-    if(startWithDigit)
-    {
-        newDomElement.setAttribute(ATTRIBUTE_STARTFLAG,"true");
-    }
-    doc.documentElement().insertBefore(newDomElement,parentDomElement);
-    newDomElement.setAttribute(ATTRIBUTE_NOTETYPE,1);
-    newDomElement.setAttribute(ATTRIBUTE_COLORINDEX,newNode->colorIndex);
-    if(!file.open(QFile::WriteOnly|QFile::Truncate))//重写文件，如果不用truncate就是在后面追加内容，就无效了
-    {
-        return;
-    }
-    QTextStream out_stream(&file);
-    doc.save(out_stream,4);
-    file.close();
-}
-
-void nodeconfig::updateXmlRenameNode(const QString& oldPath,QTreeWidgetItem *currentNode)
-{
-    QFile file(CONFIG_PATH);
-
-    if(!file.open(QIODevice::ReadOnly))
-    {
-        logger->log(QString("updateXmlRenameNode: open local xml failed"));
-        return;
-    }
-    QDomDocument doc;
-    if(!doc.setContent(&file))//从字节数组中解析XML文档，并将其设置为文档的内容
-    {
-        logger->log(QString("updateXmlRenameNode: set doc content form file failed"));
-        file.close();
-        return;
-    }
-    file.close();
-    QDomNode currentDomElement=selectSingleNode(oldPath,&doc);
-    //Check whether the node name starts with a digit， xml nodename is invaild start with digit
-    bool startWithDigit=util::isStartWidthDigit(currentNode->text(0));
-    currentDomElement.toElement().setTagName(startWithDigit?(START_FLAG+currentNode->text(0)):currentNode->text(0));
-    if(startWithDigit)
-    {
-        currentDomElement.toElement().setAttribute(ATTRIBUTE_STARTFLAG,"true");
-    }
-    if(!file.open(QFile::WriteOnly|QFile::Truncate))//重写文件，如果不用truncate就是在后面追加内容，就无效了
-    {
-        return;
-    }
-    QTextStream out_stream(&file);
-    doc.save(out_stream,4);
-    file.close();
-}
-
 //XML struct is seem like qtreeWidget ,is a tree
 //The node is added to the treewidget by loop the xml document
 void nodeconfig::loadConfigXML(QTreeWidget *tree_widget)
 {
     //设置输入文件
-    QFile inputfile(CONFIG_PATH);
-    logger->log(QDir::currentPath());
+    QString filePath =QCoreApplication::applicationDirPath()+ CONFIG_PATH;
+    QFile inputfile(filePath);
+    logger->log(filePath);
     if(!inputfile.open(QIODevice::ReadOnly))
     {
         logger->log(QString("loadConfigXML: Open node.xml file failed"));
@@ -257,6 +124,146 @@ void nodeconfig::loadConfigXML(QTreeWidget *tree_widget)
     inputfile.close();
     return;
 }
+
+//currentNode is The node which is being operated
+//newNode is the Node in the Add  OperationType and UPDATE
+void nodeconfig::updateXml(BaseInfo::OperationType type,QTreeWidgetItem *currentNode,QTreeWidgetItem *newNode)
+{
+    QString filePath =QCoreApplication::applicationDirPath()+ CONFIG_PATH;
+    QFile file(filePath);
+
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        logger->log(QString("updateXml:open local xml failed"));
+        return;
+    }
+    QDomDocument doc;
+    if(!doc.setContent(&file))//从字节数组中解析XML文档，并将其设置为文档的内容
+    {
+        logger->log(QString("updateXml:set doc content form file failed"));
+        file.close();
+        return;
+    }
+    file.close();
+    if(type==BaseInfo::AddNode||type==BaseInfo::AddNodeGroup)
+    {
+        auto path=util::treeItemToNodePath(currentNode);
+        QDomNode parentDomElement=selectSingleNode(path,&doc);
+        //Check whether the node name starts with a digit， xml nodename is invaild start with digit
+        bool startWithDigit=util::isStartWidthDigit(newNode->text(0));
+        QDomElement newDomElement=doc.createElement(startWithDigit?(START_FLAG+newNode->text(0)):newNode->text(0));
+        if(startWithDigit)
+        {
+            newDomElement.setAttribute(ATTRIBUTE_STARTFLAG,"true");
+        }
+        parentDomElement.appendChild(newDomElement);
+        newDomElement.setAttribute(ATTRIBUTE_NOTETYPE,type==BaseInfo::AddNode?0:1);
+        if(type==BaseInfo::AddNodeGroup&&currentNode!=NULL)
+        {
+            newDomElement.setAttribute(ATTRIBUTE_COLORINDEX,dynamic_cast<ExtraQTreeWidgetItem*>(currentNode)->colorIndex);
+        }
+    }
+    else if(type==BaseInfo::MoveNode)
+    {
+        auto path=util::treeItemToNodePath(currentNode);
+        QDomNode domElement=selectSingleNode(path,&doc);
+        //remove the currentNode
+        domElement.parentNode().removeChild(domElement);
+        //recyledomNode  add the current
+        auto recylePath=util::treeItemToNodePath(newNode);
+        QDomNode recyleDomNode=selectSingleNode(recylePath,&doc);
+        recyleDomNode.appendChild(domElement);
+    }
+    else if(type==BaseInfo::DeleteNode)
+    {
+        auto path=util::treeItemToNodePath(currentNode);
+        QDomNode domElement=selectSingleNode(path,&doc);
+        domElement.parentNode().removeChild(domElement);
+    }
+
+    if(!file.open(QFile::WriteOnly|QFile::Truncate))//重写文件，如果不用truncate就是在后面追加内容，就无效了
+    {
+        return;
+    }
+    QTextStream out_stream(&file);
+    doc.save(out_stream,4);
+    file.close();
+}
+
+void nodeconfig::updateXmlAddTopLevelNode(ExtraQTreeWidgetItem *newNode,QTreeWidgetItem *collectNode)
+{
+    QString filePath =QCoreApplication::applicationDirPath()+ CONFIG_PATH;
+    QFile file(filePath);
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        logger->log(QString("updateXmlAddTopLevelNode:open local xml failed"));
+        return;
+    }
+    QDomDocument doc;
+    if(!doc.setContent(&file))//从字节数组中解析XML文档，并将其设置为文档的内容
+    {
+        logger->log(QString("updateXmlAddTopLevelNode:set doc content form file failed"));
+        file.close();
+        return;
+    }
+    file.close();
+    auto path=util::treeItemToNodePath(collectNode);
+    QDomNode parentDomElement=selectSingleNode(path,&doc);
+    bool startWithDigit=util::isStartWidthDigit(newNode->text(0));
+    QDomElement newDomElement=doc.createElement(startWithDigit?(START_FLAG+newNode->text(0)):newNode->text(0));
+
+    if(startWithDigit)
+    {
+        newDomElement.setAttribute(ATTRIBUTE_STARTFLAG,"true");
+    }
+    doc.documentElement().insertBefore(newDomElement,parentDomElement);
+    newDomElement.setAttribute(ATTRIBUTE_NOTETYPE,1);
+    newDomElement.setAttribute(ATTRIBUTE_COLORINDEX,newNode->colorIndex);
+    if(!file.open(QFile::WriteOnly|QFile::Truncate))//重写文件，如果不用truncate就是在后面追加内容，就无效了
+    {
+        return;
+    }
+    QTextStream out_stream(&file);
+    doc.save(out_stream,4);
+    file.close();
+}
+
+void nodeconfig::updateXmlRenameNode(const QString& oldPath,QTreeWidgetItem *currentNode)
+{
+    QString filePath =QCoreApplication::applicationDirPath()+ CONFIG_PATH;
+    QFile file(filePath);
+
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        logger->log(QString("updateXmlRenameNode: open local xml failed"));
+        return;
+    }
+    QDomDocument doc;
+    if(!doc.setContent(&file))//从字节数组中解析XML文档，并将其设置为文档的内容
+    {
+        logger->log(QString("updateXmlRenameNode: set doc content form file failed"));
+        file.close();
+        return;
+    }
+    file.close();
+    QDomNode currentDomElement=selectSingleNode(oldPath,&doc);
+    //Check whether the node name starts with a digit， xml nodename is invaild start with digit
+    bool startWithDigit=util::isStartWidthDigit(currentNode->text(0));
+    currentDomElement.toElement().setTagName(startWithDigit?(START_FLAG+currentNode->text(0)):currentNode->text(0));
+    if(startWithDigit)
+    {
+        currentDomElement.toElement().setAttribute(ATTRIBUTE_STARTFLAG,"true");
+    }
+    if(!file.open(QFile::WriteOnly|QFile::Truncate))//重写文件，如果不用truncate就是在后面追加内容，就无效了
+    {
+        return;
+    }
+    QTextStream out_stream(&file);
+    doc.save(out_stream,4);
+    file.close();
+}
+
+
 
 //根据xml的路径，找出xml的相应节点QDomNode
 //循环遍历xml节点，通过判断节点名是否和path的相应部分匹配，不断向下找

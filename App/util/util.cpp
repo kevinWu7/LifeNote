@@ -4,6 +4,7 @@
 #include<QFile>
 #include<QSvgRenderer>
 #include<QPainter>
+#include "logger.h""
 util::util()
 {
 
@@ -25,7 +26,7 @@ QString util::treeItemToNodePath(QTreeWidgetItem *treeItem)
 {
     QString fullPath = treeItem->text(0);
 
-    while (treeItem->parent() != NULL)
+    while (treeItem->parent() != nullptr)
     {
         fullPath = treeItem->parent()->text(0) + "/" + fullPath;
         treeItem = treeItem->parent();
@@ -56,6 +57,7 @@ QString util::treeItemToFileName(QTreeWidgetItem* treeItem)
 QString util::treeItemToFullFilePath(QTreeWidgetItem* treeItem,BaseInfo::NodeType type)
 {
     auto currentPath= QCoreApplication::applicationDirPath();
+    logger->log(QString("treeItemToFullFilePath current_path: ")+currentPath);
     //保存上一个节点的内容
     QString nodePath=treeItemToNodePath(treeItem);
     if(type==BaseInfo::Child)
@@ -109,6 +111,7 @@ bool util::isStartWidthDigit(const QString& nodeName)
 
 QIcon util::CreateColorSvgIcon(const QString &path,const QString &color,const QString &opacity)
 {
+    logger->log(QString("createcolor"));
     // open svg resource load contents to qbytearray
     QFile file(path);
     file.open(QIODevice::ReadOnly);

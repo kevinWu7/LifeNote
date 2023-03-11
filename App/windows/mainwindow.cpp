@@ -230,8 +230,8 @@ void MainWindow::onAddnewBtn_clicked()
 
 void MainWindow::onFontAddBtn_clicked()
 {
-    int realIndex=ui->fontComboBox->currentIndex();
-    ui->fontComboBox->setCurrentIndex(realIndex==util::fontVector.size()-1?realIndex:realIndex+1);
+     int realIndex=ui->fontComboBox->currentIndex();
+     ui->fontComboBox->setCurrentIndex(realIndex==util::fontVector.size()-1?realIndex:realIndex+1);
 }
 
 void MainWindow::onFontReduceBtn_clicked()
@@ -247,12 +247,14 @@ void MainWindow::initfontCombobox()
     {
         ui->fontComboBox->addItem(afont);
     }
+     ui->fontComboBox->setCurrentIndex(3); //default font is 14
 }
 
 //change comboBox's selectIndex when move cursor
 void MainWindow::textEditCursorPositionChanged()
 {
     QTextCursor cursor=ui->textEdit->textCursor();
+
     if(cursor.hasSelection())
     {
         //prevent font be same when user  select All text
@@ -269,6 +271,7 @@ void MainWindow::textEditCursorPositionChanged()
          ui->fontComboBox->setCurrentIndex(realIndex);
     }
     logger->log(std::string("textEditCursorPositionChanged"));
+
 }
 
 //update current cursor font-size when change comboBox's selectIndex
@@ -605,11 +608,28 @@ void MainWindow::right_item_pressed(QTreeWidgetItem *item, int column)
     rightMenu->exec(QCursor::pos());   //菜单弹出位置为鼠标点击位置
 }
 
+void MainWindow::setLineVerticalInterval()
+{
+    if(blockFormat==nullptr)
+    {
+        blockFormat=new QTextBlockFormat;
+        blockFormat->setLineHeight(3,QTextBlockFormat::LineDistanceHeight);
+    }
+    //to set qtextedit vertical interval 3
+    ui->textEdit->selectAll();
+    auto textCursor = ui->textEdit->textCursor();
+    textCursor.setBlockFormat(*blockFormat);
+    ui->textEdit->setTextCursor(textCursor);
+    textCursor.clearSelection();//cacle the selection
+    ui->textEdit->setTextCursor(textCursor);
+}
 //切换左侧节点时，保存上一个节点的内容，加载当前节点的内容
 void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
     logger->log(QString("currentTreeItemChanged tirggerd"));
     ExtraQTreeWidgetItem* extraPreviousNode= dynamic_cast<ExtraQTreeWidgetItem*>(previous);
+
+    setLineVerticalInterval();
 
     //save previous node content to local file
     //when delete node,the focus will be changed,and this function will be trigger.

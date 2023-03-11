@@ -2,7 +2,6 @@
 #include "ui_newnotegroupform.h"
 #include <QPainterPath>
 #include "util.h"
-#include "logger.h"
 
 #define  ROUND_RADIUS 5
 #define  NewNoteGroupTip "未命名笔记本"

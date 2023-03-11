@@ -14,6 +14,7 @@
 #include<QTextDocumentFragment>
 #include<QFileDialog>
 #include<QImageReader>
+#include<QTextBlockFormat>
 #include "nodeconfig.h"
 #include "extraqtreewidgetitem.h"
 #include "newnotegroupform.h"
@@ -59,8 +60,9 @@ private:
     void InsertImageDialog();
     void initTopLevelNode();
     void initfontCombobox();
-
+    void setLineVerticalInterval();
     NewNoteGroupForm * newGroupForm=nullptr;
+    QTextBlockFormat *blockFormat=nullptr;//to set qtextedit vertical interval 3
 
 public slots:
     void boldBtn_clicked();

@@ -439,6 +439,13 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+              <bold>false</bold>
+              <kerning>true</kerning>
+             </font>
+            </property>
             <property name="autoFillBackground">
              <bool>false</bool>
             </property>

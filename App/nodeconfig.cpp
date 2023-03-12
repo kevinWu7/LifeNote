@@ -6,7 +6,7 @@
 
 
 
-#define CONFIG_PATH "/ConfigTemplate/node.xml"
+#define CONFIG_PATH "/config/node.xml"
 
 nodeconfig::nodeconfig()
 {

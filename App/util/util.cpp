@@ -4,7 +4,8 @@
 #include<QFile>
 #include<QSvgRenderer>
 #include<QPainter>
-#include "logger.h""
+#include "logger.h"
+#include "extraqtreewidgetitem.h"
 util::util()
 {
 
@@ -21,7 +22,7 @@ std::vector<QString> util::fontVector={
     "9","11","13","14","16","18","20","22","24","28","32","36","40","44","50","55","60","70"
 };
 
-//获取节点的路径xml记录的path,如 笔记本/每日工作/无标题.html ，返回 笔记本/每日工作/无标题
+//获取节点的路径xml记录的path,如 笔记本/每日工作/无标题.html,返回 笔记本/每日工作/无标题
 QString util::treeItemToNodePath(QTreeWidgetItem *treeItem)
 {
     QString fullPath = treeItem->text(0);
@@ -51,15 +52,16 @@ QString util::treeItemToFileName(QTreeWidgetItem* treeItem)
     return fileName;
 }
 
-//return the full path，default type is 0
-//if the type is 0(Node),return full file storagePath for NodeItem, for instance - D://笔记本/工作.html
-//if the type is 1(NodeGroup),return full storagePath for newItemGroup（means a file directoy，not a file） for instance - D://笔记本/新建笔记本1
-QString util::treeItemToFullFilePath(QTreeWidgetItem* treeItem,BaseInfo::NodeType type)
+//return the full path
+//if the type is child,return full file storagePath for NodeItem, for instance - D://笔记本/工作.html
+//if the type is parent,return full storagePath for newItemGroup（means a file directoy，not a file） for instance - D://笔记本/新建笔记本1
+QString util::treeItemToFullFilePath(QTreeWidgetItem* treeItem)
 {
     auto currentPath= QCoreApplication::applicationDirPath();
-    logger->log(QString("treeItemToFullFilePath current_path: ")+currentPath);
+    logger->log(QString("FullFilePath current_path: ")+currentPath);
     //保存上一个节点的内容
     QString nodePath=treeItemToNodePath(treeItem);
+    auto type= dynamic_cast<ExtraQTreeWidgetItem*>(treeItem)->nodeType;
     if(type==BaseInfo::Child)
     {
         return QString("%1/storage/%2.html").arg(currentPath,nodePath);
@@ -159,5 +161,5 @@ void util::SetDomAttrRecur( QDomElement &elem, QString strtagname, QString strat
         util::SetDomAttrRecur(ele, strtagname, strattr, strattrval);
     }
 }
-//
+
 

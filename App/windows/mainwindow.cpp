@@ -368,7 +368,7 @@ void MainWindow::onDeleteNoteItemClick()
 {
     ExtraQTreeWidgetItem* currentNode=dynamic_cast<ExtraQTreeWidgetItem*>(ui->treeWidget->currentItem());
     auto currentPath= QCoreApplication::applicationDirPath();
-    auto fullPath= util::treeItemToFullFilePath(currentNode,currentNode->nodeType); //如d:/sotrage/xxx.html
+    auto fullPath= util::treeItemToFullFilePath(currentNode); //如d:/sotrage/xxx.html
     //if node is toplevelNode
     if(currentNode->parent()==nullptr)
     {
@@ -710,6 +710,7 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
 }
 
 //给回收站&收藏node赋值
+//创建stroge默认文件夹
 void MainWindow::initTopLevelNode()
 {
     int size = ui->treeWidget->topLevelItemCount();
@@ -725,7 +726,17 @@ void MainWindow::initTopLevelNode()
         {
             collectNode=child;
         }
+        if(child->text(0)==NODENAME_RECYLE||child->text(0)==NODENAME_COLLECT)
+        {
+            auto path=util::treeItemToFullFilePath(child);
+            //创建默认废纸篓路径
+            QDir* dir = new QDir();
+            if(!dir->exists(path)){
+                dir->mkpath(path);
+            }
+        }
     }
+
 }
 
 //设置所有node的icon
@@ -825,7 +836,7 @@ void MainWindow::onTitleLineEditEditingFinished()
 
             if(currentItem->parent()!=nullptr)
             {
-                parentFullPath=util::treeItemToFullFilePath(currentItem->parent(),BaseInfo::Parent);
+                parentFullPath=util::treeItemToFullFilePath(currentItem->parent());
             }
             QString newDir=QString("%1/%2").arg(parentFullPath,ui->titleLineEdit->text());
             QString oldDir=QString("%1/%2").arg(parentFullPath,oldName);
@@ -846,7 +857,7 @@ void MainWindow::onTitleLineEditEditingFinished()
     if (type == BaseInfo::AddNodeGroup)
     {
         //新增本地文件夹
-        QString dirpath = util::treeItemToFullFilePath(extraItem, BaseInfo::Parent);
+        QString dirpath = util::treeItemToFullFilePath(extraItem);
         QDir *dir = new QDir();
         if (!dir->exists(dirpath))
         {
@@ -857,7 +868,7 @@ void MainWindow::onTitleLineEditEditingFinished()
     else if (type == BaseInfo::AddNode)
     {
         //创建本地空文档html
-        QString filePath = util::treeItemToFullFilePath(currentItem, BaseInfo::Child);
+        QString filePath = util::treeItemToFullFilePath(currentItem);
         QFile myfile(filePath);
         //注意WriteOnly是往文本中写入的时候用，ReadOnly是在读文本中内容的时候用，Truncate表示将原来文件中的内容清空
         if (myfile.open(QFile::WriteOnly))

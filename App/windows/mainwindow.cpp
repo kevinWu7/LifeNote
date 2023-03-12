@@ -608,6 +608,9 @@ void MainWindow::right_item_pressed(QTreeWidgetItem *item, int column)
     rightMenu->exec(QCursor::pos());   //菜单弹出位置为鼠标点击位置
 }
 
+//currentTreeItemChanged will call this function
+//todo: set 3 interval is specific
+//but if user modify the interval,can't call this function when currentTreeItemChanged
 void MainWindow::setLineVerticalInterval()
 {
     if(blockFormat==nullptr)
@@ -871,6 +874,32 @@ void MainWindow::onApplicationQuit()
     {
         this->newGroupForm->close();
     }
+    //save qtextedit  modify data
+    auto node =ui->treeWidget->currentItem();
+    if(node==nullptr||dynamic_cast<ExtraQTreeWidgetItem*>(node)->nodeType==BaseInfo::Parent)
+    {
+        return;
+    }
+    auto fullPath=util::treeItemToFullFilePath(node); //如d:/sotrage/xxx.html
+    //解析出路径（不含文件名）和文件名
+    int first = fullPath.lastIndexOf ("/");
+    QString dirPath = fullPath.left(first); //文件夹路径
+
+    //如果路径不存在，则创建
+    QDir* dir = new QDir();
+    if(!dir->exists(dirPath)){
+        dir->mkpath(dirPath);
+    }
+
+    //创建一个输出文件的文档
+    QFile  myfile(fullPath);
+    //注意WriteOnly是往文本中写入的时候用，ReadOnly是在读文本中内容的时候用，Truncate表示将原来文件中的内容清空
+    if (myfile.open(QFile::WriteOnly|QFile::Truncate))
+    {
+        QTextStream out(&myfile);
+        out<<ui->textEdit->toHtml()<<Qt::endl;
+    }
+    myfile.close();
 }
 
 MainWindow::~MainWindow()

@@ -23,7 +23,7 @@ struct node_info
 void nodeconfig::loadConfigXML(QTreeWidget *tree_widget)
 {
     //设置输入文件
-    QString filePath =QCoreApplication::applicationDirPath()+ CONFIG_PATH;
+    QString filePath =STORAGE_PATH+ CONFIG_PATH;
     QFile inputfile(filePath);
     logger->log(filePath);
     if(!inputfile.open(QIODevice::ReadOnly))
@@ -129,7 +129,7 @@ void nodeconfig::loadConfigXML(QTreeWidget *tree_widget)
 //newNode is the Node in the Add  OperationType and UPDATE
 void nodeconfig::updateXml(BaseInfo::OperationType type,QTreeWidgetItem *currentNode,QTreeWidgetItem *newNode)
 {
-    QString filePath =QCoreApplication::applicationDirPath()+ CONFIG_PATH;
+    QString filePath =STORAGE_PATH+ CONFIG_PATH;
     QFile file(filePath);
 
     if(!file.open(QIODevice::ReadOnly))
@@ -192,7 +192,7 @@ void nodeconfig::updateXml(BaseInfo::OperationType type,QTreeWidgetItem *current
 
 void nodeconfig::updateXmlAddTopLevelNode(ExtraQTreeWidgetItem *newNode,QTreeWidgetItem *collectNode)
 {
-    QString filePath =QCoreApplication::applicationDirPath()+ CONFIG_PATH;
+    QString filePath =STORAGE_PATH+ CONFIG_PATH;
     QFile file(filePath);
     if(!file.open(QIODevice::ReadOnly))
     {
@@ -230,7 +230,7 @@ void nodeconfig::updateXmlAddTopLevelNode(ExtraQTreeWidgetItem *newNode,QTreeWid
 
 void nodeconfig::updateXmlRenameNode(const QString& oldPath,QTreeWidgetItem *currentNode)
 {
-    QString filePath =QCoreApplication::applicationDirPath()+ CONFIG_PATH;
+    QString filePath =STORAGE_PATH+ CONFIG_PATH;
     QFile file(filePath);
 
     if(!file.open(QIODevice::ReadOnly))

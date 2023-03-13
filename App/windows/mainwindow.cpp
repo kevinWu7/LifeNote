@@ -367,7 +367,7 @@ void MainWindow::onNewNoteItemClick()
 void MainWindow::onDeleteNoteItemClick()
 {
     ExtraQTreeWidgetItem* currentNode=dynamic_cast<ExtraQTreeWidgetItem*>(ui->treeWidget->currentItem());
-    auto currentPath= QCoreApplication::applicationDirPath();
+    auto currentPath=STORAGE_PATH;
     auto fullPath= util::treeItemToFullFilePath(currentNode); //如d:/sotrage/xxx.html
     //if node is toplevelNode
     if(currentNode->parent()==nullptr)
@@ -449,7 +449,7 @@ void MainWindow::onRecoverNoteItemClick()
 {
     ExtraQTreeWidgetItem* currentNode=dynamic_cast<ExtraQTreeWidgetItem*>(ui->treeWidget->currentItem());
     auto path= util::treeItemToNodeDirPath(ui->treeWidget->currentItem());
-    auto currentPath= QCoreApplication::applicationDirPath();
+    auto currentPath= STORAGE_PATH;
 
     //移动本地存储文件到回收站
     /*
@@ -499,7 +499,7 @@ void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
 
     setAllItemIcon();
     //添加本地文件夹
-    auto currentPath= QCoreApplication::applicationDirPath();
+    auto currentPath= STORAGE_PATH;
     QString dirpath =QString("%1/storage/%2").arg(currentPath,realName);
     QDir *dir = new QDir();
     if (!dir->exists(dirpath))
@@ -832,7 +832,7 @@ void MainWindow::onTitleLineEditEditingFinished()
         }
         else
         {
-            QString parentFullPath = QString("%1/storage").arg(QCoreApplication::applicationDirPath());
+            QString parentFullPath = QString("%1/storage").arg(STORAGE_PATH);
 
             if(currentItem->parent()!=nullptr)
             {

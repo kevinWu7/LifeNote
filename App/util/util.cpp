@@ -57,7 +57,7 @@ QString util::treeItemToFileName(QTreeWidgetItem* treeItem)
 //if the type is parent,return full storagePath for newItemGroup（means a file directoy，not a file） for instance - D://笔记本/新建笔记本1
 QString util::treeItemToFullFilePath(QTreeWidgetItem* treeItem)
 {
-    auto currentPath= QCoreApplication::applicationDirPath();
+    auto currentPath=STORAGE_PATH;
     logger->log(QString("FullFilePath current_path: ")+currentPath);
     //保存上一个节点的内容
     QString nodePath=treeItemToNodePath(treeItem);

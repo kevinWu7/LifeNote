@@ -267,9 +267,14 @@ void MainWindow::textEditCursorPositionChanged()
     auto index=std::find(util::fontVector.begin(),util::fontVector.end(),font_size);
     if(index!= util::fontVector.end())
     {
-         int realIndex=std::distance(util::fontVector.begin(),index);
-         ui->fontComboBox->setCurrentIndex(realIndex);
+        int realIndex=std::distance(util::fontVector.begin(),index);
+        ui->fontComboBox->setCurrentIndex(realIndex);
     }
+    //reset the bold... btn's state
+    ui->boldBtn->setChecked(font.bold());
+    ui->italicBtn->setChecked(font.italic());
+    ui->underlineBtn->setChecked(font.underline());
+
     logger->log(std::string("textEditCursorPositionChanged"));
 
 }

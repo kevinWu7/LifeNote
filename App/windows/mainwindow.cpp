@@ -14,13 +14,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     logger->log(QDir::currentPath());
     logger->log(QString("start the application....."));
-    ui->mainPage->setStyleSheet("QWidget#mainPage{background-color:#FFFFFF}");
+    ui->mainPage->setStyleSheet("QWidget#mainPage{background-color:rgb(219,220,223");
     this->setStyleSheet("QTreeWidget::item{height:25px;}");
 
     //设置左侧侧边栏样式
     ui->leftBar->setStyleSheet("QAbstractButton{min-height:17px;max-height:17px;margin:0px;border:none;} "
                                "QAbstractButton#addnewBtn{min-height:20px;max-height:20px;}"
-                               "QWidget#leftBar{background-color:#FFFFFF} ");
+                               "QWidget#leftBar{background-color:#FFFFFF;width:150px} ");
     ui->titleBar->setStyleSheet("QToolButton{border:none;} "
                                 "QToolButton:checked{background-color:rgb(218, 218, 218)}"
                                 "QToolButton:hover{background-color:rgb(218, 218, 218)}"
@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->editWidget->layout()->setSpacing(0);
     //设置mainPage内部控件间距为5
-    ui->mainPage->layout()->setSpacing(5);
+  //  ui->mainPage->layout()->setSpacing(5);
     //设置editWidget内部左侧边距
     ui->editWidget->setContentsMargins(5,0,0,0);
     ui->treeWidget->setColumnCount(1);
@@ -45,6 +45,9 @@ MainWindow::MainWindow(QWidget *parent)
     //隐藏标题栏
     ui->treeWidget->header()->setVisible(false);
 
+    //set the splitter default-ratio,total=6,leftbar=1,editwidget=5.
+    ui->splitter->setStretchFactor(0, 1);
+    ui->splitter->setStretchFactor(1, 5);
 
     //设置背景色为透明
     ui->treeWidget->setStyleSheet("background-color:transparent;");

@@ -4,8 +4,12 @@
 #include <QTreeWidgetItem>
 #include <QDomElement>
 
-//#define STORAGE_PATH QCoreApplication::applicationDirPath()
+#ifdef QT_NO_DEBUG
 #define STORAGE_PATH  QString("/Users/wuchengcheng/Documents/Lifenote_dir")
+#else
+#define STORAGE_PATH QCoreApplication::applicationDirPath()
+#endif
+
 class util
 {
 public:

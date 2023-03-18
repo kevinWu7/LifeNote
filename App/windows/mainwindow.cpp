@@ -20,13 +20,18 @@ MainWindow::MainWindow(QWidget *parent)
     //设置左侧侧边栏样式
     ui->leftBar->setStyleSheet("QAbstractButton{min-height:17px;max-height:17px;margin:0px;border:none;} "
                                "QAbstractButton#addnewBtn{min-height:20px;max-height:20px;}"
-                               "QWidget#leftBar{background-color:#FFFFFF;width:150px} ");
+                               "QWidget#leftBar"
+                               "{background-color:#FFFFFF;"
+                               "border-radius:7px}"
+                               );
     ui->titleBar->setStyleSheet("QToolButton{border:none;} "
                                 "QToolButton:checked{background-color:rgb(218, 218, 218)}"
                                 "QToolButton:hover{background-color:rgb(218, 218, 218)}"
                                 "QWidget#titleBar{background-color:#FFFFFF}");
 
-    ui->editWidget->setStyleSheet("QWidget#editWidget{background-color:#FFFFFF}");
+    ui->editWidget->setStyleSheet("QWidget#editWidget"
+                                  "{background-color:#FFFFFF;"
+                                  "border-radius:7px}");
     //set titleLineEdit stylesheet
     ui->titleLineEdit->setStyleSheet("border: 0px;");
     ui->textEdit->setStyleSheet("border:0px; background-color:#FFFFFF");
@@ -35,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     //设置mainPage内部控件间距为5
   //  ui->mainPage->layout()->setSpacing(5);
     //设置editWidget内部左侧边距
-    ui->editWidget->setContentsMargins(5,0,0,0);
+    ui->editWidget->setContentsMargins(3,3,3,3);
     ui->treeWidget->setColumnCount(1);
     ui->treeWidget->setColumnWidth(0,40);
 

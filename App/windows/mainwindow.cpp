@@ -4,6 +4,7 @@
 #include "util.h"
 #include <QMouseEvent>
 #include "logger.h"
+#include<QScrollBar>>
 
 
 
@@ -32,6 +33,64 @@ MainWindow::MainWindow(QWidget *parent)
     ui->editWidget->setStyleSheet("QWidget#editWidget"
                                   "{background-color:#FFFFFF;"
                                   "border-radius:7px}");
+
+    QScrollBar* verticalScrollBar=ui->textEdit->verticalScrollBar();
+    QScrollBar* horizontalScrollBar=ui->treeWidget->horizontalScrollBar();
+    verticalScrollBar->setStyleSheet("QScrollBar:vertical"
+                             "{"
+                             "width:6px;"
+                             "background:rgba(0,0,0,0%);"
+                             "margin:0px,0px,0px,0px;"
+                             "padding-top:0px;"
+                             "padding-bottom:0px;"
+                             "}"
+                             "QScrollBar::handle:vertical"
+                             "{"
+                             "width:6px;"
+                             "background:rgba(0,0,0,25%);"
+                             " border-radius:3px;"
+                             "min-height:20;"
+                             "}"
+                             "QScrollBar::handle:vertical:hover"
+                             "{"
+                             "width:6px;"
+                             "background:rgba(0,0,0,50%);"
+                             " border-radius:3px;"
+                             "min-height:20;"
+                             "}"
+                             "QScrollBar::add-line:vertical" //上箭头，高度设置为0，隐藏掉
+                             "{height:0px;subcontrol-position:bottom;}"
+                             "QScrollBar::sub-line:vertical"//下拉箭头，高度设置为0，隐藏掉
+                             "{height:0px;subcontrol-position:top;}"
+                             );
+    horizontalScrollBar->setStyleSheet("QScrollBar:horizontal"
+                             "{"
+                             "height:6px;"
+                             "background:rgba(0,0,0,0%);"
+                             "margin:0px,0px,0px,0px;"
+                             "padding-left:0px;"
+                             "padding-right:0px;"
+                             "}"
+                             "QScrollBar::handle:horizontal"
+                             "{"
+                             "height:6px;"
+                             "background:rgba(0,0,0,25%);"
+                             " border-radius:3px;"
+                             "min-width:20;"
+                             "}"
+                             "QScrollBar::handle:horizontal:hover"
+                             "{"
+                             "height:6px;"
+                             "background:rgba(0,0,0,50%);"
+                             " border-radius:3px;"
+                             "min-width:20;"
+                             "}"
+                             "QScrollBar::add-line:horizontal" //左边箭头，宽度设置为0，隐藏掉
+                             "{width:0px;subcontrol-position:left;}"
+                             "QScrollBar::sub-line:horizontal"//右拉箭头，宽度设置为0，隐藏掉
+                             "{width:0px;subcontrol-position:right;}"
+                             );
+
     //set titleLineEdit stylesheet
     ui->titleLineEdit->setStyleSheet("border: 0px;");
     ui->textEdit->setStyleSheet("border:0px; background-color:#FFFFFF");

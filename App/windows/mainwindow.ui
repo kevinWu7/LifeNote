@@ -131,7 +131,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QTreeWidget" name="treeWidget">
+            <widget class="LNTreeWidget" name="treeWidget">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                <horstretch>0</horstretch>
@@ -483,6 +483,13 @@
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>LNTreeWidget</class>
+   <extends>QTreeWidget</extends>
+   <header location="global">lntreewidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

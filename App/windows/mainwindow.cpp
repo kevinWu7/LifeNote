@@ -121,6 +121,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //设置不同层次菜单的缩进
     ui->treeWidget->setIndentation(9);
+
     //设置左侧容器内部margin
     ui->leftBar->setContentsMargins(10,20,0,0);
     ui->leftBar->layout()->setSpacing(15);
@@ -137,6 +138,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->addnewBtn->setIcon(QIcon(":/res/icons/addnew.png"));
     ui->addnewBtn->setIconSize(QSize(22, 22));
     ui->addnewBtn->setCursor(Qt::PointingHandCursor);
+
 
     //设置标题栏按钮
     ui->boldBtn->setIcon(QIcon(":/res/icons/bold.png"));

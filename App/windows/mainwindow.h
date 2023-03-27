@@ -15,7 +15,6 @@
 #include<QFileDialog>
 #include<QImageReader>
 #include<QTextBlockFormat>
-#include "nodeconfig.h"
 #include "extraqtreewidgetitem.h"
 #include "newnotegroupform.h"
 
@@ -49,7 +48,6 @@ private:
     QAction * collectNoteAction;
     QAction * moveNoteAction;
     QAction * lockAction;
-    nodeconfig *config ;
     QTreeWidgetItem *recycleNode; //回收站顶级节点，构造函数给其赋值
     QTreeWidgetItem *collectNode; //收藏顶级节点，构造函数给其赋值
 

@@ -280,7 +280,7 @@ void nodeconfig::updateXmlRenameNode(const QString& oldPath,QTreeWidgetItem *cur
         break;
     }
 }*/
-QDomNode nodeconfig::selectSingleNode(const QString& path,QDomDocument* doc) const
+QDomNode nodeconfig::selectSingleNode(const QString& path,QDomDocument* doc)
 {
    // doc->documentElement()
     QStringList list=path.split(u'/');

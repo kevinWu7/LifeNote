@@ -2,7 +2,10 @@
 #include "logger.h"
 #include <QScrollBar>
 #include <QDrag>
-#include "ExtraQTreeWidgetItem.h"
+#include <QCoreApplication>
+#include <QFile>
+#include "util.h"
+#include "nodeconfig.h"
 
 LNTreeWidget::LNTreeWidget(QWidget *parent)
     : QTreeWidget(parent)
@@ -77,6 +80,16 @@ void LNTreeWidget::startDrag1(Qt::DropActions supportedActions)
 }
 
 
+void LNTreeWidget::dragLeaveEvent(QDragLeaveEvent *event)
+{
+    QTreeWidget::dragLeaveEvent(event);
+    if(coloredItem.size()>0)
+    {
+        coloredItem.at(0)->setBackground(0, QBrush(QColor(Qt::white)));
+        coloredItem.clear();
+    }
+}
+
 //拖动中不断触发的事件
 void LNTreeWidget::dragMoveEvent(QDragMoveEvent *event)
 {
@@ -87,15 +100,38 @@ void LNTreeWidget::dragMoveEvent(QDragMoveEvent *event)
         qDebug() <<"isValid";
         return;
     }
-    QTreeWidgetItem* item = this->itemFromIndex(modelIndex);
-    if(item->childCount()>0)
+    ExtraQTreeWidgetItem* targetItem =dynamic_cast<ExtraQTreeWidgetItem*>(this->itemFromIndex(modelIndex));
+    if(targetItem->nodeType==BaseInfo::Parent)
     {
-        this->expandItem(item);
+       if(coloredItem.size()==0)
+       {
+           coloredItem.push_back(targetItem);
+           targetItem->setBackground(0, QBrush(QColor(219,220,223)));
+       }
+       else
+       {
+           if(coloredItem.at(0)!=targetItem)
+           {
+               coloredItem.at(0)->setBackground(0, QBrush(QColor(Qt::white)));
+               coloredItem.clear();
+               coloredItem.push_back(targetItem);
+               targetItem->setBackground(0, QBrush(QColor(219,220,223)));
+           }
+       }
+       this->expandItem(targetItem);
+    }
+    else
+    {
+        if(coloredItem.size()>0)
+        {
+            coloredItem.at(0)->setBackground(0, QBrush(QColor(Qt::white)));
+            coloredItem.clear();
+        }
     }
     // 如果item不为nullptr，则表示鼠标指针在一个item上
-    if (item)
+    if (targetItem)
     {
-        qDebug() << "Drag item:" << item->text(0);
+        //qDebug() << "Drag item:" << targetItem->text(0);
         event->acceptProposedAction();
 
     }
@@ -104,6 +140,11 @@ void LNTreeWidget::dragMoveEvent(QDragMoveEvent *event)
 //鼠标松开事件
 void LNTreeWidget::dropEvent(QDropEvent *event)
 {
+    if(coloredItem.size()>0)
+    {
+        coloredItem.at(0)->setBackground(0, QBrush(QColor(Qt::white)));
+        coloredItem.clear();
+    }
     QModelIndex modelIndex = this->indexAt(event->position().toPoint());
     if(!modelIndex.isValid())
     {
@@ -113,10 +154,29 @@ void LNTreeWidget::dropEvent(QDropEvent *event)
     ExtraQTreeWidgetItem* targetItem = dynamic_cast<ExtraQTreeWidgetItem*>(this->itemFromIndex(modelIndex));
     if(targetItem->nodeType==BaseInfo::Child)
     {
-
         return;
     }
     ExtraQTreeWidgetItem *draggedItem =dynamic_cast<ExtraQTreeWidgetItem*>(currentItem());
+
+
+    auto currentPath=STORAGE_PATH;
+    auto fullPath= util::treeItemToFullFilePath(draggedItem); //如d:/sotrage/xxx.html
+    auto targetItemPath=util::treeItemToFullFilePath(targetItem);
+
+
+    //移动本地存储文件到回收站
+    QString fileName = util::treeItemToFileName(draggedItem); //文件名称，如xxx.html
+    auto tragetFile=QString("%1/%2").arg(targetItemPath,fileName);
+    bool moveResult= QFile::rename(fullPath,tragetFile); //A路径移动到B路径
+    std::string str="move node and move file "+ std::string(moveResult ? "true": "false") ;
+    logger->log(str);
+
+
+    //delete doc(updateXml) must be ahead of the QTreeWidget'Node delete
+    //because updateXml function is depend on the Node struct
+    //delete directly if node is parentNode
+
+    nodeconfig::updateXml(BaseInfo::MoveNode,draggedItem,targetItem);
 
     draggedItem->deleteType=1;
     draggedItem->parent()->removeChild(draggedItem);//this line will trigger currentTreeItemChanged immediately

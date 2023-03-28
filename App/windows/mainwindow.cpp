@@ -37,7 +37,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     QScrollBar* verticalScrollBar=ui->textEdit->verticalScrollBar();
     QScrollBar* horizontalScrollBar=ui->treeWidget->horizontalScrollBar();
-    verticalScrollBar->setStyleSheet("QScrollBar:vertical"
+    QScrollBar* treewidgetVerticalScrollBar=ui->treeWidget->verticalScrollBar();
+    verticalScrollBar->setStyleSheet("QScrollBar:vertical"  //滚动条的背景
                              "{"
                              "width:6px;"
                              "background:rgba(0,0,0,0%);"
@@ -45,14 +46,14 @@ MainWindow::MainWindow(QWidget *parent)
                              "padding-top:0px;"
                              "padding-bottom:0px;"
                              "}"
-                             "QScrollBar::handle:vertical"
+                             "QScrollBar::handle:vertical" //滚动条本身
                              "{"
                              "width:6px;"
                              "background:rgba(0,0,0,25%);"
                              " border-radius:3px;"
                              "min-height:20;"
                              "}"
-                             "QScrollBar::handle:vertical:hover"
+                             "QScrollBar::handle:vertical:hover"//滚动条本身，鼠标选中的样式
                              "{"
                              "width:6px;"
                              "background:rgba(0,0,0,50%);"
@@ -64,6 +65,33 @@ MainWindow::MainWindow(QWidget *parent)
                              "QScrollBar::sub-line:vertical"//下拉箭头，高度设置为0，隐藏掉
                              "{height:0px;subcontrol-position:top;}"
                              );
+    treewidgetVerticalScrollBar->setStyleSheet("QScrollBar:vertical"
+                                               "{"
+                                               "width:6px;"
+                                               "background:rgba(0,0,0,0%);"
+                                               "margin:0px,0px,0px,0px;"
+                                               "padding-top:0px;"
+                                               "padding-bottom:0px;"
+                                               "}"
+                                               "QScrollBar::handle:vertical"
+                                               "{"
+                                               "width:6px;"
+                                               "background:rgba(0,0,0,25%);"
+                                               " border-radius:3px;"
+                                               "min-height:20;"
+                                               "}"
+                                               "QScrollBar::handle:vertical:hover"
+                                               "{"
+                                               "width:6px;"
+                                               "background:rgba(0,0,0,50%);"
+                                               " border-radius:3px;"
+                                               "min-height:20;"
+                                               "}"
+                                               "QScrollBar::add-line:vertical" //上箭头，高度设置为0，隐藏掉
+                                               "{height:0px;subcontrol-position:bottom;}"
+                                               "QScrollBar::sub-line:vertical"//下拉箭头，高度设置为0，隐藏掉
+                                               "{height:0px;subcontrol-position:top;}"
+                                               );
     horizontalScrollBar->setStyleSheet("QScrollBar:horizontal"
                              "{"
                              "height:6px;"

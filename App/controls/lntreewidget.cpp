@@ -4,14 +4,35 @@
 #include <QDrag>
 #include <QCoreApplication>
 #include <QFile>
+#include <QtGlobal>
 #include "util.h"
 #include "nodeconfig.h"
+
+
+
+
 
 LNTreeWidget::LNTreeWidget(QWidget *parent)
     : QTreeWidget(parent)
 {
     setDragEnabled(true);
     setDragDropMode(QAbstractItemView::DragDrop);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    timer=new QTimer();
+    QObject::connect(timer, &QTimer::timeout,  [this]() {
+        if(this->underMouse())
+        {
+             qDebug() << "Timer tick";
+        }
+        else
+        {
+            qDebug() << "Timer tick out of mouse";
+            this->verticalScrollBar()->setVisible(false);
+            this->horizontalScrollBar()->setVisible(false);
+            timer->stop();
+        }
+    });
 }
 
 
@@ -19,15 +40,14 @@ void LNTreeWidget::enterEvent(QEnterEvent *event)
 {
     // 处理整个控件的鼠标移入事件
     // 隐藏水平滚动条
-    setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     QTreeWidget::enterEvent(event);
 }
 void LNTreeWidget::leaveEvent(QEvent *event)
 {
     // 处理整个控件的鼠标移入事件
     // 隐藏水平滚动条
-    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     QTreeWidget::leaveEvent(event);
+    timer->start(1000);  // Tick every 1 second
 }
 
 void LNTreeWidget::mousePressEvent(QMouseEvent *event)
@@ -188,3 +208,7 @@ void LNTreeWidget::dropEvent(QDropEvent *event)
 }
 
 
+void LNTreeWidget::wheelEvent(QWheelEvent* event)
+{
+     QTreeWidget::wheelEvent(event);
+}

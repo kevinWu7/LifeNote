@@ -31,131 +31,34 @@ MainWindow::MainWindow(QWidget *parent)
                                 "QToolButton:hover{background-color:rgb(218, 218, 218)}"
                                 "QWidget#titleBar{background-color:#FFFFFF}");
 
+    //set titleLineEdit stylesheet
+    ui->titleLineEdit->setStyleSheet("border: 0px;");
+
     ui->editWidget->setStyleSheet("QWidget#editWidget"
                                   "{background-color:#FFFFFF;"
                                   "border-radius:7px}");
 
-    QScrollBar* verticalScrollBar=ui->textEdit->verticalScrollBar();
-    QScrollBar* horizontalScrollBar=ui->treeWidget->horizontalScrollBar();
-    QScrollBar* treewidgetVerticalScrollBar=ui->treeWidget->verticalScrollBar();
-    verticalScrollBar->setStyleSheet("QScrollBar:vertical"  //滚动条的背景
-                             "{"
-                             "width:6px;"
-                             "background:rgba(0,0,0,0%);"
-                             "margin:0px,0px,0px,0px;"
-                             "padding-top:0px;"
-                             "padding-bottom:0px;"
-                             "}"
-                             "QScrollBar::handle:vertical" //滚动条本身
-                             "{"
-                             "width:6px;"
-                             "background:rgba(0,0,0,25%);"
-                             " border-radius:3px;"
-                             "min-height:20;"
-                             "}"
-                             "QScrollBar::handle:vertical:hover"//滚动条本身，鼠标选中的样式
-                             "{"
-                             "width:6px;"
-                             "background:rgba(0,0,0,50%);"
-                             " border-radius:3px;"
-                             "min-height:20;"
-                             "}"
-                             "QScrollBar::add-line:vertical" //上箭头，高度设置为0，隐藏掉
-                             "{height:0px;subcontrol-position:bottom;}"
-                             "QScrollBar::sub-line:vertical"//下拉箭头，高度设置为0，隐藏掉
-                             "{height:0px;subcontrol-position:top;}"
-                             );
-    treewidgetVerticalScrollBar->setStyleSheet("QScrollBar:vertical"
-                                               "{"
-                                               "width:6px;"
-                                               "background:rgba(0,0,0,0%);"
-                                               "margin:0px,0px,0px,0px;"
-                                               "padding-top:0px;"
-                                               "padding-bottom:0px;"
-                                               "}"
-                                               "QScrollBar::handle:vertical"
-                                               "{"
-                                               "width:6px;"
-                                               "background:rgba(0,0,0,25%);"
-                                               " border-radius:3px;"
-                                               "min-height:20;"
-                                               "}"
-                                               "QScrollBar::handle:vertical:hover"
-                                               "{"
-                                               "width:6px;"
-                                               "background:rgba(0,0,0,50%);"
-                                               " border-radius:3px;"
-                                               "min-height:20;"
-                                               "}"
-                                               "QScrollBar::add-line:vertical" //上箭头，高度设置为0，隐藏掉
-                                               "{height:0px;subcontrol-position:bottom;}"
-                                               "QScrollBar::sub-line:vertical"//下拉箭头，高度设置为0，隐藏掉
-                                               "{height:0px;subcontrol-position:top;}"
-                                               );
-    horizontalScrollBar->setStyleSheet("QScrollBar:horizontal"
-                             "{"
-                             "height:6px;"
-                             "background:rgba(0,0,0,0%);"
-                             "margin:0px,0px,0px,0px;"
-                             "padding-left:0px;"
-                             "padding-right:0px;"
-                             "}"
-                             "QScrollBar::handle:horizontal"
-                             "{"
-                             "height:6px;"
-                             "background:rgba(0,0,0,25%);"
-                             " border-radius:3px;"
-                             "min-width:20;"
-                             "}"
-                             "QScrollBar::handle:horizontal:hover"
-                             "{"
-                             "height:6px;"
-                             "background:rgba(0,0,0,50%);"
-                             " border-radius:3px;"
-                             "min-width:20;"
-                             "}"
-                             "QScrollBar::add-line:horizontal" //左边箭头，宽度设置为0，隐藏掉
-                             "{width:0px;subcontrol-position:left;}"
-                             "QScrollBar::sub-line:horizontal"//右拉箭头，宽度设置为0，隐藏掉
-                             "{width:0px;subcontrol-position:right;}"
-                             );
-
-    //set titleLineEdit stylesheet
-    ui->titleLineEdit->setStyleSheet("border: 0px;");
-    ui->textEdit->setStyleSheet("border:0px; background-color:#FFFFFF");
 
     ui->editWidget->layout()->setSpacing(0);
     //设置mainPage内部控件间距为5
-  //  ui->mainPage->layout()->setSpacing(5);
+    //ui->mainPage->layout()->setSpacing(5);
+
     //设置editWidget内部左侧边距
     ui->editWidget->setContentsMargins(3,3,3,3);
-    ui->treeWidget->setColumnCount(1);
-    ui->treeWidget->setColumnWidth(0,40);
 
-    ui->treeWidget->setHeaderLabels(QStringList()<<"first");
-    ui->treeWidget->header()->setStretchLastSection(false);
-    ui->treeWidget->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    //隐藏标题栏
-    ui->treeWidget->header()->setVisible(false);
 
     //set the splitter default-ratio,total=6,leftbar=1,editwidget=5.
     ui->splitter->setStretchFactor(0, 1);
     ui->splitter->setStretchFactor(1, 5);
 
-    //设置背景色为透明
-    ui->treeWidget->setStyleSheet("background-color:transparent;");
 
     //下面这句代码 修改选中行的颜色，但是改的不是很完美，故先注释
     //setStyleSheet("QTreeWidget::item{height:25px;} QTreeView::branch::selected{background-color:#5087E5;} QTreeView::item::selected{background-color:#5087E5;}");
 
-    //设置不同层次菜单的缩进
-    ui->treeWidget->setIndentation(9);
-
     //设置左侧容器内部margin
     ui->leftBar->setContentsMargins(10,20,0,0);
     ui->leftBar->layout()->setSpacing(15);
-    //设置边框不可见
-    ui->treeWidget->setFrameStyle(QFrame::NoFrame);
+
     //通过配置文件，创建node
     nodeconfig::loadConfigXML(ui->treeWidget);
 

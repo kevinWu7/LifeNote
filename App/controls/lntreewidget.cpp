@@ -5,12 +5,9 @@
 #include <QCoreApplication>
 #include <QFile>
 #include <QtGlobal>
+#include <QHeaderView>
 #include "util.h"
 #include "nodeconfig.h"
-
-
-
-
 
 LNTreeWidget::LNTreeWidget(QWidget *parent)
     : QTreeWidget(parent)
@@ -33,6 +30,80 @@ LNTreeWidget::LNTreeWidget(QWidget *parent)
             timer->stop();
         }
     });
+    this->setColumnCount(1);
+    this->setColumnWidth(0,40);
+
+    this->setHeaderLabels(QStringList()<<"first");
+    this->header()->setStretchLastSection(false);
+    this->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    //隐藏标题栏
+    this->header()->setVisible(false);
+    //设置背景色为透明
+    this->setStyleSheet("background-color:transparent;");
+
+    //设置不同层次菜单的缩进
+    this->setIndentation(9);
+    //设置边框不可见
+    this->setFrameStyle(QFrame::NoFrame);
+
+    QScrollBar* horizontalScrollBar=this->horizontalScrollBar();
+    QScrollBar* treewidgetVerticalScrollBar=this->verticalScrollBar();
+
+    treewidgetVerticalScrollBar->setStyleSheet("QScrollBar:vertical"
+                                               "{"
+                                               "width:6px;"
+                                               "background:rgba(0,0,0,0%);"
+                                               "margin:0px,0px,0px,0px;"
+                                               "padding-top:0px;"
+                                               "padding-bottom:0px;"
+                                               "}"
+                                               "QScrollBar::handle:vertical"
+                                               "{"
+                                               "width:6px;"
+                                               "background:rgba(0,0,0,20%);"
+                                               " border-radius:3px;"
+                                               "min-height:20;"
+                                               "}"
+                                               "QScrollBar::handle:vertical:hover"
+                                               "{"
+                                               "width:6px;"
+                                               "background:rgba(0,0,0,35%);"
+                                               " border-radius:3px;"
+                                               "min-height:20;"
+                                               "}"
+                                               "QScrollBar::add-line:vertical" //上箭头，高度设置为0，隐藏掉
+                                               "{height:0px;subcontrol-position:bottom;}"
+                                               "QScrollBar::sub-line:vertical"//下拉箭头，高度设置为0，隐藏掉
+                                               "{height:0px;subcontrol-position:top;}"
+                                               );
+    horizontalScrollBar->setStyleSheet("QScrollBar:horizontal"
+                             "{"
+                             "height:6px;"
+                             "background:rgba(0,0,0,0%);"
+                             "margin:0px,0px,0px,0px;"
+                             "padding-left:0px;"
+                             "padding-right:0px;"
+                             "}"
+                             "QScrollBar::handle:horizontal"
+                             "{"
+                             "height:6px;"
+                             "background:rgba(0,0,0,20%);"
+                             " border-radius:3px;"
+                             "min-width:20;"
+                             "}"
+                             "QScrollBar::handle:horizontal:hover"
+                             "{"
+                             "height:6px;"
+                             "background:rgba(0,0,0,35%);"
+                             " border-radius:3px;"
+                             "min-width:20;"
+                             "}"
+                             "QScrollBar::add-line:horizontal" //左边箭头，宽度设置为0，隐藏掉
+                             "{width:0px;subcontrol-position:left;}"
+                             "QScrollBar::sub-line:horizontal"//右拉箭头，宽度设置为0，隐藏掉
+                             "{width:0px;subcontrol-position:right;}"
+                             );
+
 }
 
 

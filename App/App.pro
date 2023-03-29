@@ -18,6 +18,7 @@ INCLUDEPATH += \
 SOURCES += \
     controls/extraqtreewidgetitem.cpp \
     controls/lntreewidget.cpp \
+    controls/lntextedit.cpp \
     main.cpp \
     util/logger.cpp \
     windows/newnotegroupform.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     base/baseinfo.h \
     controls/extraqtreewidgetitem.h \
     controls/lntreewidget.h \
+    controls/lntextedit.h \
     util/logger.h \
     windows/newnotegroupform.h \
     windows/mainwindow.h \

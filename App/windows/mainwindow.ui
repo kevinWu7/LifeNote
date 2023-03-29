@@ -451,7 +451,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QTextEdit" name="textEdit">
+            <widget class="LNTextEdit" name="textEdit">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -467,9 +467,6 @@
              </property>
              <property name="autoFillBackground">
               <bool>false</bool>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
              </property>
             </widget>
            </item>
@@ -487,7 +484,12 @@
   <customwidget>
    <class>LNTreeWidget</class>
    <extends>QTreeWidget</extends>
-   <header location="global">lntreewidget.h</header>
+   <header>lntreewidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>LNTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>lntextedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

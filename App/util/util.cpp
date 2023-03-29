@@ -6,6 +6,7 @@
 #include<QPainter>
 #include "logger.h"
 #include "extraqtreewidgetitem.h"
+#include <QDir>
 util::util()
 {
 
@@ -160,6 +161,77 @@ void util::SetDomAttrRecur( QDomElement &elem, QString strtagname, QString strat
         auto ele=elem.childNodes().at(i).toElement();
         util::SetDomAttrRecur(ele, strtagname, strattr, strattrval);
     }
+}
+
+
+bool util::cutDir(const QString &source, const QString &destination, bool override)
+{
+    int first = source.lastIndexOf ("/");
+    QString foldername = source.right(source.length()-first-1); //文件夹名
+    auto desfolder=QString("%1/%2").arg(destination,foldername);
+    QDir dirdes;
+    dirdes.mkdir(desfolder);
+    bool result=copyDir(source,desfolder,override);
+    if(result)
+    {
+       QDir dir(source);
+       return dir.removeRecursively();//删除原文件
+    }
+    return false;
+}
+
+/**
+ * @brief 拷贝文件夹到目的文件夹
+ * @param source 源文件夹全路径，比如  "F:/tx" ,"F:/txd/des/desd"
+ * @param source 要COPY到的目的路径 比如 "F:/tx/des/desd"
+ * @param override 如果目的文件存在，比如 "F:/txd/des/desd" 存在，是否覆盖，true表示覆盖
+ */
+bool util::copyDir(const QString &source, const QString &destination, bool override)
+{
+    QDir directory(source);
+    if (!directory.exists())
+    {
+        return false;
+    }
+
+
+    QString srcPath = QDir::toNativeSeparators(source);
+    if (!srcPath.endsWith(QDir::separator()))
+        srcPath += QDir::separator();
+    QString dstPath = QDir::toNativeSeparators(destination);
+    if (!dstPath.endsWith(QDir::separator()))
+        dstPath += QDir::separator();
+
+
+    bool error = false;
+    QStringList fileNames = directory.entryList(QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden);
+    for (QStringList::size_type i=0; i != fileNames.size(); ++i)
+    {
+        QString fileName = fileNames.at(i);
+        QString srcFilePath = srcPath + fileName;
+        QString dstFilePath = dstPath + fileName;
+        QFileInfo fileInfo(srcFilePath);
+        if (fileInfo.isFile() || fileInfo.isSymLink())
+        {
+            if (override)
+            {
+                QFile::setPermissions(dstFilePath, QFile::WriteOwner);
+            }
+            QFile::copy(srcFilePath, dstFilePath);
+        }
+        else if (fileInfo.isDir())
+        {
+            QDir dstDir(dstFilePath);
+            dstDir.mkpath(dstFilePath);
+            if (!copyDir(srcFilePath, dstFilePath, override))
+            {
+                error = true;
+            }
+        }
+    }
+
+
+    return !error;
 }
 
 

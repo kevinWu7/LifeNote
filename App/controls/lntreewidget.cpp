@@ -13,6 +13,8 @@ LNTreeWidget::LNTreeWidget(QWidget *parent)
     : QTreeWidget(parent)
 {
     setDragEnabled(true);
+
+
     setDragDropMode(QAbstractItemView::DragDrop);
     setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
@@ -20,7 +22,7 @@ LNTreeWidget::LNTreeWidget(QWidget *parent)
     QObject::connect(timer, &QTimer::timeout,  [this]() {
         if(this->underMouse())
         {
-             qDebug() << "Timer tick";
+            qDebug() << "Timer tick";
         }
         else
         {
@@ -39,7 +41,7 @@ LNTreeWidget::LNTreeWidget(QWidget *parent)
     //隐藏标题栏
     this->header()->setVisible(false);
     //设置背景色为透明
-    this->setStyleSheet("background-color:transparent;");
+    this->setStyleSheet("background-color: transparent;");
 
     //设置不同层次菜单的缩进
     this->setIndentation(9);
@@ -59,16 +61,14 @@ LNTreeWidget::LNTreeWidget(QWidget *parent)
                                                "}"
                                                "QScrollBar::handle:vertical"
                                                "{"
-                                               "width:6px;"
                                                "background:rgba(0,0,0,20%);"
-                                               " border-radius:3px;"
+                                               "border-radius:3px;"
                                                "min-height:20;"
                                                "}"
                                                "QScrollBar::handle:vertical:hover"
                                                "{"
-                                               "width:6px;"
                                                "background:rgba(0,0,0,35%);"
-                                               " border-radius:3px;"
+                                               "border-radius:3px;"
                                                "min-height:20;"
                                                "}"
                                                "QScrollBar::add-line:vertical" //上箭头，高度设置为0，隐藏掉
@@ -77,32 +77,32 @@ LNTreeWidget::LNTreeWidget(QWidget *parent)
                                                "{height:0px;subcontrol-position:top;}"
                                                );
     horizontalScrollBar->setStyleSheet("QScrollBar:horizontal"
-                             "{"
-                             "height:6px;"
-                             "background:rgba(0,0,0,0%);"
-                             "margin:0px,0px,0px,0px;"
-                             "padding-left:0px;"
-                             "padding-right:0px;"
-                             "}"
-                             "QScrollBar::handle:horizontal"
-                             "{"
-                             "height:6px;"
-                             "background:rgba(0,0,0,20%);"
-                             " border-radius:3px;"
-                             "min-width:20;"
-                             "}"
-                             "QScrollBar::handle:horizontal:hover"
-                             "{"
-                             "height:6px;"
-                             "background:rgba(0,0,0,35%);"
-                             " border-radius:3px;"
-                             "min-width:20;"
-                             "}"
-                             "QScrollBar::add-line:horizontal" //左边箭头，宽度设置为0，隐藏掉
-                             "{width:0px;subcontrol-position:left;}"
-                             "QScrollBar::sub-line:horizontal"//右拉箭头，宽度设置为0，隐藏掉
-                             "{width:0px;subcontrol-position:right;}"
-                             );
+                                       "{"
+                                       "height:6px;"
+                                       "background:rgba(0,0,0,0%);"
+                                       "margin:0px,0px,0px,0px;"
+                                       "padding-left:0px;"
+                                       "padding-right:0px;"
+                                       "}"
+                                       "QScrollBar::handle:horizontal"
+                                       "{"
+                                       "height:6px;"
+                                       "background:rgba(0,0,0,20%);"
+                                       " border-radius:3px;"
+                                       "min-width:20;"
+                                       "}"
+                                       "QScrollBar::handle:horizontal:hover"
+                                       "{"
+                                       "height:6px;"
+                                       "background:rgba(0,0,0,35%);"
+                                       " border-radius:3px;"
+                                       "min-width:20;"
+                                       "}"
+                                       "QScrollBar::add-line:horizontal" //左边箭头，宽度设置为0，隐藏掉
+                                       "{width:0px;subcontrol-position:left;}"
+                                       "QScrollBar::sub-line:horizontal"//右拉箭头，宽度设置为0，隐藏掉
+                                       "{width:0px;subcontrol-position:right;}"
+                                       );
 
 }
 
@@ -224,7 +224,6 @@ void LNTreeWidget::dragMoveEvent(QDragMoveEvent *event)
     {
         //qDebug() << "Drag item:" << targetItem->text(0);
         event->acceptProposedAction();
-
     }
 }
 
@@ -257,8 +256,18 @@ void LNTreeWidget::dropEvent(QDropEvent *event)
 
     //移动本地存储文件到回收站
     QString fileName = util::treeItemToFileName(draggedItem); //文件名称，如xxx.html
-    auto tragetFile=QString("%1/%2").arg(targetItemPath,fileName);
-    bool moveResult= QFile::rename(fullPath,tragetFile); //A路径移动到B路径
+    bool moveResult=false;
+    QDir dir;
+    if(draggedItem->nodeType==BaseInfo::Parent)
+    {
+       //moveResult= dir.rename(fullPath,targetItemPath)
+       moveResult=util::cutDir(fullPath,targetItemPath,true);
+    }
+    else
+    {
+        auto tragetFile=QString("%1/%2").arg(targetItemPath,fileName);
+        moveResult= QFile::rename(fullPath,tragetFile); //A路径移动到B路径
+    }
     std::string str="move node and move file "+ std::string(moveResult ? "true": "false") ;
     logger->log(str);
 
@@ -270,12 +279,19 @@ void LNTreeWidget::dropEvent(QDropEvent *event)
     nodeconfig::updateXml(BaseInfo::MoveNode,draggedItem,targetItem);
 
     draggedItem->deleteType=1;
-    draggedItem->parent()->removeChild(draggedItem);//this line will trigger currentTreeItemChanged immediately
+    if(draggedItem->parent()!=nullptr)
+    {
+        draggedItem->parent()->removeChild(draggedItem);//this line will trigger currentTreeItemChanged immediately
+    }
+    else
+    {
+        int topIndex=indexOfTopLevelItem(draggedItem);
+        takeTopLevelItem(topIndex);
+    }
     draggedItem->deleteType=0;
 
     targetItem->addChild(draggedItem);
     this->setCurrentItem(draggedItem);
-
 }
 
 

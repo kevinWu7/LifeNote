@@ -24,6 +24,7 @@ public:
     static QIcon CreateColorSvgIcon(const QString &path,const QString &color,const QString& opacity="1");
     static bool copyDir(const QString &source, const QString &destination, bool override);
     static bool cutDir(const QString &source, const QString &destination, bool override);
+    static bool isChildItem(QTreeWidgetItem* parentItem, QTreeWidgetItem* childItem);
     static std::map<int,std::string> colorBtnMap;
     static std::vector<QString> fontVector;
 

@@ -234,4 +234,17 @@ bool util::copyDir(const QString &source, const QString &destination, bool overr
     return !error;
 }
 
+bool util::isChildItem(QTreeWidgetItem* parentItem, QTreeWidgetItem* childItem)
+{
+    while (childItem != nullptr)
+    {
+        if (childItem == parentItem)
+        {
+            return true;
+        }
+        childItem = childItem->parent();
+    }
+    return false;
+}
+
 

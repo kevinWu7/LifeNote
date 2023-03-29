@@ -6,6 +6,7 @@
 #include <QFile>
 #include <QtGlobal>
 #include <QHeaderView>
+#include <QMessageBox>
 #include "util.h"
 #include "nodeconfig.h"
 
@@ -247,6 +248,11 @@ void LNTreeWidget::dropEvent(QDropEvent *event)
         return;
     }
     ExtraQTreeWidgetItem *draggedItem =dynamic_cast<ExtraQTreeWidgetItem*>(currentItem());
+    if(util::isChildItem(draggedItem,targetItem))
+    {
+        QMessageBox::warning(this, tr("警告"),tr("\n无法将父节点移动到子节点下!"),QMessageBox::Ok);
+        return;
+    }
 
 
     auto currentPath=STORAGE_PATH;

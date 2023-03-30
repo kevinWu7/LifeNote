@@ -163,7 +163,7 @@ void util::SetDomAttrRecur( QDomElement &elem, QString strtagname, QString strat
     }
 }
 
-
+//剪切文件夹。比如把整个/bin 剪切到c://aaa下面，就变成了c:/aaa/bin
 bool util::cutDir(const QString &source, const QString &destination, bool override)
 {
     int first = source.lastIndexOf ("/");
@@ -181,7 +181,7 @@ bool util::cutDir(const QString &source, const QString &destination, bool overri
 }
 
 /**
- * @brief 拷贝文件夹到目的文件夹
+ * @brief 拷贝文件夹内的所有文件到目的文件夹。比如/bin下面有a.txt,b.txt,这两个会拷贝过去。bin文件夹在原地
  * @param source 源文件夹全路径，比如  "F:/tx" ,"F:/txd/des/desd"
  * @param source 要COPY到的目的路径 比如 "F:/tx/des/desd"
  * @param override 如果目的文件存在，比如 "F:/txd/des/desd" 存在，是否覆盖，true表示覆盖
@@ -193,7 +193,6 @@ bool util::copyDir(const QString &source, const QString &destination, bool overr
     {
         return false;
     }
-
 
     QString srcPath = QDir::toNativeSeparators(source);
     if (!srcPath.endsWith(QDir::separator()))
@@ -229,8 +228,6 @@ bool util::copyDir(const QString &source, const QString &destination, bool overr
             }
         }
     }
-
-
     return !error;
 }
 

@@ -41,8 +41,6 @@ LNTreeWidget::LNTreeWidget(QWidget *parent)
     this->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     //隐藏标题栏
     this->header()->setVisible(false);
-    //设置背景色为透明
-    this->setStyleSheet("background-color: transparent;");
 
     //设置不同层次菜单的缩进
     this->setIndentation(9);
@@ -250,12 +248,9 @@ void LNTreeWidget::dropEvent(QDropEvent *event)
     ExtraQTreeWidgetItem *draggedItem =dynamic_cast<ExtraQTreeWidgetItem*>(currentItem());
     if(util::isChildItem(draggedItem,targetItem))
     {
-        QMessageBox::warning(this, tr("警告"),tr("\n无法将父节点移动到子节点下!"),QMessageBox::Ok);
+        QMessageBox::warning(this, tr("警告"),tr("\n无法将父节点移动到子节点下!"));
         return;
     }
-
-
-    auto currentPath=STORAGE_PATH;
     auto fullPath= util::treeItemToFullFilePath(draggedItem); //如d:/sotrage/xxx.html
     auto targetItemPath=util::treeItemToFullFilePath(targetItem);
 
@@ -263,11 +258,9 @@ void LNTreeWidget::dropEvent(QDropEvent *event)
     //移动本地存储文件到回收站
     QString fileName = util::treeItemToFileName(draggedItem); //文件名称，如xxx.html
     bool moveResult=false;
-    QDir dir;
     if(draggedItem->nodeType==BaseInfo::Parent)
     {
-       //moveResult= dir.rename(fullPath,targetItemPath)
-       moveResult=util::cutDir(fullPath,targetItemPath,true);
+        moveResult=util::cutDir(fullPath,targetItemPath,true);
     }
     else
     {

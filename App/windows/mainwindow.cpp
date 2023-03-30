@@ -20,12 +20,10 @@ MainWindow::MainWindow(QWidget *parent)
     this->setStyleSheet("QTreeWidget::item{height:25px;}");
 
     //设置左侧侧边栏样式
-    ui->leftBar->setStyleSheet("QAbstractButton{min-height:17px;max-height:17px;margin:0px;border:none;} "
-                               "QAbstractButton#addnewBtn{min-height:20px;max-height:20px;}"
+    ui->leftBar->setStyleSheet("QAbstractButton#addnewBtn{min-height:20px;max-height:20px;margin:0px;border:none;}"
                                "QWidget#leftBar"
                                "{background-color:#FFFFFF;"
-                               "border-radius:7px}"
-                               );
+                               "border-radius:7px}");
     ui->titleBar->setStyleSheet("QToolButton{border:none;} "
                                 "QToolButton:checked{background-color:rgb(218, 218, 218)}"
                                 "QToolButton:hover{background-color:rgb(218, 218, 218)}"

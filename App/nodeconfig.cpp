@@ -48,7 +48,7 @@ void nodeconfig::loadConfigXML(QTreeWidget *tree_widget)
             {
                 node_info *node = new node_info();
                 node->node_name=reader.name().toString();
-                BaseInfo::NodeType isParent=BaseInfo::Child;
+                NodeType isParent=ChildNode;
                 node->widgetitem=new ExtraQTreeWidgetItem(isParent);
                 foreach (const QXmlStreamAttribute & attribute, reader.attributes())
                 {
@@ -56,7 +56,7 @@ void nodeconfig::loadConfigXML(QTreeWidget *tree_widget)
                     logger->log(attribute.value().toString());
                     if(attribute.name().toString()==ATTRIBUTE_NOTETYPE)
                     {
-                        isParent= attribute.value().toString()=="0"?BaseInfo::Child:BaseInfo::Parent;
+                        isParent= attribute.value().toString()=="0"?ChildNode:ParentNode;
                     }
                     else if(attribute.name().toString()==ATTRIBUTE_COLORINDEX)
                     {
@@ -127,7 +127,7 @@ void nodeconfig::loadConfigXML(QTreeWidget *tree_widget)
 
 //currentNode is The node which is being operated
 //newNode is the Node in the Add  OperationType and UPDATE
-void nodeconfig::updateXml(BaseInfo::OperationType type,QTreeWidgetItem *currentNode,QTreeWidgetItem *newNode)
+void nodeconfig::updateXml(OperationType type,QTreeWidgetItem *currentNode,QTreeWidgetItem *newNode)
 {
     QString filePath =STORAGE_PATH+ CONFIG_PATH;
     QFile file(filePath);
@@ -145,7 +145,7 @@ void nodeconfig::updateXml(BaseInfo::OperationType type,QTreeWidgetItem *current
         return;
     }
     file.close();
-    if(type==BaseInfo::AddNode||type==BaseInfo::AddNodeGroup)
+    if(type==AddNode||type==AddNodeGroup)
     {
         auto path=util::treeItemToNodePath(currentNode);
         QDomNode parentDomElement=selectSingleNode(path,&doc);
@@ -157,13 +157,13 @@ void nodeconfig::updateXml(BaseInfo::OperationType type,QTreeWidgetItem *current
             newDomElement.setAttribute(ATTRIBUTE_STARTFLAG,"true");
         }
         parentDomElement.appendChild(newDomElement);
-        newDomElement.setAttribute(ATTRIBUTE_NOTETYPE,type==BaseInfo::AddNode?0:1);
-        if(type==BaseInfo::AddNodeGroup&&currentNode!=NULL)
+        newDomElement.setAttribute(ATTRIBUTE_NOTETYPE,type==AddNode?0:1);
+        if(type==AddNodeGroup&&currentNode!=NULL)
         {
             newDomElement.setAttribute(ATTRIBUTE_COLORINDEX,dynamic_cast<ExtraQTreeWidgetItem*>(currentNode)->colorIndex);
         }
     }
-    else if(type==BaseInfo::MoveNode)
+    else if(type==MoveNode)
     {
         auto path=util::treeItemToNodePath(currentNode);
         QDomNode domElement=selectSingleNode(path,&doc);
@@ -174,7 +174,7 @@ void nodeconfig::updateXml(BaseInfo::OperationType type,QTreeWidgetItem *current
         QDomNode recyleDomNode=selectSingleNode(recylePath,&doc);
         recyleDomNode.appendChild(domElement);
     }
-    else if(type==BaseInfo::DeleteNode)
+    else if(type==DeleteNode)
     {
         auto path=util::treeItemToNodePath(currentNode);
         QDomNode domElement=selectSingleNode(path,&doc);

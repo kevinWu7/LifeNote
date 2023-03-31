@@ -1,16 +1,13 @@
 #include "util.h"
 #include "baseinfo.h"
-#include <QApplication>
-#include<QFile>
-#include<QSvgRenderer>
-#include<QPainter>
 #include "logger.h"
 #include "extraqtreewidgetitem.h"
+#include <QApplication>
+#include <QFile>
+#include <QSvgRenderer>
+#include <QPainter>
 #include <QDir>
-util::util()
-{
 
-}
 
 std::map<int, std::string> util::colorBtnMap = {
     {0, "rgb(125,180,255)"}, {1, "rgb(212,171,128)"}, {2, "rgb(168,119,199)"},
@@ -63,11 +60,11 @@ QString util::treeItemToFullFilePath(QTreeWidgetItem* treeItem)
     //保存上一个节点的内容
     QString nodePath=treeItemToNodePath(treeItem);
     auto type= dynamic_cast<ExtraQTreeWidgetItem*>(treeItem)->nodeType;
-    if(type==BaseInfo::Child)
+    if(type==ChildNode)
     {
         return QString("%1/storage/%2.html").arg(currentPath,nodePath);
     }
-    else if(type==BaseInfo::Parent)
+    else if(type==ParentNode)
     {
         return QString("%1/storage/%2").arg(currentPath,nodePath);
     }
@@ -200,7 +197,6 @@ bool util::copyDir(const QString &source, const QString &destination, bool overr
     QString dstPath = QDir::toNativeSeparators(destination);
     if (!dstPath.endsWith(QDir::separator()))
         dstPath += QDir::separator();
-
 
     bool error = false;
     QStringList fileNames = directory.entryList(QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden);

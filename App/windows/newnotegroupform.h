@@ -25,9 +25,9 @@ public:
     void mouseMoveEvent(QMouseEvent *event) override;
 
     //记录鼠标，窗口位置
-    QPoint windowPos;
-    QPoint mousePos;
-    QPoint dPos;
+    QPointF windowPos;
+    QPointF mousePos;
+    QPointF dPos;
 
     void cancleBtn_clicked();
     void okBtn_clicked();

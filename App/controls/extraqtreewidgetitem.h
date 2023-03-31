@@ -8,7 +8,7 @@ class ExtraQTreeWidgetItem:public QTreeWidgetItem
 {
 public:
 
-    ExtraQTreeWidgetItem(BaseInfo::NodeType type);
+    ExtraQTreeWidgetItem(NodeType type);
     //0 is normal
     //1 is deleted
     int deleteType = 0;
@@ -20,7 +20,7 @@ public:
     QString colorIndex="0";
 
     //this is to distinguish menu add note（新建笔记） or menu add node group（新建笔记本）
-    BaseInfo::NodeType nodeType=BaseInfo::Child;
+    NodeType nodeType=ChildNode;
 };
 
 

@@ -36,7 +36,7 @@ NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
                                 "border-radius: 5px; "
                                 "color:rgb(255,255,255)"
                                 "}"
-                                ).arg("16px").arg("8px").arg("85px").arg("18px"));
+                                ).arg("16px","8px","85px","18px"));
     ui->nameLineEdit->setText(NewNoteGroupTip);
     InitColorPushBtn();   
     InitRoundRadius();
@@ -105,13 +105,14 @@ NewNoteGroupForm::~NewNoteGroupForm()
 void NewNoteGroupForm::mousePressEvent(QMouseEvent *event)
 {
     this->windowPos = this->pos();       // 获得部件当前位置
-    this->mousePos = event->globalPos(); // 获得鼠标位置
+    this->mousePos = event->globalPosition(); // 获得鼠标位置
     this->dPos = mousePos - windowPos;   // 移动后部件所在的位置
 }
 
 void NewNoteGroupForm::mouseMoveEvent(QMouseEvent *event)
 {
-    this->move(event->globalPos() - this->dPos);
+    this->move(event->globalPosition().x() - this->dPos.x(),
+               event->globalPosition().y() - this->dPos.y());
 }
 
 void NewNoteGroupForm::okBtn_clicked()

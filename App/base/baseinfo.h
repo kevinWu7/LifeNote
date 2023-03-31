@@ -11,24 +11,20 @@
 #define  ATTRIBUTE_STARTFLAG "isStartWithDigit"
 #define  WINDOW_TITLE "理想之城"
 
-
-class BaseInfo
+enum OperationType
 {
-public:
-    enum OperationType
-    {
-        AddNode,
-        AddNodeGroup,
-        DeleteNode,
-        MoveNode,
-        RenameNode,
-    };
-
-    enum NodeType
-    {
-        Child,
-        Parent,
-    };
+    AddNode,
+    AddNodeGroup,
+    DeleteNode,
+    MoveNode,
+    RenameNode,
 };
+
+enum NodeType
+{
+    ChildNode,
+    ParentNode,
+};
+
 
 #endif // BASEINFO_H

@@ -16,7 +16,6 @@ protected:
     void enterEvent(QEnterEvent *event) override;
     void leaveEvent(QEvent *event) override;
     void dropEvent(QDropEvent *event) override;
-    void startDrag1(Qt::DropActions supportedActions);//暂时先不实现这个stargDrag
     void mousePressEvent(QMouseEvent *event) override;
     void dragMoveEvent(QDragMoveEvent *event) override;
     void dragLeaveEvent(QDragLeaveEvent *event) override;

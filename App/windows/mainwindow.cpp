@@ -229,13 +229,13 @@ void MainWindow::onAddnewBtn_clicked()
 
 void MainWindow::onFontAddBtn_clicked()
 {
-     int realIndex=ui->fontComboBox->currentIndex();
+     size_t realIndex=ui->fontComboBox->currentIndex();
      ui->fontComboBox->setCurrentIndex(realIndex==util::fontVector.size()-1?realIndex:realIndex+1);
 }
 
 void MainWindow::onFontReduceBtn_clicked()
 {
-    int realIndex=ui->fontComboBox->currentIndex();
+    size_t realIndex=ui->fontComboBox->currentIndex();
     ui->fontComboBox->setCurrentIndex(realIndex==0?0:realIndex-1);
 }
 
@@ -300,7 +300,7 @@ void MainWindow::onNewNoteGroupItemClick()
     {
         return;
     }
-    ExtraQTreeWidgetItem *newItem=new ExtraQTreeWidgetItem(BaseInfo::Parent);
+    ExtraQTreeWidgetItem *newItem=new ExtraQTreeWidgetItem( ParentNode);
     ((ExtraQTreeWidgetItem*)newItem)->isNewNode=1;
     //Q:为什么传入这个，执行完函数后nodes就被清空了？ A：因为takeChildren这个方法就是移除的作用，一般不要用
    // auto childrens=ui->treeWidget->currentItem()->takeChildren();
@@ -338,7 +338,7 @@ void MainWindow::onNewNoteItemClick()
     {
         return;
     }
-    QTreeWidgetItem *newItem=new ExtraQTreeWidgetItem(BaseInfo::Child);
+    QTreeWidgetItem *newItem=new ExtraQTreeWidgetItem(ChildNode);
     ((ExtraQTreeWidgetItem*)newItem)->isNewNode=1;
     int count=ui->treeWidget->currentItem()->childCount();
     QList<QTreeWidgetItem*> qlist;
@@ -381,7 +381,7 @@ void MainWindow::onDeleteNoteItemClick()
             int topIndex= ui->treeWidget->indexOfTopLevelItem(currentNode);
             logger->log( QString::number(topIndex));
             ui->treeWidget->takeTopLevelItem(topIndex);
-            nodeconfig::updateXml(BaseInfo::DeleteNode,currentNode);
+            nodeconfig::updateXml( DeleteNode,currentNode);
             //delete local floder
             QDir dir(fullPath);
             dir.removeRecursively();
@@ -404,7 +404,7 @@ void MainWindow::onDeleteNoteItemClick()
     else
     {
         //若是非回收站的数据
-        if(currentNode->nodeType==BaseInfo::Parent)//父节点
+        if(currentNode->nodeType== ParentNode)//父节点
         {
             if(currentNode->childCount()>0)
             {
@@ -430,18 +430,18 @@ void MainWindow::onDeleteNoteItemClick()
     //delete doc(updateXml) must be ahead of the QTreeWidget'Node delete
     //because updateXml function is depend on the Node struct
     //delete directly if node is parentNode
-    if(isRecycle||currentNode->nodeType==BaseInfo::Parent)
+    if(isRecycle||currentNode->nodeType==ParentNode)
     {
-        nodeconfig::updateXml(BaseInfo::DeleteNode,currentNode);
+        nodeconfig::updateXml(DeleteNode,currentNode);
     }
     else
     {
-        nodeconfig::updateXml(BaseInfo::MoveNode,currentNode,recycleNode);
+        nodeconfig::updateXml(MoveNode,currentNode,recycleNode);
     }
     currentNode->deleteType=1;
     currentNode->parent()->removeChild(currentNode);//this line will trigger currentTreeItemChanged immediately
     currentNode->deleteType=0;
-    if(!isRecycle && currentNode->nodeType==BaseInfo::Child) //if parentNode is recycle,not need to add
+    if(!isRecycle && currentNode->nodeType==ChildNode) //if parentNode is recycle,not need to add
     {
         recycleNode->addChild(currentNode);
     }
@@ -451,7 +451,7 @@ void MainWindow::onDeleteNoteItemClick()
 //right-click Menu, recover Note
 void MainWindow::onRecoverNoteItemClick()
 {
-    ExtraQTreeWidgetItem* currentNode=dynamic_cast<ExtraQTreeWidgetItem*>(ui->treeWidget->currentItem());
+    //ExtraQTreeWidgetItem* currentNode=dynamic_cast<ExtraQTreeWidgetItem*>(ui->treeWidget->currentItem());
     auto path= util::treeItemToNodeDirPath(ui->treeWidget->currentItem());
     auto currentPath= STORAGE_PATH;
 
@@ -483,7 +483,7 @@ void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
 {
     //treewidget添加节点
     int count=ui->treeWidget->topLevelItemCount();
-    auto newTopNode=new ExtraQTreeWidgetItem(BaseInfo::Parent);
+    auto newTopNode=new ExtraQTreeWidgetItem(ParentNode);
     QList<QTreeWidgetItem*> qlist;
     auto f=[&]()
     {
@@ -555,7 +555,7 @@ void MainWindow::onMenuToShow()
     auto item=ui->treeWidget->currentItem();
     auto extraItem=dynamic_cast<ExtraQTreeWidgetItem*>(item);
 
-    if(extraItem->nodeType==BaseInfo::Child)
+    if(extraItem->nodeType==ChildNode)
     {
         newNoteAction->setVisible(false);
         newNoteGroupAction->setVisible(false);
@@ -602,7 +602,7 @@ void MainWindow::onMenuToShow()
     }
 }
 
-void MainWindow::right_item_pressed(QTreeWidgetItem *item, int column)
+void MainWindow::right_item_pressed()
 {
     if(QGuiApplication::mouseButtons()!= Qt::RightButton)
     {
@@ -642,7 +642,7 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
     //when delete node,the focus will be changed,and this function will be trigger.
     //so when the previous node is deleted, it's deletetype is 1 , don't save the previous node content.
     //otherwise, delete node, the local file will be create again.
-    if(previous!=nullptr && extraPreviousNode->deleteType==0 && ((ExtraQTreeWidgetItem*)previous)->nodeType==BaseInfo::Child)
+    if(previous!=nullptr && extraPreviousNode->deleteType==0 && ((ExtraQTreeWidgetItem*)previous)->nodeType== ChildNode)
     {
         auto previewFullPath=util::treeItemToFullFilePath(previous); //如d:/sotrage/xxx.html
         //解析出路径（不含文件名）和文件名
@@ -670,7 +670,7 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
         return;
     }
     //若是笔记本group，则将文本清空
-    if(((ExtraQTreeWidgetItem*)current)->nodeType==BaseInfo::Parent)
+    if(((ExtraQTreeWidgetItem*)current)->nodeType==ParentNode)
     {
         ui->textEdit->setHtml("");
         ui->titleLineEdit->setText(current->text(0));
@@ -759,7 +759,7 @@ void MainWindow::setItemIcon(ExtraQTreeWidgetItem* child)
 {
     int childCount = child->childCount();
     auto color=util::colorBtnMap[child->colorIndex.toInt()];
-    if(childCount>0||child->nodeType==BaseInfo::Parent)
+    if(childCount>0||child->nodeType==ParentNode)
     {
         if(child->parent()==nullptr&&child->text(0)==NODENAME_COLLECT) //顶级系统节点-收藏
         {
@@ -778,7 +778,7 @@ void MainWindow::setItemIcon(ExtraQTreeWidgetItem* child)
         for (int j = 0; j < childCount; ++j)
         {
             ExtraQTreeWidgetItem * grandson = dynamic_cast<ExtraQTreeWidgetItem*>(child->child(j));
-            if(grandson->childCount()>0||grandson->nodeType==BaseInfo::Parent)
+            if(grandson->childCount()>0||grandson->nodeType== ParentNode)
             {
                 setItemIcon(grandson);
             }
@@ -822,14 +822,14 @@ void MainWindow::onTitleLineEditEditingFinished()
 
     // update the local file change
     auto extraItem =dynamic_cast<ExtraQTreeWidgetItem *>(currentItem);
-    BaseInfo::OperationType type = extraItem->isNewNode==1?
-                (extraItem->nodeType == BaseInfo::Child ?
-                     BaseInfo::AddNode:
-                     BaseInfo::AddNodeGroup)
-              :BaseInfo::RenameNode;
-    if(type==BaseInfo::RenameNode)
+    OperationType type = extraItem->isNewNode==1?
+                (extraItem->nodeType == ChildNode ?
+                     AddNode:
+                     AddNodeGroup)
+              :RenameNode;
+    if(type==RenameNode)
     {
-        if(((ExtraQTreeWidgetItem*)currentItem)->nodeType==BaseInfo::Child)
+        if(((ExtraQTreeWidgetItem*)currentItem)->nodeType==ChildNode)
         {
             QFile file(fileFullPath);
             file.rename(fileNewPath+"/"+ui->titleLineEdit->text()+".html");
@@ -858,7 +858,7 @@ void MainWindow::onTitleLineEditEditingFinished()
 
     nodeconfig::updateXml(type, currentItem->parent(),currentItem);
 
-    if (type == BaseInfo::AddNodeGroup)
+    if (type == AddNodeGroup)
     {
         //新增本地文件夹
         QString dirpath = util::treeItemToFullFilePath(extraItem);
@@ -869,7 +869,7 @@ void MainWindow::onTitleLineEditEditingFinished()
         }
         extraItem->isNewNode=0;//reset isNewNode status
     }
-    else if (type == BaseInfo::AddNode)
+    else if (type ==  AddNode)
     {
         //创建本地空文档html
         QString filePath = util::treeItemToFullFilePath(currentItem);
@@ -891,7 +891,7 @@ void MainWindow::onApplicationQuit()
     }
     //save qtextedit  modify data
     auto node =ui->treeWidget->currentItem();
-    if(node==nullptr||dynamic_cast<ExtraQTreeWidgetItem*>(node)->nodeType==BaseInfo::Parent)
+    if(node==nullptr||dynamic_cast<ExtraQTreeWidgetItem*>(node)->nodeType== ParentNode)
     {
         return;
     }

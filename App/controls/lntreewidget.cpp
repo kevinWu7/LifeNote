@@ -148,28 +148,6 @@ void LNTreeWidget::mousePressEvent(QMouseEvent *event)
     QTreeWidget::mousePressEvent(event);
 }
 
-void LNTreeWidget::startDrag1(Qt::DropActions supportedActions)
-{
-    // Get the currently selected item
-    QTreeWidgetItem *item = currentItem();
-
-    // Create a custom pixmap for the drag image
-    QPixmap pixmap(":/res/icons/underline.png");
-    QPixmap scaledPixmap = pixmap.scaled(QSize(32, 32), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    // Create a drag object and set the pixmap as the drag image
-    QDrag *drag = new QDrag(this);
-    drag->setPixmap(scaledPixmap);
-
-    // Set the MIME type for the drag
-    QMimeData *mimeData = new QMimeData();
-    mimeData->setData("application/x-qabstractitemmodeldatalist", QByteArray());
-    drag->setMimeData(mimeData);
-
-    // Start the drag
-    drag->exec(Qt::MoveAction);
-}
-
-
 void LNTreeWidget::dragLeaveEvent(QDragLeaveEvent *event)
 {
     QTreeWidget::dragLeaveEvent(event);
@@ -191,7 +169,7 @@ void LNTreeWidget::dragMoveEvent(QDragMoveEvent *event)
         return;
     }
     ExtraQTreeWidgetItem* targetItem =dynamic_cast<ExtraQTreeWidgetItem*>(this->itemFromIndex(modelIndex));
-    if(targetItem->nodeType==BaseInfo::Parent)
+    if(targetItem->nodeType=  ParentNode)
     {
        if(coloredItem.size()==0)
        {
@@ -241,7 +219,7 @@ void LNTreeWidget::dropEvent(QDropEvent *event)
          return;
     }
     ExtraQTreeWidgetItem* targetItem = dynamic_cast<ExtraQTreeWidgetItem*>(this->itemFromIndex(modelIndex));
-    if(targetItem->nodeType==BaseInfo::Child)
+    if(targetItem->nodeType==  ChildNode)
     {
         return;
     }
@@ -258,7 +236,7 @@ void LNTreeWidget::dropEvent(QDropEvent *event)
     //移动本地存储文件到回收站
     QString fileName = util::treeItemToFileName(draggedItem); //文件名称，如xxx.html
     bool moveResult=false;
-    if(draggedItem->nodeType==BaseInfo::Parent)
+    if(draggedItem->nodeType==  ParentNode)
     {
         moveResult=util::cutDir(fullPath,targetItemPath,true);
     }
@@ -275,7 +253,7 @@ void LNTreeWidget::dropEvent(QDropEvent *event)
     //because updateXml function is depend on the Node struct
     //delete directly if node is parentNode
 
-    nodeconfig::updateXml(BaseInfo::MoveNode,draggedItem,targetItem);
+    nodeconfig::updateXml(  MoveNode,draggedItem,targetItem);
 
     draggedItem->deleteType=1;
     if(draggedItem->parent()!=nullptr)

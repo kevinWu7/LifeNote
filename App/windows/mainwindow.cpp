@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    logger->logEdit=ui->loggerTextEdit;
     logger->log(QDir::currentPath());
     logger->log(QString("start the application....."));
     ui->mainPage->setStyleSheet("QWidget#mainPage{background-color:rgb(219,220,223");
@@ -35,8 +36,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->editWidget->setStyleSheet("QWidget#editWidget"
                                   "{background-color:#FFFFFF;"
                                   "border-radius:7px}");
-
-
+    ui->loggerTextEdit->setStyleSheet("QWidget#loggerTextEdit"
+                                  "{background-color:#FFFFFF;"
+                                  "border-radius:7px}");
+    ui->loggerTextEdit->setVisible(false);
+    ui->loggerTextEdit->isAutoHide=false;
     ui->editWidget->layout()->setSpacing(0);
     //设置mainPage内部控件间距为5
     //ui->mainPage->layout()->setSpacing(5);
@@ -45,10 +49,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->editWidget->setContentsMargins(3,3,3,3);
 
 
-    //set the splitter default-ratio,total=6,leftbar=1,editwidget=5.
-    ui->splitter->setStretchFactor(0, 1);
-    ui->splitter->setStretchFactor(1, 5);
-
+    //set the splitter default-ratio,total=9,leftbar=2,editwidget=7.
+    ui->controlSplitter->setStretchFactor(0, 2); //代表第0个控件，即leftbar所占比例为2
+    ui->controlSplitter->setStretchFactor(1, 7);//代表第1个控件，即textedit所占比例为7.一共是9
+    //设置logger输出框，占比为3/8
+    ui->mainSplitter->setStretchFactor(0,5);
+    ui->mainSplitter->setStretchFactor(1,3);
 
     //下面这句代码 修改选中行的颜色，但是改的不是很完美，故先注释
     //setStyleSheet("QTreeWidget::item{height:25px;} QTreeView::branch::selected{background-color:#5087E5;} QTreeView::item::selected{background-color:#5087E5;}");
@@ -118,6 +124,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(recoverNoteAction, SIGNAL(triggered(bool)), this , SLOT(onRecoverNoteItemClick()));
     connect(ui->titleLineEdit,&QLineEdit::editingFinished,this,&MainWindow::onTitleLineEditEditingFinished);
     connect(qApp, &QApplication::aboutToQuit,this ,&MainWindow::onApplicationQuit);
+    connect(ui->logCheck,&QCheckBox::stateChanged,this,&MainWindow::logCheckStateChanged);
 }
 
 
@@ -288,6 +295,18 @@ void MainWindow::comboBoxCurrentIndexChanged()
     ui->textEdit->setCurrentFont(font);
 }
 
+void MainWindow::logCheckStateChanged(int state)
+{
+    if(state==Qt::Checked)
+    {
+        ui->loggerTextEdit->setVisible(true);
+
+    }
+    else
+    {
+        ui->loggerTextEdit->setVisible(false);
+    }
+}
 #pragma endregion }
 
 
@@ -478,6 +497,8 @@ void MainWindow::onLockItemClick()
 }
 
 #pragma endregion}
+
+
 
 void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
 {

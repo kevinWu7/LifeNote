@@ -25,8 +25,6 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -34,6 +32,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
 
 //重写键盘函数
 public:
@@ -59,6 +58,7 @@ private:
     void initTopLevelNode();
     void initfontCombobox();
     void setLineVerticalInterval();
+
     NewNoteGroupForm * newGroupForm=nullptr;
     QTextBlockFormat *blockFormat=nullptr;//to set qtextedit vertical interval 3
 
@@ -85,7 +85,7 @@ public slots:
     void onDeleteNoteItemClick();
     void onRecoverNoteItemClick();
     void onMenuToShow();
-
+    void logCheckStateChanged(int state);
     void onTitleLineEditEditingFinished();
     //接收新建笔记本子窗体的消息
     void onReceiveNewGroupFormData(QString nodeName,int color_index);

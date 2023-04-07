@@ -169,7 +169,7 @@ void LNTreeWidget::dragMoveEvent(QDragMoveEvent *event)
         return;
     }
     ExtraQTreeWidgetItem* targetItem =dynamic_cast<ExtraQTreeWidgetItem*>(this->itemFromIndex(modelIndex));
-    if(targetItem->nodeType=  ParentNode)
+    if(targetItem->nodeType==ParentNode)
     {
        if(coloredItem.size()==0)
        {
@@ -219,7 +219,7 @@ void LNTreeWidget::dropEvent(QDropEvent *event)
          return;
     }
     ExtraQTreeWidgetItem* targetItem = dynamic_cast<ExtraQTreeWidgetItem*>(this->itemFromIndex(modelIndex));
-    if(targetItem->nodeType==  ChildNode)
+    if(targetItem->nodeType==ChildNode)
     {
         return;
     }

@@ -48,8 +48,12 @@ LNTextEdit::LNTextEdit(QWidget *parent)
 
 void LNTextEdit::leaveEvent(QEvent *event)
 {
-    // 处理整个控件的鼠标移入事件
     // 隐藏水平滚动条
     QTextEdit::leaveEvent(event);
-    timer->start(1000);  // Tick every 1 second
+    if(isAutoHide)
+    {
+       timer->start(1000);  // Tick every 1 second
+    }
 }
+
+

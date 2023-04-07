@@ -10,6 +10,7 @@ class LNTextEdit : public QTextEdit
 public:
     LNTextEdit(QWidget *parent);
     void leaveEvent(QEvent *event) override;
+    bool isAutoHide=true;
 private:
     QTimer *timer=nullptr;
 };

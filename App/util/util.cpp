@@ -56,7 +56,6 @@ QString util::treeItemToFileName(QTreeWidgetItem* treeItem)
 QString util::treeItemToFullFilePath(QTreeWidgetItem* treeItem)
 {
     auto currentPath=STORAGE_PATH;
-    logger->log(QString("FullFilePath current_path: ")+currentPath);
     //保存上一个节点的内容
     QString nodePath=treeItemToNodePath(treeItem);
     auto type= dynamic_cast<ExtraQTreeWidgetItem*>(treeItem)->nodeType;
@@ -210,9 +209,13 @@ bool util::copyDir(const QString &source, const QString &destination, bool overr
         {
             if (override)
             {
-                QFile::setPermissions(dstFilePath, QFile::WriteOwner);
+                //QFile::setPermissions(dstFilePath, QFile::WriteOwner);
             }
-            QFile::copy(srcFilePath, dstFilePath);
+            error=QFile::copy(srcFilePath, dstFilePath);//若是相同文件拷贝，则会导致文件为空
+            if(!error)
+            {
+                return false;
+            }
         }
         else if (fileInfo.isDir())
         {

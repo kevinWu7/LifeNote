@@ -418,11 +418,14 @@ void MainWindow::onDeleteNoteItemClick()
     if(isRecycle)
     {
         QFile file(fullPath);
-        file.remove();
+        if(!file.remove())
+        {
+            QMessageBox::warning(this, tr("错误"),tr("\n文件移动失败,无法完成操作"));
+            return;
+        }
     }
-    else
+    else  //若是非回收站的数据
     {
-        //若是非回收站的数据
         if(currentNode->nodeType== ParentNode)//父节点
         {
             if(currentNode->childCount()>0)
@@ -430,10 +433,14 @@ void MainWindow::onDeleteNoteItemClick()
                 QMessageBox::warning(this, tr("警告"),tr("\n无法批量删除,请选中单个笔记进行删除!"),QMessageBox::Ok);
                 return;
             }
-            else
+            else //父节点无子节点
             {
                 QDir dir(fullPath);
-                dir.removeRecursively();
+                if(!dir.removeRecursively())
+                {
+                    QMessageBox::warning(this, tr("错误"),tr("\n文件移动失败,无法完成操作"));
+                    return;
+                }
             }
         }
         else
@@ -444,6 +451,11 @@ void MainWindow::onDeleteNoteItemClick()
             bool moveResult= QFile::rename(fullPath,recyclePath); //A路径移动到B路径
             std::string str="delete node and move file "+ std::string(moveResult ? "true": "false") ;
             logger->log(str);
+            if(!moveResult)
+            {
+                 QMessageBox::warning(this, tr("错误"),tr("\n文件移动失败,无法完成操作"));
+                 return;
+            }
         }
     }
     //delete doc(updateXml) must be ahead of the QTreeWidget'Node delete
@@ -629,7 +641,6 @@ void MainWindow::right_item_pressed()
     {
         return;
     }
-    logger->log(QString("right clicked"));
     rightMenu->exec(QCursor::pos());   //菜单弹出位置为鼠标点击位置
 }
 

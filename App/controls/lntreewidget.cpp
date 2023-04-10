@@ -229,31 +229,39 @@ void LNTreeWidget::dropEvent(QDropEvent *event)
         QMessageBox::warning(this, tr("警告"),tr("\n无法将父节点移动到子节点下!"));
         return;
     }
-    auto fullPath= util::treeItemToFullFilePath(draggedItem); //如d:/sotrage/xxx.html
-    auto targetItemPath=util::treeItemToFullFilePath(targetItem);
-
-
-    //移动本地存储文件到回收站
-    QString fileName = util::treeItemToFileName(draggedItem); //文件名称，如xxx.html
-    bool moveResult=false;
-    if(draggedItem->nodeType==  ParentNode)
+    //若是子节点移到直接的父节点下，则无需进行文件拷贝
+    //只有不是直接父子节点关系，再进行文件拷贝
+    if(draggedItem->parent()!=targetItem)
     {
-        moveResult=util::cutDir(fullPath,targetItemPath,true);
-    }
-    else
-    {
-        auto tragetFile=QString("%1/%2").arg(targetItemPath,fileName);
-        moveResult= QFile::rename(fullPath,tragetFile); //A路径移动到B路径
-    }
-    std::string str="move node and move file "+ std::string(moveResult ? "true": "false") ;
-    logger->log(str);
+        auto fullPath= util::treeItemToFullFilePath(draggedItem); //如d:/sotrage/xxx.html
+        auto targetItemPath=util::treeItemToFullFilePath(targetItem);
 
 
+        //移动本地存储文件到回收站
+        QString fileName = util::treeItemToFileName(draggedItem); //文件名称，如xxx.html
+        bool moveResult=false;
+        if(draggedItem->nodeType==ParentNode)
+        {
+            moveResult=util::cutDir(fullPath,targetItemPath,true);
+        }
+        else
+        {
+            auto tragetFile=QString("%1/%2").arg(targetItemPath,fileName);
+            moveResult= QFile::rename(fullPath,tragetFile); //A路径移动到B路径
+        }
+        std::string str="move node and move file "+ std::string(moveResult ? "true": "false") ;
+        logger->log(str);
+        if(!moveResult)
+        {
+            QMessageBox::warning(this, tr("错误"),tr("\n文件移动失败,无法完成操作"));
+            return;
+        }
+    }
     //delete doc(updateXml) must be ahead of the QTreeWidget'Node delete
     //because updateXml function is depend on the Node struct
     //delete directly if node is parentNode
 
-    nodeconfig::updateXml(  MoveNode,draggedItem,targetItem);
+    nodeconfig::updateXml(MoveNode,draggedItem,targetItem);
 
     draggedItem->deleteType=1;
     if(draggedItem->parent()!=nullptr)

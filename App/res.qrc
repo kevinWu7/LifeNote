@@ -18,5 +18,6 @@
         <file>icons/notechild.svg</file>
         <file>icons/fontAdd.png</file>
         <file>icons/fontReduce.png</file>
+        <file>icons/checkin.png</file>
     </qresource>
 </RCC>

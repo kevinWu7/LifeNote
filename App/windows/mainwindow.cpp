@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //设置左侧侧边栏样式
     ui->leftBar->setStyleSheet("QAbstractButton#addnewBtn{min-height:20px;max-height:20px;margin:0px;border:none;}"
+                               "QAbstractButton#checkinBtn{min-height:20px;max-height:20px;margin:0px;border:none;}"
                                "QWidget#leftBar"
                                "{background-color:#FFFFFF;"
                                "border-radius:7px}");
@@ -72,8 +73,15 @@ MainWindow::MainWindow(QWidget *parent)
     //设置左侧按钮icon
     ui->addnewBtn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     ui->addnewBtn->setIcon(QIcon(":/res/icons/addnew.png"));
-    ui->addnewBtn->setIconSize(QSize(22, 22));
+    ui->addnewBtn->setText("  新建笔记本");
+    ui->addnewBtn->setIconSize(QSize(16, 16));
     ui->addnewBtn->setCursor(Qt::PointingHandCursor);
+
+    ui->checkinBtn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    ui->checkinBtn->setIcon(QIcon(":/res/icons/checkin.png"));
+    ui->checkinBtn->setText("  打卡记录");
+    ui->checkinBtn->setIconSize(QSize(16, 16));
+    ui->checkinBtn->setCursor(Qt::PointingHandCursor);
 
 
     //设置标题栏按钮

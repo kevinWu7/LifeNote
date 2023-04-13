@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include "logger.h"
 #include<QScrollBar>
+#include "ui_texteditcontainer.h"
 #include "nodeconfig.h"
 
 
@@ -14,9 +15,21 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    textEditContainer=new TextEditContainer;
     logger->logEdit=ui->loggerTextEdit;
     logger->log(QDir::currentPath());
     logger->log(QString("start the application....."));
+
+
+     QTextEdit *edit = new QTextEdit();
+     ui->tabLayout->addWidget(textEditContainer);
+     ui->tabLayout->addWidget(edit);
+     edit->setVisible(false);
+
+
+    // layout->p
+    // layout->setStretchFactor(ui->tabWidget, 1);
+
     ui->mainPage->setStyleSheet("QWidget#mainPage{background-color:rgb(219,220,223");
     this->setStyleSheet("QTreeWidget::item{height:25px;}");
 
@@ -26,28 +39,14 @@ MainWindow::MainWindow(QWidget *parent)
                                "QWidget#leftBar"
                                "{background-color:#FFFFFF;"
                                "border-radius:7px}");
-    ui->titleBar->setStyleSheet("QToolButton{border:none;} "
-                                "QToolButton:checked{background-color:rgb(218, 218, 218)}"
-                                "QToolButton:hover{background-color:rgb(218, 218, 218)}"
-                                "QWidget#titleBar{background-color:#FFFFFF}");
 
-    //set titleLineEdit stylesheet
-    ui->titleLineEdit->setStyleSheet("border: 0px;");
 
-    ui->editWidget->setStyleSheet("QWidget#editWidget"
-                                  "{background-color:#FFFFFF;"
-                                  "border-radius:7px}");
+
     ui->loggerTextEdit->setStyleSheet("QWidget#loggerTextEdit"
                                   "{background-color:#FFFFFF;"
                                   "border-radius:7px}");
     ui->loggerTextEdit->setVisible(false);
     ui->loggerTextEdit->isAutoHide=false;
-    ui->editWidget->layout()->setSpacing(0);
-    //设置mainPage内部控件间距为5
-    //ui->mainPage->layout()->setSpacing(5);
-
-    //设置editWidget内部左侧边距
-    ui->editWidget->setContentsMargins(3,3,3,3);
 
 
     //set the splitter default-ratio,total=9,leftbar=2,editwidget=7.
@@ -56,7 +55,6 @@ MainWindow::MainWindow(QWidget *parent)
     //设置logger输出框，占比为3/8
     ui->mainSplitter->setStretchFactor(0,5);
     ui->mainSplitter->setStretchFactor(1,3);
-
     //下面这句代码 修改选中行的颜色，但是改的不是很完美，故先注释
     //setStyleSheet("QTreeWidget::item{height:25px;} QTreeView::branch::selected{background-color:#5087E5;} QTreeView::item::selected{background-color:#5087E5;}");
 
@@ -84,43 +82,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->checkinBtn->setCursor(Qt::PointingHandCursor);
 
 
-    //设置标题栏按钮
-    ui->boldBtn->setIcon(QIcon(":/res/icons/bold.png"));
-    ui->boldBtn->setToolTip("加粗");
-    ui->italicBtn->setIcon(QIcon(":/res/icons/italic.png"));
-    ui->italicBtn->setToolTip("斜体");
-    ui->colorBtn->setIcon(QIcon(":/res/icons/color.png"));
-    ui->colorBtn->setToolTip("颜色");
-    ui->underlineBtn->setIcon(QIcon(":/res/icons/underline.png"));
-    ui->underlineBtn->setToolTip("下划线");
-    ui->pictureBtn->setIcon(QIcon(":/res/icons/img.png"));
-    ui->pictureBtn->setToolTip("添加图片");
-    ui->saveBtn->setIcon(QIcon(":/res/icons/save.png"));
-    ui->saveBtn->setToolTip("保存");
-    ui->undoBtn->setIcon(QIcon(":/res/icons/undo.png"));
-    ui->undoBtn->setToolTip("撤回");
-    ui->fontAddBtn->setIcon(QIcon(":/res/icons/fontAdd.png"));
-    ui->fontAddBtn->setToolTip("增大字号");
-    ui->fontReduceBtn->setIcon(QIcon(":/res/icons/fontReduce.png"));
-    ui->fontReduceBtn->setToolTip("减小字号");
-    initfontCombobox();
+
+
     initRightMenu();
 
-
     //设置信号槽
-    connect(ui->boldBtn,SIGNAL(clicked()),this,SLOT(boldBtn_clicked()));
-    connect(ui->italicBtn,SIGNAL(clicked()),this,SLOT(italicBtn_clicked()));
-    connect(ui->underlineBtn,SIGNAL(clicked()),this,SLOT(underlineBtn_clicked()));
-    connect(ui->colorBtn,SIGNAL(clicked()),this,SLOT(colorBtn_clicked()));
-    connect(ui->pictureBtn,&QToolButton::clicked,this,&MainWindow::onPictureBtn_clicked);
-    connect(ui->undoBtn,&QToolButton::clicked,this,&MainWindow::onUndoBtn_clicked);
-    connect(ui->saveBtn,&QToolButton::clicked,this,&MainWindow::onSaveBtn_clicked);
-    connect(ui->addnewBtn,&QToolButton::clicked,this,&MainWindow::onAddnewBtn_clicked);
-    connect(ui->fontAddBtn,&QToolButton::clicked,this,&MainWindow::onFontAddBtn_clicked);
-    connect(ui->fontReduceBtn,&QToolButton::clicked,this,&MainWindow::onFontReduceBtn_clicked);
-    connect(ui->fontComboBox, &QComboBox::currentIndexChanged,this, &MainWindow::comboBoxCurrentIndexChanged);
     connect(ui->treeWidget,&QTreeWidget::currentItemChanged,this,&MainWindow::currentTreeItemChanged);
-    connect(ui->textEdit,&QTextEdit::cursorPositionChanged,this,&MainWindow::textEditCursorPositionChanged);
+    connect(textEditContainer->ui->saveBtn,&QToolButton::clicked,this,&MainWindow::onSaveBtn_clicked);
+    connect(ui->addnewBtn,&QToolButton::clicked,this,&MainWindow::onAddnewBtn_clicked);
     connect(ui->treeWidget,&QTreeWidget::itemPressed,this,&MainWindow::right_item_pressed);
     connect(rightMenu,&QMenu::aboutToShow,this,&MainWindow::onMenuToShow);
     connect(newNoteAction, SIGNAL(triggered(bool)), this , SLOT(onNewNoteItemClick()));
@@ -130,57 +99,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(lockAction, SIGNAL(triggered(bool)), this , SLOT(onLockItemClick()));
     connect(deleteNoteAction, SIGNAL(triggered(bool)), this , SLOT(onDeleteNoteItemClick()));
     connect(recoverNoteAction, SIGNAL(triggered(bool)), this , SLOT(onRecoverNoteItemClick()));
-    connect(ui->titleLineEdit,&QLineEdit::editingFinished,this,&MainWindow::onTitleLineEditEditingFinished);
+    connect(textEditContainer->ui->titleLineEdit,&QLineEdit::editingFinished,this,&MainWindow::onTitleLineEditEditingFinished);
     connect(qApp, &QApplication::aboutToQuit,this ,&MainWindow::onApplicationQuit);
-    connect(ui->logCheck,&QCheckBox::stateChanged,this,&MainWindow::logCheckStateChanged);
+    connect(textEditContainer->ui->logCheck,&QCheckBox::stateChanged,this,&MainWindow::logCheckStateChanged);
 }
 
 
 #pragma region TitleBar-Button-Funciton{
-void MainWindow::boldBtn_clicked()
-{
-    QTextCharFormat fmt;
-    if(ui->boldBtn->isChecked())
-    {
-        fmt.setFontWeight(QFont::Bold);
-    }
-    else
-    {
-        fmt.setFontWeight(QFont::Normal);
-    }
-    ui->textEdit->mergeCurrentCharFormat(fmt);
-}
-
-void MainWindow::italicBtn_clicked()
-{
-    QTextCharFormat fmt;
-    fmt.setFontItalic(ui->italicBtn->isChecked());
-    ui->textEdit->mergeCurrentCharFormat(fmt);
-}
-
-void MainWindow::underlineBtn_clicked()
-{
-    QTextCharFormat fmt;
-    fmt.setFontUnderline(ui->underlineBtn->isChecked());
-    ui->textEdit->mergeCurrentCharFormat(fmt);
-}
-
-void MainWindow::colorBtn_clicked()
-{
-    QColor color = QColorDialog::getColor(Qt::blue,this);
-    if(color.isValid())
-    {
-        QTextCharFormat fmt;
-        fmt=ui->textEdit->currentCharFormat();
-        fmt.setForeground(color);
-        ui->textEdit->mergeCurrentCharFormat(fmt);
-    }
-}
-
-void MainWindow::onUndoBtn_clicked()
-{
-    ui->textEdit->undo();
-}
 
 void MainWindow::onSaveBtn_clicked()
 {
@@ -196,113 +121,9 @@ void MainWindow::onSaveBtn_clicked()
     if (myfile.open(QFile::WriteOnly|QFile::Truncate))
     {
         QTextStream out(&myfile);
-        out<<ui->textEdit->toHtml()<<Qt::endl;
+        out<<textEditContainer->ui->textEdit->toHtml()<<Qt::endl;
     }
 }
-
-void MainWindow::onPictureBtn_clicked()
-{
-    InsertImageDialog();
-}
-
-void MainWindow::InsertImageDialog()
-{
-    QString selectFilter="IMAGE (*.png *.jpg *jpeg *.bmp *.gif)\n";
-    QString file = QFileDialog::getOpenFileName(this, tr("Select an image"),
-                                                "/", tr("IMAGE (*.png *.jpg *jpeg *.bmp *.gif)\n"),&selectFilter);
-
-    QUrl Uri ( QString ( "file://%1" ).arg ( file ) );
-    QImage image = QImageReader ( file ).read();
-
-    QTextDocument * textDocument = ui->textEdit->document();
-    textDocument->addResource( QTextDocument::ImageResource, Uri, QVariant ( image ) );
-    QTextCursor cursor = ui->textEdit->textCursor();
-    QTextImageFormat imageFormat;
-    imageFormat.setWidth( image.width() );
-    imageFormat.setHeight( image.height() );
-    imageFormat.setName( Uri.toString() );
-    cursor.insertImage(imageFormat);
-}
-
-void MainWindow::onAddnewBtn_clicked()
-{
-    try
-    {
-        if(!this->newGroupForm)
-        {
-            newGroupForm=new NewNoteGroupForm;
-            connect(newGroupForm,&NewNoteGroupForm::sendParentWindowData,this, &MainWindow::onReceiveNewGroupFormData);
-        }
-        newGroupForm->move(this->frameGeometry().topLeft() +this->rect().center() -newGroupForm->rect().center());//使子窗体居中
-        newGroupForm->show();
-    }
-    catch(...)
-    {
-        logger->log(QString("error"));
-    }
-}
-
-void MainWindow::onFontAddBtn_clicked()
-{
-     size_t realIndex=ui->fontComboBox->currentIndex();
-     ui->fontComboBox->setCurrentIndex(realIndex==util::fontVector.size()-1?realIndex:realIndex+1);
-}
-
-void MainWindow::onFontReduceBtn_clicked()
-{
-    size_t realIndex=ui->fontComboBox->currentIndex();
-    ui->fontComboBox->setCurrentIndex(realIndex==0?0:realIndex-1);
-}
-
-void MainWindow::initfontCombobox()
-{
-    ui->fontComboBox->clear();
-    for(const QString &afont : util::fontVector)
-    {
-        ui->fontComboBox->addItem(afont);
-    }
-     ui->fontComboBox->setCurrentIndex(3); //default font is 14
-}
-
-//change comboBox's selectIndex when move cursor
-void MainWindow::textEditCursorPositionChanged()
-{
-    QTextCursor cursor=ui->textEdit->textCursor();
-
-    if(cursor.hasSelection())
-    {
-        //prevent font be same when user  select All text
-        //because select texts will change the cursor,then change the combobox's selectedIndex.
-        //then trigger the comboBoxCurrentIndexChanged function,and all the text'font will be same
-        return;
-    }
-    QFont font=cursor.charFormat().font();
-    QString font_size =QString::number(font.pointSize());
-    auto index=std::find(util::fontVector.begin(),util::fontVector.end(),font_size);
-    if(index!= util::fontVector.end())
-    {
-        int realIndex=std::distance(util::fontVector.begin(),index);
-        ui->fontComboBox->setCurrentIndex(realIndex);
-    }
-    //reset the bold... btn's state
-    ui->boldBtn->setChecked(font.bold());
-    ui->italicBtn->setChecked(font.italic());
-    ui->underlineBtn->setChecked(font.underline());
-
-    logger->log(std::string("textEditCursorPositionChanged"));
-
-}
-
-//update current cursor font-size when change comboBox's selectIndex
-void MainWindow::comboBoxCurrentIndexChanged()
-{
-    auto current_font= ui->fontComboBox->currentText();
-    logger->log("current font:" +current_font);
-    QFont font = ui->textEdit->currentFont();
-    font.setPointSize(current_font.toInt());
-    ui->textEdit->setCurrentFont(font);
-}
-
 void MainWindow::logCheckStateChanged(int state)
 {
     if(state==Qt::Checked)
@@ -349,7 +170,7 @@ void MainWindow::onNewNoteGroupItemClick()
     //set selectedItem to the newItem
     ui->treeWidget->setCurrentItem(newItem);
     //set focus to the right-titleLineEdit, Convenient for users to modify the title
-    ui->titleLineEdit->setFocus();
+    textEditContainer->ui->titleLineEdit->setFocus();
 
 
     //update local xml and html when titleLineEdit finishEdit 。
@@ -386,7 +207,7 @@ void MainWindow::onNewNoteItemClick()
     //set selectedItem to the newItem
     ui->treeWidget->setCurrentItem(newItem);
     //set focus to the right-titleLineEdit, Convenient for users to modify the title
-    ui->titleLineEdit->setFocus();
+    textEditContainer->ui->titleLineEdit->setFocus();
 
     //update local xml and html when titleLineEdit finishEdit 。
     //in the function onTitleLineEditEditingFinished()
@@ -518,6 +339,23 @@ void MainWindow::onLockItemClick()
 
 #pragma endregion}
 
+void MainWindow::onAddnewBtn_clicked()
+{
+    try
+    {
+        if(!this->newGroupForm)
+        {
+            newGroupForm=new NewNoteGroupForm;
+            connect(newGroupForm,&NewNoteGroupForm::sendParentWindowData,this, &MainWindow::onReceiveNewGroupFormData);
+        }
+        newGroupForm->move(this->frameGeometry().topLeft() +this->rect().center() -newGroupForm->rect().center());//使子窗体居中
+        newGroupForm->show();
+    }
+    catch(...)
+    {
+        logger->log(QString("error"));
+    }
+}
 
 
 void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
@@ -557,10 +395,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Enter|| event->key() == Qt::Key_Return )
     {
-        ui->textEdit->setFocus();
-        QTextCursor tmpCursor = ui->textEdit->textCursor();
+        textEditContainer->ui->textEdit->setFocus();
+        QTextCursor tmpCursor = textEditContainer->ui->textEdit->textCursor();
         tmpCursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, 0);
-        ui->textEdit->setTextCursor(tmpCursor);
+        textEditContainer->ui->textEdit->setTextCursor(tmpCursor);
     }
 }
 
@@ -663,12 +501,12 @@ void MainWindow::setLineVerticalInterval()
         blockFormat->setLineHeight(3,QTextBlockFormat::LineDistanceHeight);
     }
     //to set qtextedit vertical interval 3
-    ui->textEdit->selectAll();
-    auto textCursor = ui->textEdit->textCursor();
+    textEditContainer->ui->textEdit->selectAll();
+    auto textCursor = textEditContainer->ui->textEdit->textCursor();
     textCursor.setBlockFormat(*blockFormat);
-    ui->textEdit->setTextCursor(textCursor);
+    textEditContainer->ui->textEdit->setTextCursor(textCursor);
     textCursor.clearSelection();//cacle the selection
-    ui->textEdit->setTextCursor(textCursor);
+    textEditContainer->ui->textEdit->setTextCursor(textCursor);
 }
 //切换左侧节点时，保存上一个节点的内容，加载当前节点的内容
 void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
@@ -701,7 +539,7 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
         if (myfile.open(QFile::WriteOnly|QFile::Truncate))
         {
             QTextStream out(&myfile);
-            out<<ui->textEdit->toHtml()<<Qt::endl;
+            out<<textEditContainer->ui->textEdit->toHtml()<<Qt::endl;
         }
         myfile.close();
     }
@@ -712,11 +550,11 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
     //若是笔记本group，则将文本清空
     if(((ExtraQTreeWidgetItem*)current)->nodeType==ParentNode)
     {
-        ui->textEdit->setHtml("");
-        ui->titleLineEdit->setText(current->text(0));
+        textEditContainer->ui->textEdit->setHtml("");
+        textEditContainer->ui->titleLineEdit->setText(current->text(0));
         //not allow to edit the Nodegroup
-        ui->textEdit->setEnabled(false);
-        for(auto child_toolBtn :ui->titleBar->children())
+        textEditContainer->ui->textEdit->setEnabled(false);
+        for(auto child_toolBtn :textEditContainer->ui->titleBar->children())
         {
             QToolButton* btn=dynamic_cast<QToolButton*>(child_toolBtn);
             if(btn!=nullptr)
@@ -728,8 +566,8 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
     }
     else
     {
-        ui->textEdit->setEnabled(true);
-        for(auto child_toolBtn :ui->titleBar->children())
+        textEditContainer->ui->textEdit->setEnabled(true);
+        for(auto child_toolBtn :textEditContainer->ui->titleBar->children())
         {
             QToolButton* btn=dynamic_cast<QToolButton*>(child_toolBtn);
             if(btn!=nullptr)
@@ -739,7 +577,7 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
         }
     }
     //load current node‘s title to right-titleLineEdit title
-    ui->titleLineEdit->setText(current->text(0));
+    textEditContainer->ui->titleLineEdit->setText(current->text(0));
     //load current node's local file content to right-textEdit content
     auto fullPath=util::treeItemToFullFilePath(current);
     QFile file(fullPath);
@@ -750,7 +588,7 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
     QByteArray allArray = file.readAll();
     QString allStr = QString(allArray);
     file.close();
-    ui->textEdit->setHtml(allStr);
+    textEditContainer->ui->textEdit->setHtml(allStr);
 }
 
 //给回收站&收藏node赋值
@@ -838,7 +676,7 @@ void MainWindow::setItemIcon(ExtraQTreeWidgetItem* child)
 void MainWindow::onTitleLineEditEditingFinished()
 {
     logger->log(QString("onTitleLineEditEditingFinished"));
-    if (ui->titleLineEdit->text().length() == 0)
+    if (textEditContainer->ui->titleLineEdit->text().length() == 0)
     {
         return;
     }
@@ -857,7 +695,7 @@ void MainWindow::onTitleLineEditEditingFinished()
     auto fileNewPath=util::treeItemToNodeDirPath(currentItem);
     auto oldName=currentItem->text(0);
 
-    currentItem->setText(0, ui->titleLineEdit->text());
+    currentItem->setText(0, textEditContainer->ui->titleLineEdit->text());
 
 
     // update the local file change
@@ -872,7 +710,7 @@ void MainWindow::onTitleLineEditEditingFinished()
         if(((ExtraQTreeWidgetItem*)currentItem)->nodeType==ChildNode)
         {
             QFile file(fileFullPath);
-            file.rename(fileNewPath+"/"+ui->titleLineEdit->text()+".html");
+            file.rename(fileNewPath+"/"+textEditContainer->ui->titleLineEdit->text()+".html");
         }
         else
         {
@@ -882,7 +720,7 @@ void MainWindow::onTitleLineEditEditingFinished()
             {
                 parentFullPath=util::treeItemToFullFilePath(currentItem->parent());
             }
-            QString newDir=QString("%1/%2").arg(parentFullPath,ui->titleLineEdit->text());
+            QString newDir=QString("%1/%2").arg(parentFullPath,textEditContainer->ui->titleLineEdit->text());
             QString oldDir=QString("%1/%2").arg(parentFullPath,oldName);
             QDir _dir(oldDir);
             logger->log(oldDir.toStdString());
@@ -952,7 +790,7 @@ void MainWindow::onApplicationQuit()
     if (myfile.open(QFile::WriteOnly|QFile::Truncate))
     {
         QTextStream out(&myfile);
-        out<<ui->textEdit->toHtml()<<Qt::endl;
+        out<<textEditContainer->ui->textEdit->toHtml()<<Qt::endl;
     }
     myfile.close();
 }

@@ -20,6 +20,7 @@ SOURCES += \
     controls/lntreewidget.cpp \
     controls/lntextedit.cpp \
     main.cpp \
+    texteditcontainer.cpp \
     util/logger.cpp \
     windows/newnotegroupform.cpp \
     windows/mainwindow.cpp \
@@ -32,6 +33,7 @@ HEADERS += \
     controls/extraqtreewidgetitem.h \
     controls/lntreewidget.h \
     controls/lntextedit.h \
+    texteditcontainer.h \
     util/logger.h \
     windows/newnotegroupform.h \
     windows/mainwindow.h \
@@ -40,6 +42,7 @@ HEADERS += \
     util/util.h
 
 FORMS += \
+    texteditcontainer.ui \
     windows/newnotegroupform.ui \
     windows/mainwindow.ui \
     controls/svgtextlabel.ui

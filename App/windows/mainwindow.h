@@ -16,7 +16,9 @@
 #include<QImageReader>
 #include<QTextBlockFormat>
 #include "extraqtreewidgetitem.h"
+#include "texteditcontainer.h"
 #include "newnotegroupform.h"
+
 
 
 
@@ -54,29 +56,20 @@ private:
     void setAllItemIcon();
     void setItemIcon(ExtraQTreeWidgetItem* child_item);
     void initRightMenu();
-    void InsertImageDialog();
+
     void initTopLevelNode();
-    void initfontCombobox();
+
     void setLineVerticalInterval();
 
+    TextEditContainer * textEditContainer=nullptr;
     NewNoteGroupForm * newGroupForm=nullptr;
     QTextBlockFormat *blockFormat=nullptr;//to set qtextedit vertical interval 3
 
 public slots:
-    void boldBtn_clicked();
-    void italicBtn_clicked();
-    void underlineBtn_clicked();
-    void colorBtn_clicked();
-    void onPictureBtn_clicked();
-    void onUndoBtn_clicked();
     void onSaveBtn_clicked();
-    void onAddnewBtn_clicked();
-    void onFontAddBtn_clicked();
-    void onFontReduceBtn_clicked();
-    void right_item_pressed();//右键菜单点击
     void currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
-    void comboBoxCurrentIndexChanged();
-    void textEditCursorPositionChanged();
+    void right_item_pressed();//右键菜单点击
+    void onAddnewBtn_clicked();
     void onNewNoteItemClick();
     void onNewNoteGroupItemClick();
     void onCollectNoteItemClick();

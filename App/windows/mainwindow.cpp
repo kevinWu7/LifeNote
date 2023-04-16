@@ -10,25 +10,22 @@
 
 
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     textEditContainer=new TextEditContainer;
+    _checkinWidget =new checkinWidget;
     logger->logEdit=ui->loggerTextEdit;
     logger->log(QDir::currentPath());
     logger->log(QString("start the application....."));
 
+    ui->tabLayout->addWidget(textEditContainer);
+    ui->tabLayout->addWidget(_checkinWidget);
+    textEditContainer->setVisible(false);
 
-     QTextEdit *edit = new QTextEdit();
-     ui->tabLayout->addWidget(textEditContainer);
-     ui->tabLayout->addWidget(edit);
-     edit->setVisible(false);
-
-
-    // layout->p
-    // layout->setStretchFactor(ui->tabWidget, 1);
 
     ui->mainPage->setStyleSheet("QWidget#mainPage{background-color:rgb(219,220,223");
     this->setStyleSheet("QTreeWidget::item{height:25px;}");

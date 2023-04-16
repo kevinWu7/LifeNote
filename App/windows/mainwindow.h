@@ -18,6 +18,7 @@
 #include "extraqtreewidgetitem.h"
 #include "texteditcontainer.h"
 #include "newnotegroupform.h"
+#include "checkinwidget.h"
 
 
 
@@ -62,6 +63,7 @@ private:
     void setLineVerticalInterval();
 
     TextEditContainer * textEditContainer=nullptr;
+    checkinWidget *_checkinWidget=nullptr;
     NewNoteGroupForm * newGroupForm=nullptr;
     QTextBlockFormat *blockFormat=nullptr;//to set qtextedit vertical interval 3
 

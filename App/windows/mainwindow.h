@@ -85,6 +85,7 @@ public slots:
     //接收新建笔记本子窗体的消息
     void onReceiveNewGroupFormData(QString nodeName,int color_index);
     void onApplicationQuit();
+    void checkinBtn_clicked();
 
 };
 #endif // MAINWINDOW_H

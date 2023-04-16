@@ -4,7 +4,7 @@
 #include "util.h"
 #include <QMouseEvent>
 #include "logger.h"
-#include<QScrollBar>
+#include <QScrollBar>
 #include "ui_texteditcontainer.h"
 #include "nodeconfig.h"
 
@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->tabLayout->addWidget(textEditContainer);
     ui->tabLayout->addWidget(_checkinWidget);
-    textEditContainer->setVisible(false);
+    _checkinWidget->setVisible(false);
 
 
     ui->mainPage->setStyleSheet("QWidget#mainPage{background-color:rgb(219,220,223");
@@ -78,9 +78,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->checkinBtn->setIconSize(QSize(16, 16));
     ui->checkinBtn->setCursor(Qt::PointingHandCursor);
 
-
-
-
     initRightMenu();
 
     //设置信号槽
@@ -99,6 +96,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(textEditContainer->ui->titleLineEdit,&QLineEdit::editingFinished,this,&MainWindow::onTitleLineEditEditingFinished);
     connect(qApp, &QApplication::aboutToQuit,this ,&MainWindow::onApplicationQuit);
     connect(textEditContainer->ui->logCheck,&QCheckBox::stateChanged,this,&MainWindow::logCheckStateChanged);
+    connect(ui->checkinBtn,&QToolButton::clicked,this,&MainWindow::checkinBtn_clicked);
 }
 
 
@@ -354,6 +352,12 @@ void MainWindow::onAddnewBtn_clicked()
     }
 }
 
+void MainWindow::checkinBtn_clicked()
+{
+    _checkinWidget->setVisible(true);
+    textEditContainer->setVisible(false);
+     _checkinWidget->setFocus();
+}
 
 void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
 {
@@ -505,9 +509,17 @@ void MainWindow::setLineVerticalInterval()
     textCursor.clearSelection();//cacle the selection
     textEditContainer->ui->textEdit->setTextCursor(textCursor);
 }
+
+
+
 //切换左侧节点时，保存上一个节点的内容，加载当前节点的内容
 void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
+    if(!textEditContainer->isVisible())
+    {
+        _checkinWidget->setVisible(false);
+        textEditContainer->setVisible(true);
+    }
     logger->log(QString("currentTreeItemChanged tirggerd"));
     ExtraQTreeWidgetItem* extraPreviousNode= dynamic_cast<ExtraQTreeWidgetItem*>(previous);
 

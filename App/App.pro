@@ -28,7 +28,6 @@ SOURCES += \
     windows/newnotegroupform.cpp \
     windows/mainwindow.cpp \
     nodeconfig.cpp \
-    controls/svgtextlabel.cpp \
     util/util.cpp
 
 HEADERS += \
@@ -44,7 +43,6 @@ HEADERS += \
     windows/newnotegroupform.h \
     windows/mainwindow.h \
     nodeconfig.h \
-    controls/svgtextlabel.h \
     util/util.h
 
 FORMS += \
@@ -53,8 +51,7 @@ FORMS += \
     controls/habbititem.ui \
     controls/previewcheckwidget.ui \
     windows/newnotegroupform.ui \
-    windows/mainwindow.ui \
-    controls/svgtextlabel.ui
+    windows/mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

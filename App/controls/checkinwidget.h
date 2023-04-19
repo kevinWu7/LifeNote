@@ -2,6 +2,7 @@
 #define CHECKINWIDGET_H
 
 #include <QWidget>
+#include "habbititem.h"
 
 namespace Ui {
 class checkinWidget;
@@ -14,6 +15,9 @@ class checkinWidget : public QWidget
 public:
     explicit checkinWidget(QWidget *parent = nullptr);
     ~checkinWidget();
+
+public slots:
+    void addItemBtn_clicked();
 
 private:
     Ui::checkinWidget *ui;

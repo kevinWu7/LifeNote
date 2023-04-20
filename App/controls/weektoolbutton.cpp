@@ -2,14 +2,24 @@
 #include<QWidget>
 
 
-WeekToolButton::WeekToolButton(QWidget *parent)
+WeekToolButton::WeekToolButton(QWidget *parent,bool m_iconState)
       : QToolButton(parent)
 {
-     connect(this,&QToolButton::clicked,this,&WeekToolButton::CheckinButton_clicked);
+     connect(this,&QToolButton::clicked,this,&WeekToolButton::WeekButton_clicked);
+     this->setIconSize(QSize(24,24));
+     iconState=m_iconState;
 }
 
 
-void WeekToolButton::CheckinButton_clicked()
+void WeekToolButton::WeekButton_clicked()
 {
-     logger->log(QString("clikced"));//todo
+    if(iconState)
+    {
+         this->setIcon(QIcon(":/icons/res/checkin/tick.png"));
+    }
+    else
+    {
+         this->setIcon(QIcon());
+    }
+    iconState=!iconState;
 }

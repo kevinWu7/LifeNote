@@ -7,8 +7,10 @@
 class WeekToolButton : public QToolButton
 {
 public:
-    WeekToolButton(QWidget *parent = nullptr);
-    void CheckinButton_clicked();
+    WeekToolButton(QWidget *parent = nullptr,bool m_iconState=true);
+    void WeekButton_clicked();
+private :
+    bool iconState=false;
 };
 
 #endif // WEEKTOOLBUTTON_H

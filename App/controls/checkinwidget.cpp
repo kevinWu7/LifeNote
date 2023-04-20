@@ -18,7 +18,8 @@ checkinWidget::checkinWidget(QWidget *parent) :
     ui->leftTitleStatus->setSpacing(2);
 
     ui->titleBarControl->setStyleSheet("QToolButton:hover { background-color: rgb(218, 218, 218); }"
-                                     "QToolButton { margin: 0px; border: none; }");
+                                     "QToolButton{width:32px;min-width:32px;max-width:32px;height:32px; min-height:32px; max-height:32px;"
+                                       "margin:0px; border:none;}");
     ui->mainWidget->setStyleSheet("QWidget#mainWidget"
                                   "{background-color:#FFFFFF;"
                                   "border-radius:7px}");

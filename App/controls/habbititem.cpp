@@ -14,13 +14,20 @@ HabbitItem::HabbitItem(QWidget *parent) :
                                 "border-radius: %2;"
                                 "background-color: rgb(239,239,239);"
                                 "padding: 0;"
-                                "margin: 0;"
-                                "}").arg("16px","8px"));
+                                "margin: 0;}"
+                                "QToolButton#imgBtn{"
+                                "background-color: transparent;"
+                                "width: %3 ; min-width: %3; max-width: %3;"
+                                "height: %3 ; min-height: %3; max-height: %3;"
+                                "}"
+                              ).arg("24px","12px","22px"));
+
 
     ui->imgBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    ui->imgBtn->setIcon(QIcon(":/icons/res/note/addnew.png"));
-    ui->imgBtn->setToolTip("添加打卡项目");
+    ui->imgBtn->setIcon(QIcon(":/icons/res/checkin/run.png"));
     ui->imgBtn->setIconSize(QSize(22,22));
+
+    ui->labelText->setFont(QFont("Arial", 14, QFont::Normal));
 }
 
 

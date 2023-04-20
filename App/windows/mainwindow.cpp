@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->tabLayout->addWidget(textEditContainer);
     ui->tabLayout->addWidget(_checkinWidget);
-    _checkinWidget->setVisible(false);
+
 
 
     ui->mainPage->setStyleSheet("QWidget#mainPage{background-color:rgb(219,220,223");
@@ -67,13 +67,13 @@ MainWindow::MainWindow(QWidget *parent)
     initTopLevelNode();
     //设置左侧按钮icon
     ui->addnewBtn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    ui->addnewBtn->setIcon(QIcon(":/res/icons/addnew.png"));
+    ui->addnewBtn->setIcon(QIcon(":/icons/res/note/addnew.png"));
     ui->addnewBtn->setText("  新建笔记本");
     ui->addnewBtn->setIconSize(QSize(16, 16));
     ui->addnewBtn->setCursor(Qt::PointingHandCursor);
 
     ui->checkinBtn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    ui->checkinBtn->setIcon(QIcon(":/res/icons/checkin.png"));
+    ui->checkinBtn->setIcon(QIcon(":/icons/res/checkin/checkin.png"));
     ui->checkinBtn->setText("  打卡记录");
     ui->checkinBtn->setIconSize(QSize(16, 16));
     ui->checkinBtn->setCursor(Qt::PointingHandCursor);
@@ -97,6 +97,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(qApp, &QApplication::aboutToQuit,this ,&MainWindow::onApplicationQuit);
     connect(textEditContainer->ui->logCheck,&QCheckBox::stateChanged,this,&MainWindow::logCheckStateChanged);
     connect(ui->checkinBtn,&QToolButton::clicked,this,&MainWindow::checkinBtn_clicked);
+
+    textEditContainer->setVisible(false);
 }
 
 
@@ -515,11 +517,12 @@ void MainWindow::setLineVerticalInterval()
 //切换左侧节点时，保存上一个节点的内容，加载当前节点的内容
 void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
-    if(!textEditContainer->isVisible())
+    //todo 暂时先隐藏
+    /*if(!textEditContainer->isVisible())
     {
         _checkinWidget->setVisible(false);
         textEditContainer->setVisible(true);
-    }
+    }*/
     logger->log(QString("currentTreeItemChanged tirggerd"));
     ExtraQTreeWidgetItem* extraPreviousNode= dynamic_cast<ExtraQTreeWidgetItem*>(previous);
 
@@ -650,16 +653,16 @@ void MainWindow::setItemIcon(ExtraQTreeWidgetItem* child)
     {
         if(child->parent()==nullptr&&child->text(0)==NODENAME_COLLECT) //顶级系统节点-收藏
         {
-            child->setIcon(0,QIcon(":/res/icons/collect.png"));
+            child->setIcon(0,QIcon(":/icons/res/note/collect.png"));
         }
         else if(child->parent()==nullptr&&child->text(0)==NODENAME_RECYLE)//顶级系统节点-废纸篓
         {
-            child->setIcon(0,QIcon(":/res/icons/recycle.png"));
+            child->setIcon(0,QIcon(":/icons/res/note/recycle.png"));
         }
         else
         {
            // QIcon icon= util::CreateColorSvgIcon(":/res/icons/noteparent.svg",QString::fromStdString(color),"0.8");
-            auto icon=QIcon(":/res/icons/parentnote.png");
+            auto icon=QIcon(":/icons/res/note/parentnote.png");
             child->setIcon(0,icon);
         }
         for (int j = 0; j < childCount; ++j)
@@ -671,14 +674,14 @@ void MainWindow::setItemIcon(ExtraQTreeWidgetItem* child)
             }
             else
             {
-                QIcon icon= util::CreateColorSvgIcon(":/res/icons/notechild.svg", QString::fromStdString(color));
+                QIcon icon= util::CreateColorSvgIcon(":/icons/res/note/notechild.svg", QString::fromStdString(color));
                 grandson->setIcon(0,QIcon(icon));
             }
         }
     }
     else
     {
-        child->setIcon(0,QIcon(":/res/icons/childnote.png"));
+        child->setIcon(0,QIcon(":/icons/res/note/childnote.png"));
     }
 }
 

@@ -7,10 +7,18 @@ checkinWidget::checkinWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->addItemBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    ui->addItemBtn->setIcon(QIcon(":/res/icons/addnew.png"));
+    ui->addItemBtn->setIcon(QIcon(":/icons/res/note/addnew.png"));
     ui->addItemBtn->setToolTip("添加打卡项目");
-    ui->addItemBtn->setStyleSheet("QToolButton:hover { background-color: rgb(218, 218, 218); }"
-                                     "QToolButton {min-height: 20px; max-height: 20px; margin: 0px; border: none; }");
+    ui->addItemBtn->setIconSize(QSize(22,22));
+
+    ui->iconBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    ui->iconBtn->setIcon(QIcon(":/icons/res/checkin/sun.png"));
+    ui->iconBtn->setIconSize(QSize(27,27));
+    ui->dateTimeLabel->setFont(QFont("Arial", 16, QFont::Normal));
+    ui->leftTitleStatus->setSpacing(2);
+
+    ui->titleBarControl->setStyleSheet("QToolButton:hover { background-color: rgb(218, 218, 218); }"
+                                     "QToolButton { margin: 0px; border: none; }");
     ui->mainWidget->setStyleSheet("QWidget#mainWidget"
                                   "{background-color:#FFFFFF;"
                                   "border-radius:7px}");

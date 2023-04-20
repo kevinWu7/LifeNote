@@ -21,6 +21,7 @@ SOURCES += \
     controls/lntreewidget.cpp \
     controls/lntextedit.cpp \
     controls/habbititem.cpp \
+    controls/weektoolbutton.cpp \
     main.cpp \
     controls/texteditcontainer.cpp \
     controls/previewcheckwidget.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
     controls/texteditcontainer.h \
     controls/habbititem.h \
     controls/previewcheckwidget.h \
+    controls/weektoolbutton.h \
     util/logger.h \
     windows/newnotegroupform.h \
     windows/mainwindow.h \

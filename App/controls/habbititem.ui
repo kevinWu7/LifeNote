@@ -15,9 +15,9 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QLabel" name="labelSvg">
+    <widget class="QToolButton" name="imgBtn">
      <property name="text">
-      <string>T</string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -42,49 +42,49 @@
     </spacer>
    </item>
    <item>
-    <widget class="QToolButton" name="weekBtn1">
+    <widget class="WeekToolButton" name="weekBtn1">
      <property name="text">
       <string/>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QToolButton" name="weekBtn2">
+    <widget class="WeekToolButton" name="weekBtn2">
      <property name="text">
       <string/>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QToolButton" name="weekBtn3">
+    <widget class="WeekToolButton" name="weekBtn3">
      <property name="text">
       <string/>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QToolButton" name="weekBtn4">
+    <widget class="WeekToolButton" name="weekBtn4">
      <property name="text">
       <string/>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QToolButton" name="weekBtn5">
+    <widget class="WeekToolButton" name="weekBtn5">
      <property name="text">
       <string/>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QToolButton" name="weekBtn6">
+    <widget class="WeekToolButton" name="weekBtn6">
      <property name="text">
       <string/>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QToolButton" name="weekBtn7">
+    <widget class="WeekToolButton" name="weekBtn7">
      <property name="text">
       <string/>
      </property>
@@ -99,6 +99,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WeekToolButton</class>
+   <extends>QToolButton</extends>
+   <header>weektoolbutton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

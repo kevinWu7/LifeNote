@@ -1,23 +1,38 @@
 <RCC>
-    <qresource prefix="/res">
-        <file>icons/addnew.png</file>
-        <file>icons/bold.png</file>
-        <file>icons/childnote.png</file>
-        <file>icons/collect.png</file>
-        <file>icons/color.png</file>
-        <file>icons/img.png</file>
-        <file>icons/italic.png</file>
-        <file>icons/noteparent.svg</file>
-        <file>icons/parentnote.png</file>
-        <file>icons/recycle.png</file>
-        <file>icons/save.png</file>
-        <file>icons/search.png</file>
-        <file>icons/today.png</file>
-        <file>icons/underline.png</file>
-        <file>icons/undo.png</file>
-        <file>icons/notechild.svg</file>
-        <file>icons/fontAdd.png</file>
-        <file>icons/fontReduce.png</file>
-        <file>icons/checkin.png</file>
+    <qresource prefix="/icons">
+        <file>res/checkin/ bowl.png</file>
+        <file>res/checkin/cat.png</file>
+        <file>res/checkin/checkin.png</file>
+        <file>res/checkin/coffee.png</file>
+        <file>res/checkin/computer.png</file>
+        <file>res/checkin/dog.png</file>
+        <file>res/checkin/english.png</file>
+        <file>res/checkin/english2.png</file>
+        <file>res/checkin/game.png</file>
+        <file>res/checkin/notes.png</file>
+        <file>res/checkin/run.png</file>
+        <file>res/checkin/study.png</file>
+        <file>res/checkin/sun.png</file>
+        <file>res/checkin/tableware.png</file>
+        <file>res/checkin/train.png</file>
+        <file>res/checkin/train2.png</file>
+        <file>res/note/addnew.png</file>
+        <file>res/note/bold.png</file>
+        <file>res/note/childnote.png</file>
+        <file>res/note/collect.png</file>
+        <file>res/note/color.png</file>
+        <file>res/note/fontAdd.png</file>
+        <file>res/note/fontReduce.png</file>
+        <file>res/note/img.png</file>
+        <file>res/note/italic.png</file>
+        <file>res/note/notechild.svg</file>
+        <file>res/note/noteparent.svg</file>
+        <file>res/note/parentnote.png</file>
+        <file>res/note/recycle.png</file>
+        <file>res/note/save.png</file>
+        <file>res/note/search.png</file>
+        <file>res/note/today.png</file>
+        <file>res/note/underline.png</file>
+        <file>res/note/undo.png</file>
     </qresource>
 </RCC>

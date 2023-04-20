@@ -31,23 +31,23 @@ TextEditContainer::TextEditContainer(QWidget *parent) :
     initfontCombobox();
 
     //设置标题栏按钮
-    ui->boldBtn->setIcon(QIcon(":/res/icons/bold.png"));
+    ui->boldBtn->setIcon(QIcon(":/icons/res/note/bold.png"));
     ui->boldBtn->setToolTip("加粗");
-    ui->italicBtn->setIcon(QIcon(":/res/icons/italic.png"));
+    ui->italicBtn->setIcon(QIcon(":/icons/res/note/italic.png"));
     ui->italicBtn->setToolTip("斜体");
-    ui->colorBtn->setIcon(QIcon(":/res/icons/color.png"));
+    ui->colorBtn->setIcon(QIcon(":/icons/res/note/color.png"));
     ui->colorBtn->setToolTip("颜色");
-    ui->underlineBtn->setIcon(QIcon(":/res/icons/underline.png"));
+    ui->underlineBtn->setIcon(QIcon(":/icons/res/note/underline.png"));
     ui->underlineBtn->setToolTip("下划线");
-    ui->pictureBtn->setIcon(QIcon(":/res/icons/img.png"));
+    ui->pictureBtn->setIcon(QIcon(":/icons/res/note/img.png"));
     ui->pictureBtn->setToolTip("添加图片");
-    ui->saveBtn->setIcon(QIcon(":/res/icons/save.png"));
+    ui->saveBtn->setIcon(QIcon(":/icons/res/note/save.png"));
     ui->saveBtn->setToolTip("保存");
-    ui->undoBtn->setIcon(QIcon(":/res/icons/undo.png"));
+    ui->undoBtn->setIcon(QIcon(":/icons/res/note/undo.png"));
     ui->undoBtn->setToolTip("撤回");
-    ui->fontAddBtn->setIcon(QIcon(":/res/icons/fontAdd.png"));
+    ui->fontAddBtn->setIcon(QIcon(":/icons/res/note/fontAdd.png"));
     ui->fontAddBtn->setToolTip("增大字号");
-    ui->fontReduceBtn->setIcon(QIcon(":/res/icons/fontReduce.png"));
+    ui->fontReduceBtn->setIcon(QIcon(":/icons/res/note/fontReduce.png"));
     ui->fontReduceBtn->setToolTip("减小字号");
 
     connect(ui->boldBtn,SIGNAL(clicked()),this,SLOT(boldBtn_clicked()));

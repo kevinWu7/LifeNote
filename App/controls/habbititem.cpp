@@ -16,7 +16,14 @@ HabbitItem::HabbitItem(QWidget *parent) :
                                 "padding: 0;"
                                 "margin: 0;"
                                 "}").arg("16px","8px"));
+
+    ui->imgBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    ui->imgBtn->setIcon(QIcon(":/icons/res/note/addnew.png"));
+    ui->imgBtn->setToolTip("添加打卡项目");
+    ui->imgBtn->setIconSize(QSize(22,22));
 }
+
+
 
 HabbitItem::~HabbitItem()
 {

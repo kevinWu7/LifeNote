@@ -6,9 +6,9 @@ HabbitItem::HabbitItem(QWidget *parent) :
     ui(new Ui::HabbitItem)
 {
     ui->setupUi(this);
-    this->setStyleSheet(QString("QToolButton:hover { background-color: rgb(224, 224, 224); }"
+    this->setStyleSheet(QString("QToolButton:hover {border: 0px; background-color: rgb(224, 224, 224); }"
                                 "QToolButton{"
-                                "border: 1px;"
+                                "border: 0px;"
                                 "width: %1 ; min-width: %1; max-width: %1;"
                                 "height: %1 ; min-height: %1; max-height: %1;"
                                 "border-radius: %2;"
@@ -20,7 +20,7 @@ HabbitItem::HabbitItem(QWidget *parent) :
                                 "width: %3 ; min-width: %3; max-width: %3;"
                                 "height: %3 ; min-height: %3; max-height: %3;"
                                 "}"
-                              ).arg("24px","12px","22px"));
+                              ).arg("16px","8px","22px"));
 
 
     ui->imgBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);

@@ -20,7 +20,7 @@ checkinWidget::checkinWidget(QWidget *parent) :
     ui->titleBarControl->setStyleSheet("QToolButton:hover { background-color: rgb(218, 218, 218); }"
                                      "QToolButton{width:32px;min-width:32px;max-width:32px;height:32px; min-height:32px; max-height:32px;"
                                        "margin:0px; border:none;}");
-    ui->mainWidget->setStyleSheet("QWidget#mainWidget"
+    ui->leftNavigateWidget->setStyleSheet("QWidget#leftNavigateWidget"
                                   "{background-color:#FFFFFF;"
                                   "border-radius:7px}");
     connect(ui->addItemBtn,&QToolButton::clicked,this,&checkinWidget::addItemBtn_clicked);
@@ -31,8 +31,8 @@ checkinWidget::checkinWidget(QWidget *parent) :
 void checkinWidget::addItemBtn_clicked()
 {
     HabbitItem *item =new HabbitItem;
-    int index = ui->mainWidget->layout()->count()-1; // Replace with the desired index where you want to insert the item
-    QBoxLayout *boxLayout = dynamic_cast<QBoxLayout*>(ui->mainWidget->layout());
+    int index = ui->leftNavigateWidget->layout()->count()-1; // Replace with the desired index where you want to insert the item
+    QBoxLayout *boxLayout = dynamic_cast<QBoxLayout*>(ui->leftNavigateWidget->layout());
     if (boxLayout)
     {
         boxLayout->insertWidget(index, dynamic_cast<QWidget*>(item));

@@ -16,6 +16,7 @@ INCLUDEPATH += \
     $$PWD/util
 
 SOURCES += \
+    controls/calendarcontrol.cpp \
     controls/checkinwidget.cpp \
     controls/extraqtreewidgetitem.cpp \
     controls/lntreewidget.cpp \
@@ -24,7 +25,6 @@ SOURCES += \
     controls/weektoolbutton.cpp \
     main.cpp \
     controls/texteditcontainer.cpp \
-    controls/previewcheckwidget.cpp \
     util/logger.cpp \
     windows/newnotegroupform.cpp \
     windows/mainwindow.cpp \
@@ -33,13 +33,13 @@ SOURCES += \
 
 HEADERS += \
     base/baseinfo.h \
+    controls/calendarcontrol.h \
     controls/checkinwidget.h \
     controls/extraqtreewidgetitem.h \
     controls/lntreewidget.h \
     controls/lntextedit.h \
     controls/texteditcontainer.h \
     controls/habbititem.h \
-    controls/previewcheckwidget.h \
     controls/weektoolbutton.h \
     util/logger.h \
     windows/newnotegroupform.h \
@@ -48,10 +48,10 @@ HEADERS += \
     util/util.h
 
 FORMS += \
+    controls/calendarcontrol.ui \
     controls/checkinwidget.ui \
     controls/texteditcontainer.ui \
     controls/habbititem.ui \
-    controls/previewcheckwidget.ui \
     windows/newnotegroupform.ui \
     windows/mainwindow.ui
 

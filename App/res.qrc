@@ -35,5 +35,7 @@
         <file>res/note/underline.png</file>
         <file>res/note/undo.png</file>
         <file>res/checkin/tick.png</file>
+        <file>res/checkin/arrow-left.png</file>
+        <file>res/checkin/arrow-right.png</file>
     </qresource>
 </RCC>

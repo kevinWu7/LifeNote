@@ -7,13 +7,25 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>310</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QWidget" name="titleBarWidget" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout">
@@ -40,7 +52,7 @@
       <item>
        <widget class="QLabel" name="datetimeLabel">
         <property name="text">
-         <string>TextLabel</string>
+         <string>2023年4月</string>
         </property>
        </widget>
       </item>
@@ -68,100 +80,261 @@
     </widget>
    </item>
    <item>
+    <widget class="QWidget" name="weekDayWidget" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="weeklabel_1">
+        <property name="text">
+         <string>一</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="weeklabel_2">
+        <property name="text">
+         <string>二</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="weeklabel_3">
+        <property name="text">
+         <string>三</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="weeklabel_4">
+        <property name="text">
+         <string>四</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="weeklabel_5">
+        <property name="text">
+         <string>五</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="weeklabel_6">
+        <property name="text">
+         <string>六</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="weeklabel_7">
+        <property name="text">
+         <string>日</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QWidget" name="mainGridWidget" native="true">
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="4" column="2">
-       <widget class="QToolButton" name="toolButton_24">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QToolButton" name="toolButton_30">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QToolButton" name="toolButton_23">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="4">
-       <widget class="QToolButton" name="toolButton_33">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="5">
-       <widget class="QToolButton" name="toolButton_41">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="3">
-       <widget class="QToolButton" name="toolButton_11">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="5">
-       <widget class="QToolButton" name="toolButton_6">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="6">
-       <widget class="QToolButton" name="toolButton_35">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QToolButton" name="toolButton_16">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="6">
+     <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item row="2" column="6">
        <widget class="QToolButton" name="toolButton_21">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="1">
+      <item row="1" column="4">
+       <widget class="QToolButton" name="toolButton_12">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="4">
+       <widget class="QToolButton" name="toolButton_19">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="6">
+       <widget class="QToolButton" name="toolButton_14">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="6">
+       <widget class="QToolButton" name="toolButton_42">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="6">
+       <widget class="QToolButton" name="toolButton_28">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QToolButton" name="toolButton_23">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3">
+       <widget class="QToolButton" name="toolButton_39">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QToolButton" name="toolButton_31">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QToolButton" name="toolButton_24">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QToolButton" name="toolButton_9">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QToolButton" name="toolButton_6">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QToolButton" name="toolButton_2">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QToolButton" name="toolButton_16">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
        <widget class="QToolButton" name="toolButton_37">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="4">
-       <widget class="QToolButton" name="toolButton_40">
+      <item row="3" column="5">
+       <widget class="QToolButton" name="toolButton_27">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
-       <widget class="QToolButton" name="toolButton_36">
+      <item row="4" column="5">
+       <widget class="QToolButton" name="toolButton_34">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QToolButton" name="toolButton_18">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QToolButton" name="toolButton_11">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="5">
+       <widget class="QToolButton" name="toolButton_20">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QToolButton" name="toolButton_5">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="1" column="2">
+       <widget class="QToolButton" name="toolButton_10">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="4">
+       <widget class="QToolButton" name="toolButton_33">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
        <widget class="QToolButton" name="toolButton_3">
         <property name="text">
          <string>...</string>
@@ -169,247 +342,128 @@
        </widget>
       </item>
       <item row="3" column="4">
-       <widget class="QToolButton" name="toolButton_19">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="3">
-       <widget class="QToolButton" name="toolButton_39">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QToolButton" name="toolButton_29">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="6">
-       <widget class="QToolButton" name="toolButton_14">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="4">
        <widget class="QToolButton" name="toolButton_26">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QToolButton" name="toolButton_2">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="2">
-       <widget class="QToolButton" name="toolButton_31">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="5">
-       <widget class="QToolButton" name="toolButton_34">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QToolButton" name="toolButton_22">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="5">
-       <widget class="QToolButton" name="toolButton_27">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="4">
-       <widget class="QToolButton" name="toolButton_12">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="3">
-       <widget class="QToolButton" name="toolButton_18">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
-       <widget class="QToolButton" name="toolButton_17">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="3">
        <widget class="QToolButton" name="toolButton_25">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="6">
-       <widget class="QToolButton" name="toolButton_28">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QToolButton" name="toolButton_15">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="5">
+      <item row="1" column="5">
        <widget class="QToolButton" name="toolButton_13">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QToolButton" name="toolButton_1">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="3">
-       <widget class="QToolButton" name="toolButton_32">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="6">
+      <item row="0" column="6">
        <widget class="QToolButton" name="toolButton_7">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="2">
+      <item row="5" column="2">
        <widget class="QToolButton" name="toolButton_38">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="6">
-       <widget class="QToolButton" name="toolButton_42">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="5">
-       <widget class="QToolButton" name="toolButton_20">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
+      <item row="1" column="0">
        <widget class="QToolButton" name="toolButton_8">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="3">
-       <widget class="QToolButton" name="toolButton_4">
+      <item row="4" column="3">
+       <widget class="QToolButton" name="toolButton_32">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="2" column="2">
-       <widget class="QToolButton" name="toolButton_10">
+       <widget class="QToolButton" name="toolButton_17">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="4">
-       <widget class="QToolButton" name="toolButton_5">
+      <item row="4" column="1">
+       <widget class="QToolButton" name="toolButton_30">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QToolButton" name="toolButton_9">
+      <item row="4" column="6">
+       <widget class="QToolButton" name="toolButton_35">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QLabel" name="weeklabel_1">
+       <widget class="QToolButton" name="toolButton_1">
         <property name="text">
-         <string>一</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="weeklabel_2">
-        <property name="text">
-         <string>二</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QLabel" name="weeklabel_3">
-        <property name="text">
-         <string>三</string>
+         <string>...</string>
         </property>
        </widget>
       </item>
       <item row="0" column="3">
-       <widget class="QLabel" name="weeklabel_4">
+       <widget class="QToolButton" name="toolButton_4">
         <property name="text">
-         <string>四</string>
+         <string>...</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="4">
-       <widget class="QLabel" name="weeklabel_5">
+      <item row="3" column="0">
+       <widget class="QToolButton" name="toolButton_22">
         <property name="text">
-         <string>五</string>
+         <string>...</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="5">
-       <widget class="QLabel" name="weeklabel_6">
+      <item row="5" column="5">
+       <widget class="QToolButton" name="toolButton_41">
         <property name="text">
-         <string>六</string>
+         <string>...</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="6">
-       <widget class="QLabel" name="weeklabel_7">
+      <item row="4" column="0">
+       <widget class="QToolButton" name="toolButton_29">
         <property name="text">
-         <string>日</string>
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QToolButton" name="toolButton_36">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QToolButton" name="toolButton_15">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="4">
+       <widget class="QToolButton" name="toolButton_40">
+        <property name="text">
+         <string>...</string>
         </property>
        </widget>
       </item>

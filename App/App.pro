@@ -10,21 +10,23 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 ICON = logo.icns
 INCLUDEPATH += \
-    $$PWD/controls \
+    $$PWD/custom_controls \
+    $$PWD/widgets \
     $$PWD/windows \
     $$PWD/base \
     $$PWD/util
 
 SOURCES += \
-    controls/calendarcontrol.cpp \
-    controls/checkinwidget.cpp \
-    controls/extraqtreewidgetitem.cpp \
-    controls/lntreewidget.cpp \
-    controls/lntextedit.cpp \
-    controls/habbititem.cpp \
-    controls/weektoolbutton.cpp \
+    custom_controls/monthbutton.cpp \
+    widgets/calendarcontrol.cpp \
+    widgets/checkinwidget.cpp \
+    custom_controls/extraqtreewidgetitem.cpp \
+    custom_controls/lntreewidget.cpp \
+    custom_controls/lntextedit.cpp \
+    widgets/habbititem.cpp \
+    custom_controls/weektoolbutton.cpp \
     main.cpp \
-    controls/texteditcontainer.cpp \
+    widgets/texteditcontainer.cpp \
     util/logger.cpp \
     windows/newnotegroupform.cpp \
     windows/mainwindow.cpp \
@@ -33,14 +35,15 @@ SOURCES += \
 
 HEADERS += \
     base/baseinfo.h \
-    controls/calendarcontrol.h \
-    controls/checkinwidget.h \
-    controls/extraqtreewidgetitem.h \
-    controls/lntreewidget.h \
-    controls/lntextedit.h \
-    controls/texteditcontainer.h \
-    controls/habbititem.h \
-    controls/weektoolbutton.h \
+    custom_controls/monthbutton.h \
+    widgets/calendarcontrol.h \
+    widgets/checkinwidget.h \
+    custom_controls/extraqtreewidgetitem.h \
+    custom_controls/lntreewidget.h \
+    custom_controls/lntextedit.h \
+    widgets/texteditcontainer.h \
+    widgets/habbititem.h \
+    custom_controls/weektoolbutton.h \
     util/logger.h \
     windows/newnotegroupform.h \
     windows/mainwindow.h \
@@ -48,10 +51,10 @@ HEADERS += \
     util/util.h
 
 FORMS += \
-    controls/calendarcontrol.ui \
-    controls/checkinwidget.ui \
-    controls/texteditcontainer.ui \
-    controls/habbititem.ui \
+    widgets/calendarcontrol.ui \
+    widgets/checkinwidget.ui \
+    widgets/texteditcontainer.ui \
+    widgets/habbititem.ui \
     windows/newnotegroupform.ui \
     windows/mainwindow.ui
 

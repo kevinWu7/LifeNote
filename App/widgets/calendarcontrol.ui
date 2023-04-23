@@ -180,294 +180,294 @@
        <number>0</number>
       </property>
       <item row="2" column="6">
-       <widget class="QToolButton" name="toolButton_21">
+       <widget class="monthButton" name="toolButton_21">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="1" column="4">
-       <widget class="QToolButton" name="toolButton_12">
+       <widget class="monthButton" name="toolButton_12">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="2" column="4">
-       <widget class="QToolButton" name="toolButton_19">
+       <widget class="monthButton" name="toolButton_19">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="1" column="6">
-       <widget class="QToolButton" name="toolButton_14">
+       <widget class="monthButton" name="toolButton_14">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="5" column="6">
-       <widget class="QToolButton" name="toolButton_42">
+       <widget class="monthButton" name="toolButton_42">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="3" column="6">
-       <widget class="QToolButton" name="toolButton_28">
+       <widget class="monthButton" name="toolButton_28">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QToolButton" name="toolButton_23">
+       <widget class="monthButton" name="toolButton_23">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="5" column="3">
-       <widget class="QToolButton" name="toolButton_39">
+       <widget class="monthButton" name="toolButton_39">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="4" column="2">
-       <widget class="QToolButton" name="toolButton_31">
+       <widget class="monthButton" name="toolButton_31">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="3" column="2">
-       <widget class="QToolButton" name="toolButton_24">
+       <widget class="monthButton" name="toolButton_24">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QToolButton" name="toolButton_9">
+       <widget class="monthButton" name="toolButton_9">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="0" column="5">
-       <widget class="QToolButton" name="toolButton_6">
+       <widget class="monthButton" name="toolButton_6">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QToolButton" name="toolButton_2">
+       <widget class="monthButton" name="toolButton_2">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QToolButton" name="toolButton_16">
+       <widget class="monthButton" name="toolButton_16">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="5" column="1">
-       <widget class="QToolButton" name="toolButton_37">
+       <widget class="monthButton" name="toolButton_37">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="3" column="5">
-       <widget class="QToolButton" name="toolButton_27">
+       <widget class="monthButton" name="toolButton_27">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="4" column="5">
-       <widget class="QToolButton" name="toolButton_34">
+       <widget class="monthButton" name="toolButton_34">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="2" column="3">
-       <widget class="QToolButton" name="toolButton_18">
+       <widget class="monthButton" name="toolButton_18">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="1" column="3">
-       <widget class="QToolButton" name="toolButton_11">
+       <widget class="monthButton" name="toolButton_11">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="2" column="5">
-       <widget class="QToolButton" name="toolButton_20">
+       <widget class="monthButton" name="toolButton_20">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="0" column="4">
-       <widget class="QToolButton" name="toolButton_5">
+       <widget class="monthButton" name="toolButton_5">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="QToolButton" name="toolButton_10">
+       <widget class="monthButton" name="toolButton_10">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="4" column="4">
-       <widget class="QToolButton" name="toolButton_33">
+       <widget class="monthButton" name="toolButton_33">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="0" column="2">
-       <widget class="QToolButton" name="toolButton_3">
+       <widget class="monthButton" name="toolButton_3">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="3" column="4">
-       <widget class="QToolButton" name="toolButton_26">
+       <widget class="monthButton" name="toolButton_26">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="3" column="3">
-       <widget class="QToolButton" name="toolButton_25">
+       <widget class="monthButton" name="toolButton_25">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="1" column="5">
-       <widget class="QToolButton" name="toolButton_13">
+       <widget class="monthButton" name="toolButton_13">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="0" column="6">
-       <widget class="QToolButton" name="toolButton_7">
+       <widget class="monthButton" name="toolButton_7">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="5" column="2">
-       <widget class="QToolButton" name="toolButton_38">
+       <widget class="monthButton" name="toolButton_38">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QToolButton" name="toolButton_8">
+       <widget class="monthButton" name="toolButton_8">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="4" column="3">
-       <widget class="QToolButton" name="toolButton_32">
+       <widget class="monthButton" name="toolButton_32">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="2" column="2">
-       <widget class="QToolButton" name="toolButton_17">
+       <widget class="monthButton" name="toolButton_17">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QToolButton" name="toolButton_30">
+       <widget class="monthButton" name="toolButton_30">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="4" column="6">
-       <widget class="QToolButton" name="toolButton_35">
+       <widget class="monthButton" name="toolButton_35">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QToolButton" name="toolButton_1">
+       <widget class="monthButton" name="toolButton_1">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="0" column="3">
-       <widget class="QToolButton" name="toolButton_4">
+       <widget class="monthButton" name="toolButton_4">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QToolButton" name="toolButton_22">
+       <widget class="monthButton" name="toolButton_22">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="5" column="5">
-       <widget class="QToolButton" name="toolButton_41">
+       <widget class="monthButton" name="toolButton_41">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="4" column="0">
-       <widget class="QToolButton" name="toolButton_29">
+       <widget class="monthButton" name="toolButton_29">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="5" column="0">
-       <widget class="QToolButton" name="toolButton_36">
+       <widget class="monthButton" name="toolButton_36">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QToolButton" name="toolButton_15">
+       <widget class="monthButton" name="toolButton_15">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
       <item row="5" column="4">
-       <widget class="QToolButton" name="toolButton_40">
+       <widget class="monthButton" name="toolButton_40">
         <property name="text">
          <string>...</string>
         </property>
@@ -491,6 +491,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>monthButton</class>
+   <extends>QToolButton</extends>
+   <header>monthbutton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

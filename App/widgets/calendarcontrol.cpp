@@ -1,6 +1,5 @@
 #include "calendarcontrol.h"
 #include "ui_calendarcontrol.h"
-#include <QDate>
 #include <QPalette>
 #include "util.h"
 
@@ -17,6 +16,7 @@ CalendarControl::CalendarControl(QWidget *parent) :
                                 "height: %1 ; min-height: %1; max-height: %1;"
                                 "border-radius: %2;"
                                 "background-color: rgb(239,239,239);"
+                                "font-size: 12px;"
                                 "padding: 0;"
                                 "margin: 0;}"
                                 "QToolButton#arrowLeftBtn{"      //左箭头样式
@@ -59,45 +59,87 @@ CalendarControl::CalendarControl(QWidget *parent) :
         label->setAlignment(Qt::AlignCenter);
     }
 
-
-    initMonthBtnEvent();
-    initDate();
+    connect(ui->arrowLeftBtn,&QToolButton::clicked,this,&CalendarControl::arrowLeftBtn_clicked);
+    connect(ui->arrowRightBtn,&QToolButton::clicked,this,&CalendarControl::arrowRightBtn_clicked);
+    cacheAllDate();
+    initCurrentMonth();
 }
 
-void CalendarControl::initMonthBtnEvent()
-{
-    for(int index=0;index<ui->mainGridWidget->layout()->count();index++)
-    {
-        QToolButton* childWidget =dynamic_cast<QToolButton*>(ui->mainGridWidget->layout()->itemAt(index)->widget());
-        if(childWidget)
-        {
-            connect(childWidget,&QToolButton::clicked,this,&CalendarControl::monthBtn_clicked);
-        }
-    }
-}
-void CalendarControl::monthBtn_clicked()
-{
-    QToolButton *button = qobject_cast<QToolButton*>(sender());
 
-    QPalette palette = button->palette();
-    QColor textColor = palette.color(QPalette::ButtonText);
 
-    if (textColor == Qt::white)
+
+void  CalendarControl::arrowLeftBtn_clicked()
+{
+    QDate currentDate = QDate::currentDate();
+
+    // 获取当前展示月份的第一天
+    if(currendDisplayDate.month()==1)
     {
-        button->setStyleSheet("background-color:rgb(239,239,239);color:black");
+        currendDisplayDate = QDate(currendDisplayDate.year()-1, 12, 1);
     }
     else
     {
-        button->setStyleSheet("background-color:rgb(72,114,251);color:white");
+        currendDisplayDate = QDate(currendDisplayDate.year(), currendDisplayDate.month()-1, 1);
     }
+    //若为当前月份，则直接调用initCurrentMonth
+    if(currendDisplayDate.year()==currentDate.year()&&currendDisplayDate.month()==currentDate.month())
+    {
+       // initCurrentMonth();
+        //return;
+    }
+    // 计算日期间距
+    int weekDistance= currendDisplayDate.dayOfWeek()-1;
+
+    QDate startDate = currendDisplayDate.addDays(-(weekDistance));
+    fillDateTomainGrid(startDate);
+
 }
 
-void CalendarControl::initDate()
+void  CalendarControl::arrowRightBtn_clicked()
 {
-    // 获取当前日期
     QDate currentDate = QDate::currentDate();
-    qDebug() << "当前日期: " << currentDate.toString(Qt::ISODate);
 
+    // 获取当前展示月份的第一天
+    if(currendDisplayDate.month()==12)
+    {
+        currendDisplayDate = QDate(currendDisplayDate.year()+1, 1, 1);
+    }
+    else
+    {
+        currendDisplayDate = QDate(currendDisplayDate.year(), currendDisplayDate.month()+1, 1);
+    }
+    //若为当前月份，则直接调用initCurrentMonth
+    if(currendDisplayDate.year()==currentDate.year()&&currendDisplayDate.month()==currentDate.month())
+    {
+        //initCurrentMonth();
+        //return;
+    }
+    // 计算日期间距
+    int weekDistance= currendDisplayDate.dayOfWeek()-1;
+    QDate startDate = currendDisplayDate.addDays(-(weekDistance));
+    fillDateTomainGrid(startDate);
+}
+
+
+
+void CalendarControl::initCurrentMonth()
+{
+    QDate currentDate = QDate::currentDate();
+    // 获取当前月份的第一天
+    currendDisplayDate = QDate(currentDate.year(), currentDate.month(), 1);
+
+    // 计算日期间距
+    int daysDifference = currendDisplayDate.daysTo(currentDate);
+    int weekDay= currendDisplayDate.dayOfWeek();
+    int weekDistance= weekDay-1;
+
+    QDate startDate = currentDate.addDays(-(daysDifference + weekDistance));
+    fillDateTomainGrid(startDate);
+}
+
+void CalendarControl::cacheAllDate()
+{
+    QDate currentDate = QDate::currentDate();
     // 获取前一年的日期
     QDate lastYearDate = currentDate.addYears(-1);
     // 获取后一年的日期
@@ -106,38 +148,40 @@ void CalendarControl::initDate()
     // 打印前一年到后一年的每一天
     QDate dateIterator = lastYearDate;
     while (dateIterator <= nextYearDate) {
-        qDebug() << dateIterator.toString(Qt::ISODate);
         dateIterator = dateIterator.addDays(1);
-        vector_date.push_back(dateIterator);
+        vector_allcache_date.push_back(dateIterator);
     }
-    // 获取当前月份的第一天
-    QDate firstDayOfMonth = QDate(currentDate.year(), currentDate.month(), 1);
-    // 计算日期间距
-    int daysDifference = firstDayOfMonth.daysTo(currentDate);
-    qDebug() << "Days difference:" << daysDifference;
-    int weekDay= firstDayOfMonth.dayOfWeek();
-    qDebug() << "Days week:" << weekDay;
-    int weekDistance= weekDay-1;
+}
 
-    QDate startDate = currentDate.addDays(-(daysDifference + weekDistance));
-    // 创建新的vector对象
-    std::vector<QDate> currentMonth_date;
-
+void CalendarControl::fillDateTomainGrid(QDate startDate)
+{
+    currentMonth_date.clear();
+    QDate currentDate = QDate::currentDate();
     // 循环添加日期到vector中
     for (int i = 0; i < 42; i++) {
         currentMonth_date.push_back(startDate.addDays(i));
     }
     for(int index=0;index<ui->mainGridWidget->layout()->count();index++)
     {
-         QToolButton* childWidget = util::findWidget<QToolButton>(ui->mainGridWidget,"toolButton_"+QString::number(index+1));
+         monthButton* childWidget = util::findWidget<monthButton>(ui->mainGridWidget,"toolButton_"+QString::number(index+1));
          if (childWidget)
          {
              QString dayNumber=QString::number(currentMonth_date[index].day());
              qDebug() << "Days dayNumber:" << dayNumber;
              childWidget->setText(dayNumber);
+             childWidget->date=currentMonth_date[index];
+             //设置当天的按钮，标记为特殊颜色
+             if(currentMonth_date[index]==currentDate)
+             {
+                  childWidget->setStyleSheet("color:orange;font-weight: bold;");
+             }
+             else
+             {
+                 childWidget->setStyleSheet("color:black;");
+             }
          }
     }
-
+    ui->datetimeLabel->setText(QString("%1年 %2月").arg(currendDisplayDate.year()).arg(currendDisplayDate.month()));
 }
 
 CalendarControl::~CalendarControl()

@@ -15,11 +15,11 @@ void WeekToolButton::WeekButton_clicked()
 {
     if(iconState)
     {
-         this->setIcon(QIcon(":/icons/res/checkin/tick.png"));
+        this->setIcon(QIcon());
     }
     else
     {
-         this->setIcon(QIcon());
+        this->setIcon(QIcon(":/icons/res/checkin/tick.png"));
     }
     iconState=!iconState;
 }

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <vector>
+#include <QDate>
 namespace Ui {
 class CalendarControl;
 }
@@ -17,10 +18,15 @@ public:
 
 private:
     Ui::CalendarControl *ui;
-    void initDate();
+    QDate currendDisplayDate;//当前展示的日期
+    void initCurrentMonth();
+    void cacheAllDate();
     void initMonthBtnEvent();
-   void monthBtn_clicked();
-    std::vector<QDate> vector_date;
+    void monthBtn_clicked();
+    void arrowLeftBtn_clicked();
+    void arrowRightBtn_clicked();
+    void fillDateTomainGrid(QDate startDate);
+    std::vector<QDate> vector_allcache_date;
     std::vector<QDate> currentMonth_date;
 };
 

@@ -170,15 +170,19 @@ void CalendarControl::fillDateTomainGrid(QDate startDate)
              qDebug() << "Days dayNumber:" << dayNumber;
              childWidget->setText(dayNumber);
              childWidget->date=currentMonth_date[index];
+             childWidget->currendDisplayDate=currendDisplayDate;
              //设置当天的按钮，标记为特殊颜色
              if(currentMonth_date[index]==currentDate)
              {
-                  childWidget->setStyleSheet("color:orange;font-weight: bold;");
+                 childWidget->setStyleSheet("color:orange;font-weight:bold;");
+                 continue;
              }
-             else
+             if(currentMonth_date[index].month()!=currendDisplayDate.month())
              {
-                 childWidget->setStyleSheet("color:black;");
+                 childWidget->setStyleSheet("color:rgb(158,158,158);");
+                 continue;
              }
+             childWidget->setStyleSheet("color:black;");
          }
     }
     ui->datetimeLabel->setText(QString("%1年 %2月").arg(currendDisplayDate.year()).arg(currendDisplayDate.month()));

@@ -55,6 +55,9 @@
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
+        <property name="handleWidth">
+         <number>3</number>
+        </property>
         <property name="childrenCollapsible">
          <bool>false</bool>
         </property>
@@ -154,7 +157,7 @@
           <item>
            <widget class="QLabel" name="label">
             <property name="text">
-             <string>TextLabel</string>
+             <string/>
             </property>
            </widget>
           </item>

@@ -23,6 +23,13 @@ checkinWidget::checkinWidget(QWidget *parent) :
     this->setStyleSheet("QWidget#mainWidget"
                                   "{background-color:#FFFFFF;"
                                   "border-radius:7px}");
+    ui->mainSplitter->setStyleSheet("QSplitter::handle { background-color: transparent; }"
+                                    "QSplitter::handle:horizontal {"
+                                    "  width: 1px;" // 将宽度设置为3像素，以便在左右边框之间留出空间
+                                    "  margin: 0px;"
+                                    "  border-left: none;" // 设置左边框颜色和宽度
+                                    "  border-right:1px solid rgb(240,239,239);" // 设置右边框颜色和宽度
+                                    "}");
     connect(ui->addItemBtn,&QToolButton::clicked,this,&checkinWidget::addItemBtn_clicked);
 
 }

@@ -13,7 +13,7 @@ void monthButton::monthButton_clicked()
 {
     monthButton *button = dynamic_cast<monthButton*>(sender());
     QDate currentDate=QDate::currentDate();
-    if(button->date==currentDate)
+    if(date==currentDate)
     {
         if(iconState)
         {
@@ -28,13 +28,26 @@ void monthButton::monthButton_clicked()
     {
         if(iconState)
         {
-            button->setStyleSheet("background-color:rgb(239,239,239);color:black;");
+            if(date.month()!= currendDisplayDate.month())
+            {
+                button->setStyleSheet("background-color:rgb(239,239,239);color:rgb(158,158,158);");
+            }
+            else
+            {
+                button->setStyleSheet("background-color:rgb(239,239,239);color:black;");
+            }
         }
         else
         {
-            button->setStyleSheet("background-color:rgb(72,114,251);color:white;");
+           if(date.month()!= currendDisplayDate.month())
+           {
+                button->setStyleSheet("background-color:rgba(72,114,251,0.6);color:white;");
+           }
+           else
+           {
+                button->setStyleSheet("background-color:rgb(72,114,251);color:white;");
+           }
         }
     }
     iconState=!iconState;
-
 }

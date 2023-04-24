@@ -1,7 +1,6 @@
 #include "checkinwidget.h"
 #include "ui_checkinwidget.h"
 #include "habbititem.h"
-#include "logger.h"
 
 checkinWidget::checkinWidget(QWidget *parent) :
     QWidget(parent),
@@ -55,10 +54,6 @@ void checkinWidget::addItemBtn_clicked()
 
 void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex)
 {
-     if(name.isEmpty())
-     {
-         name="未命名项目";
-     }
      HabbitItem *habit =new HabbitItem;
      habit->setIconIndex(iconIndex);
      habit->setProjectName(name);

@@ -2,8 +2,9 @@
 #include "ui_newhabitform.h"
 #include "util.h"
 #include <QPainterPath>
+#include "logger.h"
 
-#define DefaultDisplayTip "输入项目名"
+#define DefaultDisplayTip "未命名项目"
 #define  ROUND_RADIUS 5
 
 NewHabitForm::NewHabitForm(QWidget *parent) :
@@ -38,7 +39,6 @@ NewHabitForm::NewHabitForm(QWidget *parent) :
                                 "color:rgb(255,255,255)"
                                 "}"
                                 ).arg("60px","18px"));
-
     initIConBtn();
     InitRoundRadius();
     connect(ui->okBtn,&QPushButton::clicked,this,&NewHabitForm::okBtn_clicked);
@@ -64,19 +64,45 @@ void NewHabitForm::initIConBtn()
         toolBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
         toolBtn->setIcon(QIcon(QString(":/icons/res/checkin/%1").arg(icon)));
         toolBtn->setIconSize(QSize(20,20));
+        connect(toolBtn,&QToolButton::clicked,this,&NewHabitForm::iconBtn_clicked);
+    }
+}
+
+void NewHabitForm::iconBtn_clicked()
+{
+    auto btn= dynamic_cast<QToolButton*>(sender());
+    if(btn->isChecked())
+    {
+        for(int i=0;i<ui->iconWidget->layout()->count();i++)
+        {
+            QToolButton* toolBtn= dynamic_cast<QToolButton*>(ui->iconWidget->layout()->itemAt(i)->widget());
+            if(btn!=toolBtn)
+            {
+                toolBtn->setChecked(false);
+            }
+            else
+            {
+                iconIndex=i;
+                logger->log(QString("index: %1").arg(i));
+            }
+        }
     }
 }
 
 void NewHabitForm::okBtn_clicked()
 {
-    emit sendSelectDataToParent(ui->nameLineEdit->text(),2);
-    ui->nameLineEdit->setText(DefaultDisplayTip);
+    if(ui->nameLineEdit->text().isEmpty())
+    {
+       ui->nameLineEdit->setText(DefaultDisplayTip);
+    }
+    emit sendSelectDataToParent(ui->nameLineEdit->text(),iconIndex);
+    ui->nameLineEdit->setText("");
     this->setVisible(false);
 }
 
 void NewHabitForm::cancleBtn_clicked()
 {
-    ui->nameLineEdit->setText(DefaultDisplayTip);
+    ui->nameLineEdit->setText("");
     this->setVisible(false);
 }
 

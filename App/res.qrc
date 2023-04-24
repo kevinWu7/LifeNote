@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/icons">
-        <file>res/checkin/ bowl.png</file>
         <file>res/checkin/cat.png</file>
         <file>res/checkin/checkin.png</file>
         <file>res/checkin/coffee.png</file>
@@ -37,5 +36,6 @@
         <file>res/checkin/tick.png</file>
         <file>res/checkin/arrow-left.png</file>
         <file>res/checkin/arrow-right.png</file>
+        <file>res/checkin/bowl.png</file>
     </qresource>
 </RCC>

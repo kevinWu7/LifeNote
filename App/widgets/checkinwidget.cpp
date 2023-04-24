@@ -1,5 +1,7 @@
 #include "checkinwidget.h"
 #include "ui_checkinwidget.h"
+#include "habbititem.h"
+#include "logger.h"
 
 checkinWidget::checkinWidget(QWidget *parent) :
     QWidget(parent),
@@ -37,13 +39,35 @@ checkinWidget::checkinWidget(QWidget *parent) :
 
 void checkinWidget::addItemBtn_clicked()
 {
-    HabbitItem *item =new HabbitItem;
-    int index = ui->leftNavigateWidget->layout()->count()-1; // Replace with the desired index where you want to insert the item
-    QBoxLayout *boxLayout = dynamic_cast<QBoxLayout*>(ui->leftNavigateWidget->layout());
-    if (boxLayout)
+    if(!this->habitForm)
     {
-        boxLayout->insertWidget(index, dynamic_cast<QWidget*>(item));
+        habitForm=new NewHabitForm;
+        connect(habitForm,&NewHabitForm::sendSelectDataToParent,this, &checkinWidget::onReceiveNewHabitFormData);
     }
+    if(this->window())
+    {
+         habitForm->move(this->window()->frameGeometry().topLeft() +this->window()->rect().center() -habitForm->rect().center());//使子窗体居中
+    }
+    habitForm->show();
+
+
+}
+
+void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex)
+{
+     if(name.isEmpty())
+     {
+         name="未命名项目";
+     }
+     HabbitItem *habit =new HabbitItem;
+     habit->setIconIndex(iconIndex);
+     habit->setProjectName(name);
+     int index = ui->leftNavigateWidget->layout()->count()-1; // Replace with the desired index where you want to insert the item
+     QBoxLayout *boxLayout = dynamic_cast<QBoxLayout*>(ui->leftNavigateWidget->layout());
+     if (boxLayout)
+     {
+         boxLayout->insertWidget(index, dynamic_cast<QWidget*>(habit));
+     }
 }
 
 checkinWidget::~checkinWidget()

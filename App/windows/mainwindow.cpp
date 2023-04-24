@@ -8,9 +8,6 @@
 #include "ui_texteditcontainer.h"
 #include "nodeconfig.h"
 
-
-
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)

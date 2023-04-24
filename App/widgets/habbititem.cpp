@@ -1,6 +1,6 @@
 #include "habbititem.h"
 #include "ui_habbititem.h"
-
+#include "util.h"
 HabbitItem::HabbitItem(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::HabbitItem)
@@ -24,13 +24,20 @@ HabbitItem::HabbitItem(QWidget *parent) :
 
 
     ui->imgBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    ui->imgBtn->setIcon(QIcon(":/icons/res/checkin/run.png"));
     ui->imgBtn->setIconSize(QSize(22,22));
-
-    ui->labelText->setFont(QFont("Arial", 14, QFont::Normal));
+    ui->nameLabel->setFont(QFont("Arial", 14, QFont::Normal));
 }
 
+void HabbitItem::setIconIndex(int iconIndex)
+{
+    auto icon=QString::fromStdString(util::iconMap[iconIndex]);
+    ui->imgBtn->setIcon(QIcon(QString(":/icons/res/checkin/%1").arg(icon)));
+}
 
+void HabbitItem::setProjectName(QString name)
+{
+    ui->nameLabel->setText(name);
+}
 
 HabbitItem::~HabbitItem()
 {

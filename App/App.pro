@@ -18,45 +18,49 @@ INCLUDEPATH += \
 
 SOURCES += \
     custom_controls/monthbutton.cpp \
-    widgets/calendarcontrol.cpp \
-    widgets/checkinwidget.cpp \
     custom_controls/extraqtreewidgetitem.cpp \
     custom_controls/lntreewidget.cpp \
     custom_controls/lntextedit.cpp \
-    widgets/habbititem.cpp \
     custom_controls/weektoolbutton.cpp \
-    main.cpp \
+    widgets/calendarcontrol.cpp \
+    widgets/checkinwidget.cpp \
+    widgets/habbititem.cpp \
     widgets/texteditcontainer.cpp \
-    util/logger.cpp \
     windows/newnotegroupform.cpp \
     windows/mainwindow.cpp \
+    windows/newhabitform.cpp \
+    main.cpp \
+    util/logger.cpp \
     nodeconfig.cpp \
     util/util.cpp
 
 HEADERS += \
-    base/baseinfo.h \
     custom_controls/monthbutton.h \
-    widgets/calendarcontrol.h \
-    widgets/checkinwidget.h \
     custom_controls/extraqtreewidgetitem.h \
     custom_controls/lntreewidget.h \
     custom_controls/lntextedit.h \
+    custom_controls/weektoolbutton.h \
+    widgets/calendarcontrol.h \
+    widgets/checkinwidget.h \  
     widgets/texteditcontainer.h \
     widgets/habbititem.h \
-    custom_controls/weektoolbutton.h \
-    util/logger.h \
-    windows/newnotegroupform.h \
     windows/mainwindow.h \
+    windows/newnotegroupform.h \
+    windows/newhabitform.h \
+    base/baseinfo.h \
     nodeconfig.h \
-    util/util.h
+    util/util.h \
+    util/logger.h
 
 FORMS += \
     widgets/calendarcontrol.ui \
     widgets/checkinwidget.ui \
     widgets/texteditcontainer.ui \
     widgets/habbititem.ui \
-    windows/newnotegroupform.ui \
-    windows/mainwindow.ui
+    windows/newhabitform.ui \
+    windows/mainwindow.ui \
+    windows/newnotegroupform.ui
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

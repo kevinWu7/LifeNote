@@ -27,6 +27,7 @@ public:
     static bool cutDir(const QString &source, const QString &destination, bool override);
     static bool isChildItem(QTreeWidgetItem* parentItem, QTreeWidgetItem* childItem);
     static std::map<int,std::string> colorBtnMap;
+    static std::map<int,std::string> iconMap;
     static std::vector<QString> fontVector;
     template<typename T>
     static T *findWidget(QWidget *parent, const QString &objectName)

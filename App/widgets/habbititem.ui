@@ -34,7 +34,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="labelText">
+    <widget class="QLabel" name="nameLabel">
      <property name="text">
       <string>跑步</string>
      </property>
@@ -110,7 +110,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="ratioLabel">
      <property name="text">
       <string>3/7</string>
      </property>

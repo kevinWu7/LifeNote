@@ -8,6 +8,11 @@
 #include <QPainter>
 #include <QDir>
 
+std::map<int,std::string> util::iconMap={
+    {0,"computer.png" },{1,"run.png" },{2,"english.png" },{3,"study.png" },{4,"train.png" },
+    {5,"english2.png" },{6,"notes.png" },{7,"game.png" },{8,"bowl.png" },{9,"tableware.png" },
+    {10,"cat.png" },{11,"dog.png" },{12,"coffee.png" },{13,"train2.png" },
+};
 
 std::map<int, std::string> util::colorBtnMap = {
     {0, "rgb(125,180,255)"}, {1, "rgb(212,171,128)"}, {2, "rgb(168,119,199)"},

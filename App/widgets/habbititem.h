@@ -14,7 +14,9 @@ class HabbitItem : public QWidget
 public:
     explicit HabbitItem(QWidget *parent = nullptr);
     ~HabbitItem();
-
+    int iconIndex=0;
+    void setIconIndex(int iconIndex);
+    void setProjectName(QString name);
 private:
     Ui::HabbitItem *ui;
 };

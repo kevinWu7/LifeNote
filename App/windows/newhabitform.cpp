@@ -93,7 +93,14 @@ void NewHabitForm::okBtn_clicked()
 {
     if(ui->nameLineEdit->text().isEmpty())
     {
-       ui->nameLineEdit->setText(DefaultDisplayTip);
+       ui->warningLabel->setText("项目名称为空，请输入项目名称!");
+       ui->warningLabel->setStyleSheet("color:red");
+       return;
+    }
+    else
+    {
+        ui->warningLabel->setText("");
+        ui->warningLabel->setStyleSheet("color:transparent");
     }
     emit sendSelectDataToParent(ui->nameLineEdit->text(),iconIndex);
     ui->nameLineEdit->setText("");

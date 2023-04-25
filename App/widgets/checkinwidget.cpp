@@ -1,6 +1,15 @@
 #include "checkinwidget.h"
 #include "ui_checkinwidget.h"
 #include "habbititem.h"
+#include "util.h"
+#include "logger.h"
+#include <QFile>
+#include <QXmlStreamReader>
+#include "baseinfo.h"
+
+#define CHECKIN_CONFIG_PATH "/config/checkin.xml"
+
+
 
 checkinWidget::checkinWidget(QWidget *parent) :
     QWidget(parent),
@@ -33,6 +42,97 @@ checkinWidget::checkinWidget(QWidget *parent) :
                                     "}");
     connect(ui->addItemBtn,&QToolButton::clicked,this,&checkinWidget::addItemBtn_clicked);
 
+    std::vector<project_info*> projects= LoadCheckinConfig();
+    for(auto item :projects)
+    {
+        auto s=QString::number(30);
+        onReceiveNewHabitFormData(item->project_name,item->iconIndex.toInt());
+    }
+}
+//XML struct is seem like qtreeWidget ,is a tree
+//The node is added to the treewidget by loop the xml document
+std::vector<project_info*> checkinWidget::LoadCheckinConfig()
+{
+    //设置输入文件
+    QString filePath =STORAGE_PATH+ CHECKIN_CONFIG_PATH;
+    QFile inputfile(filePath);
+    std::vector<project_info*> vector_project;
+    if(!inputfile.open(QIODevice::ReadOnly))
+    {
+        logger->log(QString("loadConfigXML: Open checkin.xml file failed"));
+        return vector_project;
+    }
+    QXmlStreamReader reader(&inputfile);
+
+    bool isTotalProjectRange=false;
+    //开始解析
+    while (!reader.atEnd())
+    {
+        QXmlStreamReader::TokenType token = reader.readNext();
+        switch (token)
+        {
+        case QXmlStreamReader::StartDocument:
+            break;
+        case QXmlStreamReader::EndDocument:
+            break;
+        case QXmlStreamReader::StartElement:
+            if(!reader.name().toString().isEmpty())
+            {
+                project_info *project = new project_info();
+                if(reader.name().toString()==NODENAME_TOTALPROJECT)
+                {
+                    isTotalProjectRange=true;
+                }
+                else if(reader.name().toString()==NODENAME_PROJECT)
+                {
+                    if(isTotalProjectRange)
+                    {
+                        foreach (const QXmlStreamAttribute & attribute, reader.attributes())
+                        {
+                            logger->log(attribute.name().toString());
+                            logger->log(attribute.value().toString());
+                            if(attribute.name().toString()==ATTRIBUTE_NAME)
+                            {
+                                project->project_name= attribute.value().toString();
+                            }
+                            if(attribute.name().toString()==ATTRIBUTE_ICONINDEX)
+                            {
+                                project->iconIndex= attribute.value().toString();
+                            }
+                        }
+                        vector_project.push_back(project);
+                    }
+                }
+            }
+            break;
+        case QXmlStreamReader::EndElement:
+            if(reader.name().toString()==NODENAME_TOTALPROJECT)
+            {
+                isTotalProjectRange=false;
+            }
+            if(reader.name().toString()=="root")
+            {
+                continue;
+            }
+            break;
+        case QXmlStreamReader::Characters:
+            break;
+        }
+    }
+
+    //是否是正常结束
+    if (reader.error())
+    {
+        QString str="Error: "+reader.errorString()+"in file test.xml "
+                                                   "at line "+QString::number(reader.lineNumber())+
+                ",column "+QString::number(reader.columnNumber());
+        logger->log(str);
+        vector_project.clear();
+        return vector_project;
+    }
+    //关闭文件
+    inputfile.close();
+    return vector_project;
 }
 
 
@@ -48,8 +148,6 @@ void checkinWidget::addItemBtn_clicked()
          habitForm->move(this->window()->frameGeometry().topLeft() +this->window()->rect().center() -habitForm->rect().center());//使子窗体居中
     }
     habitForm->show();
-
-
 }
 
 void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex)

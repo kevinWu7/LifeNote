@@ -11,6 +11,15 @@
 #define  ATTRIBUTE_STARTFLAG "isStartWithDigit"
 #define  WINDOW_TITLE "理想之城"
 
+#define NODENAME_TOTALPROJECT "TotalProjet"
+#define NODENAME_DETAILPROJECT "DetailProject"
+#define NODENAME_PROJECT "project"
+#define ATTRIBUTE_NAME "name"
+#define ATTRIBUTE_DATE "date"
+#define ATTRIBUTE_TIP "tip"
+#define ATTRIBUTE_TYPE "type"
+#define ATTRIBUTE_ICONINDEX "iconindex"
+
 enum OperationType
 {
     AddNode,

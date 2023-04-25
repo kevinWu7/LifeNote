@@ -266,6 +266,13 @@
       </spacer>
      </item>
      <item>
+      <widget class="QLabel" name="warningLabel">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="cancleBtn">
        <property name="text">
         <string>取消</string>

@@ -4,12 +4,14 @@
 #include <QWidget>
 #include "newhabitform.h"
 #include <QToolButton>
+#include "baseinfo.h"
 
 struct project_info
 {
     QString project_name;
     QToolButton * button;
     QString iconIndex;
+    QString type;
 };
 
 namespace Ui {
@@ -33,6 +35,8 @@ private:
     Ui::checkinWidget *ui;
     void onReceiveNewHabitFormData(QString name, int iconIndex);
     std::vector<project_info*> LoadCheckinConfig();
+    void updateXml(HabitOperationType type,project_info * project);
+    void addHabitItem(project_info *project);
 };
 
 #endif // CHECKINWIDGET_H

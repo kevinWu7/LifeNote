@@ -5,7 +5,7 @@
 #include "logger.h"
 #include <QFile>
 #include <QXmlStreamReader>
-#include "baseinfo.h"
+
 
 #define CHECKIN_CONFIG_PATH "/config/checkin.xml"
 
@@ -46,11 +46,10 @@ checkinWidget::checkinWidget(QWidget *parent) :
     for(auto item :projects)
     {
         auto s=QString::number(30);
-        onReceiveNewHabitFormData(item->project_name,item->iconIndex.toInt());
+        addHabitItem(item);
     }
 }
-//XML struct is seem like qtreeWidget ,is a tree
-//The node is added to the treewidget by loop the xml document
+
 std::vector<project_info*> checkinWidget::LoadCheckinConfig()
 {
     //设置输入文件
@@ -123,8 +122,7 @@ std::vector<project_info*> checkinWidget::LoadCheckinConfig()
     //是否是正常结束
     if (reader.error())
     {
-        QString str="Error: "+reader.errorString()+"in file test.xml "
-                                                   "at line "+QString::number(reader.lineNumber())+
+        QString str="Error: "+reader.errorString()+"in file test.xml at line "+QString::number(reader.lineNumber())+
                 ",column "+QString::number(reader.columnNumber());
         logger->log(str);
         vector_project.clear();
@@ -133,6 +131,51 @@ std::vector<project_info*> checkinWidget::LoadCheckinConfig()
     //关闭文件
     inputfile.close();
     return vector_project;
+}
+
+
+void checkinWidget::updateXml(HabitOperationType type,project_info * project)
+{
+    QString filePath =STORAGE_PATH + CHECKIN_CONFIG_PATH;
+    QFile file(filePath);
+
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        logger->log(QString("updateXml:open local xml failed"));
+        return;
+    }
+    QDomDocument doc;
+    if(!doc.setContent(&file))//从字节数组中解析XML文档，并将其设置为文档的内容
+    {
+        logger->log(QString("updateXml:set doc content form file failed"));
+        file.close();
+        return;
+    }
+    file.close();
+    if(type==AddHabit)
+    {
+        auto path= NODENAME_TOTALPROJECT;
+        QDomNode parentDomElement=util::selectSingleNode(path,&doc);
+        QDomElement newDomElement=doc.createElement(NODENAME_PROJECT);
+        parentDomElement.appendChild(newDomElement);
+        newDomElement.setAttribute(ATTRIBUTE_NAME,project->project_name);
+        newDomElement.setAttribute(ATTRIBUTE_ICONINDEX,project->iconIndex);
+        newDomElement.setAttribute(ATTRIBUTE_TYPE,project->type);
+    }
+    else if(type==DeleteNode)
+    {
+       // auto path=util::treeItemToNodePath(currentNode);
+        //QDomNode domElement=selectSingleNode(path,&doc);
+        ///domElement.parentNode().removeChild(domElement);
+    }
+
+    if(!file.open(QFile::WriteOnly|QFile::Truncate))//重写文件，如果不用truncate就是在后面追加内容，就无效了
+    {
+        return;
+    }
+    QTextStream out_stream(&file);
+    doc.save(out_stream,4);
+    file.close();
 }
 
 
@@ -150,17 +193,26 @@ void checkinWidget::addItemBtn_clicked()
     habitForm->show();
 }
 
+void checkinWidget::addHabitItem(project_info *project)
+{
+    HabbitItem *habit =new HabbitItem;
+    habit->setIconIndex(project->iconIndex.toInt());
+    habit->setProjectName(project->project_name);
+    int index = ui->leftNavigateWidget->layout()->count()-1; // Replace with the desired index where you want to insert the item
+    QBoxLayout *boxLayout = dynamic_cast<QBoxLayout*>(ui->leftNavigateWidget->layout());
+    if (boxLayout)
+    {
+        boxLayout->insertWidget(index, dynamic_cast<QWidget*>(habit));
+    }
+}
+
 void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex)
 {
-     HabbitItem *habit =new HabbitItem;
-     habit->setIconIndex(iconIndex);
-     habit->setProjectName(name);
-     int index = ui->leftNavigateWidget->layout()->count()-1; // Replace with the desired index where you want to insert the item
-     QBoxLayout *boxLayout = dynamic_cast<QBoxLayout*>(ui->leftNavigateWidget->layout());
-     if (boxLayout)
-     {
-         boxLayout->insertWidget(index, dynamic_cast<QWidget*>(habit));
-     }
+    project_info *project=new project_info;
+    project->iconIndex=QString::number(iconIndex);
+    project->project_name=name;
+    addHabitItem(project);
+    updateXml(AddHabit, project);
 }
 
 checkinWidget::~checkinWidget()

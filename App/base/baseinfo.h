@@ -29,6 +29,13 @@ enum OperationType
     RenameNode,
 };
 
+enum HabitOperationType
+{
+    AddHabit,
+    RemoveHabit,
+    MoveHabit,
+};
+
 enum NodeType
 {
     ChildNode,

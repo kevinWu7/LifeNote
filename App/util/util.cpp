@@ -249,5 +249,56 @@ bool util::isChildItem(QTreeWidgetItem* parentItem, QTreeWidgetItem* childItem)
 }
 
 
+//根据xml的路径，找出xml的相应节点QDomNode
+//循环遍历xml节点，通过判断节点名是否和path的相应部分匹配，不断向下找
+//为什么写这个方法，是因为原先只能通过在xml中设置属性，通过属性来判断，如下面这段代码，但是这样会导致xml内容臃肿，所以selectSingleNode能让xml看起来更简洁
+/*勿删
+ QDomNodeList list = doc.elementsByTagName(path);
+ for(int i=0;i<list.size();i++)
+ {
+    QDomElement e = list.at(i).toElement();
+    if(e.attribute("path")==path)
+    {
+        QDomElement newDomElement=doc.createElement(newNode->text(0));
+        list.at(i).appendChild(newDomElement);
+        break;
+    }
+}*/
+QDomNode util::selectSingleNode(const QString& path,QDomDocument* doc)
+{
+   // doc->documentElement()
+    QStringList list=path.split(u'/');
+
+    int i=0;
+    auto rootElement=doc->documentElement();
+    auto childNode=rootElement.firstChild();
+    QString currentStr=list.at(0);
+
+       while(!childNode.isNull())
+       {
+           if(childNode.toElement().tagName()==list.at(i)||
+                 (childNode.toElement().tagName().startsWith(START_FLAG)&& //这个条件判断下若是有开头记号的node，则判断是否带有记号，且包含该字符串list.at(i)
+                  childNode.toElement().tagName().contains(list.at(i))))
+           {
+               if(i==list.size()-1)//完全匹配上了
+               {
+                   return childNode;
+               }
+              if(childNode.hasChildNodes())
+              {
+                  QDomNodeList nodeList= childNode.childNodes();
+                  childNode=nodeList.at(0);
+                  i++;
+                  currentStr=list.at(i);
+              }
+           }
+           else
+           {
+              childNode=childNode.nextSibling();//将同级的下一个节点，赋给childNode
+           }
+       }
+    return childNode;
+}
+
 
 

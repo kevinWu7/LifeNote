@@ -2,6 +2,7 @@
 #define NEWHABITFORM_H
 
 #include <QWidget>
+#include <QMouseEvent>
 
 namespace Ui {
 class NewHabitForm;
@@ -27,6 +28,13 @@ private:
     Ui::NewHabitForm *ui;
     void initIConBtn();
     int iconIndex=0;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+
+    //记录鼠标，窗口位置
+    QPointF windowPos;
+    QPointF mousePos;
+    QPointF dPos;
 };
 
 #endif // NEWHABITFORM_H

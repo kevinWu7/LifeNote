@@ -29,6 +29,7 @@ public:
     static std::map<int,std::string> colorBtnMap;
     static std::map<int,std::string> iconMap;
     static std::vector<QString> fontVector;
+    static QDomNode selectSingleNode(const QString& path,QDomDocument* doc);
     template<typename T>
     static T *findWidget(QWidget *parent, const QString &objectName)
     {

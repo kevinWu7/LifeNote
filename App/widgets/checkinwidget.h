@@ -5,6 +5,8 @@
 #include "newhabitform.h"
 #include <QToolButton>
 #include "baseinfo.h"
+#include <QMouseEvent>
+#include "habbititem.h"
 
 struct project_info
 {
@@ -37,6 +39,7 @@ private:
     std::vector<project_info*> LoadCheckinConfig();
     void updateXml(HabitOperationType type,project_info * project);
     void addHabitItem(project_info *project);
+    void onReceiveHabitMousePressed(HabbitItem *habit,QWidget *weekWidget);
 };
 
 #endif // CHECKINWIDGET_H

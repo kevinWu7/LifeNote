@@ -23,7 +23,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tabLayout->addWidget(_checkinWidget);
 
 
-
     ui->mainPage->setStyleSheet("QWidget#mainPage{background-color:rgb(219,220,223");
     this->setStyleSheet("QTreeWidget::item{height:25px;}");
 

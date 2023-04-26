@@ -24,6 +24,7 @@ public slots:
     void okBtn_clicked();
     void cancleBtn_clicked();
     void iconBtn_clicked();
+
 private:
     Ui::NewHabitForm *ui;
     void initIConBtn();

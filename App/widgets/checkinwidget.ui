@@ -63,14 +63,23 @@
         </property>
         <widget class="QWidget" name="leftNavigateWidget" native="true">
          <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QWidget" name="titleBarControl" native="true">
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <property name="leftMargin">
-              <number>0</number>
+              <number>12</number>
              </property>
              <property name="rightMargin">
-              <number>0</number>
+              <number>12</number>
              </property>
              <item>
               <layout class="QHBoxLayout" name="leftTitleStatus">

@@ -17,6 +17,11 @@ public:
     int iconIndex=0;
     void setIconIndex(int iconIndex);
     void setProjectName(QString name);
+     void mousePressEvent(QMouseEvent *event) override;
+public slots:
+
+signals:
+    void triggerMousePressEvent(HabbitItem *habit,QWidget* weekWidget);
 private:
     Ui::HabbitItem *ui;
 };

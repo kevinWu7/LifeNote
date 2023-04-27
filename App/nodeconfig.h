@@ -1,15 +1,15 @@
 #ifndef NODECONFIG_H
 #define NODECONFIG_H
 
+#include <iostream>
+#include <vector>
 #include <QObject>
 #include <QFile>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 #include <QDir>
-#include <vector>
 #include <QTreeWidgetItem>
 #include <QDomElement>
-#include <iostream>
 #include "baseinfo.h"
 #include "extraqtreewidgetitem.h"
 

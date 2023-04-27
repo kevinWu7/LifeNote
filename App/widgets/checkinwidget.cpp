@@ -1,9 +1,9 @@
+#include <QFile>
+#include <QXmlStreamReader>
 #include "checkinwidget.h"
 #include "ui_checkinwidget.h"
 #include "util.h"
 #include "logger.h"
-#include <QFile>
-#include <QXmlStreamReader>
 
 
 #define CHECKIN_CONFIG_PATH "/config/checkin.xml"

@@ -1,7 +1,7 @@
-#include "calendarcontrol.h"
-#include "ui_calendarcontrol.h"
 #include <QPalette>
+#include "calendarcontrol.h"
 #include "util.h"
+#include "ui_calendarcontrol.h"
 
 CalendarControl::CalendarControl(QWidget *parent) :
     QWidget(parent),

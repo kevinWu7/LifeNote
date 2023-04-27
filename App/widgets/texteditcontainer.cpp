@@ -1,11 +1,13 @@
-#include "texteditcontainer.h"
-#include "ui_texteditcontainer.h"
-#include "util.h"
-#include "logger.h"
 #include <QColorDialog>
 #include <QFile>
-#include<QFileDialog>
-#include<QImageReader>
+#include <QFileDialog>
+#include <QImageReader>
+#include "logger.h"
+#include "util.h"
+#include "texteditcontainer.h"
+#include "ui_texteditcontainer.h"
+
+
 
 TextEditContainer::TextEditContainer(QWidget *parent) :
     QWidget(parent),

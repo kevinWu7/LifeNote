@@ -1,7 +1,8 @@
-#include "newnotegroupform.h"
-#include "ui_newnotegroupform.h"
 #include <QPainterPath>
 #include "util.h"
+#include "newnotegroupform.h"
+#include "ui_newnotegroupform.h"
+
 
 #define  ROUND_RADIUS 5
 

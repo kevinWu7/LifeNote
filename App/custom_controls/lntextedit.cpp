@@ -1,5 +1,6 @@
-#include "lntextedit.h"
 #include <QScrollBar>
+#include "lntextedit.h"
+
 
 LNTextEdit::LNTextEdit(QWidget *parent)
     : QTextEdit(parent)

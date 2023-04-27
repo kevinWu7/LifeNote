@@ -2,11 +2,12 @@
 #define CHECKINWIDGET_H
 
 #include <QWidget>
-#include "newhabitform.h"
+#include <QMouseEvent>
 #include <QToolButton>
 #include "baseinfo.h"
-#include <QMouseEvent>
 #include "habbititem.h"
+#include "newhabitform.h"
+
 
 struct project_info
 {

@@ -1,9 +1,8 @@
+#include <QCoreApplication>
 #include "nodeconfig.h"
 #include "extraqtreewidgetitem.h"
 #include "util.h"
 #include "logger.h"
-#include <QCoreApplication>
-
 
 
 #define CONFIG_PATH "/config/node.xml"

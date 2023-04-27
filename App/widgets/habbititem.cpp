@@ -1,8 +1,9 @@
+#include <QMouseEvent>
 #include "habbititem.h"
 #include "ui_habbititem.h"
 #include "util.h"
-#include "logger.h"
-#include <QMouseEvent>
+
+
 
 HabbitItem::HabbitItem(QWidget *parent) :
     QWidget(parent),

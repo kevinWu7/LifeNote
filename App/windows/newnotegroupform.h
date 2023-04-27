@@ -1,9 +1,10 @@
 #ifndef NEWNOTEGROUPFORM_H
 #define NEWNOTEGROUPFORM_H
 
+#include <map>
 #include <QWidget>
 #include <QMouseEvent>
-#include <map>
+
 
 namespace Ui {
 class NewNoteGroupForm;

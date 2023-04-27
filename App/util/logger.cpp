@@ -1,5 +1,6 @@
-#include "logger.h"
 #include <QDebug>
+#include "logger.h"
+
 
 Logger *logger=new Logger("log.txt");
 

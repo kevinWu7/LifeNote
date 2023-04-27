@@ -1,10 +1,9 @@
+#include <QMouseEvent>
+#include <QScrollBar>
 #include "mainwindow.h"
-#include "logger.h"
 #include "ui_mainwindow.h"
 #include "util.h"
-#include <QMouseEvent>
 #include "logger.h"
-#include <QScrollBar>
 #include "ui_texteditcontainer.h"
 #include "nodeconfig.h"
 

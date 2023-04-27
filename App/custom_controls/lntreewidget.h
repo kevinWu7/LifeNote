@@ -1,7 +1,7 @@
 #ifndef LNTREEWIDGET_H
 #define LNTREEWIDGET_H
-#include<QTreeWidget>
-#include<QEvent>
+#include <QTreeWidget>
+#include <QEvent>
 #include <QDropEvent>
 #include <QMimeData>
 #include <QDrag>

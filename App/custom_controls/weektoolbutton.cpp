@@ -1,5 +1,6 @@
+#include <QWidget>
 #include "weektoolbutton.h"
-#include<QWidget>
+
 
 
 WeekToolButton::WeekToolButton(QWidget *parent,bool m_iconState)
@@ -22,4 +23,5 @@ void WeekToolButton::WeekButton_clicked()
         this->setIcon(QIcon(":/icons/res/checkin/tick.png"));
     }
     iconState=!iconState;
+
 }

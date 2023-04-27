@@ -1,5 +1,3 @@
-#include "lntreewidget.h"
-#include "logger.h"
 #include <QScrollBar>
 #include <QDrag>
 #include <QCoreApplication>
@@ -7,8 +5,11 @@
 #include <QtGlobal>
 #include <QHeaderView>
 #include <QMessageBox>
+#include "logger.h"
 #include "util.h"
 #include "nodeconfig.h"
+#include "lntreewidget.h"
+
 
 LNTreeWidget::LNTreeWidget(QWidget *parent)
     : QTreeWidget(parent)

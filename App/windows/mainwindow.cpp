@@ -5,7 +5,7 @@
 #include "util.h"
 #include "logger.h"
 #include "ui_texteditcontainer.h"
-#include "nodeconfig.h"
+#include "noteconfig.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -55,7 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->leftBar->layout()->setSpacing(15);
 
     //通过配置文件，创建node
-    nodeconfig::loadConfigXML(ui->treeWidget);
+    noteconfig::loadConfigXML(ui->treeWidget);
 
     setAllItemIcon();
 
@@ -221,7 +221,7 @@ void MainWindow::onDeleteNoteItemClick()
             int topIndex= ui->treeWidget->indexOfTopLevelItem(currentNode);
             logger->log( QString::number(topIndex));
             ui->treeWidget->takeTopLevelItem(topIndex);
-            nodeconfig::updateXml( DeleteNode,currentNode);
+            noteconfig::updateXml( DeleteNode,currentNode);
             //delete local floder
             QDir dir(fullPath);
             dir.removeRecursively();
@@ -284,11 +284,11 @@ void MainWindow::onDeleteNoteItemClick()
     //delete directly if node is parentNode
     if(isRecycle||currentNode->nodeType==ParentNode)
     {
-        nodeconfig::updateXml(DeleteNode,currentNode);
+        noteconfig::updateXml(DeleteNode,currentNode);
     }
     else
     {
-        nodeconfig::updateXml(MoveNode,currentNode,recycleNode);
+        noteconfig::updateXml(MoveNode,currentNode,recycleNode);
     }
     currentNode->deleteType=1;
     currentNode->parent()->removeChild(currentNode);//this line will trigger currentTreeItemChanged immediately
@@ -376,7 +376,7 @@ void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
     ui->treeWidget->insertTopLevelItem(count-2,newTopNode);
 
     //添加xml节点
-    nodeconfig::updateXmlAddTopLevelNode(newTopNode,collectNode);
+    noteconfig::updateXmlAddTopLevelNode(newTopNode,collectNode);
 
     setAllItemIcon();
     //添加本地文件夹
@@ -737,11 +737,11 @@ void MainWindow::onTitleLineEditEditingFinished()
                 _dir.rename(oldDir, newDir);
             }
         }
-        nodeconfig::updateXmlRenameNode(oldPath,currentItem);
+        noteconfig::updateXmlRenameNode(oldPath,currentItem);
         return;
     }
 
-    nodeconfig::updateXml(type, currentItem->parent(),currentItem);
+    noteconfig::updateXml(type, currentItem->parent(),currentItem);
 
     if (type == AddNodeGroup)
     {

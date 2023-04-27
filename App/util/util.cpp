@@ -298,7 +298,21 @@ QDomNode util::selectSingleNode(const QString& path,QDomDocument* doc)
               childNode=childNode.nextSibling();//将同级的下一个节点，赋给childNode
            }
        }
-    return childNode;
+       return childNode;
+}
+
+std::vector<QDate> util::getThisWeek()
+{
+    QDate currentDate = QDate::currentDate();
+    // 获取本周的时间点
+    std::vector<QDate> thisWeek;
+    int dayOfWeek = currentDate.dayOfWeek();
+    QDate startOfWeek = currentDate.addDays(-dayOfWeek + 1); // 周一
+    for (int i = 0; i < 7; ++i) {
+        QDate date = startOfWeek.addDays(i);
+        thisWeek.push_back(date);
+    }
+    return thisWeek;
 }
 
 

@@ -14,6 +14,7 @@ INCLUDEPATH += \
     $$PWD/widgets \
     $$PWD/windows \
     $$PWD/base \
+    $$PWD/xmlconfig \
     $$PWD/util
 
 SOURCES += \
@@ -31,8 +32,9 @@ SOURCES += \
     windows/newhabitform.cpp \
     main.cpp \
     util/logger.cpp \
-    nodeconfig.cpp \
-    util/util.cpp
+    util/util.cpp \
+    xmlconfig/noteconfig.cpp \
+    xmlconfig/checkinconfig.cpp
 
 HEADERS += \
     custom_controls/monthbutton.h \
@@ -40,6 +42,7 @@ HEADERS += \
     custom_controls/lntreewidget.h \
     custom_controls/lntextedit.h \
     custom_controls/weektoolbutton.h \
+    xmlconfig/noteconfig.h \
     widgets/calendarcontrol.h \
     widgets/checkinwidget.h \  
     widgets/texteditcontainer.h \
@@ -48,9 +51,10 @@ HEADERS += \
     windows/newnotegroupform.h \
     windows/newhabitform.h \
     base/baseinfo.h \
-    nodeconfig.h \
     util/util.h \
-    util/logger.h
+    util/logger.h \
+    xmlconfig/noteconfig.h \
+    xmlconfig/checkinconfig.h
 
 FORMS += \
     widgets/calendarcontrol.ui \

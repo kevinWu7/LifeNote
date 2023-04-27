@@ -7,7 +7,7 @@
 #include <QMessageBox>
 #include "logger.h"
 #include "util.h"
-#include "nodeconfig.h"
+#include "noteconfig.h"
 #include "lntreewidget.h"
 
 
@@ -262,7 +262,7 @@ void LNTreeWidget::dropEvent(QDropEvent *event)
     //because updateXml function is depend on the Node struct
     //delete directly if node is parentNode
 
-    nodeconfig::updateXml(MoveNode,draggedItem,targetItem);
+    noteconfig::updateXml(MoveNode,draggedItem,targetItem);
 
     draggedItem->deleteType=1;
     if(draggedItem->parent()!=nullptr)

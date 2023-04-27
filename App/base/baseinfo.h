@@ -14,10 +14,12 @@
 #define NODENAME_TOTALPROJECT "TotalProjet"
 #define NODENAME_DETAILPROJECT "DetailProject"
 #define NODENAME_PROJECT "project"
+#define NODENAME_CHECKINDATE "checkin"
 #define ATTRIBUTE_NAME "name"
 #define ATTRIBUTE_DATE "date"
 #define ATTRIBUTE_TIP "tip"
 #define ATTRIBUTE_TYPE "type"
+#define ATTRIBUTE_ISCHECKED "ischeckd"
 #define ATTRIBUTE_ICONINDEX "iconindex"
 
 enum OperationType
@@ -29,11 +31,18 @@ enum OperationType
     RenameNode,
 };
 
+
 enum HabitOperationType
 {
-    AddHabit,
+    AddHabit, //添加习惯项目
     RemoveHabit,
     MoveHabit,
+};
+
+enum CheckinType
+{
+    CheckinAction, //签到打卡
+    CheckOutAction, //取消签到
 };
 
 enum NodeType

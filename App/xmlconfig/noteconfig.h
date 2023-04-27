@@ -1,5 +1,5 @@
-#ifndef NODECONFIG_H
-#define NODECONFIG_H
+#ifndef NOTECONFIG_H
+#define NOTECONFIG_H
 
 #include <iostream>
 #include <vector>
@@ -15,10 +15,10 @@
 
 
 
-class nodeconfig
+class noteconfig
 {
 public:
-    nodeconfig();
+    noteconfig();
     static void loadConfigXML(QTreeWidget *tree_widget);//启动时，读取文件加载node
     //currentNode is The node that is being operated
     //newNode is the Node in the Add  OperationType
@@ -29,4 +29,4 @@ public:
 
 };
 
-#endif // NODECONFIG_H
+#endif // NOTECONFIG_H

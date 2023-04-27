@@ -1,8 +1,9 @@
+#include <QPainterPath>
+#include "util.h"
+#include "logger.h"
 #include "newhabitform.h"
 #include "ui_newhabitform.h"
-#include "util.h"
-#include <QPainterPath>
-#include "logger.h"
+
 
 #define DefaultDisplayTip "未命名项目"
 #define  ROUND_RADIUS 5

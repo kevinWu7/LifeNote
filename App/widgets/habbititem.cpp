@@ -2,6 +2,9 @@
 #include "habbititem.h"
 #include "ui_habbititem.h"
 #include "util.h"
+#include "logger.h"
+#include "weektoolbutton.h"
+#include "checkinconfig.h""
 
 
 
@@ -29,6 +32,7 @@ HabbitItem::HabbitItem(QWidget *parent) :
     ui->imgBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->imgBtn->setIconSize(QSize(22,22));
     ui->nameLabel->setFont(QFont("Arial", 14, QFont::Normal));
+    InitWeekButtons();
 
     //connect(this, &HabbitItem::mousePressEvent, this, &HabbitItem::onMousePress);
 }
@@ -56,16 +60,45 @@ void HabbitItem::mousePressEvent(QMouseEvent *event)
     }
 }
 
-
-void HabbitItem::setIconIndex(int iconIndex)
+void HabbitItem::InitWeekButtons()
 {
-    auto icon=QString::fromStdString(util::iconMap[iconIndex]);
+    auto thisWeek=util::getThisWeek();
+    for(int i=0;i<ui->weekWidget->layout()->count();i++)
+    {
+        WeekToolButton* btn= dynamic_cast<WeekToolButton*>(ui->weekWidget->layout()->itemAt(i)->widget());
+        connect(btn,&WeekToolButton::OnWeekButtonClicked,this,&HabbitItem::OnReceiveWeekBtnClicked);
+        btn->date=thisWeek[i];
+    }
+}
+
+void HabbitItem::OnReceiveWeekBtnClicked(QDate date,bool ischecked)
+{
+    checkin_dateitem *item =new checkin_dateitem;
+    item->date=date;
+    item->tips="";
+    item->ischecked=ischecked;
+    item->project_name=projectName;
+    if(ischecked)
+    {
+        CheckinConfig::getInstance().updateDetailXml(CheckinAction,item);
+    }
+    else
+    {
+        CheckinConfig::getInstance().updateDetailXml(CheckOutAction,item);
+    }
+}
+
+void HabbitItem::setIconIndex(int index)
+{
+    auto icon=QString::fromStdString(util::iconMap[index]);
     ui->imgBtn->setIcon(QIcon(QString(":/icons/res/checkin/%1").arg(icon)));
+    iconIndex=index;
 }
 
 void HabbitItem::setProjectName(QString name)
 {
     ui->nameLabel->setText(name);
+    projectName=name;
 }
 
 HabbitItem::~HabbitItem()

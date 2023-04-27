@@ -1,20 +1,20 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <iostream>
 #include <QMainWindow>
-#include<QMessageBox>
-#include<QSpinBox>
-#include<QColorDialog>
-#include<QTreeWidget>
-#include<QTreeWidgetItem>
-#include<QStandardItemModel>
-#include<QStandardItem>
-#include<iostream>
-#include<QMenu>
-#include<QTextDocumentFragment>
-#include<QFileDialog>
-#include<QImageReader>
-#include<QTextBlockFormat>
+#include <QMessageBox>
+#include <QSpinBox>
+#include <QColorDialog>
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
+#include <QStandardItemModel>
+#include <QStandardItem>
+#include <QMenu>
+#include <QTextDocumentFragment>
+#include <QFileDialog>
+#include <QImageReader>
+#include <QTextBlockFormat>
 #include "extraqtreewidgetitem.h"
 #include "texteditcontainer.h"
 #include "newnotegroupform.h"

@@ -30,6 +30,7 @@ public:
     static std::map<int,std::string> iconMap;
     static std::vector<QString> fontVector;
     static QDomNode selectSingleNode(const QString& path,QDomDocument* doc);
+    static std::vector<QDate> getThisWeek();
     template<typename T>
     static T *findWidget(QWidget *parent, const QString &objectName)
     {

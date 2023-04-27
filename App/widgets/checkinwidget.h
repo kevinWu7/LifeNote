@@ -7,15 +7,8 @@
 #include "baseinfo.h"
 #include "habbititem.h"
 #include "newhabitform.h"
+#include "checkinconfig.h"
 
-
-struct project_info
-{
-    QString project_name;
-    QToolButton * button;
-    QString iconIndex;
-    QString type;
-};
 
 namespace Ui {
 class checkinWidget;
@@ -37,8 +30,7 @@ public slots:
 private:
     Ui::checkinWidget *ui;
     void onReceiveNewHabitFormData(QString name, int iconIndex);
-    std::vector<project_info*> LoadCheckinConfig();
-    void updateXml(HabitOperationType type,project_info * project);
+
     void addHabitItem(project_info *project);
     void onReceiveHabitMousePressed(HabbitItem *habit,QWidget *weekWidget);
 };

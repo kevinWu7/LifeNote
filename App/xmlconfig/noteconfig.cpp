@@ -1,5 +1,5 @@
 #include <QCoreApplication>
-#include "nodeconfig.h"
+#include "noteconfig.h"
 #include "extraqtreewidgetitem.h"
 #include "util.h"
 #include "logger.h"
@@ -7,7 +7,7 @@
 
 #define CONFIG_PATH "/config/node.xml"
 
-nodeconfig::nodeconfig()
+noteconfig::noteconfig()
 {
 
 }
@@ -19,7 +19,7 @@ struct node_info
 
 //XML struct is seem like qtreeWidget ,is a tree
 //The node is added to the treewidget by loop the xml document
-void nodeconfig::loadConfigXML(QTreeWidget *tree_widget)
+void noteconfig::loadConfigXML(QTreeWidget *tree_widget)
 {
     //设置输入文件
     QString filePath =STORAGE_PATH+ CONFIG_PATH;
@@ -120,7 +120,7 @@ void nodeconfig::loadConfigXML(QTreeWidget *tree_widget)
 
 //currentNode is The node which is being operated
 //newNode is the Node in the Add  OperationType and UPDATE
-void nodeconfig::updateXml(OperationType type,QTreeWidgetItem *currentNode,QTreeWidgetItem *newNode)
+void noteconfig::updateXml(OperationType type,QTreeWidgetItem *currentNode,QTreeWidgetItem *newNode)
 {
     QString filePath =STORAGE_PATH+ CONFIG_PATH;
     QFile file(filePath);
@@ -183,7 +183,7 @@ void nodeconfig::updateXml(OperationType type,QTreeWidgetItem *currentNode,QTree
     file.close();
 }
 
-void nodeconfig::updateXmlAddTopLevelNode(ExtraQTreeWidgetItem *newNode,QTreeWidgetItem *collectNode)
+void noteconfig::updateXmlAddTopLevelNode(ExtraQTreeWidgetItem *newNode,QTreeWidgetItem *collectNode)
 {
     QString filePath =STORAGE_PATH+ CONFIG_PATH;
     QFile file(filePath);
@@ -221,7 +221,7 @@ void nodeconfig::updateXmlAddTopLevelNode(ExtraQTreeWidgetItem *newNode,QTreeWid
     file.close();
 }
 
-void nodeconfig::updateXmlRenameNode(const QString& oldPath,QTreeWidgetItem *currentNode)
+void noteconfig::updateXmlRenameNode(const QString& oldPath,QTreeWidgetItem *currentNode)
 {
     QString filePath =STORAGE_PATH+ CONFIG_PATH;
     QFile file(filePath);

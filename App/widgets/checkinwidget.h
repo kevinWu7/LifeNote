@@ -31,7 +31,7 @@ private:
     Ui::checkinWidget *ui;
     void onReceiveNewHabitFormData(QString name, int iconIndex);
 
-    void addHabitItem(project_info *project);
+    HabbitItem* addHabitItem(project_info *project);
     void onReceiveHabitMousePressed(HabbitItem *habit,QWidget *weekWidget);
 };
 

@@ -8,6 +8,8 @@
 
 #define CHECKIN_CONFIG_PATH "/config/checkin.xml"
 
+
+
 struct checkin_dateitem
 {
     QString project_name;
@@ -23,13 +25,19 @@ struct project_info
     QString type;
 };
 
+struct xmlLoadResult
+{
+    std::vector<project_info*> project_list;
+    std::map<QString,std::vector<checkin_dateitem*>> checkin_map;
+};
+
 
 
 class CheckinConfig
 {
 public:
     static CheckinConfig& getInstance();
-    std::vector<project_info*> LoadCheckinConfig();
+    xmlLoadResult LoadCheckinConfig();
     void updateHabitXml(HabitOperationType action,project_info * project);
     void updateDetailXml(CheckinType type,checkin_dateitem* item);
 

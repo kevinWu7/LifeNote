@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QDate>
-
+#include "checkinconfig.h"
 namespace Ui {
 class HabbitItem;
 }
@@ -19,6 +19,7 @@ public:
     void setIconIndex(int iconIndex);
     void setProjectName(QString name);
     void mousePressEvent(QMouseEvent *event) override;
+    void InitCheckinBtn(std::vector<checkin_dateitem*> checkinItems);
 
 public slots:
     void OnReceiveWeekBtnClicked(QDate date,bool ischecked);

@@ -84,20 +84,22 @@ void CheckinConfig::updateDetailXml(CheckinType action,checkin_dateitem *item)
 
 
 
-std::vector<project_info*> CheckinConfig::LoadCheckinConfig()
+xmlLoadResult CheckinConfig::LoadCheckinConfig()
 {
     //设置输入文件
     QString filePath =STORAGE_PATH+ CHECKIN_CONFIG_PATH;
     QFile inputfile(filePath);
-    std::vector<project_info*> vector_project;
+    xmlLoadResult result;
     if(!inputfile.open(QIODevice::ReadOnly))
     {
         logger->log(QString("loadConfigXML: Open checkin.xml file failed"));
-        return vector_project;
+        return result;
     }
     QXmlStreamReader reader(&inputfile);
 
     bool isTotalProjectRange=false;
+    bool isDetailProjectRange=false;
+    QString current_name="";
     //开始解析
     while (!reader.atEnd())
     {
@@ -111,19 +113,21 @@ std::vector<project_info*> CheckinConfig::LoadCheckinConfig()
         case QXmlStreamReader::StartElement:
             if(!reader.name().toString().isEmpty())
             {
-                project_info *project = new project_info();
                 if(reader.name().toString()==NODENAME_TOTALPROJECT)
                 {
                     isTotalProjectRange=true;
+                }
+                else if(reader.name().toString()==NODENAME_DETAILPROJECT)
+                {
+                    isDetailProjectRange=true;
                 }
                 else if(reader.name().toString()==NODENAME_PROJECT)
                 {
                     if(isTotalProjectRange)
                     {
+                        project_info *project = new project_info;
                         foreach (const QXmlStreamAttribute & attribute, reader.attributes())
                         {
-                            logger->log(attribute.name().toString());
-                            logger->log(attribute.value().toString());
                             if(attribute.name().toString()==ATTRIBUTE_NAME)
                             {
                                 project->project_name= attribute.value().toString();
@@ -133,7 +137,39 @@ std::vector<project_info*> CheckinConfig::LoadCheckinConfig()
                                 project->iconIndex= attribute.value().toString();
                             }
                         }
-                        vector_project.push_back(project);
+                        result.project_list.push_back(project);
+                    }
+                    else if(isDetailProjectRange)
+                    {
+                        foreach (const QXmlStreamAttribute & attribute, reader.attributes())
+                        {
+                            if(attribute.name().toString()==ATTRIBUTE_NAME)
+                            {
+                               current_name=attribute.value().toString();
+                            }
+                        }
+                        std::vector<checkin_dateitem*> date_list;
+                        result.checkin_map[current_name]=date_list;
+                    }
+                }
+                else if(reader.name().toString()==NODENAME_CHECKINDATE)
+                {
+                    if(isDetailProjectRange)
+                    {
+                        checkin_dateitem *dateitem=new checkin_dateitem;
+                        dateitem->project_name=current_name;
+                        foreach (const QXmlStreamAttribute & attribute, reader.attributes())
+                        {
+                            if(attribute.name().toString()==ATTRIBUTE_DATE)
+                            {
+                                dateitem->date=QDate::fromString(attribute.value().toString(), "yyyy/MM/dd");
+                            }
+                            if(attribute.name().toString()==ATTRIBUTE_TIP)
+                            {
+                                dateitem->tips= attribute.value().toString();
+                            }
+                        }
+                        result.checkin_map[current_name].push_back(dateitem);
                     }
                 }
             }
@@ -159,12 +195,12 @@ std::vector<project_info*> CheckinConfig::LoadCheckinConfig()
         QString str="Error: "+reader.errorString()+"in file test.xml at line "+QString::number(reader.lineNumber())+
                 ",column "+QString::number(reader.columnNumber());
         logger->log(str);
-        vector_project.clear();
-        return vector_project;
+        result.project_list.clear();
+        return result;
     }
     //关闭文件
     inputfile.close();
-    return vector_project;
+    return result;
 }
 
 

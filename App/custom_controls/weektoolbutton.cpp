@@ -1,7 +1,5 @@
 #include <QWidget>
 #include "weektoolbutton.h"
-#include "checkinconfig.h"
-#include "logger.h"
 
 
 WeekToolButton::WeekToolButton(QWidget *parent,bool m_iconState)
@@ -11,6 +9,7 @@ WeekToolButton::WeekToolButton(QWidget *parent,bool m_iconState)
      this->setIconSize(QSize(24,24));
      iconState=m_iconState;
 }
+
 
 
 void WeekToolButton::WeekButton_clicked()
@@ -25,12 +24,12 @@ void WeekToolButton::WeekButton_clicked()
     }
     iconState=!iconState;
     emit OnWeekButtonClicked(this->date,iconState);
-
 }
 
-/*void WeekToolButton::OnWeekButtonClicked(QDate date)
+void WeekToolButton::setWeekButtonClicked()
 {
-    // 处理信号触发事件的逻辑
-    logger->log(QString("triggerOnWeekButtonClicked"));
+    this->setIcon(QIcon(":/icons/res/checkin/tick.png"));
+    iconState=true;
 }
-*/
+
+

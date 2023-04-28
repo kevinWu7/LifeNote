@@ -11,6 +11,7 @@ class WeekToolButton : public QToolButton
 public:
     WeekToolButton(QWidget *parent = nullptr,bool m_iconState=false);
     void WeekButton_clicked();
+    void setWeekButtonClicked();
     QDate date;
 signals:
     void OnWeekButtonClicked(QDate date,bool ischecked);

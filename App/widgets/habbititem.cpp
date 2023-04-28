@@ -60,6 +60,28 @@ void HabbitItem::mousePressEvent(QMouseEvent *event)
     }
 }
 
+//讲habit中的btn初始化是否checked
+void HabbitItem::InitCheckinBtn(std::vector<checkin_dateitem *> checkinItems)
+{
+    for(int i=0;i<ui->weekWidget->layout()->count();i++)
+    {
+        WeekToolButton* btn= dynamic_cast<WeekToolButton*>(ui->weekWidget->layout()->itemAt(i)->widget());
+        QDate date=btn->date;
+
+        auto it = std::find_if(checkinItems.begin(), checkinItems.end(), [&date](checkin_dateitem* item)
+        {
+            return item->date == date;
+        });
+
+        if (it != checkinItems.end())
+        {
+           //  btn->setChecked(true);
+            btn->setWeekButtonClicked();
+            // btn->setStyleSheet("background-color:red");
+        }
+    }
+}
+
 void HabbitItem::InitWeekButtons()
 {
     auto thisWeek=util::getThisWeek();

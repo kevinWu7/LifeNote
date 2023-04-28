@@ -41,13 +41,14 @@ checkinWidget::checkinWidget(QWidget *parent) :
                                     "}");
     connect(ui->addItemBtn,&QToolButton::clicked,this,&checkinWidget::addItemBtn_clicked);
 
-    std::vector<project_info*> projects= CheckinConfig::getInstance().LoadCheckinConfig();
-    for(auto item :projects)
+    auto result= CheckinConfig::getInstance().LoadCheckinConfig();
+    //加载habititem
+    for(auto item :result.project_list)
     {
-        addHabitItem(item);
+        HabbitItem* habit= addHabitItem(item);
+        habit->InitCheckinBtn(result.checkin_map[item->project_name]);
     }
 }
-
 
 
 void checkinWidget::addItemBtn_clicked()
@@ -64,7 +65,7 @@ void checkinWidget::addItemBtn_clicked()
     habitForm->show();
 }
 
-void checkinWidget::addHabitItem(project_info *project)
+HabbitItem* checkinWidget::addHabitItem(project_info *project)
 {
     HabbitItem *habit =new HabbitItem;
     habit->setIconIndex(project->iconIndex.toInt());
@@ -76,6 +77,7 @@ void checkinWidget::addHabitItem(project_info *project)
         boxLayout->insertWidget(index, dynamic_cast<QWidget*>(habit));
     }
     connect(habit,&HabbitItem::triggerMousePressEvent,this,&checkinWidget::onReceiveHabitMousePressed);
+    return habit;
 }
 
 void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex)
@@ -97,11 +99,10 @@ void checkinWidget::onReceiveHabitMousePressed(HabbitItem *habit,QWidget *weekWi
         if(control!=nullptr&&control!=habit)
         {
             control->setStyleSheet("QWidget#mainWidget{background-color:white}");
-
         }
     }
-
 }
+
 checkinWidget::~checkinWidget()
 {
     delete ui;

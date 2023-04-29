@@ -2,8 +2,7 @@
 #include <QXmlStreamReader>
 #include "checkinwidget.h"
 #include "ui_checkinwidget.h"
-#include "util.h"
-#include "logger.h"
+
 
 
 #define CHECKIN_CONFIG_PATH "/config/checkin.xml"
@@ -47,6 +46,11 @@ checkinWidget::checkinWidget(QWidget *parent) :
     {
         HabbitItem* habit= addHabitItem(item);
         habit->InitCheckinBtn(result.checkin_map[item->project_name]);
+        if(item->selected)
+        {
+            habit->setStyleSheet("QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
+            ui->calendarWidget->InitCheckinMonthBtn(result.checkin_map[item->project_name]);
+        }
     }
 }
 
@@ -67,9 +71,9 @@ void checkinWidget::addItemBtn_clicked()
 
 HabbitItem* checkinWidget::addHabitItem(project_info *project)
 {
-    HabbitItem *habit =new HabbitItem;
+    HabbitItem *habit =new HabbitItem(project->project_name);
     habit->setIconIndex(project->iconIndex.toInt());
-    habit->setProjectName(project->project_name);
+
     int index = ui->leftNavigateWidget->layout()->count()-1; // Replace with the desired index where you want to insert the item
     QBoxLayout *boxLayout = dynamic_cast<QBoxLayout*>(ui->leftNavigateWidget->layout());
     if (boxLayout)
@@ -89,7 +93,7 @@ void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex)
     CheckinConfig::getInstance().updateHabitXml(AddHabit, project);
 }
 
-void checkinWidget::onReceiveHabitMousePressed(HabbitItem *habit,QWidget *weekWidget)
+void checkinWidget::onReceiveHabitMousePressed(HabbitItem *habit)
 {
     habit->setStyleSheet("QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
 

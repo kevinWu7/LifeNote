@@ -13,18 +13,17 @@ class HabbitItem : public QWidget
     Q_OBJECT
 
 public:
-    explicit HabbitItem(QWidget *parent = nullptr);
+    explicit HabbitItem(QString project_name,QWidget *parent = nullptr);
     ~HabbitItem();
 
     void setIconIndex(int iconIndex);
-    void setProjectName(QString name);
     void mousePressEvent(QMouseEvent *event) override;
     void InitCheckinBtn(std::vector<checkin_dateitem*> checkinItems);
 
 public slots:
-    void OnReceiveWeekBtnClicked(QDate date,bool ischecked);
+    //void OnReceiveWeekBtnClicked(QDate date,bool ischecked);
 signals:
-    void triggerMousePressEvent(HabbitItem *habit,QWidget* weekWidget);
+    void triggerMousePressEvent(HabbitItem *habit);
 private:
     Ui::HabbitItem *ui;
     void InitWeekButtons();

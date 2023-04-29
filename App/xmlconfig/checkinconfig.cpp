@@ -136,6 +136,10 @@ xmlLoadResult CheckinConfig::LoadCheckinConfig()
                             {
                                 project->iconIndex= attribute.value().toString();
                             }
+                            if(attribute.name().toString()==ATTRIBUTE_SELECTED)
+                            {
+                                project->selected=attribute.value().toString()=="true";
+                            }
                         }
                         result.project_list.push_back(project);
                     }

@@ -22,6 +22,7 @@ struct project_info
 {
     QString project_name;
     QString iconIndex;
+    bool selected;
     QString type;
 };
 

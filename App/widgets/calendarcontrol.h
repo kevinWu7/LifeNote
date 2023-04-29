@@ -4,7 +4,7 @@
 #include <vector>
 #include <QDate>
 #include <QWidget>
-
+#include "checkinconfig.h"
 
 namespace Ui {
 class CalendarControl;
@@ -17,6 +17,7 @@ class CalendarControl : public QWidget
 public:
     explicit CalendarControl(QWidget *parent = nullptr);
     ~CalendarControl();
+    void InitCheckinMonthBtn(std::vector<checkin_dateitem *> checkinItems);
 
 private:
     Ui::CalendarControl *ui;

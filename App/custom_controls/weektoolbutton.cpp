@@ -1,5 +1,6 @@
 #include <QWidget>
 #include "weektoolbutton.h"
+#include "calendarcentral.h"
 
 
 WeekToolButton::WeekToolButton(QWidget *parent,bool m_iconState)
@@ -9,6 +10,7 @@ WeekToolButton::WeekToolButton(QWidget *parent,bool m_iconState)
      this->setIconSize(QSize(24,24));
      iconState=m_iconState;
 }
+
 
 
 
@@ -23,7 +25,20 @@ void WeekToolButton::WeekButton_clicked()
         this->setIcon(QIcon(":/icons/res/checkin/tick.png"));
     }
     iconState=!iconState;
-    emit OnWeekButtonClicked(this->date,iconState);
+    checkin_dateitem *item =new checkin_dateitem;
+    item->date=date;
+    item->tips="";
+    item->ischecked=iconState;
+    item->project_name=project_name;
+    if(iconState)
+    {
+        CheckinConfig::getInstance().updateDetailXml(CheckinAction,item);
+    }
+    else
+    {
+        CheckinConfig::getInstance().updateDetailXml(CheckOutAction,item);
+    }
+    CalendarCentral::getInstance().triggerGlobalEvent(item);
 }
 
 void WeekToolButton::setWeekButtonClicked()

@@ -21,6 +21,7 @@
 #define ATTRIBUTE_TYPE "type"
 #define ATTRIBUTE_ISCHECKED "ischeckd"
 #define ATTRIBUTE_ICONINDEX "iconindex"
+#define ATTRIBUTE_SELECTED "selected"
 
 enum OperationType
 {

@@ -32,7 +32,7 @@ private:
     void onReceiveNewHabitFormData(QString name, int iconIndex);
 
     HabbitItem* addHabitItem(project_info *project);
-    void onReceiveHabitMousePressed(HabbitItem *habit,QWidget *weekWidget);
+    void onReceiveHabitMousePressed(HabbitItem *habit);
 };
 
 #endif // CHECKINWIDGET_H

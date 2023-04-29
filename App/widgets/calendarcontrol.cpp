@@ -3,6 +3,7 @@
 #include "util.h"
 #include "ui_calendarcontrol.h"
 
+
 CalendarControl::CalendarControl(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CalendarControl)
@@ -66,7 +67,23 @@ CalendarControl::CalendarControl(QWidget *parent) :
 }
 
 
+void CalendarControl::InitCheckinMonthBtn(std::vector<checkin_dateitem *> checkinItems)
+{
+    for(int i=0;i<ui->mainGridWidget->layout()->count();i++)
+    {
+        monthButton* btn= dynamic_cast<monthButton*>(ui->mainGridWidget->layout()->itemAt(i)->widget());
+        QDate date=btn->date;
+        auto it = std::find_if(checkinItems.begin(), checkinItems.end(), [&date](checkin_dateitem* item)
+        {
+            return item->date == date;
+        });
 
+        if (it != checkinItems.end())
+        {
+            btn->setMonthButtonClicked();
+        }
+    }
+}
 
 void  CalendarControl::arrowLeftBtn_clicked()
 {
@@ -163,26 +180,26 @@ void CalendarControl::fillDateTomainGrid(QDate startDate)
     }
     for(int index=0;index<ui->mainGridWidget->layout()->count();index++)
     {
-         monthButton* childWidget = util::findWidget<monthButton>(ui->mainGridWidget,"toolButton_"+QString::number(index+1));
-         if (childWidget)
+         monthButton* monthBtn = util::findWidget<monthButton>(ui->mainGridWidget,"toolButton_"+QString::number(index+1));
+         if (monthBtn)
          {
              QString dayNumber=QString::number(currentMonth_date[index].day());
              qDebug() << "Days dayNumber:" << dayNumber;
-             childWidget->setText(dayNumber);
-             childWidget->date=currentMonth_date[index];
-             childWidget->currendDisplayDate=currendDisplayDate;
+             monthBtn->setText(dayNumber);
+             monthBtn->date=currentMonth_date[index];
+             monthBtn->currendDisplayDate=currendDisplayDate;
              //设置当天的按钮，标记为特殊颜色
              if(currentMonth_date[index]==currentDate)
              {
-                 childWidget->setStyleSheet("color:orange;font-weight:bold;");
+                 monthBtn->setStyleSheet("color:orange;font-weight:bold;");
                  continue;
              }
              if(currentMonth_date[index].month()!=currendDisplayDate.month())
              {
-                 childWidget->setStyleSheet("color:rgb(158,158,158);");
+                 monthBtn->setStyleSheet("color:rgb(158,158,158);");
                  continue;
              }
-             childWidget->setStyleSheet("color:black;");
+             monthBtn->setStyleSheet("color:black;");
          }
     }
     ui->datetimeLabel->setText(QString("%1年 %2月").arg(currendDisplayDate.year()).arg(currendDisplayDate.month()));

@@ -15,9 +15,11 @@ INCLUDEPATH += \
     $$PWD/windows \
     $$PWD/base \
     $$PWD/xmlconfig \
+    $$PWD/business \
     $$PWD/util
 
 SOURCES += \
+    business/calendarcentral.cpp \
     custom_controls/monthbutton.cpp \
     custom_controls/extraqtreewidgetitem.cpp \
     custom_controls/lntreewidget.cpp \
@@ -37,6 +39,7 @@ SOURCES += \
     xmlconfig/checkinconfig.cpp
 
 HEADERS += \
+    business/calendarcentral.h \
     custom_controls/monthbutton.h \
     custom_controls/extraqtreewidgetitem.h \
     custom_controls/lntreewidget.h \

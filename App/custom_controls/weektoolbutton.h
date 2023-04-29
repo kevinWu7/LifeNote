@@ -13,8 +13,9 @@ public:
     void WeekButton_clicked();
     void setWeekButtonClicked();
     QDate date;
+    QString project_name;
 signals:
-    void OnWeekButtonClicked(QDate date,bool ischecked);
+    //void OnWeekButtonClicked(QDate date,bool ischecked);
 private :
     bool iconState=false;
 

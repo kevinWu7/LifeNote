@@ -86,7 +86,6 @@ void CalendarControl::InitCheckinMonthBtn(std::vector<checkin_dateitem *> checki
         {
              btn->setMonthButtonClicked(false);
         }
-
     }
 }
 
@@ -114,7 +113,15 @@ void  CalendarControl::arrowLeftBtn_clicked()
 
     QDate startDate = currendDisplayDate.addDays(-(weekDistance));
     fillDateTomainGrid(startDate);
-
+    //设置checked状态
+    auto result= CheckinConfig::getInstance().LoadCheckinConfig();
+    for(auto item :result.project_list)
+    {
+        if(item->selected)//初始化将选中habit高亮
+        {
+            InitCheckinMonthBtn(result.checkin_map[item->project_name],item->project_name);
+        }
+    }
 }
 
 void  CalendarControl::arrowRightBtn_clicked()
@@ -140,6 +147,15 @@ void  CalendarControl::arrowRightBtn_clicked()
     int weekDistance= currendDisplayDate.dayOfWeek()-1;
     QDate startDate = currendDisplayDate.addDays(-(weekDistance));
     fillDateTomainGrid(startDate);
+    //设置checked状态
+    auto result= CheckinConfig::getInstance().LoadCheckinConfig();
+    for(auto item :result.project_list)
+    {
+        if(item->selected)//初始化将选中habit高亮
+        {
+            InitCheckinMonthBtn(result.checkin_map[item->project_name],item->project_name);
+        }
+    }
 }
 
 

@@ -38,6 +38,7 @@ enum HabitOperationType
     AddHabit, //添加习惯项目
     RemoveHabit,
     MoveHabit,
+    ChangeSelectedHabit,//切换habit
 };
 
 enum CheckinType

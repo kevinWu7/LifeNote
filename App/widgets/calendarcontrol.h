@@ -17,7 +17,7 @@ class CalendarControl : public QWidget
 public:
     explicit CalendarControl(QWidget *parent = nullptr);
     ~CalendarControl();
-    void InitCheckinMonthBtn(std::vector<checkin_dateitem *> checkinItems);
+    void InitCheckinMonthBtn(std::vector<checkin_dateitem *> checkinItems,QString projectName);
 
 private:
     Ui::CalendarControl *ui;

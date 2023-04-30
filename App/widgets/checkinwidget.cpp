@@ -46,10 +46,11 @@ checkinWidget::checkinWidget(QWidget *parent) :
     {
         HabbitItem* habit= addHabitItem(item);
         habit->InitCheckinBtn(result.checkin_map[item->project_name]);
-        if(item->selected)
+        if(item->selected)//初始化将选中habit高亮
         {
+            habit->isSelected=true;
             habit->setStyleSheet("QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
-            ui->calendarWidget->InitCheckinMonthBtn(result.checkin_map[item->project_name]);
+            ui->calendarWidget->InitCheckinMonthBtn(result.checkin_map[item->project_name],item->project_name);
         }
     }
 }
@@ -95,16 +96,38 @@ void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex)
 
 void checkinWidget::onReceiveHabitMousePressed(HabbitItem *habit)
 {
+    if(habit->isSelected)
+    {
+        return;
+    }
     habit->setStyleSheet("QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
-
+    habit->isSelected=true;
     for(int i=0;i< ui->leftNavigateWidget->layout()->count();i++)
     {
         auto control=dynamic_cast<HabbitItem*>(ui->leftNavigateWidget->layout()->itemAt(i)->widget());
         if(control!=nullptr&&control!=habit)
         {
+            control->isSelected=false;
             control->setStyleSheet("QWidget#mainWidget{background-color:white}");
         }
     }
+    //修改配置文件
+    project_info *info=new project_info;
+    info->project_name=habit->projectName;
+    info->selected=habit->isSelected;
+
+    CheckinConfig::getInstance().updateHabitXml(ChangeSelectedHabit,info);
+    //重新加载配置文件
+    auto result= CheckinConfig::getInstance().LoadCheckinConfig();
+    //加载habititem
+    for(auto item :result.project_list)
+    {
+        if(item->selected)//切换右侧日历本到选中的habit
+        {
+            ui->calendarWidget->InitCheckinMonthBtn(result.checkin_map[item->project_name],item->project_name);
+        }
+    }
+
 }
 
 checkinWidget::~checkinWidget()

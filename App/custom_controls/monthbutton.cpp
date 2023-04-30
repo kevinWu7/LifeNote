@@ -1,6 +1,6 @@
 #include "monthbutton.h"
 #include "calendarcentral.h"
-#include "logger.h"
+
 
 monthButton::monthButton(QWidget *parent ,bool m_iconState)
     : QToolButton(parent)
@@ -16,24 +16,16 @@ monthButton::monthButton(QWidget *parent ,bool m_iconState)
 
 void monthButton::receiveBtnChecked(checkin_dateitem* dateItem)
 {
+    if(dateItem->sender==1||dateItem->project_name!=project_name)
+    {
+        return;
+    }
     if(dateItem->date== date)
     {
-        this->click();
+        setMonthButtonClicked(dateItem->ischecked);
     }
 }
 
-void monthButton::setMonthButtonClicked()
-{
-    if(date.month()!= currendDisplayDate.month())
-    {
-         this->setStyleSheet("background-color:rgba(72,114,251,0.6);color:white;");
-    }
-    else
-    {
-         this->setStyleSheet("background-color:rgb(72,114,251);color:white;");
-    }
-    iconState=true;
-}
 
 
 void monthButton::monthButton_clicked()
@@ -77,4 +69,49 @@ void monthButton::monthButton_clicked()
         }
     }
     iconState=!iconState;
+
+    checkin_dateitem *item =new checkin_dateitem;
+    item->date=date;
+    item->tips="";
+    item->ischecked=iconState;
+    item->sender=1;
+    item->project_name=project_name;
+
+    if(iconState)
+    {
+        CheckinConfig::getInstance().updateDetailXml(CheckinAction,item);
+    }
+    else
+    {
+        CheckinConfig::getInstance().updateDetailXml(CheckOutAction,item);
+    }
+    CalendarCentral::getInstance().triggerGlobalEvent(item);
+}
+
+//仅仅改变ui状态
+void monthButton::setMonthButtonClicked(bool ischeck)
+{
+    if(!ischeck)
+    {
+        if(date.month()!= currendDisplayDate.month())
+        {
+            this->setStyleSheet("background-color:rgb(239,239,239);color:rgb(158,158,158);");
+        }
+        else
+        {
+            this->setStyleSheet("background-color:rgb(239,239,239);color:black;");
+        }
+    }
+    else
+    {
+       if(date.month()!= currendDisplayDate.month())
+       {
+            this->setStyleSheet("background-color:rgba(72,114,251,0.6);color:white;");
+       }
+       else
+       {
+            this->setStyleSheet("background-color:rgb(72,114,251);color:white;");
+       }
+    }
+    iconState=ischeck;
 }

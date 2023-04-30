@@ -75,7 +75,7 @@ void HabbitItem::InitCheckinBtn(std::vector<checkin_dateitem *> checkinItems)
 
         if (it != checkinItems.end())
         {
-            btn->setWeekButtonClicked();
+            btn->setWeekButtonClicked(true);
         }
     }
 }

@@ -52,7 +52,7 @@ CalendarControl::CalendarControl(QWidget *parent) :
 
         "QLabel#weeklabel_6{color: rgba(255,185,48,0.8);}"
         "QLabel#weeklabel_7{color: rgba(255,185,48,0.8);}"
-    );
+                );
     //设置label的文字居中对齐
     for(int i=0;i<ui->weekDayWidget->layout()->count();i++)
     {
@@ -67,21 +67,26 @@ CalendarControl::CalendarControl(QWidget *parent) :
 }
 
 
-void CalendarControl::InitCheckinMonthBtn(std::vector<checkin_dateitem *> checkinItems)
+void CalendarControl::InitCheckinMonthBtn(std::vector<checkin_dateitem *> checkinItems,QString projectName)
 {
     for(int i=0;i<ui->mainGridWidget->layout()->count();i++)
     {
         monthButton* btn= dynamic_cast<monthButton*>(ui->mainGridWidget->layout()->itemAt(i)->widget());
         QDate date=btn->date;
+        btn->project_name=projectName;
         auto it = std::find_if(checkinItems.begin(), checkinItems.end(), [&date](checkin_dateitem* item)
         {
-            return item->date == date;
+             return item->date == date;
         });
-
         if (it != checkinItems.end())
         {
-            btn->setMonthButtonClicked();
+            btn->setMonthButtonClicked(true);
         }
+        else
+        {
+             btn->setMonthButtonClicked(false);
+        }
+
     }
 }
 
@@ -175,7 +180,8 @@ void CalendarControl::fillDateTomainGrid(QDate startDate)
     currentMonth_date.clear();
     QDate currentDate = QDate::currentDate();
     // 循环添加日期到vector中
-    for (int i = 0; i < 42; i++) {
+    for (int i = 0; i < 42; i++)
+    {
         currentMonth_date.push_back(startDate.addDays(i));
     }
     for(int index=0;index<ui->mainGridWidget->layout()->count();index++)

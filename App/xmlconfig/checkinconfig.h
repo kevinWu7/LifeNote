@@ -16,6 +16,7 @@ struct checkin_dateitem
     QDate date;
     bool ischecked;
     QString tips;
+    int sender;//0代表weekbtn，1代表monthbtn
 };
 
 struct project_info

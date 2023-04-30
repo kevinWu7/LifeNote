@@ -30,7 +30,7 @@
     <widget class="QWidget" name="titleBarWidget" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="leftMargin">
-       <number>8</number>
+       <number>14</number>
       </property>
       <property name="rightMargin">
        <number>14</number>
@@ -95,13 +95,13 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="leftMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -168,13 +168,13 @@
     <widget class="QWidget" name="mainGridWidget" native="true">
      <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0">
       <property name="leftMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>

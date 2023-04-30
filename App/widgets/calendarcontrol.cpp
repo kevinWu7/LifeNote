@@ -36,7 +36,7 @@ CalendarControl::CalendarControl(QWidget *parent) :
                                 "}"
                                 "QToolButton#arrowRightBtn:hover{"
                                 "background-color: rgb(224, 224, 224);}"
-                              ).arg("34px","17px","22px","12px"));
+                              ).arg("32px","16px","22px","12px"));
 
     ui->arrowLeftBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->arrowLeftBtn->setIcon(QIcon(":/icons/res/checkin/arrow-left.png"));
@@ -46,7 +46,7 @@ CalendarControl::CalendarControl(QWidget *parent) :
     ui->titleBarWidget->setStyleSheet("QLabel#datetimeLabel{font-size: 16pt;}");
     ui->weekDayWidget->setStyleSheet(
         "QLabel {"
-        "width: 34px ; min-width: 34px; max-width: 34px;"
+        "width: 32px ; min-width: 32px; max-width: 32px;"
         "font-size: 12px;"            // 设置字体大小
         "color: rgba(0, 0, 0,0.3);}"  // 设置文本颜色为黑色，透明度为70%
 

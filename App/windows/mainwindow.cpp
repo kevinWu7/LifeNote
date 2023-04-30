@@ -93,7 +93,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(textEditContainer->ui->logCheck,&QCheckBox::stateChanged,this,&MainWindow::logCheckStateChanged);
     connect(ui->checkinBtn,&QToolButton::clicked,this,&MainWindow::checkinBtn_clicked);
 
-    textEditContainer->setVisible(false);
+    _checkinWidget->setVisible(false);
 }
 
 
@@ -513,11 +513,11 @@ void MainWindow::setLineVerticalInterval()
 void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
     //todo 暂时先隐藏
-    /*if(!textEditContainer->isVisible())
+    if(!textEditContainer->isVisible())
     {
         _checkinWidget->setVisible(false);
         textEditContainer->setVisible(true);
-    }*/
+    }
     logger->log(QString("currentTreeItemChanged tirggerd"));
     ExtraQTreeWidgetItem* extraPreviousNode= dynamic_cast<ExtraQTreeWidgetItem*>(previous);
 

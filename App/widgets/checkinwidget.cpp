@@ -25,6 +25,7 @@ checkinWidget::checkinWidget(QWidget *parent) :
     ui->dateTimeLabel->setFont(QFont("Arial", 16, QFont::Normal));
     ui->leftTitleStatus->setSpacing(2);
 
+
     ui->titleBarControl->setStyleSheet("QToolButton:hover { background-color: rgb(218, 218, 218); }"
                                      "QToolButton{width:32px;min-width:32px;max-width:32px;height:32px; min-height:32px; max-height:32px;"
                                        "margin:0px; border:none;}");
@@ -40,6 +41,8 @@ checkinWidget::checkinWidget(QWidget *parent) :
                                     "}");
     connect(ui->addItemBtn,&QToolButton::clicked,this,&checkinWidget::addItemBtn_clicked);
 
+
+
     auto result= CheckinConfig::getInstance().LoadCheckinConfig();
     //加载habititem
     for(auto item :result.project_list)
@@ -53,6 +56,9 @@ checkinWidget::checkinWidget(QWidget *parent) :
             ui->calendarWidget->InitCheckinMonthBtn(result.checkin_map[item->project_name],item->project_name);
         }
     }
+    //set the splitter default-ratio,total=9,leftbar=2,editwidget=7.
+    ui->mainSplitter->setStretchFactor(0, 3); //代表第0个控件，即leftbar所占比例为2
+    ui->mainSplitter->setStretchFactor(1,4);//代表第1个控件，即textedit所占比例为7.一共是9
 }
 
 

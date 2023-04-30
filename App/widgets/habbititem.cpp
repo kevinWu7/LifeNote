@@ -26,10 +26,10 @@ HabbitItem::HabbitItem(QString name,QWidget *parent) :
                            "background-color: transparent;"
                            "width: %1 ; min-width: %1; max-width: %1;"
                            "height: %1 ; min-height: %1; max-height: %1;}"
-                          ).arg("22px"));
+                          ).arg("20px"));
     //this->setStyleSheet("background-color:red");
     ui->imgBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    ui->imgBtn->setIconSize(QSize(22,22));
+    ui->imgBtn->setIconSize(QSize(20,20));
     ui->nameLabel->setFont(QFont("Arial", 14, QFont::Normal));
     InitWeekButtons();
     ui->nameLabel->setText(name);

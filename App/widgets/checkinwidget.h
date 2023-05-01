@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QMouseEvent>
 #include <QToolButton>
-#include "baseinfo.h"
+#include <QTimer>
 #include "habbititem.h"
 #include "newhabitform.h"
 #include "checkinconfig.h"
@@ -22,7 +22,8 @@ public:
     explicit checkinWidget(QWidget *parent = nullptr);
     ~checkinWidget();
     NewHabitForm *habitForm=nullptr;
-
+    void InitCurrentDate();
+    QDate currentDate;
 
 public slots:
     void addItemBtn_clicked();
@@ -33,6 +34,8 @@ private:
 
     HabbitItem* addHabitItem(project_info *project);
     void onReceiveHabitMousePressed(HabbitItem *habit);
+    void timerOutTriggered();
+    QTimer timer;
 };
 
 #endif // CHECKINWIDGET_H

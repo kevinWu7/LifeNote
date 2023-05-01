@@ -86,7 +86,6 @@ void HabbitItem::InitWeekButtons()
     for(int i=0;i<ui->weekWidget->layout()->count();i++)
     {
         WeekToolButton* btn= dynamic_cast<WeekToolButton*>(ui->weekWidget->layout()->itemAt(i)->widget());
-        //connect(btn,&WeekToolButton::OnWeekButtonClicked,this,&HabbitItem::OnReceiveWeekBtnClicked);
         btn->date=thisWeek[i];
         btn->project_name=projectName;
     }

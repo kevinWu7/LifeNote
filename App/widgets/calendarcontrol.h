@@ -18,11 +18,10 @@ public:
     explicit CalendarControl(QWidget *parent = nullptr);
     ~CalendarControl();
     void InitCheckinMonthBtn(std::vector<checkin_dateitem *> checkinItems,QString projectName);
-
+    void initCurrentMonth();
 private:
     Ui::CalendarControl *ui;
     QDate currendDisplayDate;//当前展示的日期
-    void initCurrentMonth();
     void cacheAllDate();
     void initMonthBtnEvent();
     void monthBtn_clicked();

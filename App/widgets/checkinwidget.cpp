@@ -59,8 +59,38 @@ checkinWidget::checkinWidget(QWidget *parent) :
     //set the splitter default-ratio,total=9,leftbar=2,editwidget=7.
     ui->mainSplitter->setStretchFactor(0, 3); //代表第0个控件，即leftbar所占比例为2
     ui->mainSplitter->setStretchFactor(1,4);//代表第1个控件，即textedit所占比例为7.一共是9
+    InitCurrentDate();
 }
 
+void checkinWidget::timerOutTriggered()
+{
+    QDate newCurrentDate=QDate::currentDate();
+    if(newCurrentDate==currentDate)
+    {
+        return;
+    }
+    currentDate=newCurrentDate;
+    QString labelText=QString("%1年%2月%3号").arg(QString::number(currentDate.year()),
+                  QString::number(currentDate.month()),QString::number(currentDate.day()));
+    ui->dateTimeLabel->setText(labelText);
+    //habit 更新
+    for(int i=0;i< ui->leftNavigateWidget->layout()->count();i++)
+    {
+        auto control=dynamic_cast<HabbitItem*>(ui->leftNavigateWidget->layout()->itemAt(i)->widget());
+        if(control!=nullptr)
+        {
+            control->InitWeekButtons();
+        }
+    }
+}
+
+void checkinWidget::InitCurrentDate()
+{
+    currentDate=QDate::currentDate();
+    // Connect the timeout signal to a lambda function
+    connect(&timer, &QTimer::timeout,this, &checkinWidget::timerOutTriggered);
+    timer.start(5000);
+}
 
 void checkinWidget::addItemBtn_clicked()
 {

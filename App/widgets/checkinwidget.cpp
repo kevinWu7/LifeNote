@@ -1,6 +1,7 @@
 #include <QFile>
 #include <QXmlStreamReader>
 #include "checkinwidget.h"
+#include "logger.h"
 #include "ui_checkinwidget.h"
 
 
@@ -67,12 +68,13 @@ void checkinWidget::timerOutTriggered()
     QDate newCurrentDate=QDate::currentDate();
     if(newCurrentDate==currentDate)
     {
-        return;
+         return;
     }
     currentDate=newCurrentDate;
     QString labelText=QString("%1年%2月%3号").arg(QString::number(currentDate.year()),
                   QString::number(currentDate.month()),QString::number(currentDate.day()));
     ui->dateTimeLabel->setText(labelText);
+    auto result= CheckinConfig::getInstance().LoadCheckinConfig();
     //habit 更新
     for(int i=0;i< ui->leftNavigateWidget->layout()->count();i++)
     {
@@ -80,6 +82,8 @@ void checkinWidget::timerOutTriggered()
         if(control!=nullptr)
         {
             control->InitWeekButtons();
+            //加载habititem
+            control->InitCheckinBtn(result.checkin_map[control->projectName]);
         }
     }
 }

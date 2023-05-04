@@ -4,6 +4,7 @@
 #include "util.h"
 #include "weektoolbutton.h"
 #include "checkinconfig.h"
+#include "logger.h"
 
 
 HabbitItem::HabbitItem(QString name,QWidget *parent) :
@@ -76,6 +77,12 @@ void HabbitItem::InitCheckinBtn(std::vector<checkin_dateitem *> checkinItems)
         if (it != checkinItems.end())
         {
             btn->setWeekButtonClicked(true);
+            logger->log(QString("%1 %2 set is true").arg(projectName).arg(date.toString()));
+        }
+        else
+        {
+            btn->setWeekButtonClicked(false);
+            logger->log(QString("%1 %2 set is false").arg(projectName).arg(date.toString()));
         }
     }
 }

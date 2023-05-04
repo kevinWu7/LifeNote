@@ -11,7 +11,7 @@
 #define  ATTRIBUTE_STARTFLAG "isStartWithDigit"
 #define  WINDOW_TITLE "理想之城"
 
-#define NODENAME_TOTALPROJECT "TotalProjet"
+#define NODENAME_TOTALPROJECT "TotalProject"
 #define NODENAME_DETAILPROJECT "DetailProject"
 #define NODENAME_PROJECT "project"
 #define NODENAME_CHECKINDATE "checkin"

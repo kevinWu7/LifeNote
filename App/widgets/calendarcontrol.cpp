@@ -2,6 +2,7 @@
 #include "calendarcontrol.h"
 #include "util.h"
 #include "ui_calendarcontrol.h"
+#include "recorditem.h"
 
 
 CalendarControl::CalendarControl(QWidget *parent) :
@@ -20,10 +21,6 @@ CalendarControl::CalendarControl(QWidget *parent) :
                                 "font-size: 12px;"
                                 "padding: 0;"
                                 "margin: 0;}"
-                                "QToolButton#projectIconBtn{"      //图标
-                                "width: %3 ; min-width: %3; max-width: %3;"
-                                "height: %3; min-height: %3; max-height: %3;"
-                                "background-color: transparent;}"
                                 "QToolButton#arrowLeftBtn{"      //左箭头样式
                                 "width: %4 ; min-width: %4; max-width: %4;"
                                 "height: %4; min-height: %4; max-height: %4;"
@@ -40,7 +37,9 @@ CalendarControl::CalendarControl(QWidget *parent) :
                                 "}"
                                 "QToolButton#arrowRightBtn:hover{"
                                 "background-color: rgb(224, 224, 224);}"
-                              ).arg("32px","16px","30px","12px"));
+                                "QToolButton#projectIconBtn{"      //图标
+                                 "background-color: transparent;}"
+                              ).arg("32px","16px","22px","12px"));
 
     ui->arrowLeftBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->arrowLeftBtn->setIcon(QIcon(":/icons/res/checkin/arrow-left.png"));
@@ -75,9 +74,12 @@ CalendarControl::CalendarControl(QWidget *parent) :
     connect(ui->arrowRightBtn,&QToolButton::clicked,this,&CalendarControl::arrowRightBtn_clicked);
     cacheAllDate();
     initCurrentMonth();
+    ui->recordItem1->setRecordType(RecordType::TotalCheckinCount);
+    ui->recordItem2->setRecordType(RecordType::NewContinuousCheckin);
+    ui->recordItem3->setRecordType(RecordType::CurrentMonthRatio);
 }
 
-void CalendarControl::setHabitItem(std::vector<checkin_dateitem *> checkinItems,QString projectName,int iconIndex)
+void CalendarControl::setHabitItem(const std::vector<checkin_dateitem *> &checkinItems,QString projectName,int iconIndex)
 {
     InitCheckinMonthBtn(checkinItems,projectName);
     //设置图标 和项目名
@@ -85,9 +87,12 @@ void CalendarControl::setHabitItem(std::vector<checkin_dateitem *> checkinItems,
     ui->projectIconBtn->setIcon(QIcon(QString(":/icons/res/checkin/%1").arg(icon)));
 
     ui->projectLabel->setText(projectName);
+    ui->recordItem1->setCheckinData(checkinItems);
+    ui->recordItem2->setCheckinData(checkinItems);
+    ui->recordItem3->setCheckinData(checkinItems);
 }
 
-void CalendarControl::InitCheckinMonthBtn(std::vector<checkin_dateitem *> checkinItems,QString projectName)
+void CalendarControl::InitCheckinMonthBtn(const std::vector<checkin_dateitem *> &checkinItems,QString projectName)
 {
     for(int i=0;i<ui->mainGridWidget->layout()->count();i++)
     {

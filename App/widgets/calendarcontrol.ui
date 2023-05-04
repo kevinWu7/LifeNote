@@ -30,7 +30,7 @@
        <number>15</number>
       </property>
       <property name="leftMargin">
-       <number>10</number>
+       <number>8</number>
       </property>
       <property name="topMargin">
        <number>0</number>
@@ -96,13 +96,13 @@
        <number>12</number>
       </property>
       <item>
-       <widget class="RecordItem" name="widget" native="true"/>
+       <widget class="RecordItem" name="recordItem1" native="true"/>
       </item>
       <item>
-       <widget class="RecordItem" name="widget_3" native="true"/>
+       <widget class="RecordItem" name="recordItem2" native="true"/>
       </item>
       <item>
-       <widget class="RecordItem" name="widget_2" native="true"/>
+       <widget class="RecordItem" name="recordItem3" native="true"/>
       </item>
      </layout>
     </widget>
@@ -198,13 +198,13 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="leftMargin">
-       <number>5</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>5</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -271,13 +271,13 @@
     <widget class="QWidget" name="mainGridWidget" native="true">
      <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0">
       <property name="leftMargin">
-       <number>5</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>5</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>

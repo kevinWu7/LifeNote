@@ -62,7 +62,7 @@ void HabbitItem::mousePressEvent(QMouseEvent *event)
 }
 
 //讲habit中的btn初始化是否checked
-void HabbitItem::InitCheckinBtn(std::vector<checkin_dateitem *> checkinItems)
+void HabbitItem::InitCheckinBtn(const std::vector<checkin_dateitem *> &checkinItems)
 {
     for(int i=0;i<ui->weekWidget->layout()->count();i++)
     {

@@ -18,7 +18,7 @@ public:
 
     void setIconIndex(int iconIndex);
     void mousePressEvent(QMouseEvent *event) override;
-    void InitCheckinBtn(std::vector<checkin_dateitem*> checkinItems);
+    void InitCheckinBtn(const std::vector<checkin_dateitem*> &checkinItems);
     bool isSelected=false;//是否被光标选中
     QString projectName;
     int iconIndex=0;

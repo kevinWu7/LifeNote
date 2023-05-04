@@ -17,9 +17,9 @@ class CalendarControl : public QWidget
 public:
     explicit CalendarControl(QWidget *parent = nullptr);
     ~CalendarControl();
-    void InitCheckinMonthBtn(std::vector<checkin_dateitem *> checkinItems,QString projectName);
+    void InitCheckinMonthBtn(const std::vector<checkin_dateitem *> &checkinItems,QString projectName);
     void initCurrentMonth();
-    void setHabitItem(std::vector<checkin_dateitem *> checkinItems,QString projectName,int iconIndex);//设置为当前选中项目
+    void setHabitItem(const std::vector<checkin_dateitem *> &checkinItems,QString projectName,int iconIndex);//设置为当前选中项目
 private:
     Ui::CalendarControl *ui;
     QDate currendDisplayDate;//当前展示的日期

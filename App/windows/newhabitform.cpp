@@ -3,6 +3,7 @@
 #include "logger.h"
 #include "newhabitform.h"
 #include "ui_newhabitform.h"
+#include "baseinfo.h"
 
 
 #define DefaultDisplayTip "未命名项目"
@@ -40,6 +41,8 @@ NewHabitForm::NewHabitForm(QWidget *parent) :
                                 "color:rgb(255,255,255)"
                                 "}"
                                 ).arg("60px","18px"));
+    ui->bottomLine->setStyleSheet(QString("QFrame{border-top: 1px solid %1; border-bottom: none;}").arg(LINE_COLOR));
+    ui->topLine->setStyleSheet(QString("QFrame{border-top: 1px solid %1; border-bottom: none;}").arg(LINE_COLOR));
     initIConBtn();
     InitRoundRadius();
     connect(ui->okBtn,&QPushButton::clicked,this,&NewHabitForm::okBtn_clicked);

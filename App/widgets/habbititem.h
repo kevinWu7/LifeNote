@@ -21,6 +21,7 @@ public:
     void InitCheckinBtn(std::vector<checkin_dateitem*> checkinItems);
     bool isSelected=false;//是否被光标选中
     QString projectName;
+    int iconIndex=0;
     void InitWeekButtons();
 public slots:
     //void OnReceiveWeekBtnClicked(QDate date,bool ischecked);
@@ -30,7 +31,7 @@ private:
     Ui::HabbitItem *ui;
 
 
-    int iconIndex=0;
+
 
 };
 

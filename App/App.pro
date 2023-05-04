@@ -25,6 +25,7 @@ SOURCES += \
     custom_controls/lntreewidget.cpp \
     custom_controls/lntextedit.cpp \
     custom_controls/weektoolbutton.cpp \
+    widgets/recorditem.cpp \
     widgets/calendarcontrol.cpp \
     widgets/checkinwidget.cpp \
     widgets/habbititem.cpp \
@@ -44,8 +45,9 @@ HEADERS += \
     custom_controls/extraqtreewidgetitem.h \
     custom_controls/lntreewidget.h \
     custom_controls/lntextedit.h \
-    custom_controls/weektoolbutton.h \
+    custom_controls/weektoolbutton.h \ 
     xmlconfig/noteconfig.h \
+    widgets/recorditem.h \
     widgets/calendarcontrol.h \
     widgets/checkinwidget.h \  
     widgets/texteditcontainer.h \
@@ -60,6 +62,7 @@ HEADERS += \
     xmlconfig/checkinconfig.h
 
 FORMS += \
+    widgets/recorditem.ui \
     widgets/calendarcontrol.ui \
     widgets/checkinwidget.ui \
     widgets/texteditcontainer.ui \

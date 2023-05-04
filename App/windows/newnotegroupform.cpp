@@ -2,6 +2,7 @@
 #include "util.h"
 #include "newnotegroupform.h"
 #include "ui_newnotegroupform.h"
+#include "baseinfo.h"
 
 
 #define  ROUND_RADIUS 5
@@ -36,7 +37,9 @@ NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
                                 "color:rgb(255,255,255)"
                                 "}"
                                 ).arg("16px","8px","85px","18px"));
-    InitColorPushBtn();   
+    ui->bottomLine->setStyleSheet(QString("QFrame{border-top: 1px solid %1; border-bottom: none;}").arg(LINE_COLOR));
+    ui->topLine->setStyleSheet(QString("QFrame{border-top: 1px solid %1; border-bottom: none;}").arg(LINE_COLOR));
+    InitColorPushBtn();
     InitRoundRadius();
     InitEvent();
 }

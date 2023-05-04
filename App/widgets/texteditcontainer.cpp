@@ -6,6 +6,7 @@
 #include "util.h"
 #include "texteditcontainer.h"
 #include "ui_texteditcontainer.h"
+#include "baseinfo.h"
 
 
 
@@ -24,6 +25,8 @@ TextEditContainer::TextEditContainer(QWidget *parent) :
     ui->editWidget->setStyleSheet("QWidget#editWidget"
                                   "{background-color:#FFFFFF;"
                                   "border-radius:7px}");
+    ui->titleBarBottomLine->setStyleSheet(QString("QFrame{border-top: 1px solid %1; border-bottom: none;}").arg(LINE_COLOR));
+
     ui->editWidget->layout()->setSpacing(0);
     //设置mainPage内部控件间距为5
     //ui->mainPage->layout()->setSpacing(5);

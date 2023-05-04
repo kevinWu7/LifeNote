@@ -54,12 +54,13 @@ checkinWidget::checkinWidget(QWidget *parent) :
         {
             habit->isSelected=true;
             habit->setStyleSheet("QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
-            ui->calendarWidget->InitCheckinMonthBtn(result.checkin_map[item->project_name],item->project_name);
+            ui->calendarWidget->setHabitItem(result.checkin_map[item->project_name],item->project_name,
+                    habit->iconIndex);
         }
     }
-    //set the splitter default-ratio,total=9,leftbar=2,editwidget=7.
-    ui->mainSplitter->setStretchFactor(0, 3); //代表第0个控件，即leftbar所占比例为2
-    ui->mainSplitter->setStretchFactor(1,4);//代表第1个控件，即textedit所占比例为7.一共是9
+    //set the splitter default-ratio,total=7,左侧=2,右侧=7.
+    ui->mainSplitter->setStretchFactor(0,5); //代表第0个控件，即左边所占比例为2
+    ui->mainSplitter->setStretchFactor(1,4);//代表第1个控件，即右边所占比例为7.一共是9
     InitCurrentDate();
 }
 
@@ -164,10 +165,10 @@ void checkinWidget::onReceiveHabitMousePressed(HabbitItem *habit)
     {
         if(item->selected)//切换右侧日历本到选中的habit
         {
-            ui->calendarWidget->InitCheckinMonthBtn(result.checkin_map[item->project_name],item->project_name);
+            ui->calendarWidget->setHabitItem(result.checkin_map[item->project_name],item->project_name,
+                    habit->iconIndex);
         }
     }
-
 }
 
 checkinWidget::~checkinWidget()

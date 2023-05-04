@@ -359,7 +359,7 @@
   <customwidget>
    <class>LNTextEdit</class>
    <extends>QTextEdit</extends>
-   <header location="global">lntextedit.h</header>
+   <header>lntextedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -20,6 +20,10 @@ CalendarControl::CalendarControl(QWidget *parent) :
                                 "font-size: 12px;"
                                 "padding: 0;"
                                 "margin: 0;}"
+                                "QToolButton#projectIconBtn{"      //图标
+                                "width: %3 ; min-width: %3; max-width: %3;"
+                                "height: %3; min-height: %3; max-height: %3;"
+                                "background-color: transparent;}"
                                 "QToolButton#arrowLeftBtn{"      //左箭头样式
                                 "width: %4 ; min-width: %4; max-width: %4;"
                                 "height: %4; min-height: %4; max-height: %4;"
@@ -36,12 +40,19 @@ CalendarControl::CalendarControl(QWidget *parent) :
                                 "}"
                                 "QToolButton#arrowRightBtn:hover{"
                                 "background-color: rgb(224, 224, 224);}"
-                              ).arg("32px","16px","22px","12px"));
+                              ).arg("32px","16px","30px","12px"));
 
     ui->arrowLeftBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->arrowLeftBtn->setIcon(QIcon(":/icons/res/checkin/arrow-left.png"));
     ui->arrowRightBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->arrowRightBtn->setIcon(QIcon(":/icons/res/checkin/arrow-right.png"));
+
+    ui->projectIconBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    ui->projectIconBtn->setIconSize(QSize(30,30));
+    ui->projectLabel->setFont(QFont("Arial", 22, QFont::Normal));
+
+    ui->centerLine->setStyleSheet(QString("QFrame{border-top: 1px solid %1; border-bottom: none;}").arg(LINE_COLOR));
+
 
     ui->titleBarWidget->setStyleSheet("QLabel#datetimeLabel{font-size: 16pt;}");
     ui->weekDayWidget->setStyleSheet(
@@ -66,6 +77,15 @@ CalendarControl::CalendarControl(QWidget *parent) :
     initCurrentMonth();
 }
 
+void CalendarControl::setHabitItem(std::vector<checkin_dateitem *> checkinItems,QString projectName,int iconIndex)
+{
+    InitCheckinMonthBtn(checkinItems,projectName);
+    //设置图标 和项目名
+    auto icon=QString::fromStdString(util::iconMap[iconIndex]);
+    ui->projectIconBtn->setIcon(QIcon(QString(":/icons/res/checkin/%1").arg(icon)));
+
+    ui->projectLabel->setText(projectName);
+}
 
 void CalendarControl::InitCheckinMonthBtn(std::vector<checkin_dateitem *> checkinItems,QString projectName)
 {
@@ -102,12 +122,6 @@ void  CalendarControl::arrowLeftBtn_clicked()
     {
         currendDisplayDate = QDate(currendDisplayDate.year(), currendDisplayDate.month()-1, 1);
     }
-    //若为当前月份，则直接调用initCurrentMonth
-    if(currendDisplayDate.year()==currentDate.year()&&currendDisplayDate.month()==currentDate.month())
-    {
-       // initCurrentMonth();
-        //return;
-    }
     // 计算日期间距
     int weekDistance= currendDisplayDate.dayOfWeek()-1;
 
@@ -136,12 +150,6 @@ void  CalendarControl::arrowRightBtn_clicked()
     else
     {
         currendDisplayDate = QDate(currendDisplayDate.year(), currendDisplayDate.month()+1, 1);
-    }
-    //若为当前月份，则直接调用initCurrentMonth
-    if(currendDisplayDate.year()==currentDate.year()&&currendDisplayDate.month()==currentDate.month())
-    {
-        //initCurrentMonth();
-        //return;
     }
     // 计算日期间距
     int weekDistance= currendDisplayDate.dayOfWeek()-1;
@@ -174,6 +182,8 @@ void CalendarControl::initCurrentMonth()
     QDate startDate = currentDate.addDays(-(daysDifference + weekDistance));
     fillDateTomainGrid(startDate);
 }
+
+
 
 void CalendarControl::cacheAllDate()
 {

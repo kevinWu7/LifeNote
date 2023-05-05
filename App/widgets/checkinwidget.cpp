@@ -89,11 +89,11 @@ void checkinWidget::initHabitRightMenu()
     rightHabitMenu->addAction(deleteHabitAction);
     rightHabitMenu->setStyleSheet("QMenu { width: 80px; background-color:white;}");
                                  // "QMenu::item { height: 10px; padding-bottom: 10px;padding-left：20px }");
-    connect(editHabitAction, &QAction::triggered, this, &checkinWidget::onHabitMenuEdit);
-    connect(deleteHabitAction, &QAction::triggered, this, &checkinWidget::onHabitMenuDelete);
+    connect(editHabitAction, &QAction::triggered, this, &checkinWidget::onMenuEdit);
+    connect(deleteHabitAction, &QAction::triggered, this, &checkinWidget::onMenuDelete);
 }
 
-void checkinWidget::onHabitMenuEdit()
+void checkinWidget::onMenuEdit()
 {
     if(!this->habitForm)
     {
@@ -109,7 +109,7 @@ void checkinWidget::onHabitMenuEdit()
 
 }
 
-void checkinWidget::onHabitMenuDelete()
+void checkinWidget::onMenuDelete()
 {
     ui->leftNavigateWidget->layout()->removeWidget(currentHabit);
     project_info *project=new project_info;
@@ -183,7 +183,7 @@ HabbitItem* checkinWidget::addHabitItem(project_info *project)
 
 void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex,int formMode)
 {
-    if(formMode==0)
+    if(formMode==0) //新建habit
     {
         project_info *project=new project_info;
         project->iconIndex=QString::number(iconIndex);
@@ -192,13 +192,15 @@ void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex,int fo
         CheckinConfig::getInstance().updateHabitXml(AddHabit, project);
         connect(habit,&HabbitItem::customContextMenuRequested,this,&checkinWidget::onRightMenuRequested);
     }
-    else
+    else //编辑habit
     {
         project_info *old_project=new project_info;
         old_project->iconIndex=QString::number(currentHabit->iconIndex);
         old_project->project_name=currentHabit->projectName;
         currentHabit->setIconIndex(iconIndex);
         currentHabit->setProjectName(name);
+        currentHabit->InitWeekButtons();
+
         ui->calendarWidget->editHabitItem(name,iconIndex);
         project_info *new_project=new project_info;
         new_project->iconIndex=QString::number(iconIndex);

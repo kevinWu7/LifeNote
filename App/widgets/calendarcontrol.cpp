@@ -98,6 +98,11 @@ void CalendarControl::editHabitItem(QString projectName, int iconIndex)
     auto icon=QString::fromStdString(util::iconMap[iconIndex]);
     ui->projectIconBtn->setIcon(QIcon(QString(":/icons/res/checkin/%1").arg(icon)));
     ui->projectLabel->setText(projectName);
+    for(int i=0;i<ui->mainGridWidget->layout()->count();i++)
+    {
+        monthButton* btn= dynamic_cast<monthButton*>(ui->mainGridWidget->layout()->itemAt(i)->widget());
+        btn->project_name=projectName;
+    }
 }
 
 void CalendarControl::InitCheckinMonthBtn(const std::vector<checkin_dateitem *> &checkinItems,QString projectName)

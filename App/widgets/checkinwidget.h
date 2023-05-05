@@ -29,8 +29,8 @@ public:
 public slots:
     void addItemBtn_clicked();
     void onRightMenuRequested(const QPoint &pos);
-    void onHabitMenuEdit();
-    void onHabitMenuDelete();
+    void onMenuEdit();
+    void onMenuDelete();
 
 private:
     Ui::checkinWidget *ui;

@@ -59,6 +59,18 @@ void NewHabitForm::InitRoundRadius()
     QRegion region(polygon);
     setMask(region);
 }
+
+void NewHabitForm::setEditMode(QString name, int iconIndex)
+{
+    formMode=1;
+    ui->nameLabel->setText("请输入新的项目名");
+    ui->nameLineEdit->setText(name);
+    QToolButton* toolBtn= dynamic_cast<QToolButton*>(ui->iconWidget->layout()->itemAt(iconIndex)->widget());
+    if(!toolBtn->isChecked())
+    {
+        toolBtn->click();
+    }
+}
 void NewHabitForm::initIConBtn()
 {
     for(int i=0;i<ui->iconWidget->layout()->count();i++)
@@ -87,7 +99,6 @@ void NewHabitForm::iconBtn_clicked()
             else
             {
                 iconIndex=i;
-                logger->log(QString("index: %1").arg(i));
             }
         }
     }
@@ -106,15 +117,18 @@ void NewHabitForm::okBtn_clicked()
         ui->warningLabel->setText("");
         ui->warningLabel->setStyleSheet("color:transparent");
     }
-    emit sendSelectDataToParent(ui->nameLineEdit->text(),iconIndex);
+    ui->nameLabel->setText("请输入项目名称");
+    emit sendSelectDataToParent(ui->nameLineEdit->text(),iconIndex,formMode);
     ui->nameLineEdit->setText("");
     this->setVisible(false);
+    formMode=0;
 }
 
 void NewHabitForm::cancleBtn_clicked()
 {
     ui->nameLineEdit->setText("");
     this->setVisible(false);
+    formMode=0;
 }
 void NewHabitForm::mousePressEvent(QMouseEvent *event)
 {

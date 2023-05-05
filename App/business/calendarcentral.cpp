@@ -21,6 +21,17 @@ void CalendarCentral::registerGlobalEvent(checkBtnCallback callback)
 }
 
 
+void CalendarCentral::unregisterGlobalEvent(checkBtnCallback callback)
+{
+    auto it = std::find_if(callbackList.begin(), callbackList.end(),
+        [callback](const checkBtnCallback& cb) { return &cb == &callback; });
+
+    if (it != callbackList.end())
+    {
+        callbackList.erase(it);
+    }
+}
+
 
 void CalendarCentral::triggerGlobalEvent(checkin_dateitem *item)
 {

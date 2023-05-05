@@ -15,13 +15,14 @@ RecordItem::RecordItem(QWidget *parent) :
     ui->textLabel->setStyleSheet("color:rgb(160,160,160)");
 
     // 绑定成员函数到实例
-    auto bindFunctionOfreceiveBtnChecked = std::bind(&RecordItem::receiveBtnChecked, this, std::placeholders::_1);
+    bindFunctionOfreceiveBtnChecked = std::bind(&RecordItem::receiveBtnChecked, this, std::placeholders::_1);
     // 注册全局事件
     CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
 }
 
 RecordItem::~RecordItem()
 {
+    CalendarCentral::getInstance().unregisterGlobalEvent(bindFunctionOfreceiveBtnChecked);
     delete ui;
 }
 

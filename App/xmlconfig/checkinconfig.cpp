@@ -18,6 +18,60 @@ CheckinConfig& CheckinConfig::getInstance()
     return *instance;
 }
 
+//编辑habit时，需要修改project_name
+void CheckinConfig::updateHabitXmlInEditMode(HabitOperationType type,project_info * project,project_info * old_project)
+{
+    QString filePath =STORAGE_PATH + CHECKIN_CONFIG_PATH;
+    QFile file(filePath);
+
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        logger->log(QString("updateXml:open local xml failed"));
+        return;
+    }
+    QDomDocument doc;
+    if(!doc.setContent(&file))//从字节数组中解析XML文档，并将其设置为文档的内容
+    {
+        logger->log(QString("updateXml:set doc content form file failed"));
+        file.close();
+        return;
+    }
+    file.close();
+    if(type==EditHabit)
+    {
+        QDomNode parentDomElement=util::selectSingleNode(NODENAME_TOTALPROJECT,&doc);
+        QDomNodeList childNodes = parentDomElement.childNodes(); // 获取子节点列表
+        for (int i = 0; i < childNodes.size(); i++)
+        {
+            QDomNode childNode = childNodes.item(i); // 获取当前子节点
+            QDomElement childElement = childNode.toElement();
+            if (childElement.attribute(ATTRIBUTE_NAME) ==old_project->project_name)
+            {
+                childElement.setAttribute(ATTRIBUTE_NAME,project->project_name);
+                childElement.setAttribute(ATTRIBUTE_ICONINDEX,project->iconIndex);
+            }
+        }
+        QDomNode parentDetailDomElement=util::selectSingleNode(NODENAME_DETAILPROJECT,&doc);
+        QDomNodeList childdetailNodes = parentDetailDomElement.childNodes(); // 获取子节点列表
+        for (int i = 0; i < childdetailNodes.size(); i++)
+        {
+            QDomNode childNode = childdetailNodes.item(i); // 获取当前子节点
+            QDomElement childElement = childNode.toElement();
+            if (childElement.attribute(ATTRIBUTE_NAME) == old_project->project_name)
+            {
+                childElement.setAttribute(ATTRIBUTE_NAME,project->project_name);
+            }
+        }
+    }
+    if(!file.open(QFile::WriteOnly|QFile::Truncate))//重写文件，如果不用truncate就是在后面追加内容，就无效了
+    {
+        return;
+    }
+    QTextStream out_stream(&file);
+    doc.save(out_stream,4);
+    file.close();
+}
+
 void CheckinConfig::updateHabitXml(HabitOperationType type,project_info * project)
 {
     QString filePath =STORAGE_PATH + CHECKIN_CONFIG_PATH;
@@ -50,6 +104,31 @@ void CheckinConfig::updateHabitXml(HabitOperationType type,project_info * projec
         detailParentDomElement.appendChild(detailNewDomElement);
         detailNewDomElement.setAttribute(ATTRIBUTE_NAME,project->project_name);
         detailNewDomElement.setAttribute(ATTRIBUTE_TYPE,project->type);
+    }
+    else if(type==RemoveHabit)
+    {
+        QDomNode parentDomElement=util::selectSingleNode(NODENAME_TOTALPROJECT,&doc);
+        QDomNodeList childNodes = parentDomElement.childNodes(); // 获取子节点列表
+        for (int i = 0; i < childNodes.size(); i++)
+        {
+            QDomNode childNode = childNodes.item(i); // 获取当前子节点
+            QDomElement childElement = childNode.toElement();
+            if (childElement.attribute(ATTRIBUTE_NAME) == project->project_name)
+            {
+                parentDomElement.removeChild(childElement);
+            }
+        }
+        QDomNode parentDetailDomElement=util::selectSingleNode(NODENAME_DETAILPROJECT,&doc);
+        QDomNodeList childdetailNodes = parentDetailDomElement.childNodes(); // 获取子节点列表
+        for (int i = 0; i < childdetailNodes.size(); i++)
+        {
+            QDomNode childNode = childdetailNodes.item(i); // 获取当前子节点
+            QDomElement childElement = childNode.toElement();
+            if (childElement.attribute(ATTRIBUTE_NAME) == project->project_name)
+            {
+                parentDetailDomElement.removeChild(childElement);
+            }
+        }
     }
     else if(type==ChangeSelectedHabit)
     {

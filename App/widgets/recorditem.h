@@ -35,6 +35,7 @@ private:
     int find_max_consecutive_dates(const std::vector<checkin_dateitem*>& items);
     int find_current_consecutive_dates(const std::vector<checkin_dateitem*>& items);
     double calculate_current_month_ratio(const std::vector<checkin_dateitem*>& items);
+    std::function<void(checkin_dateitem*)> bindFunctionOfreceiveBtnChecked;
     std::map<RecordType,QString> recordMap=
     {
         {TotalCheckinCount,"总打卡"},

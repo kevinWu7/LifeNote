@@ -12,7 +12,7 @@ public:
     static CalendarCentral& getInstance();
     // 注册按钮点击全局事件
     void registerGlobalEvent(checkBtnCallback callback);
-    //void unregisterGlobalEvent(checkBtnCallback callback);
+    void unregisterGlobalEvent(checkBtnCallback callback);
     // 触发按钮点击全局事件
     void triggerGlobalEvent(checkin_dateitem * dateItem);
 

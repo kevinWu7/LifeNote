@@ -20,6 +20,7 @@ public:
     void InitCheckinMonthBtn(const std::vector<checkin_dateitem *> &checkinItems,QString projectName);
     void initCurrentMonth();
     void setHabitItem(const std::vector<checkin_dateitem *> &checkinItems,QString projectName,int iconIndex);//设置为当前选中项目
+    void editHabitItem(QString projectName,int iconIndex);//编辑habit，需要对应修改CalendarControl
 private:
     Ui::CalendarControl *ui;
     QDate currendDisplayDate;//当前展示的日期

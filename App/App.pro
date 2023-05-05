@@ -25,10 +25,10 @@ SOURCES += \
     custom_controls/lntreewidget.cpp \
     custom_controls/lntextedit.cpp \
     custom_controls/weektoolbutton.cpp \
+    widgets/habititem.cpp \
     widgets/recorditem.cpp \
     widgets/calendarcontrol.cpp \
     widgets/checkinwidget.cpp \
-    widgets/habbititem.cpp \
     widgets/texteditcontainer.cpp \
     windows/newnotegroupform.cpp \
     windows/mainwindow.cpp \
@@ -45,13 +45,13 @@ HEADERS += \
     custom_controls/extraqtreewidgetitem.h \
     custom_controls/lntreewidget.h \
     custom_controls/lntextedit.h \
-    custom_controls/weektoolbutton.h \ 
+    custom_controls/weektoolbutton.h \  \
+    widgets/habititem.h \
     xmlconfig/noteconfig.h \
     widgets/recorditem.h \
     widgets/calendarcontrol.h \
     widgets/checkinwidget.h \  
     widgets/texteditcontainer.h \
-    widgets/habbititem.h \
     windows/mainwindow.h \
     windows/newnotegroupform.h \
     windows/newhabitform.h \
@@ -62,11 +62,11 @@ HEADERS += \
     xmlconfig/checkinconfig.h
 
 FORMS += \
+    widgets/habititem.ui \
     widgets/recorditem.ui \
     widgets/calendarcontrol.ui \
     widgets/checkinwidget.ui \
     widgets/texteditcontainer.ui \
-    widgets/habbititem.ui \
     windows/newhabitform.ui \
     windows/mainwindow.ui \
     windows/newnotegroupform.ui

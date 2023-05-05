@@ -1,5 +1,5 @@
 #include <QMouseEvent>
-#include "habbititem.h"
+#include "habititem.h"
 #include "ui_habbititem.h"
 #include "util.h"
 #include "weektoolbutton.h"
@@ -9,9 +9,10 @@
 
 HabbitItem::HabbitItem(QString name,QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::HabbitItem)
+    ui(new Ui::HabitItem)
 {
     ui->setupUi(this);
+    setContextMenuPolicy(Qt::CustomContextMenu);
     projectName=name;
     ui->weekWidget->setStyleSheet(QString("QToolButton:hover {border: 0px; background-color: rgb(210, 210, 215); }"
                                 "QToolButton{"
@@ -105,6 +106,12 @@ void HabbitItem::setIconIndex(int index)
     auto icon=QString::fromStdString(util::iconMap[index]);
     ui->imgBtn->setIcon(QIcon(QString(":/icons/res/checkin/%1").arg(icon)));
     iconIndex=index;
+}
+
+void HabbitItem::setProjectName(QString name)
+{
+    ui->nameLabel->setText(name);
+    projectName=name;
 }
 
 

@@ -15,11 +15,14 @@ public:
     QDate date;
     QString project_name;
     void setWeekButtonClicked(bool ischecked);
+    ~WeekToolButton();
+
 signals:
     //void OnWeekButtonClicked(QDate date,bool ischecked);
 private :
     bool iconState=false;
     void receiveBtnChecked(checkin_dateitem* dateItem);
+    std::function<void(checkin_dateitem *)> bindFunctionOfreceiveBtnChecked;
 
 };
 

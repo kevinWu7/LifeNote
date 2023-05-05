@@ -1,13 +1,12 @@
 #include <QFile>
 #include <QXmlStreamReader>
+#include <QMenu>
 #include "checkinwidget.h"
 #include "logger.h"
 #include "ui_checkinwidget.h"
 
 
-
 #define CHECKIN_CONFIG_PATH "/config/checkin.xml"
-
 
 
 checkinWidget::checkinWidget(QWidget *parent) :
@@ -40,6 +39,7 @@ checkinWidget::checkinWidget(QWidget *parent) :
                                     "  border-right: none;" // 设置左边框颜色和宽度
                                     "  border-left:1px solid rgb(240,239,239);" // 设置右边框颜色和宽度
                                     "}");
+    initHabitRightMenu();
     connect(ui->addItemBtn,&QToolButton::clicked,this,&checkinWidget::addItemBtn_clicked);
 
 
@@ -53,15 +53,70 @@ checkinWidget::checkinWidget(QWidget *parent) :
         if(item->selected)//初始化将选中habit高亮
         {
             habit->isSelected=true;
+            currentHabit=habit;
             habit->setStyleSheet("QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
             ui->calendarWidget->setHabitItem(result.checkin_map[item->project_name],item->project_name,
                     habit->iconIndex);
         }
+        connect(habit,&HabbitItem::customContextMenuRequested,this,&checkinWidget::onRightMenuRequested);
     }
     //set the splitter default-ratio,total=7,左侧=2,右侧=7.
     ui->mainSplitter->setStretchFactor(0,5); //代表第0个控件，即左边所占比例为2
     ui->mainSplitter->setStretchFactor(1,4);//代表第1个控件，即右边所占比例为7.一共是9
     InitCurrentDate();
+
+}
+
+void checkinWidget::onRightMenuRequested(const QPoint &pos)
+{
+   // rightHabitMenu->exec(pos);
+    HabbitItem *habitWidget = qobject_cast<HabbitItem *>(sender());
+     if (habitWidget)
+     {
+         onReceiveHabitMousePressed(habitWidget);//切换habitItem
+         // Convert the local position to global position
+         QPoint globalPos = habitWidget->mapToGlobal(pos);
+         rightHabitMenu->exec(globalPos);
+     }
+}
+
+void checkinWidget::initHabitRightMenu()
+{
+    editHabitAction = new QAction(QIcon(":/icons/res/note/edit.png"),"编辑",this);
+    deleteHabitAction = new QAction(QIcon(":/icons/res/note/delete.svg"),"删除",this);
+    rightHabitMenu=new QMenu(this);
+    rightHabitMenu->addAction(editHabitAction);
+    rightHabitMenu->addAction(deleteHabitAction);
+    rightHabitMenu->setStyleSheet("QMenu { width: 80px; background-color:white;}");
+                                 // "QMenu::item { height: 10px; padding-bottom: 10px;padding-left：20px }");
+    connect(editHabitAction, &QAction::triggered, this, &checkinWidget::onHabitMenuEdit);
+    connect(deleteHabitAction, &QAction::triggered, this, &checkinWidget::onHabitMenuDelete);
+}
+
+void checkinWidget::onHabitMenuEdit()
+{
+    if(!this->habitForm)
+    {
+        habitForm=new NewHabitForm;
+        connect(habitForm,&NewHabitForm::sendSelectDataToParent,this, &checkinWidget::onReceiveNewHabitFormData);
+    }
+    if(this->window())
+    {
+         habitForm->move(this->window()->frameGeometry().topLeft() +this->window()->rect().center() -habitForm->rect().center());//使子窗体居中
+    }
+    habitForm->setEditMode(currentHabit->projectName,currentHabit->iconIndex);
+    habitForm->show();
+
+}
+
+void checkinWidget::onHabitMenuDelete()
+{
+    ui->leftNavigateWidget->layout()->removeWidget(currentHabit);
+    project_info *project=new project_info;
+    project->project_name=currentHabit->projectName;
+    CheckinConfig::getInstance().updateHabitXml(RemoveHabit,project);
+    delete currentHabit;
+    currentHabit=nullptr;
 }
 
 void checkinWidget::timerOutTriggered()
@@ -126,13 +181,30 @@ HabbitItem* checkinWidget::addHabitItem(project_info *project)
     return habit;
 }
 
-void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex)
+void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex,int formMode)
 {
-    project_info *project=new project_info;
-    project->iconIndex=QString::number(iconIndex);
-    project->project_name=name;
-    addHabitItem(project);
-    CheckinConfig::getInstance().updateHabitXml(AddHabit, project);
+    if(formMode==0)
+    {
+        project_info *project=new project_info;
+        project->iconIndex=QString::number(iconIndex);
+        project->project_name=name;
+        HabbitItem *habit= addHabitItem(project);
+        CheckinConfig::getInstance().updateHabitXml(AddHabit, project);
+        connect(habit,&HabbitItem::customContextMenuRequested,this,&checkinWidget::onRightMenuRequested);
+    }
+    else
+    {
+        project_info *old_project=new project_info;
+        old_project->iconIndex=QString::number(currentHabit->iconIndex);
+        old_project->project_name=currentHabit->projectName;
+        currentHabit->setIconIndex(iconIndex);
+        currentHabit->setProjectName(name);
+        ui->calendarWidget->editHabitItem(name,iconIndex);
+        project_info *new_project=new project_info;
+        new_project->iconIndex=QString::number(iconIndex);
+        new_project->project_name=name;
+        CheckinConfig::getInstance().updateHabitXmlInEditMode(EditHabit, new_project,old_project);
+    }
 }
 
 void checkinWidget::onReceiveHabitMousePressed(HabbitItem *habit)
@@ -143,6 +215,7 @@ void checkinWidget::onReceiveHabitMousePressed(HabbitItem *habit)
     }
     habit->setStyleSheet("QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
     habit->isSelected=true;
+    currentHabit=habit;
     for(int i=0;i< ui->leftNavigateWidget->layout()->count();i++)
     {
         auto control=dynamic_cast<HabbitItem*>(ui->leftNavigateWidget->layout()->itemAt(i)->widget());
@@ -165,8 +238,8 @@ void checkinWidget::onReceiveHabitMousePressed(HabbitItem *habit)
     {
         if(item->selected)//切换右侧日历本到选中的habit
         {
-            ui->calendarWidget->setHabitItem(result.checkin_map[item->project_name],item->project_name,
-                    habit->iconIndex);
+            ui->calendarWidget->setHabitItem(result.checkin_map[item->project_name],
+                    item->project_name, habit->iconIndex);
         }
     }
 }

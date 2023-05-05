@@ -16,9 +16,10 @@ public:
     explicit NewHabitForm(QWidget *parent = nullptr);
     ~NewHabitForm();
     void InitRoundRadius();
+    void setEditMode(QString name,int iconIndex);
 
 signals:
-    void sendSelectDataToParent(QString name ,int iconIndex);
+    void sendSelectDataToParent(QString name ,int iconIndex,int formMode);
 
 public slots:
     void okBtn_clicked();
@@ -36,6 +37,8 @@ private:
     QPointF windowPos;
     QPointF mousePos;
     QPointF dPos;
+
+    bool formMode=0;//0代表是新建habit，1代表是修改habit，默认为0
 };
 
 #endif // NEWHABITFORM_H

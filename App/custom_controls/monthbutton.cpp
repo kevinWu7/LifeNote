@@ -9,7 +9,7 @@ monthButton::monthButton(QWidget *parent ,bool m_iconState)
     this->setIconSize(QSize(24,24));
     iconState=m_iconState;
     // 绑定成员函数到实例
-    auto bindFunctionOfreceiveBtnChecked = std::bind(&monthButton::receiveBtnChecked, this, std::placeholders::_1);
+    bindFunctionOfreceiveBtnChecked = std::bind(&monthButton::receiveBtnChecked, this, std::placeholders::_1);
     // 注册全局事件
     CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
 }
@@ -115,3 +115,10 @@ void monthButton::setMonthButtonClicked(bool ischeck)
     }
     iconState=ischeck;
 }
+
+monthButton::~monthButton()
+{
+    // 注销全局事件
+    CalendarCentral::getInstance().unregisterGlobalEvent(bindFunctionOfreceiveBtnChecked);
+}
+

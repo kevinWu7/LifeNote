@@ -40,6 +40,7 @@ class CheckinConfig
 public:
     static CheckinConfig& getInstance();
     xmlLoadResult LoadCheckinConfig();
+    void updateHabitXmlInEditMode(HabitOperationType type,project_info * project,project_info * old_project);
     void updateHabitXml(HabitOperationType action,project_info * project);
     void updateDetailXml(CheckinType type,checkin_dateitem* item);
 

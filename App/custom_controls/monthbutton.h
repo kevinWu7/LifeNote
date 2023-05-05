@@ -16,8 +16,10 @@ public:
      void setMonthButtonClicked(bool ischeck);
      bool iconState=false;
      QString project_name;
+     ~monthButton();
 private:
      void monthButton_clicked();
+     std::function<void(checkin_dateitem *)> bindFunctionOfreceiveBtnChecked;
 };
 
 #endif // MONTHBUTTON_H

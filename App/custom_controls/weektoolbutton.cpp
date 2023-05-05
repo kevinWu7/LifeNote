@@ -10,7 +10,7 @@ WeekToolButton::WeekToolButton(QWidget *parent,bool m_iconState)
      this->setIconSize(QSize(24,24));
      iconState=m_iconState;
      // 绑定成员函数到实例
-     auto bindFunctionOfreceiveBtnChecked = std::bind(&WeekToolButton::receiveBtnChecked, this, std::placeholders::_1);
+     bindFunctionOfreceiveBtnChecked = std::bind(&WeekToolButton::receiveBtnChecked, this, std::placeholders::_1);
      // 注册全局事件
      CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
 }
@@ -69,6 +69,11 @@ void WeekToolButton::setWeekButtonClicked(bool ischecked)
          this->setIcon(QIcon());
     }
     iconState=ischecked;
+}
+
+WeekToolButton::~WeekToolButton()
+{
+    CalendarCentral::getInstance().unregisterGlobalEvent(bindFunctionOfreceiveBtnChecked);
 }
 
 

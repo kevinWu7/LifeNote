@@ -39,6 +39,7 @@ enum HabitOperationType
     AddHabit, //添加习惯项目
     RemoveHabit,
     MoveHabit,
+    EditHabit,//编辑习惯项目
     ChangeSelectedHabit,//切换habit
 };
 

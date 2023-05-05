@@ -37,5 +37,7 @@
         <file>res/checkin/arrow-left.png</file>
         <file>res/checkin/arrow-right.png</file>
         <file>res/checkin/bowl.png</file>
+        <file>res/note/edit.png</file>
+        <file>res/note/delete.svg</file>
     </qresource>
 </RCC>

@@ -1,11 +1,11 @@
-#ifndef HABBITITEM_H
-#define HABBITITEM_H
+#ifndef HABITITEM_H
+#define HABITITEM_H
 
 #include <QWidget>
 #include <QDate>
 #include "checkinconfig.h"
 namespace Ui {
-class HabbitItem;
+class HabitItem;
 }
 
 class HabbitItem : public QWidget
@@ -17,6 +17,7 @@ public:
     ~HabbitItem();
 
     void setIconIndex(int iconIndex);
+    void setProjectName(QString name);
     void mousePressEvent(QMouseEvent *event) override;
     void InitCheckinBtn(const std::vector<checkin_dateitem*> &checkinItems);
     bool isSelected=false;//是否被光标选中
@@ -28,11 +29,11 @@ public slots:
 signals:
     void triggerMousePressEvent(HabbitItem *habit);
 private:
-    Ui::HabbitItem *ui;
+    Ui::HabitItem *ui;
 
 
 
 
 };
 
-#endif // HABBITITEM_H
+#endif // HABITITEM_H

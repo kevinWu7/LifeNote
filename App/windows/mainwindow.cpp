@@ -23,16 +23,15 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     ui->mainPage->setStyleSheet("QWidget#mainPage{background-color:rgb(219,220,223");
-    this->setStyleSheet("QTreeWidget::item{height:25px;}");
+    this->setStyleSheet("QTreeWidget::item{height:25px;}"
+                        "QTreeWidget{background-color:#FFFFFF}");
 
     //设置左侧侧边栏样式
     ui->leftBar->setStyleSheet("QAbstractButton#addnewBtn{min-height:20px;max-height:20px;margin:0px;border:none;}"
-                               "QAbstractButton#checkinBtn{min-height:20px;max-height:20px;margin:0px;border:none;}"
+                               "QAbstractButton#checkinBtn{min-height:20px;max-height:20px;margin-left:0px;padding-top:4px;padding-bottom:4px;border:none;}"
                                "QWidget#leftBar"
                                "{background-color:#FFFFFF;"
                                "border-radius:7px}");
-
-
 
     ui->loggerTextEdit->setStyleSheet("QWidget#loggerTextEdit"
                                   "{background-color:#FFFFFF;"
@@ -47,8 +46,6 @@ MainWindow::MainWindow(QWidget *parent)
     //设置logger输出框，占比为3/8
     ui->mainSplitter->setStretchFactor(0,5);
     ui->mainSplitter->setStretchFactor(1,3);
-    //下面这句代码 修改选中行的颜色，但是改的不是很完美，故先注释
-    //setStyleSheet("QTreeWidget::item{height:25px;} QTreeView::branch::selected{background-color:#5087E5;} QTreeView::item::selected{background-color:#5087E5;}");
 
     //设置左侧容器内部margin
     ui->leftBar->setContentsMargins(10,20,0,0);
@@ -353,7 +350,8 @@ void MainWindow::checkinBtn_clicked()
 {
     _checkinWidget->setVisible(true);
     textEditContainer->setVisible(false);
-     _checkinWidget->setFocus();
+    _checkinWidget->setFocus();
+    ui->checkinBtn->setStyleSheet("background-color:rgb(186,214,251)}");
 }
 
 void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
@@ -517,6 +515,7 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
     {
         _checkinWidget->setVisible(false);
         textEditContainer->setVisible(true);
+        ui->checkinBtn->setStyleSheet("QWidget#checkinWidget{background-color:transparent}");
     }
     logger->log(QString("currentTreeItemChanged tirggerd"));
     ExtraQTreeWidgetItem* extraPreviousNode= dynamic_cast<ExtraQTreeWidgetItem*>(previous);

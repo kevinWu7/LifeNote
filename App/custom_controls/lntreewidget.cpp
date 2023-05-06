@@ -50,6 +50,16 @@ LNTreeWidget::LNTreeWidget(QWidget *parent)
 
     QScrollBar* horizontalScrollBar=this->horizontalScrollBar();
     QScrollBar* treewidgetVerticalScrollBar=this->verticalScrollBar();
+    //下面这句代码 修改选中行的颜色，但是改的不是很完美，故先注释
+
+    QPalette palette = this->palette();
+    palette.setColor(QPalette::Active, QPalette::Highlight, QColor(186,214,251));
+    palette.setColor(QPalette::Inactive, QPalette::Highlight, QColor(200, 200, 200,70));
+    palette.setColor(QPalette::HighlightedText, QColor(0,0,0));
+    palette.setColor(QPalette::Inactive, QPalette::HighlightedText, QColor(0, 0, 0));
+    this->setPalette(palette);
+
+    this->setStyleSheet("QTreeView::item { height: 25px;}" );
 
     treewidgetVerticalScrollBar->setStyleSheet("QScrollBar:vertical"
                                                "{"

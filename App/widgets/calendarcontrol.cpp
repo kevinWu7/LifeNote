@@ -83,8 +83,15 @@ void CalendarControl::setHabitItem(const std::vector<checkin_dateitem *> &checki
 {
     InitCheckinMonthBtn(checkinItems,projectName);
     //设置图标 和项目名
-    auto icon=QString::fromStdString(util::iconMap[iconIndex]);
-    ui->projectIconBtn->setIcon(QIcon(QString(":/icons/res/checkin/%1").arg(icon)));
+    if(iconIndex==-1)
+    {
+         ui->projectIconBtn->setIcon(QIcon(""));
+    }
+    else
+    {
+        auto icon=QString::fromStdString(util::iconMap[iconIndex]);
+        ui->projectIconBtn->setIcon(QIcon(QString(":/icons/res/checkin/%1").arg(icon)));
+    }
 
     ui->projectLabel->setText(projectName);
     ui->recordItem1->setCheckinData(checkinItems);

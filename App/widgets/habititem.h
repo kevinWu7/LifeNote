@@ -8,13 +8,13 @@ namespace Ui {
 class HabitItem;
 }
 
-class HabbitItem : public QWidget
+class HabitItem : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit HabbitItem(QString project_name,QWidget *parent = nullptr);
-    ~HabbitItem();
+    explicit HabitItem(QString project_name,QWidget *parent = nullptr);
+    ~HabitItem();
 
     void setIconIndex(int iconIndex);
     void setProjectName(QString name);
@@ -27,7 +27,7 @@ public:
 public slots:
     //void OnReceiveWeekBtnClicked(QDate date,bool ischecked);
 signals:
-    void triggerMousePressEvent(HabbitItem *habit);
+    void triggerMousePressEvent(HabitItem *habit);
 private:
     Ui::HabitItem *ui;
 

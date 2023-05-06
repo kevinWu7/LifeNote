@@ -22,22 +22,23 @@ public:
     explicit checkinWidget(QWidget *parent = nullptr);
     ~checkinWidget();
     NewHabitForm *habitForm=nullptr;
-    void InitCurrentDate();
+    void InitCurrentDateAndTimer();
     QDate currentDate;
-    HabbitItem *currentHabit=nullptr;
+    HabitItem *currentHabit=nullptr;
 
 public slots:
     void addItemBtn_clicked();
     void onRightMenuRequested(const QPoint &pos);
     void onMenuEdit();
     void onMenuDelete();
+    void setSelectedHabit(HabitItem *habit);
 
 private:
     Ui::checkinWidget *ui;
     void onReceiveNewHabitFormData(QString name, int iconIndex,int formMode);
     void initHabitRightMenu();
-    HabbitItem* addHabitItem(project_info *project);
-    void onReceiveHabitMousePressed(HabbitItem *habit);
+    HabitItem* addHabitItem(project_info *project);
+    void onReceiveHabitMousePressed(HabitItem *habit);
     void timerOutTriggered();
     QAction * editHabitAction;
     QAction * deleteHabitAction;

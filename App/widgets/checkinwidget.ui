@@ -99,7 +99,7 @@
                <item>
                 <widget class="QLabel" name="dateTimeLabel">
                  <property name="text">
-                  <string>2023年4月16号</string>
+                  <string>2023年xx月xx号</string>
                  </property>
                 </widget>
                </item>

@@ -1,13 +1,13 @@
 #include <QMouseEvent>
+#include "ui_habititem.h"
 #include "habititem.h"
-#include "ui_habbititem.h"
 #include "util.h"
 #include "weektoolbutton.h"
 #include "checkinconfig.h"
 #include "logger.h"
 
 
-HabbitItem::HabbitItem(QString name,QWidget *parent) :
+HabitItem::HabitItem(QString name,QWidget *parent) :
     QWidget(parent),
     ui(new Ui::HabitItem)
 {
@@ -38,7 +38,7 @@ HabbitItem::HabbitItem(QString name,QWidget *parent) :
     //connect(this, &HabbitItem::mousePressEvent, this, &HabbitItem::onMousePress);
 }
 
-void HabbitItem::mousePressEvent(QMouseEvent *event)
+void HabitItem::mousePressEvent(QMouseEvent *event)
 {
     // 判断鼠标事件类型
     if (event->type() == QMouseEvent::MouseButtonPress)
@@ -63,7 +63,7 @@ void HabbitItem::mousePressEvent(QMouseEvent *event)
 }
 
 //讲habit中的btn初始化是否checked
-void HabbitItem::InitCheckinBtn(const std::vector<checkin_dateitem *> &checkinItems)
+void HabitItem::InitCheckinBtn(const std::vector<checkin_dateitem *> &checkinItems)
 {
     for(int i=0;i<ui->weekWidget->layout()->count();i++)
     {
@@ -88,7 +88,7 @@ void HabbitItem::InitCheckinBtn(const std::vector<checkin_dateitem *> &checkinIt
     }
 }
 
-void HabbitItem::InitWeekButtons()
+void HabitItem::InitWeekButtons()
 {
     auto thisWeek=util::getThisWeek();
     for(int i=0;i<ui->weekWidget->layout()->count();i++)
@@ -101,21 +101,21 @@ void HabbitItem::InitWeekButtons()
 
 
 
-void HabbitItem::setIconIndex(int index)
+void HabitItem::setIconIndex(int index)
 {
     auto icon=QString::fromStdString(util::iconMap[index]);
     ui->imgBtn->setIcon(QIcon(QString(":/icons/res/checkin/%1").arg(icon)));
     iconIndex=index;
 }
 
-void HabbitItem::setProjectName(QString name)
+void HabitItem::setProjectName(QString name)
 {
     ui->nameLabel->setText(name);
     projectName=name;
 }
 
 
-HabbitItem::~HabbitItem()
+HabitItem::~HabitItem()
 {
     delete ui;
 }

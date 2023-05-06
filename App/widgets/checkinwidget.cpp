@@ -42,35 +42,32 @@ checkinWidget::checkinWidget(QWidget *parent) :
     initHabitRightMenu();
     connect(ui->addItemBtn,&QToolButton::clicked,this,&checkinWidget::addItemBtn_clicked);
 
-
-
     auto result= CheckinConfig::getInstance().LoadCheckinConfig();
     //加载habititem
     for(auto item :result.project_list)
     {
-        HabbitItem* habit= addHabitItem(item);
+        HabitItem* habit= addHabitItem(item);
         habit->InitCheckinBtn(result.checkin_map[item->project_name]);
         if(item->selected)//初始化将选中habit高亮
         {
             habit->isSelected=true;
             currentHabit=habit;
             habit->setStyleSheet("QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
-            ui->calendarWidget->setHabitItem(result.checkin_map[item->project_name],item->project_name,
-                    habit->iconIndex);
+            ui->calendarWidget->setHabitItem(result.checkin_map[item->project_name],item->project_name,habit->iconIndex);
         }
-        connect(habit,&HabbitItem::customContextMenuRequested,this,&checkinWidget::onRightMenuRequested);
+        connect(habit,&HabitItem::customContextMenuRequested,this,&checkinWidget::onRightMenuRequested);
     }
     //set the splitter default-ratio,total=7,左侧=2,右侧=7.
     ui->mainSplitter->setStretchFactor(0,5); //代表第0个控件，即左边所占比例为2
     ui->mainSplitter->setStretchFactor(1,4);//代表第1个控件，即右边所占比例为7.一共是9
-    InitCurrentDate();
+    InitCurrentDateAndTimer();
 
 }
 
 void checkinWidget::onRightMenuRequested(const QPoint &pos)
 {
    // rightHabitMenu->exec(pos);
-    HabbitItem *habitWidget = qobject_cast<HabbitItem *>(sender());
+    HabitItem *habitWidget = qobject_cast<HabitItem *>(sender());
      if (habitWidget)
      {
          onReceiveHabitMousePressed(habitWidget);//切换habitItem
@@ -117,6 +114,18 @@ void checkinWidget::onMenuDelete()
     CheckinConfig::getInstance().updateHabitXml(RemoveHabit,project);
     delete currentHabit;
     currentHabit=nullptr;
+    //默认设置第一个habit为选中项
+    for(int i=0;i< ui->leftNavigateWidget->layout()->count();i++)
+    {
+        auto control=dynamic_cast<HabitItem*>(ui->leftNavigateWidget->layout()->itemAt(i)->widget());
+        if(control!=nullptr)
+        {
+            setSelectedHabit(control);
+            return;
+        }
+    }
+    //若删除光了，设置一个空的habitItem。
+    ui->calendarWidget->setHabitItem({},"",-1);
 }
 
 void checkinWidget::timerOutTriggered()
@@ -134,7 +143,7 @@ void checkinWidget::timerOutTriggered()
     //habit 更新
     for(int i=0;i< ui->leftNavigateWidget->layout()->count();i++)
     {
-        auto control=dynamic_cast<HabbitItem*>(ui->leftNavigateWidget->layout()->itemAt(i)->widget());
+        auto control=dynamic_cast<HabitItem*>(ui->leftNavigateWidget->layout()->itemAt(i)->widget());
         if(control!=nullptr)
         {
             control->InitWeekButtons();
@@ -144,9 +153,12 @@ void checkinWidget::timerOutTriggered()
     }
 }
 
-void checkinWidget::InitCurrentDate()
+void checkinWidget::InitCurrentDateAndTimer()
 {
     currentDate=QDate::currentDate();
+    QString labelText=QString("%1年%2月%3号").arg(QString::number(currentDate.year()),
+                  QString::number(currentDate.month()),QString::number(currentDate.day()));
+    ui->dateTimeLabel->setText(labelText);
     // Connect the timeout signal to a lambda function
     connect(&timer, &QTimer::timeout,this, &checkinWidget::timerOutTriggered);
     timer.start(5000);
@@ -166,9 +178,9 @@ void checkinWidget::addItemBtn_clicked()
     habitForm->show();
 }
 
-HabbitItem* checkinWidget::addHabitItem(project_info *project)
+HabitItem* checkinWidget::addHabitItem(project_info *project)
 {
-    HabbitItem *habit =new HabbitItem(project->project_name);
+    HabitItem *habit =new HabitItem(project->project_name);
     habit->setIconIndex(project->iconIndex.toInt());
 
     int index = ui->leftNavigateWidget->layout()->count()-1; // Replace with the desired index where you want to insert the item
@@ -177,7 +189,7 @@ HabbitItem* checkinWidget::addHabitItem(project_info *project)
     {
         boxLayout->insertWidget(index, dynamic_cast<QWidget*>(habit));
     }
-    connect(habit,&HabbitItem::triggerMousePressEvent,this,&checkinWidget::onReceiveHabitMousePressed);
+    connect(habit,&HabitItem::triggerMousePressEvent,this,&checkinWidget::onReceiveHabitMousePressed);
     return habit;
 }
 
@@ -188,9 +200,10 @@ void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex,int fo
         project_info *project=new project_info;
         project->iconIndex=QString::number(iconIndex);
         project->project_name=name;
-        HabbitItem *habit= addHabitItem(project);
+        HabitItem *habit= addHabitItem(project);
         CheckinConfig::getInstance().updateHabitXml(AddHabit, project);
-        connect(habit,&HabbitItem::customContextMenuRequested,this,&checkinWidget::onRightMenuRequested);
+        connect(habit,&HabitItem::customContextMenuRequested,this,&checkinWidget::onRightMenuRequested);
+        setSelectedHabit(habit);
     }
     else //编辑habit
     {
@@ -209,7 +222,7 @@ void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex,int fo
     }
 }
 
-void checkinWidget::onReceiveHabitMousePressed(HabbitItem *habit)
+void checkinWidget::setSelectedHabit(HabitItem *habit)
 {
     if(habit->isSelected)
     {
@@ -220,7 +233,7 @@ void checkinWidget::onReceiveHabitMousePressed(HabbitItem *habit)
     currentHabit=habit;
     for(int i=0;i< ui->leftNavigateWidget->layout()->count();i++)
     {
-        auto control=dynamic_cast<HabbitItem*>(ui->leftNavigateWidget->layout()->itemAt(i)->widget());
+        auto control=dynamic_cast<HabitItem*>(ui->leftNavigateWidget->layout()->itemAt(i)->widget());
         if(control!=nullptr&&control!=habit)
         {
             control->isSelected=false;
@@ -230,7 +243,7 @@ void checkinWidget::onReceiveHabitMousePressed(HabbitItem *habit)
     //修改配置文件
     project_info *info=new project_info;
     info->project_name=habit->projectName;
-    info->selected=habit->isSelected;
+    info->selected=true;
 
     CheckinConfig::getInstance().updateHabitXml(ChangeSelectedHabit,info);
     //重新加载配置文件
@@ -244,6 +257,11 @@ void checkinWidget::onReceiveHabitMousePressed(HabbitItem *habit)
                     item->project_name, habit->iconIndex);
         }
     }
+}
+
+void checkinWidget::onReceiveHabitMousePressed(HabitItem *habit)
+{
+    setSelectedHabit(habit);
 }
 
 checkinWidget::~checkinWidget()

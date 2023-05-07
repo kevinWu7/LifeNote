@@ -74,6 +74,7 @@ MainWindow::MainWindow(QWidget *parent)
     initRightMenu();
 
     //设置信号槽
+    connect(ui->treeWidget, &QTreeWidget::itemClicked, this, &MainWindow::onTreeWidgetItemClicked);
     connect(ui->treeWidget,&QTreeWidget::currentItemChanged,this,&MainWindow::currentTreeItemChanged);
     connect(textEditContainer->ui->saveBtn,&QToolButton::clicked,this,&MainWindow::onSaveBtn_clicked);
     connect(ui->addnewBtn,&QToolButton::clicked,this,&MainWindow::onAddnewBtn_clicked);
@@ -508,9 +509,7 @@ void MainWindow::setLineVerticalInterval()
 }
 
 
-
-//切换左侧节点时，保存上一个节点的内容，加载当前节点的内容
-void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void MainWindow::onTreeWidgetItemClicked(QTreeWidgetItem *item, int column)
 {
     //todo 暂时先隐藏
     if(!textEditContainer->isVisible())
@@ -519,6 +518,11 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
         textEditContainer->setVisible(true);
         ui->checkinBtn->setStyleSheet("QWidget#checkinWidget{background-color:transparent}");
     }
+}
+//切换左侧节点时，保存上一个节点的内容，加载当前节点的内容
+void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+{
+
     logger->log(QString("currentTreeItemChanged tirggerd"));
     ExtraQTreeWidgetItem* extraPreviousNode= dynamic_cast<ExtraQTreeWidgetItem*>(previous);
 

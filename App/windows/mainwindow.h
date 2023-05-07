@@ -69,6 +69,7 @@ private:
 
 public slots:
     void onSaveBtn_clicked();
+    void onTreeWidgetItemClicked(QTreeWidgetItem *item, int column);
     void currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void right_item_pressed();//右键菜单点击
     void onAddnewBtn_clicked();

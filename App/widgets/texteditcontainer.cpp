@@ -26,13 +26,6 @@ TextEditContainer::TextEditContainer(QWidget *parent) :
                                   "{background-color:#FFFFFF;"
                                   "border-radius:7px}");
     ui->titleBarBottomLine->setStyleSheet(QString("QFrame{border-top: 1px solid %1; border-bottom: none;}").arg(LINE_COLOR));
-
-    ui->editWidget->layout()->setSpacing(0);
-    //设置mainPage内部控件间距为5
-    //ui->mainPage->layout()->setSpacing(5);
-
-    //设置editWidget内部左侧边距
-    ui->editWidget->setContentsMargins(3,3,3,3);
     initfontCombobox();
 
     //设置标题栏按钮

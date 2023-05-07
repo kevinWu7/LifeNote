@@ -18,15 +18,15 @@ checkinWidget::checkinWidget(QWidget *parent) :
     ui->addItemBtn->setIcon(QIcon(":/icons/res/note/addnew.png"));
     ui->addItemBtn->setToolTip("添加打卡项目");
     ui->addItemBtn->setIconSize(QSize(22,22));
+    ui->addItemBtn->setCursor(Qt::PointingHandCursor);
 
     ui->iconBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->iconBtn->setIcon(QIcon(":/icons/res/checkin/sun.png"));
     ui->iconBtn->setIconSize(QSize(27,27));
     ui->dateTimeLabel->setFont(QFont("Arial", 16, QFont::Normal));
-    ui->leftTitleStatus->setSpacing(2);
 
 
-    ui->titleBarControl->setStyleSheet("QToolButton:hover { background-color: rgb(218, 218, 218); }"
+    ui->titleBarControl->setStyleSheet(
                                      "QToolButton{width:32px;min-width:32px;max-width:32px;height:32px; min-height:32px; max-height:32px;"
                                        "margin:0px; border:none;}");
     this->setStyleSheet("QWidget#mainWidget {background-color:#FFFFFF;border-radius:7px}"

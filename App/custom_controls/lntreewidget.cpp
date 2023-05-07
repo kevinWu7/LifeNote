@@ -59,8 +59,8 @@ LNTreeWidget::LNTreeWidget(QWidget *parent)
     palette.setColor(QPalette::Inactive, QPalette::HighlightedText, QColor(0, 0, 0));
     this->setPalette(palette);
 
-    this->setStyleSheet("QTreeView::item { height: 25px;}" );
-
+    this->setStyleSheet("QTreeView::item { height: 25px;}"
+                        "QTreeWidget{background-color:#FFFFFF;}");
     treewidgetVerticalScrollBar->setStyleSheet("QScrollBar:vertical"
                                                "{"
                                                "width:6px;"

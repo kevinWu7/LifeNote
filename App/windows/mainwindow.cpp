@@ -1,5 +1,6 @@
 #include <QMouseEvent>
 #include <QScrollBar>
+#include<QLabel>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "util.h"
@@ -23,15 +24,17 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     ui->mainPage->setStyleSheet("QWidget#mainPage{background-color:rgb(219,220,223");
-    this->setStyleSheet("QTreeWidget::item{height:25px;}"
-                        "QTreeWidget{background-color:#FFFFFF}");
+
 
     //设置左侧侧边栏样式
-    ui->leftBar->setStyleSheet("QAbstractButton#addnewBtn{min-height:20px;max-height:20px;margin:0px;border:none;}"
-                               "QAbstractButton#checkinBtn{min-height:20px;max-height:20px;margin-left:0px;padding-top:4px;padding-bottom:4px;border:none;}"
+    ui->leftBar->setStyleSheet("QAbstractButton#addnewBtn{min-height:20px;max-height:20px;padding-left:10px;"
+                               "margin:0px;border:none;}"
+                               "QAbstractButton#checkinBtn{min-height:20px;max-height:20px;margin:0px;padding-top:4px;padding-left:10px;padding-bottom:4px;border:none;}"
                                "QWidget#leftBar"
                                "{background-color:#FFFFFF;"
                                "border-radius:7px}");
+
+
 
     ui->loggerTextEdit->setStyleSheet("QWidget#loggerTextEdit"
                                   "{background-color:#FFFFFF;"
@@ -47,9 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->mainSplitter->setStretchFactor(0,5);
     ui->mainSplitter->setStretchFactor(1,3);
 
-    //设置左侧容器内部margin
-    ui->leftBar->setContentsMargins(10,20,0,0);
-    ui->leftBar->layout()->setSpacing(15);
+
 
     //通过配置文件，创建node
     noteconfig::loadConfigXML(ui->treeWidget);
@@ -191,6 +192,7 @@ void MainWindow::onNewNoteItemClick()
     QString newNodeName=util::NoRepeatNodeName(qlist,"无标题");
     newItem->setText(0,newNodeName);
     auto currentNode=ui->treeWidget->currentItem();
+
     currentNode->addChild(newItem);
 
     //set selectedItem to the newItem

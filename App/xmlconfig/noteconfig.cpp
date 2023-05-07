@@ -49,6 +49,7 @@ void noteconfig::loadConfigXML(QTreeWidget *tree_widget)
                 node->node_name=reader.name().toString();
                 NodeType isParent=ChildNode;
                 node->widgetitem=new ExtraQTreeWidgetItem(isParent);
+
                 foreach (const QXmlStreamAttribute & attribute, reader.attributes())
                 {
                     logger->log(attribute.name().toString());

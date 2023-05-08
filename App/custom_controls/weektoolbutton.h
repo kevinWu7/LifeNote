@@ -10,20 +10,24 @@ class WeekToolButton : public QToolButton
 {
     Q_OBJECT
 public:
-    WeekToolButton(QWidget *parent = nullptr,bool m_iconState=false);
+    WeekToolButton(QWidget *parent = nullptr,bool _ischecked=false);
     void WeekButton_clicked();
-    QDate date;
+    void setDate(const QDate& _date);
+    const QDate& getDate();
     QString project_name;
-    void setWeekButtonClicked(bool ischecked);
+    void setWeekButtonClicked(bool _ischecked);
     ~WeekToolButton();
 
 signals:
     //void OnWeekButtonClicked(QDate date,bool ischecked);
 private :
-    bool iconState=false;
+    bool isChecked=false;
     void receiveBtnChecked(checkin_dateitem* dateItem);
     std::function<void(checkin_dateitem *)> bindFunctionOfreceiveBtnChecked;
-
+    QDate currentDate;
+    void initBaseStyleSheet();
+    void updateSizeStyle(int size);
+    QString baseStyleSheet;
 };
 
 #endif // WEEKTOOLBUTTON_H

@@ -11,27 +11,17 @@ CalendarControl::CalendarControl(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->setStyleSheet(QString("QToolButton:hover {border: 0px; background-color: rgb(224, 224, 224); }"
-                                "QToolButton{"
-                                "border: 0px;"
+    this->setStyleSheet(QString("QToolButton#arrowLeftBtn{"      //左箭头样式
                                 "width: %1 ; min-width: %1; max-width: %1;"
-                                "height: %1 ; min-height: %1; max-height: %1;"
-                                "border-radius: %2;"
-                                "background-color: rgb(239,239,239);"
-                                "font-size: 12px;"
-                                "padding: 0;"
-                                "margin: 0;}"
-                                "QToolButton#arrowLeftBtn{"      //左箭头样式
-                                "width: %4 ; min-width: %4; max-width: %4;"
-                                "height: %4; min-height: %4; max-height: %4;"
+                                "height: %1; min-height: %1; max-height: %1;"
                                 "border-radius: 5px;"
                                 "background-color: transparent;"
                                 "}"
                                 "QToolButton#arrowLeftBtn:hover{"
                                 "background-color: rgb(224, 224, 224);}"
                                 "QToolButton#arrowRightBtn{"         //右箭头样式
-                                "width: %4 ; min-width: %4; max-width: %4;"
-                                "height: %4; min-height: %4; max-height: %4;"
+                                "width: %1; min-width: %1; max-width: %1;"
+                                "height: %1; min-height: %1; max-height: %1;"
                                 "border-radius: 5px;"
                                 "background-color: transparent;"
                                 "}"
@@ -39,7 +29,7 @@ CalendarControl::CalendarControl(QWidget *parent) :
                                 "background-color: rgb(224, 224, 224);}"
                                 "QToolButton#projectIconBtn{"      //图标
                                  "background-color: transparent;}"
-                              ).arg("32px","16px","22px","12px"));
+                              ).arg("12px"));
 
     ui->arrowLeftBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->arrowLeftBtn->setIcon(QIcon(":/icons/res/checkin/arrow-left.png"));
@@ -117,7 +107,7 @@ void CalendarControl::InitCheckinMonthBtn(const std::vector<checkin_dateitem *> 
     for(int i=0;i<ui->mainGridWidget->layout()->count();i++)
     {
         monthButton* btn= dynamic_cast<monthButton*>(ui->mainGridWidget->layout()->itemAt(i)->widget());
-        QDate date=btn->date;
+        QDate date=btn->getDate();
         btn->project_name=projectName;
         auto it = std::find_if(checkinItems.begin(), checkinItems.end(), [&date](checkin_dateitem* item)
         {
@@ -243,7 +233,7 @@ void CalendarControl::fillDateTomainGrid(QDate startDate)
              QString dayNumber=QString::number(currentMonth_date[index].day());
              qDebug() << "Days dayNumber:" << dayNumber;
              monthBtn->setText(dayNumber);
-             monthBtn->date=currentMonth_date[index];
+             monthBtn->setDate(currentMonth_date[index]);
              monthBtn->currendDisplayDate=currendDisplayDate;
              //设置当天的按钮，标记为特殊颜色
              if(currentMonth_date[index]==currentDate)

@@ -3,19 +3,39 @@
 #include "calendarcentral.h"
 
 
-WeekToolButton::WeekToolButton(QWidget *parent,bool m_iconState)
+WeekToolButton::WeekToolButton(QWidget *parent,bool _ischecked)
       : QToolButton(parent)
 {
      connect(this,&QToolButton::clicked,this,&WeekToolButton::WeekButton_clicked);
-     this->setIconSize(QSize(24,24));
-     iconState=m_iconState;
+     initBaseStyleSheet();
+     updateSizeStyle(16);
+     isChecked=_ischecked;
      // 绑定成员函数到实例
      bindFunctionOfreceiveBtnChecked = std::bind(&WeekToolButton::receiveBtnChecked, this, std::placeholders::_1);
      // 注册全局事件
      CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
 }
 
+void WeekToolButton::initBaseStyleSheet()
+{
+       baseStyleSheet = QString("QToolButton:hover {border: 0px; background-color: rgb(210, 210, 215); }"
+                                "QToolButton{"
+                                "border: 0px;"
+                                "background-color: rgb(230,230,235);"
+                                "padding: 0;"
+                                "margin: 0;}");
+};
 
+void WeekToolButton::updateSizeStyle(int size)
+{
+      QString sizeStyleSheet = QString("QToolButton{"
+                                       "width: %1px; min-width: %1px; max-width: %1px;"
+                                       "height: %1px; min-height: %1px; max-height: %1px;"
+                                       "border-radius: %2px;}")
+                                       .arg(QString::number(size),QString::number(size/2));
+      setStyleSheet(baseStyleSheet + sizeStyleSheet);
+      this->setIconSize(QSize(size+8,size+8));
+}
 
 void WeekToolButton::receiveBtnChecked(checkin_dateitem* dateItem)
 {
@@ -23,7 +43,7 @@ void WeekToolButton::receiveBtnChecked(checkin_dateitem* dateItem)
     {
         return;
     }
-    if(dateItem->date== date)
+    if(dateItem->date== currentDate)
     {
        setWeekButtonClicked(dateItem->ischecked);
     }
@@ -31,22 +51,14 @@ void WeekToolButton::receiveBtnChecked(checkin_dateitem* dateItem)
 
 void WeekToolButton::WeekButton_clicked()
 {
-    if(iconState)
-    {
-        this->setIcon(QIcon());
-    }
-    else
-    {
-        this->setIcon(QIcon(":/icons/res/checkin/tick.png"));
-    }
-    iconState=!iconState;
+    setWeekButtonClicked(!isChecked);
     checkin_dateitem *item =new checkin_dateitem;
-    item->date=date;
+    item->date=currentDate;
     item->tips="";
-    item->ischecked=iconState;
+    item->ischecked=isChecked;
     item->project_name=project_name;
     item->sender=0;
-    if(iconState)
+    if(isChecked)
     {
         CheckinConfig::getInstance().updateDetailXml(CheckinAction,item);
     }
@@ -57,10 +69,30 @@ void WeekToolButton::WeekButton_clicked()
     CalendarCentral::getInstance().triggerGlobalEvent(item);
 }
 
-//仅仅改变ui状态
-void WeekToolButton::setWeekButtonClicked(bool ischecked)
+void WeekToolButton::setDate(const QDate &_date)
 {
-    if(ischecked)
+    currentDate=_date;
+    bool isToday=_date==QDate::currentDate();
+    if(isToday)
+    {
+        this->updateSizeStyle(18);
+    }
+    else
+    {
+        this->updateSizeStyle(16);
+    }
+}
+
+const QDate& WeekToolButton::getDate()
+{
+    return currentDate;
+}
+
+
+//仅仅改变ui状态
+void WeekToolButton::setWeekButtonClicked(bool _ischecked)
+{
+    if(_ischecked)
     {
          this->setIcon(QIcon(":/icons/res/checkin/tick.png"));
     }
@@ -68,7 +100,7 @@ void WeekToolButton::setWeekButtonClicked(bool ischecked)
     {
          this->setIcon(QIcon());
     }
-    iconState=ischecked;
+    isChecked=_ischecked;
 }
 
 WeekToolButton::~WeekToolButton()

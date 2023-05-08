@@ -2,16 +2,52 @@
 #include "calendarcentral.h"
 
 
-monthButton::monthButton(QWidget *parent ,bool m_iconState)
+monthButton::monthButton(QWidget *parent ,bool _ischecked)
     : QToolButton(parent)
 {
     connect(this,&QToolButton::clicked,this,&monthButton::monthButton_clicked);
     this->setIconSize(QSize(24,24));
-    iconState=m_iconState;
+    isChecked=_ischecked;
     // 绑定成员函数到实例
     bindFunctionOfreceiveBtnChecked = std::bind(&monthButton::receiveBtnChecked, this, std::placeholders::_1);
     // 注册全局事件
     CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
+    initBaseStyleSheet();
+    updateColorStyle("rgb(239,239,239)","black","normal");
+
+}
+
+void monthButton::initBaseStyleSheet()
+{
+       baseStyleSheet = QString(
+                                "QToolButton{"
+                                "border: 0px;"
+                                "width: %1 ; min-width: %1; max-width: %1;"
+                                "height: %1 ; min-height: %1; max-height: %1;"
+                                "border-radius: %2;"
+                                "font-size: 12px;"
+                                "padding: 0;"
+                                "margin: 0;}").arg("32px","16px");
+};
+
+void monthButton::updateColorStyle(QString background,QString textColor,QString font_weight)
+{
+      QString colorStyleSheet = QString("QToolButton"
+                                       "{background-color:%1;"
+                                       "color:%2;"
+                                       "font-weight: %3;}")
+                                       .arg(background,textColor,font_weight);
+      setStyleSheet(baseStyleSheet + colorStyleSheet);
+}
+
+void monthButton::setDate(const QDate &date)
+{
+    currentDate=date;
+}
+
+const QDate &monthButton::getDate()
+{
+    return currentDate;
 }
 
 void monthButton::receiveBtnChecked(checkin_dateitem* dateItem)
@@ -20,7 +56,7 @@ void monthButton::receiveBtnChecked(checkin_dateitem* dateItem)
     {
         return;
     }
-    if(dateItem->date== date)
+    if(dateItem->date== currentDate)
     {
         setMonthButtonClicked(dateItem->ischecked);
     }
@@ -30,54 +66,16 @@ void monthButton::receiveBtnChecked(checkin_dateitem* dateItem)
 
 void monthButton::monthButton_clicked()
 {
-    monthButton *button = dynamic_cast<monthButton*>(sender());
-    QDate currentDate=QDate::currentDate();
-    if(date==currentDate)
-    {
-        if(iconState)
-        {
-            button->setStyleSheet("background-color:rgb(239,239,239);color:orange;font-weight: bold;");
-        }
-        else
-        {
-            button->setStyleSheet("background-color:rgb(72,114,251);color:orange;font-weight: bold;");
-        }
-    }
-    else
-    {
-        if(iconState)
-        {
-            if(date.month()!= currendDisplayDate.month())
-            {
-                button->setStyleSheet("background-color:rgb(239,239,239);color:rgb(158,158,158);");
-            }
-            else
-            {
-                button->setStyleSheet("background-color:rgb(239,239,239);color:black;");
-            }
-        }
-        else
-        {
-           if(date.month()!= currendDisplayDate.month())
-           {
-                button->setStyleSheet("background-color:rgba(72,114,251,0.6);color:white;");
-           }
-           else
-           {
-                button->setStyleSheet("background-color:rgb(72,114,251);color:white;");
-           }
-        }
-    }
-    iconState=!iconState;
+    setMonthButtonClicked(!isChecked);
 
     checkin_dateitem *item =new checkin_dateitem;
-    item->date=date;
+    item->date=currentDate;
     item->tips="";
-    item->ischecked=iconState;
+    item->ischecked=isChecked;
     item->sender=1;
     item->project_name=project_name;
 
-    if(iconState)
+    if(isChecked)
     {
         CheckinConfig::getInstance().updateDetailXml(CheckinAction,item);
     }
@@ -89,31 +87,46 @@ void monthButton::monthButton_clicked()
 }
 
 //仅仅改变ui状态
-void monthButton::setMonthButtonClicked(bool ischeck)
+void monthButton::setMonthButtonClicked(bool _ischeck)
 {
-    if(!ischeck)
+    QDate _currentDate=QDate::currentDate();
+    if(currentDate==_currentDate)
     {
-        if(date.month()!= currendDisplayDate.month())
+        if(!_ischeck)
         {
-            this->setStyleSheet("background-color:rgb(239,239,239);color:rgb(158,158,158);");
+            updateColorStyle("rgb(239,239,239)","orange","bold");
         }
         else
         {
-            this->setStyleSheet("background-color:rgb(239,239,239);color:black;");
+            updateColorStyle("rgb(72,114,251)","orange","bold");
         }
     }
     else
     {
-       if(date.month()!= currendDisplayDate.month())
-       {
-            this->setStyleSheet("background-color:rgba(72,114,251,0.6);color:white;");
-       }
-       else
-       {
-            this->setStyleSheet("background-color:rgb(72,114,251);color:white;");
-       }
+        if(!_ischeck)
+        {
+            if(currentDate.month()!= currendDisplayDate.month())
+            {
+                updateColorStyle("rgb(239,239,239)","rgb(158,158,158)","normal");
+            }
+            else
+            {
+                updateColorStyle("rgb(239,239,239)","black","normal");
+            }
+        }
+        else
+        {
+            if(currentDate.month()!= currendDisplayDate.month())
+            {
+                updateColorStyle("rgba(72,114,251,0.6)","white","normal");
+            }
+            else
+            {
+                updateColorStyle("rgb(72,114,251)","white","normal");
+            }
+        }
     }
-    iconState=ischeck;
+    isChecked=_ischeck;
 }
 
 monthButton::~monthButton()

@@ -139,14 +139,20 @@ int RecordItem::find_current_consecutive_dates(const std::vector<checkin_dateite
        return  a->date < b->date;
     });
 
-    int current_consecutive_dates = 1;
+    int current_consecutive_dates = 1; // 初始值设为1，因为至少包含一个最大日期
+    QDate currentDate = QDate::currentDate();
+    QDate maxDate = sorted_items[sorted_items.size()-1]->date;
 
+    // 如果最大日期大于今天，则从最大日期开始计算连续天数
+      if (maxDate > currentDate) {
+          currentDate = maxDate;
+      } else if (maxDate < currentDate.addDays(-1)) {
+          // 如果最大日期为前天，则直接返回0
+          return 0;
+      }
+    // 计算连续存在的天数
     for (size_t i = sorted_items.size()-1; i >0; --i)
     {
-        if(sorted_items[sorted_items.size()-1]->date!=QDate::currentDate())
-        {
-            return 0;
-        }
         if (sorted_items[i]->date == sorted_items[i - 1]->date.addDays(1))
         {
             // 如果当前日期和前一个日期相差一天，那么增加连续日期计数

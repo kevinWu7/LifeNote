@@ -14,16 +14,6 @@ HabitItem::HabitItem(QString name,QWidget *parent) :
     ui->setupUi(this);
     setContextMenuPolicy(Qt::CustomContextMenu);
     projectName=name;
-    ui->weekWidget->setStyleSheet(QString("QToolButton:hover {border: 0px; background-color: rgb(210, 210, 215); }"
-                                "QToolButton{"
-                                "border: 0px;"
-                                "width: %1 ; min-width: %1; max-width: %1;"
-                                "height: %1 ; min-height: %1; max-height: %1;"
-                                "border-radius: %2;"
-                                "background-color: rgb(230,230,235);"
-                                "padding: 0;"
-                                "margin: 0;}"
-                              ).arg("16px","8px"));
     ui->imgBtn->setStyleSheet(QString("QToolButton#imgBtn{"
                            "background-color: transparent;"
                            "width: %1 ; min-width: %1; max-width: %1;"
@@ -68,7 +58,7 @@ void HabitItem::InitCheckinBtn(const std::vector<checkin_dateitem *> &checkinIte
     for(int i=0;i<ui->weekWidget->layout()->count();i++)
     {
         WeekToolButton* btn= dynamic_cast<WeekToolButton*>(ui->weekWidget->layout()->itemAt(i)->widget());
-        QDate date=btn->date;
+        QDate date=btn->getDate();
 
         auto it = std::find_if(checkinItems.begin(), checkinItems.end(), [&date](checkin_dateitem* item)
         {
@@ -94,7 +84,7 @@ void HabitItem::InitWeekButtons()
     for(int i=0;i<ui->weekWidget->layout()->count();i++)
     {
         WeekToolButton* btn= dynamic_cast<WeekToolButton*>(ui->weekWidget->layout()->itemAt(i)->widget());
-        btn->date=thisWeek[i];
+        btn->setDate(thisWeek[i]);
         btn->project_name=projectName;
     }
 }

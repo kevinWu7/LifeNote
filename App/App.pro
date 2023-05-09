@@ -20,11 +20,13 @@ INCLUDEPATH += \
 
 SOURCES += \
     business/calendarcentral.cpp \
+    business/roundedtooltiphelper.cpp \
     custom_controls/monthbutton.cpp \
     custom_controls/extraqtreewidgetitem.cpp \
     custom_controls/lntreewidget.cpp \
     custom_controls/lntextedit.cpp \
     custom_controls/weektoolbutton.cpp \
+    custom_controls/roundedtooltip.cpp \
     widgets/habititem.cpp \
     widgets/recorditem.cpp \
     widgets/calendarcontrol.cpp \
@@ -41,11 +43,13 @@ SOURCES += \
 
 HEADERS += \
     business/calendarcentral.h \
+    business/roundedtooltiphelper.h \
     custom_controls/monthbutton.h \
     custom_controls/extraqtreewidgetitem.h \
     custom_controls/lntreewidget.h \
     custom_controls/lntextedit.h \
     custom_controls/weektoolbutton.h \  \
+    custom_controls/roundedtooltip.h \
     widgets/habititem.h \
     xmlconfig/noteconfig.h \
     widgets/recorditem.h \

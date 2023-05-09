@@ -18,9 +18,9 @@ WeekToolButton::WeekToolButton(QWidget *parent,bool _ischecked)
 
 void WeekToolButton::initBaseStyleSheet()
 {
-       baseStyleSheet = QString("QToolButton:hover {border: 0px; background-color: rgb(210, 210, 215); }"
+       baseStyleSheet = QString("QToolButton:hover {border:none; background-color: rgb(210, 210, 215); }"
                                 "QToolButton{"
-                                "border: 0px;"
+                                "border: none;"
                                 "background-color: rgb(230,230,235);"
                                 "padding: 0;"
                                 "margin: 0;}");
@@ -34,7 +34,7 @@ void WeekToolButton::updateSizeStyle(int size)
                                        "border-radius: %2px;}")
                                        .arg(QString::number(size),QString::number(size/2));
       setStyleSheet(baseStyleSheet + sizeStyleSheet);
-      this->setIconSize(QSize(size+8,size+8));
+      this->setIconSize(QSize(size,size));
 }
 
 void WeekToolButton::receiveBtnChecked(checkin_dateitem* dateItem)
@@ -75,7 +75,7 @@ void WeekToolButton::setDate(const QDate &_date)
     bool isToday=_date==QDate::currentDate();
     if(isToday)
     {
-        this->updateSizeStyle(18);
+        this->updateSizeStyle(20);
     }
     else
     {

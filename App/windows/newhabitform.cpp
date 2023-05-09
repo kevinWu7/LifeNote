@@ -1,6 +1,5 @@
 #include <QPainterPath>
 #include "util.h"
-#include "logger.h"
 #include "newhabitform.h"
 #include "ui_newhabitform.h"
 #include "baseinfo.h"

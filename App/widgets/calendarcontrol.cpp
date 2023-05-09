@@ -49,7 +49,6 @@ CalendarControl::CalendarControl(QWidget *parent) :
         "width: 32px ; min-width: 32px; max-width: 32px;"
         "font-size: 12px;"            // 设置字体大小
         "color: rgba(0, 0, 0,0.3);}"  // 设置文本颜色为黑色，透明度为70%
-
         "QLabel#weeklabel_6{color: rgba(255,185,48,0.8);}"
         "QLabel#weeklabel_7{color: rgba(255,185,48,0.8);}"
                 );

@@ -5,6 +5,7 @@
 #include "weektoolbutton.h"
 #include "checkinconfig.h"
 #include "logger.h"
+#include "roundedtooltiphelper.h"
 
 
 HabitItem::HabitItem(QString name,QWidget *parent) :
@@ -84,8 +85,11 @@ void HabitItem::InitWeekButtons()
     for(int i=0;i<ui->weekWidget->layout()->count();i++)
     {
         WeekToolButton* btn= dynamic_cast<WeekToolButton*>(ui->weekWidget->layout()->itemAt(i)->widget());
+        RoundedToolTipHelper::installHelper(btn,RoundedToolTipHelper::Top);
+
         btn->setDate(thisWeek[i]);
         btn->project_name=projectName;
+        btn->setToolTip(thisWeek[i].toString("M月d号，ddd"));
     }
 }
 

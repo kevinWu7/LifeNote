@@ -19,9 +19,8 @@ monthButton::monthButton(QWidget *parent ,bool _ischecked)
 
 void monthButton::initBaseStyleSheet()
 {
-       baseStyleSheet = QString(
-                                "QToolButton{"
-                                "border: 0px;"
+       baseStyleSheet = QString("QToolButton{"
+                                "border: none;"
                                 "width: %1 ; min-width: %1; max-width: %1;"
                                 "height: %1 ; min-height: %1; max-height: %1;"
                                 "border-radius: %2;"

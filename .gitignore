@@ -58,3 +58,7 @@ compile_commands.json
 #shadow build floder
 debug_build
 release_build
+
+#mac's app
+*.app
+

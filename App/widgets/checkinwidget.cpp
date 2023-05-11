@@ -2,7 +2,7 @@
 #include <QXmlStreamReader>
 #include <QMenu>
 #include "checkinwidget.h"
-#include "logger.h"
+#include "roundedtooltiphelper.h"
 #include "ui_checkinwidget.h"
 
 
@@ -16,7 +16,8 @@ checkinWidget::checkinWidget(QWidget *parent) :
     ui->setupUi(this);
     ui->addItemBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->addItemBtn->setIcon(QIcon(":/icons/res/note/addnew.png"));
-    ui->addItemBtn->setToolTip("添加打卡项目43");
+    ui->addItemBtn->setToolTip("添加打卡项目");
+    RoundedToolTipHelper::installHelper(ui->addItemBtn);
     ui->addItemBtn->setIconSize(QSize(22,22));
     ui->addItemBtn->setCursor(Qt::PointingHandCursor);
 

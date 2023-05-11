@@ -85,11 +85,10 @@ void HabitItem::InitWeekButtons()
     for(int i=0;i<ui->weekWidget->layout()->count();i++)
     {
         WeekToolButton* btn= dynamic_cast<WeekToolButton*>(ui->weekWidget->layout()->itemAt(i)->widget());
-        RoundedToolTipHelper::installHelper(btn,RoundedToolTipHelper::Top);
-
+        RoundedToolTipHelper::installHelper(btn,RoundedToolTipHelper::ControlTop);
         btn->setDate(thisWeek[i]);
         btn->project_name=projectName;
-        btn->setToolTip(thisWeek[i].toString("M月d号，ddd"));
+        btn->setToolTip(thisWeek[i].toString("M月d号 ddd"));
     }
 }
 

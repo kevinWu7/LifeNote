@@ -9,6 +9,7 @@ class RoundedToolTip : public QWidget {
 
 public:
     explicit RoundedToolTip(const QString &text, QWidget *parent = nullptr);
+    void setToolTipText(QString tooltip);
 
 private:
     QLabel *m_label;

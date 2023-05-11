@@ -6,10 +6,11 @@
 #include <QTimer>
 #include "roundedtooltiphelper.h"
 
-
+#define ControlPositionSpacing 5
 
 RoundedToolTip *RoundedToolTipHelper::m_toolTip = nullptr;
 RoundedToolTipHelper *RoundedToolTipHelper::helper = nullptr;
+QWidget* RoundedToolTipHelper::m_currentWidget = nullptr;
 std::map<QWidget *, RoundedToolTipHelper::ToolTipPosition> RoundedToolTipHelper::m_widgetPositions;
 
 RoundedToolTipHelper::RoundedToolTipHelper(QObject *parent)
@@ -26,9 +27,30 @@ void RoundedToolTipHelper::installHelper(QWidget *widget, ToolTipPosition positi
     if (!helper)
     {
         helper = new RoundedToolTipHelper();
+        if (!m_toolTip)
+        {
+            QString toolTipText = widget->toolTip();
+            if (!toolTipText.isEmpty())
+            {
+                m_toolTip = new RoundedToolTip(toolTipText, widget);
+            }
+        }
     }
     helper->m_widgetPositions[widget] = position;
     widget->installEventFilter(helper);
+}
+
+void RoundedToolTipHelper::unInstallHelper(QWidget *widget)
+{
+    // 移除事件过滤器
+    widget->removeEventFilter(helper);
+    // 清理相关资源
+    m_widgetPositions.erase(widget);
+    if (widget == m_currentWidget)
+    {
+        m_currentWidget = nullptr;
+        hideToolTip();
+    }
 }
 
 bool RoundedToolTipHelper::eventFilter(QObject *watched, QEvent *event)
@@ -64,35 +86,53 @@ void RoundedToolTipHelper::onShowToolTipTimerTimeout()
         showToolTip(m_currentWidget);
     }
 }
+
+
 void RoundedToolTipHelper::showToolTip(QWidget *widget)
 {
-    if (!m_toolTip)
+    if(!m_toolTip)
     {
-        QString toolTipText = widget->toolTip();
-        if (!toolTipText.isEmpty())
-        {
-            m_toolTip = new RoundedToolTip(toolTipText, widget);
-        }
+        m_toolTip=new RoundedToolTip(widget->toolTip(),widget);
     }
+
     if (m_toolTip)
     {
+        m_toolTip->setToolTipText(widget->toolTip());
+        m_toolTip->show();
+
         QPoint mousePos = QCursor::pos();
         QRect screenRect = QGuiApplication::screenAt(mousePos)->availableGeometry();
         ToolTipPosition position = m_widgetPositions[widget];
-
+        QRect widgetRect = widget->rect();
         switch (position)
         {
-        case Top:
-            mousePos -= QPoint(0, m_toolTip->height());
+        case MouseTop:
+            mousePos -= QPoint(0, m_toolTip->height()+ControlPositionSpacing);
             break;
-        case Bottom:
-            mousePos += QPoint(0, 20); // 20 是一个偏移值，可以根据需要调整
+        case MouseBottom:
+            mousePos += QPoint(0, ControlPositionSpacing*4); // 20 是一个偏移值，可以根据需要调整
             break;
-        case Left:
-            mousePos -= QPoint(m_toolTip->width(), 0);
+        case MouseLeft:
+            mousePos -= QPoint(m_toolTip->width()+ControlPositionSpacing, m_toolTip->height()/2);
             break;
-        case Right:
-            mousePos += QPoint(0, 0); // 20 是一个偏移值，可以根据需要调整
+        case MouseRight:
+            mousePos += QPoint(ControlPositionSpacing*3, -m_toolTip->height()/2); // 20 是一个偏移值，可以根据需要调整
+            break;
+        case ControlTop:
+            mousePos = widget->mapToGlobal(widgetRect.topLeft()-
+                       QPoint(m_toolTip->width()/2-widgetRect.width()/2, m_toolTip->height()+ControlPositionSpacing));
+            break;
+        case ControlBottom:
+            mousePos = widget->mapToGlobal(widgetRect.bottomLeft()-
+                       QPoint(m_toolTip->width()/2-widgetRect.width()/2, -ControlPositionSpacing*2));
+            break;
+        case ControlLeft:
+            mousePos = widget->mapToGlobal(widgetRect.topLeft() -
+                      QPoint(m_toolTip->width()+ControlPositionSpacing,m_toolTip->height()/2-widgetRect.height()/2 ));
+            break;
+        case ControlRight:
+            mousePos = widget->mapToGlobal(widgetRect.topRight()-
+                       QPoint(-ControlPositionSpacing,m_toolTip->height()/2-widgetRect.height()/2 ));
             break;
         }
 
@@ -116,15 +156,15 @@ void RoundedToolTipHelper::showToolTip(QWidget *widget)
         }
 
         m_toolTip->move(mousePos);
-        m_toolTip->show();
-    }
+   }
 }
+
 void RoundedToolTipHelper::hideToolTip()
 {
     if (m_toolTip)
     {
         m_toolTip->hide();
-        delete m_toolTip;
-        m_toolTip = nullptr;
     }
+    delete m_toolTip;
+    m_toolTip = nullptr;
 }

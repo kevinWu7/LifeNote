@@ -1,6 +1,7 @@
 #include <QWidget>
 #include "weektoolbutton.h"
 #include "calendarcentral.h"
+#include "roundedtooltiphelper.h"
 
 
 WeekToolButton::WeekToolButton(QWidget *parent,bool _ischecked)
@@ -106,6 +107,7 @@ void WeekToolButton::setWeekButtonClicked(bool _ischecked)
 WeekToolButton::~WeekToolButton()
 {
     CalendarCentral::getInstance().unregisterGlobalEvent(bindFunctionOfreceiveBtnChecked);
+    RoundedToolTipHelper::installHelper(this);
 }
 
 

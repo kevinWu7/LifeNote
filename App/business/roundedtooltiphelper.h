@@ -14,27 +14,31 @@ class RoundedToolTipHelper : public QObject
 public:
 
     enum ToolTipPosition {
-         Top,
-         Bottom,
-         Left,
-         Right
+         MouseTop,
+         MouseBottom,
+         MouseLeft,
+         MouseRight,
+         ControlTop,
+         ControlBottom,
+         ControlLeft,
+         ControlRight,
      };
 
     explicit RoundedToolTipHelper(QObject *parent = nullptr);
-    static void installHelper(QWidget *widget ,ToolTipPosition position = Bottom);
-
+    static void installHelper(QWidget *widget ,ToolTipPosition position = MouseBottom);
+    static void unInstallHelper(QWidget *widget);
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
+
 private slots:
     void onShowToolTipTimerTimeout();
-
 private:
     static void showToolTip(QWidget *widget);
     static void hideToolTip();
     static std::map<QWidget *, ToolTipPosition> m_widgetPositions;
     static RoundedToolTip *m_toolTip;
     QTimer *m_showToolTipTimer;
-    QWidget *m_currentWidget;
+    static QWidget *m_currentWidget;
     static RoundedToolTipHelper *helper;
 };
 

@@ -68,7 +68,6 @@ checkinWidget::checkinWidget(QWidget *parent) :
 
 void checkinWidget::onRightMenuRequested(const QPoint &pos)
 {
-   // rightHabitMenu->exec(pos);
     HabitItem *habitWidget = qobject_cast<HabitItem *>(sender());
      if (habitWidget)
      {

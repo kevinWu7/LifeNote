@@ -125,8 +125,6 @@ void CalendarControl::InitCheckinMonthBtn(const std::vector<checkin_dateitem *> 
 
 void  CalendarControl::arrowLeftBtn_clicked()
 {
-    QDate currentDate = QDate::currentDate();
-
     // 获取当前展示月份的第一天
     if(currendDisplayDate.month()==1)
     {
@@ -154,8 +152,6 @@ void  CalendarControl::arrowLeftBtn_clicked()
 
 void  CalendarControl::arrowRightBtn_clicked()
 {
-    QDate currentDate = QDate::currentDate();
-
     // 获取当前展示月份的第一天
     if(currendDisplayDate.month()==12)
     {

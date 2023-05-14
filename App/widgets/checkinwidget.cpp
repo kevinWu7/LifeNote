@@ -45,6 +45,7 @@ checkinWidget::checkinWidget(QWidget *parent) :
     connect(ui->addItemBtn,&QToolButton::clicked,this,&checkinWidget::addItemBtn_clicked);
 
     auto result= CheckinConfig::getInstance().LoadCheckinConfig();
+    ui->calendarWidget->setHabitItem({},"",-1);
     //加载habititem
     for(auto item :result.project_list)
     {

@@ -118,7 +118,7 @@ void CalendarControl::InitCheckinMonthBtn(const std::vector<checkin_dateitem *> 
         }
         else
         {
-             btn->setMonthButtonClicked(false);
+            btn->setMonthButtonClicked(false);
         }
     }
 }

@@ -13,8 +13,7 @@ monthButton::monthButton(QWidget *parent ,bool _ischecked)
     // 注册全局事件
     CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
     initBaseStyleSheet();
-    updateColorStyle("rgb(239,239,239)","black","normal");
-
+    updateColorStyle("rgb(239,239,239)","rgb(158,158,158)","normal");
 }
 
 void monthButton::initBaseStyleSheet()

@@ -4,6 +4,7 @@
 #include "checkinwidget.h"
 #include "roundedtooltiphelper.h"
 #include "ui_checkinwidget.h"
+#include "logger.h"
 
 
 #define CHECKIN_CONFIG_PATH "/config/checkin.xml"
@@ -51,9 +52,8 @@ checkinWidget::checkinWidget(QWidget *parent) :
         habit->InitCheckinBtn(result.checkin_map[item->project_name]);
         if(item->selected)//初始化将选中habit高亮
         {
-            habit->isSelected=true;
             currentHabit=habit;
-            habit->setStyleSheet("QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
+            habit->setHabitSelected(true);
             ui->calendarWidget->setHabitItem(result.checkin_map[item->project_name],item->project_name,habit->iconIndex);
         }
         connect(habit,&HabitItem::customContextMenuRequested,this,&checkinWidget::onRightMenuRequested);
@@ -181,6 +181,7 @@ void checkinWidget::addItemBtn_clicked()
 
 HabitItem* checkinWidget::addHabitItem(project_info *project)
 {
+    logger->log(QString(project->project_name));
     HabitItem *habit =new HabitItem(project->project_name);
     habit->setIconIndex(project->iconIndex.toInt());
 
@@ -229,16 +230,14 @@ void checkinWidget::setSelectedHabit(HabitItem *habit)
     {
         return;
     }
-    habit->setStyleSheet("QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
-    habit->isSelected=true;
     currentHabit=habit;
+    habit->setHabitSelected(true);
     for(int i=0;i< ui->leftNavigateWidget->layout()->count();i++)
     {
         auto control=dynamic_cast<HabitItem*>(ui->leftNavigateWidget->layout()->itemAt(i)->widget());
         if(control!=nullptr&&control!=habit)
         {
-            control->isSelected=false;
-            control->setStyleSheet("QWidget#mainWidget{background-color:white}");
+            control->setHabitSelected(false);
         }
     }
     //修改配置文件

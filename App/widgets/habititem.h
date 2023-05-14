@@ -18,6 +18,7 @@ public:
 
     void setIconIndex(int iconIndex);
     void setProjectName(QString name);
+    void setHabitSelected(bool isSelect);
     void mousePressEvent(QMouseEvent *event) override;
     void InitCheckinBtn(const std::vector<checkin_dateitem*> &checkinItems);
     bool isSelected=false;//是否被光标选中
@@ -30,6 +31,10 @@ signals:
     void triggerMousePressEvent(HabitItem *habit);
 private:
     Ui::HabitItem *ui;
+    std::function<void(checkin_dateitem *)> bindFunctionOfreceiveBtnChecked;
+    void receiveBtnChecked(checkin_dateitem* dateItem);
+    int checkedCount=0;//右侧统计x/7中指代x
+    QString baseStyleSheet;
 
 
 

@@ -6,6 +6,7 @@
 #include "checkinconfig.h"
 #include "logger.h"
 #include "roundedtooltiphelper.h"
+#include "calendarcentral.h"
 
 
 HabitItem::HabitItem(QString name,QWidget *parent) :
@@ -18,15 +19,24 @@ HabitItem::HabitItem(QString name,QWidget *parent) :
     ui->imgBtn->setStyleSheet(QString("QToolButton#imgBtn{"
                            "background-color: transparent;"
                            "width: %1 ; min-width: %1; max-width: %1;"
-                           "height: %1 ; min-height: %1; max-height: %1;}"
+                           "height: %1 ; min-height: %1; max-height: %1;}"                   
                           ).arg("20px"));
-    //this->setStyleSheet("background-color:red");
+    baseStyleSheet="QLabel#countLabel{font:13px}"
+                   "QLabel#textLabel{font:10px}"
+                   "QLabel#dayLabel{font:9px}";
+    this->setStyleSheet(baseStyleSheet);
+    ui->textLabel->setStyleSheet("color:rgb(160,160,160)");
+       ui->dayLabel->setStyleSheet("color:rgb(160,160,160)");
     ui->imgBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->imgBtn->setIconSize(QSize(20,20));
     ui->nameLabel->setFont(QFont("Arial", 14, QFont::Normal));
+
     InitWeekButtons();
     ui->nameLabel->setText(name);
-    //connect(this, &HabbitItem::mousePressEvent, this, &HabbitItem::onMousePress);
+    // 绑定成员函数到实例
+    bindFunctionOfreceiveBtnChecked = std::bind(&HabitItem::receiveBtnChecked, this, std::placeholders::_1);
+    // 注册全局事件
+    CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
 }
 
 void HabitItem::mousePressEvent(QMouseEvent *event)
@@ -53,7 +63,7 @@ void HabitItem::mousePressEvent(QMouseEvent *event)
     }
 }
 
-//讲habit中的btn初始化是否checked
+//将habit中的btn初始化是否checked
 void HabitItem::InitCheckinBtn(const std::vector<checkin_dateitem *> &checkinItems)
 {
     for(int i=0;i<ui->weekWidget->layout()->count();i++)
@@ -69,6 +79,7 @@ void HabitItem::InitCheckinBtn(const std::vector<checkin_dateitem *> &checkinIte
         if (it != checkinItems.end())
         {
             btn->setWeekButtonClicked(true);
+            checkedCount++;
             logger->log(QString("%1 %2 set is true").arg(projectName).arg(date.toString()));
         }
         else
@@ -77,6 +88,7 @@ void HabitItem::InitCheckinBtn(const std::vector<checkin_dateitem *> &checkinIte
             logger->log(QString("%1 %2 set is false").arg(projectName).arg(date.toString()));
         }
     }
+    ui->countLabel->setText(QString("%1").arg(checkedCount));
 }
 
 void HabitItem::InitWeekButtons()
@@ -89,6 +101,27 @@ void HabitItem::InitWeekButtons()
         btn->setDate(thisWeek[i]);
         btn->project_name=projectName;
         btn->setToolTip(thisWeek[i].toString("M月d号 ddd"));
+    }
+}
+
+
+//当按钮点击时，更新右侧x/7 label
+void HabitItem::receiveBtnChecked(checkin_dateitem *dateItem)
+{
+    if(dateItem->project_name!=projectName)
+    {
+        return;
+    }
+    for(int i=0;i<ui->weekWidget->layout()->count();i++)
+    {
+        WeekToolButton* btn= dynamic_cast<WeekToolButton*>(ui->weekWidget->layout()->itemAt(i)->widget());
+        QDate date=btn->getDate();
+        if (date== dateItem->date)
+        {
+            checkedCount=dateItem->ischecked?checkedCount+1:checkedCount-1;
+            ui->countLabel->setText(QString("%1").arg(checkedCount));
+            break;
+        }
     }
 }
 
@@ -107,8 +140,23 @@ void HabitItem::setProjectName(QString name)
     projectName=name;
 }
 
+void HabitItem::setHabitSelected(bool isSelect)
+{
+    isSelected=isSelect;
+    logger->log(projectName+(isSelect?QString("setHabitSelected true"):QString("setHabitSelected fasle")));
+    if(!isSelect)
+    {
+        this->setStyleSheet(baseStyleSheet+"QWidget#mainWidget{background-color:white}");
+    }
+    else
+    {
+        this->setStyleSheet(baseStyleSheet+"QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
+    }
+}
+
 
 HabitItem::~HabitItem()
 {
+    CalendarCentral::getInstance().unregisterGlobalEvent(bindFunctionOfreceiveBtnChecked);
     delete ui;
 }

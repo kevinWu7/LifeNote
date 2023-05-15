@@ -1,16 +1,19 @@
-#include "util.h"
-#include "baseinfo.h"
 #include <QApplication>
-#include<QFile>
-#include<QSvgRenderer>
-#include<QPainter>
-#include "logger.h"
-#include "extraqtreewidgetitem.h"
+#include <QFile>
+#include <QSvgRenderer>
+#include <QPainter>
 #include <QDir>
-util::util()
-{
+#include "baseinfo.h"
+#include "logger.h"
+#include "util.h"
+#include "extraqtreewidgetitem.h"
 
-}
+
+std::map<int,std::string> util::iconMap={
+    {0,"computer.png" },{1,"run.png" },{2,"english.png" },{3,"study.png" },{4,"train.png" },
+    {5,"english2.png" },{6,"notes.png" },{7,"game.png" },{8,"bowl.png" },{9,"tableware.png" },
+    {10,"cat.png" },{11,"dog.png" },{12,"coffee.png" },{13,"train2.png" },
+};
 
 std::map<int, std::string> util::colorBtnMap = {
     {0, "rgb(125,180,255)"}, {1, "rgb(212,171,128)"}, {2, "rgb(168,119,199)"},
@@ -59,15 +62,14 @@ QString util::treeItemToFileName(QTreeWidgetItem* treeItem)
 QString util::treeItemToFullFilePath(QTreeWidgetItem* treeItem)
 {
     auto currentPath=STORAGE_PATH;
-    logger->log(QString("FullFilePath current_path: ")+currentPath);
     //保存上一个节点的内容
     QString nodePath=treeItemToNodePath(treeItem);
     auto type= dynamic_cast<ExtraQTreeWidgetItem*>(treeItem)->nodeType;
-    if(type==BaseInfo::Child)
+    if(type==ChildNode)
     {
         return QString("%1/storage/%2.html").arg(currentPath,nodePath);
     }
-    else if(type==BaseInfo::Parent)
+    else if(type==ParentNode)
     {
         return QString("%1/storage/%2").arg(currentPath,nodePath);
     }
@@ -201,7 +203,6 @@ bool util::copyDir(const QString &source, const QString &destination, bool overr
     if (!dstPath.endsWith(QDir::separator()))
         dstPath += QDir::separator();
 
-
     bool error = false;
     QStringList fileNames = directory.entryList(QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden);
     for (QStringList::size_type i=0; i != fileNames.size(); ++i)
@@ -214,9 +215,13 @@ bool util::copyDir(const QString &source, const QString &destination, bool overr
         {
             if (override)
             {
-                QFile::setPermissions(dstFilePath, QFile::WriteOwner);
+                //QFile::setPermissions(dstFilePath, QFile::WriteOwner);
             }
-            QFile::copy(srcFilePath, dstFilePath);
+            error=QFile::copy(srcFilePath, dstFilePath);//若是相同文件拷贝，则会导致文件为空
+            if(!error)
+            {
+                return false;
+            }
         }
         else if (fileInfo.isDir())
         {
@@ -243,5 +248,72 @@ bool util::isChildItem(QTreeWidgetItem* parentItem, QTreeWidgetItem* childItem)
     }
     return false;
 }
+
+
+//根据xml的路径，找出xml的相应节点QDomNode
+//循环遍历xml节点，通过判断节点名是否和path的相应部分匹配，不断向下找
+//为什么写这个方法，是因为原先只能通过在xml中设置属性，通过属性来判断，如下面这段代码，但是这样会导致xml内容臃肿，所以selectSingleNode能让xml看起来更简洁
+/*勿删
+ QDomNodeList list = doc.elementsByTagName(path);
+ for(int i=0;i<list.size();i++)
+ {
+    QDomElement e = list.at(i).toElement();
+    if(e.attribute("path")==path)
+    {
+        QDomElement newDomElement=doc.createElement(newNode->text(0));
+        list.at(i).appendChild(newDomElement);
+        break;
+    }
+}*/
+QDomNode util::selectSingleNode(const QString& path,QDomDocument* doc)
+{
+   // doc->documentElement()
+    QStringList list=path.split(u'/');
+
+    int i=0;
+    auto rootElement=doc->documentElement();
+    auto childNode=rootElement.firstChild();
+    QString currentStr=list.at(0);
+
+       while(!childNode.isNull())
+       {
+           if(childNode.toElement().tagName()==list.at(i)||
+                 (childNode.toElement().tagName().startsWith(START_FLAG)&& //这个条件判断下若是有开头记号的node，则判断是否带有记号，且包含该字符串list.at(i)
+                  childNode.toElement().tagName().contains(list.at(i))))
+           {
+               if(i==list.size()-1)//完全匹配上了
+               {
+                   return childNode;
+               }
+              if(childNode.hasChildNodes())
+              {
+                  QDomNodeList nodeList= childNode.childNodes();
+                  childNode=nodeList.at(0);
+                  i++;
+                  currentStr=list.at(i);
+              }
+           }
+           else
+           {
+              childNode=childNode.nextSibling();//将同级的下一个节点，赋给childNode
+           }
+       }
+       return childNode;
+}
+
+std::vector<QDate> util::getThisWeek()
+{
+    QDate currentDate = QDate::currentDate();
+    // 获取本周的时间点
+    std::vector<QDate> thisWeek;
+    int dayOfWeek = currentDate.dayOfWeek();
+    QDate startOfWeek = currentDate.addDays(-dayOfWeek + 1); // 周一
+    for (int i = 0; i < 7; ++i) {
+        QDate date = startOfWeek.addDays(i);
+        thisWeek.push_back(date);
+    }
+    return thisWeek;
+}
+
 
 

@@ -4,6 +4,7 @@
 #include <QTreeWidgetItem>
 #include <QDomElement>
 
+
 #ifdef QT_NO_DEBUG
 #define STORAGE_PATH  QString("/Users/wuchengcheng/Documents/Lifenote_dir")
 #else
@@ -26,8 +27,28 @@ public:
     static bool cutDir(const QString &source, const QString &destination, bool override);
     static bool isChildItem(QTreeWidgetItem* parentItem, QTreeWidgetItem* childItem);
     static std::map<int,std::string> colorBtnMap;
+    static std::map<int,std::string> iconMap;
     static std::vector<QString> fontVector;
+    static QDomNode selectSingleNode(const QString& path,QDomDocument* doc);
+    static std::vector<QDate> getThisWeek();
+    template<typename T>
+    static T *findWidget(QWidget *parent, const QString &objectName)
+    {
+        if (!parent)
+        {
+            return nullptr;
+        }
 
+        T *childWidget = parent->findChild<T *>(objectName);
+        if (childWidget)
+        {
+            qDebug() << "Found widget with object name:" << objectName;
+        } else
+        {
+            qDebug() << "Widget with object name" << objectName << "not found";
+        }
+        return childWidget;
+    }
 };
 
 #endif // UTIL_H

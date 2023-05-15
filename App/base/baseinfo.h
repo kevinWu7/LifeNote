@@ -11,24 +11,49 @@
 #define  ATTRIBUTE_STARTFLAG "isStartWithDigit"
 #define  WINDOW_TITLE "理想之城"
 
+#define NODENAME_TOTALPROJECT "TotalProject"
+#define NODENAME_DETAILPROJECT "DetailProject"
+#define NODENAME_PROJECT "project"
+#define NODENAME_CHECKINDATE "checkin"
+#define ATTRIBUTE_NAME "name"
+#define ATTRIBUTE_DATE "date"
+#define ATTRIBUTE_TIP "tip"
+#define ATTRIBUTE_TYPE "type"
+#define ATTRIBUTE_ISCHECKED "ischeckd"
+#define ATTRIBUTE_ICONINDEX "iconindex"
+#define ATTRIBUTE_SELECTED "selected"
+#define LINE_COLOR "rgb(239, 239, 239)"
 
-class BaseInfo
+enum OperationType
 {
-public:
-    enum OperationType
-    {
-        AddNode,
-        AddNodeGroup,
-        DeleteNode,
-        MoveNode,
-        RenameNode,
-    };
-
-    enum NodeType
-    {
-        Child,
-        Parent,
-    };
+    AddNode,
+    AddNodeGroup,
+    DeleteNode,
+    MoveNode,
+    RenameNode,
 };
+
+
+enum HabitOperationType
+{
+    AddHabit, //添加习惯项目
+    RemoveHabit,
+    MoveHabit,
+    EditHabit,//编辑习惯项目
+    ChangeSelectedHabit,//切换habit
+};
+
+enum CheckinType
+{
+    CheckinAction, //签到打卡
+    CheckOutAction, //取消签到
+};
+
+enum NodeType
+{
+    ChildNode,
+    ParentNode,
+};
+
 
 #endif // BASEINFO_H

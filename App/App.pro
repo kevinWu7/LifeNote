@@ -10,39 +10,71 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 ICON = logo.icns
 INCLUDEPATH += \
-    $$PWD/controls \
+    $$PWD/custom_controls \
+    $$PWD/widgets \
     $$PWD/windows \
     $$PWD/base \
+    $$PWD/xmlconfig \
+    $$PWD/business \
     $$PWD/util
 
 SOURCES += \
-    controls/extraqtreewidgetitem.cpp \
-    controls/lntreewidget.cpp \
-    controls/lntextedit.cpp \
-    main.cpp \
-    util/logger.cpp \
+    business/calendarcentral.cpp \
+    business/roundedtooltiphelper.cpp \
+    custom_controls/monthbutton.cpp \
+    custom_controls/extraqtreewidgetitem.cpp \
+    custom_controls/lntreewidget.cpp \
+    custom_controls/lntextedit.cpp \
+    custom_controls/weektoolbutton.cpp \
+    custom_controls/roundedtooltip.cpp \
+    widgets/habititem.cpp \
+    widgets/recorditem.cpp \
+    widgets/calendarcontrol.cpp \
+    widgets/checkinwidget.cpp \
+    widgets/texteditcontainer.cpp \
     windows/newnotegroupform.cpp \
     windows/mainwindow.cpp \
-    nodeconfig.cpp \
-    controls/svgtextlabel.cpp \
-    util/util.cpp
+    windows/newhabitform.cpp \
+    main.cpp \
+    util/logger.cpp \
+    util/util.cpp \
+    xmlconfig/noteconfig.cpp \
+    xmlconfig/checkinconfig.cpp
 
 HEADERS += \
-    base/baseinfo.h \
-    controls/extraqtreewidgetitem.h \
-    controls/lntreewidget.h \
-    controls/lntextedit.h \
-    util/logger.h \
-    windows/newnotegroupform.h \
+    business/calendarcentral.h \
+    business/roundedtooltiphelper.h \
+    custom_controls/monthbutton.h \
+    custom_controls/extraqtreewidgetitem.h \
+    custom_controls/lntreewidget.h \
+    custom_controls/lntextedit.h \
+    custom_controls/weektoolbutton.h \  \
+    custom_controls/roundedtooltip.h \
+    widgets/habititem.h \
+    xmlconfig/noteconfig.h \
+    widgets/recorditem.h \
+    widgets/calendarcontrol.h \
+    widgets/checkinwidget.h \  
+    widgets/texteditcontainer.h \
     windows/mainwindow.h \
-    nodeconfig.h \
-    controls/svgtextlabel.h \
-    util/util.h
+    windows/newnotegroupform.h \
+    windows/newhabitform.h \
+    base/baseinfo.h \
+    util/util.h \
+    util/logger.h \
+    xmlconfig/noteconfig.h \
+    xmlconfig/checkinconfig.h
 
 FORMS += \
-    windows/newnotegroupform.ui \
+    widgets/habititem.ui \
+    widgets/recorditem.ui \
+    widgets/calendarcontrol.ui \
+    widgets/checkinwidget.ui \
+    widgets/texteditcontainer.ui \
+    windows/newhabitform.ui \
     windows/mainwindow.ui \
-    controls/svgtextlabel.ui
+    windows/newnotegroupform.ui
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -54,11 +86,22 @@ RESOURCES += \
 # 配置file_copies
 CONFIG += file_copies
 
-# 创建transfer自定义变量
-# 配置需要复制的文件或目录(支持通配符)
-transfer.files = $$PWD/config #$$PWD表示工程源代码所在目录
-# 配置需要复制的目标目录, $$OUT_PWD含义为程序输出目录
-transfer.path = $$OUT_PWD/App.app/Contents/MacOS
+# 创建 transfer 自定义变量
+# 配置需要复制的文件或目录（支持通配符）
+transfer.files = $$PWD/config # $$PWD 表示工程源代码所在目录
+
+# 配置需要复制的目标目录，$$OUT_PWD 含义为程序输出目录
+win32 {
+    transfer.path = $$OUT_PWD/debug
+}
+macx {
+    transfer.path = $$OUT_PWD/App.app/Contents/MacOS
+}
+
+# 配置 COPIES
+COPIES += transfer
+
+
 
 # 配置COPIES
 COPIES += transfer

@@ -1,17 +1,17 @@
-#include "newnotegroupform.h"
-#include "ui_newnotegroupform.h"
 #include <QPainterPath>
 #include "util.h"
+#include "newnotegroupform.h"
+#include "ui_newnotegroupform.h"
+#include "baseinfo.h"
+
 
 #define  ROUND_RADIUS 5
-#define  NewNoteGroupTip "未命名笔记本"
 
 NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::NewNoteGroupForm)
 {
     ui->setupUi(this);
-    //this->setAttribute(Qt::WA_TranslucentBackground);
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setWindowModality(Qt::ApplicationModal);
     this->setStyleSheet(QString("QLabel{color:rgb(110,111,111);font-size:11px} "
@@ -36,9 +36,10 @@ NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
                                 "border-radius: 5px; "
                                 "color:rgb(255,255,255)"
                                 "}"
-                                ).arg("16px").arg("8px").arg("85px").arg("18px"));
-    ui->nameLineEdit->setText(NewNoteGroupTip);
-    InitColorPushBtn();   
+                                ).arg("16px","8px","85px","18px"));
+    ui->bottomLine->setStyleSheet(QString("QFrame{border-top: 1px solid %1; border-bottom: none;}").arg(LINE_COLOR));
+    ui->topLine->setStyleSheet(QString("QFrame{border-top: 1px solid %1; border-bottom: none;}").arg(LINE_COLOR));
+    InitColorPushBtn();
     InitRoundRadius();
     InitEvent();
 }
@@ -105,25 +106,37 @@ NewNoteGroupForm::~NewNoteGroupForm()
 void NewNoteGroupForm::mousePressEvent(QMouseEvent *event)
 {
     this->windowPos = this->pos();       // 获得部件当前位置
-    this->mousePos = event->globalPos(); // 获得鼠标位置
+    this->mousePos = event->globalPosition(); // 获得鼠标位置
     this->dPos = mousePos - windowPos;   // 移动后部件所在的位置
 }
 
 void NewNoteGroupForm::mouseMoveEvent(QMouseEvent *event)
 {
-    this->move(event->globalPos() - this->dPos);
+    this->move(event->globalPosition().x() - this->dPos.x(),
+               event->globalPosition().y() - this->dPos.y());
 }
 
 void NewNoteGroupForm::okBtn_clicked()
 {
+    if(ui->nameLineEdit->text().isEmpty())
+    {
+       ui->warningLabel->setText("名称为空，请输入名称!");
+       ui->warningLabel->setStyleSheet("color:red");
+       return;
+    }
+    else
+    {
+        ui->warningLabel->setText("");
+        ui->warningLabel->setStyleSheet("color:transparent");
+    }
     emit sendParentWindowData(ui->nameLineEdit->text(),color_index);
-    ui->nameLineEdit->setText(NewNoteGroupTip);
+    ui->nameLineEdit->setText("");
     this->setVisible(false);
 }
 
 void NewNoteGroupForm::cancleBtn_clicked()
 {
-    ui->nameLineEdit->setText(NewNoteGroupTip);
+    ui->nameLineEdit->setText("");
     this->setVisible(false);
 }
 

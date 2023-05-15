@@ -1,22 +1,25 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <iostream>
 #include <QMainWindow>
-#include<QMessageBox>
-#include<QSpinBox>
-#include<QColorDialog>
-#include<QTreeWidget>
-#include<QTreeWidgetItem>
-#include<QStandardItemModel>
-#include<QStandardItem>
-#include<iostream>
-#include<QMenu>
-#include<QTextDocumentFragment>
-#include<QFileDialog>
-#include<QImageReader>
-#include<QTextBlockFormat>
+#include <QMessageBox>
+#include <QSpinBox>
+#include <QColorDialog>
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
+#include <QStandardItemModel>
+#include <QStandardItem>
+#include <QMenu>
+#include <QTextDocumentFragment>
+#include <QFileDialog>
+#include <QImageReader>
+#include <QTextBlockFormat>
 #include "extraqtreewidgetitem.h"
+#include "texteditcontainer.h"
 #include "newnotegroupform.h"
+#include "checkinwidget.h"
+
 
 
 
@@ -25,8 +28,6 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -34,6 +35,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
 
 //重写键盘函数
 public:
@@ -55,28 +57,22 @@ private:
     void setAllItemIcon();
     void setItemIcon(ExtraQTreeWidgetItem* child_item);
     void initRightMenu();
-    void InsertImageDialog();
+
     void initTopLevelNode();
-    void initfontCombobox();
+
     void setLineVerticalInterval();
+
+    TextEditContainer * textEditContainer=nullptr;
+    checkinWidget *_checkinWidget=nullptr;
     NewNoteGroupForm * newGroupForm=nullptr;
     QTextBlockFormat *blockFormat=nullptr;//to set qtextedit vertical interval 3
 
 public slots:
-    void boldBtn_clicked();
-    void italicBtn_clicked();
-    void underlineBtn_clicked();
-    void colorBtn_clicked();
-    void onPictureBtn_clicked();
-    void onUndoBtn_clicked();
     void onSaveBtn_clicked();
-    void onAddnewBtn_clicked();
-    void onFontAddBtn_clicked();
-    void onFontReduceBtn_clicked();
-    void right_item_pressed(QTreeWidgetItem *item, int column);//右键菜单点击
+    void onTreeWidgetItemClicked(QTreeWidgetItem *item, int column);
     void currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
-    void comboBoxCurrentIndexChanged();
-    void textEditCursorPositionChanged();
+    void right_item_pressed();//右键菜单点击
+    void onAddnewBtn_clicked();
     void onNewNoteItemClick();
     void onNewNoteGroupItemClick();
     void onCollectNoteItemClick();
@@ -85,11 +81,12 @@ public slots:
     void onDeleteNoteItemClick();
     void onRecoverNoteItemClick();
     void onMenuToShow();
-
+    void logCheckStateChanged(int state);
     void onTitleLineEditEditingFinished();
     //接收新建笔记本子窗体的消息
     void onReceiveNewGroupFormData(QString nodeName,int color_index);
     void onApplicationQuit();
+    void checkinBtn_clicked();
 
 };
 #endif // MAINWINDOW_H

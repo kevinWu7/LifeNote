@@ -102,6 +102,12 @@
               <property name="text">
                <string>...</string>
               </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
              </widget>
             </item>
             <item>
@@ -189,6 +195,32 @@
              </widget>
             </item>
             <item>
+             <widget class="QWidget" name="widget" native="true">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout">
+               <item>
+                <widget class="QRadioButton" name="darkRadioButton">
+                 <property name="text">
+                  <string>深色</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="lightRadioButton">
+                 <property name="text">
+                  <string>浅色</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
              <spacer name="verticalSpacer">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -210,7 +242,14 @@
            <layout class="QVBoxLayout" name="tabLayout"/>
           </widget>
          </widget>
-         <widget class="LNTextEdit" name="loggerTextEdit"/>
+         <widget class="LNTextEdit" name="loggerTextEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </widget>
        </item>
       </layout>

@@ -16,17 +16,7 @@ HabitItem::HabitItem(QString name,QWidget *parent) :
     ui->setupUi(this);
     setContextMenuPolicy(Qt::CustomContextMenu);
     projectName=name;
-    ui->imgBtn->setStyleSheet(QString("QToolButton#imgBtn{"
-                           "background-color: transparent;"
-                           "width: %1 ; min-width: %1; max-width: %1;"
-                           "height: %1 ; min-height: %1; max-height: %1;}"                   
-                          ).arg("20px"));
-    baseStyleSheet="QLabel#countLabel{font:13px}"
-                   "QLabel#textLabel{font:10px}"
-                   "QLabel#dayLabel{font:9px}";
-    this->setStyleSheet(baseStyleSheet);
-    ui->textLabel->setStyleSheet("color:rgb(160,160,160)");
-       ui->dayLabel->setStyleSheet("color:rgb(160,160,160)");
+
     ui->imgBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->imgBtn->setIconSize(QSize(20,20));
     ui->nameLabel->setFont(QFont("Arial", 14, QFont::Normal));
@@ -143,14 +133,22 @@ void HabitItem::setProjectName(QString name)
 void HabitItem::setHabitSelected(bool isSelect)
 {
     isSelected=isSelect;
-    logger->log(projectName+(isSelect?QString("setHabitSelected true"):QString("setHabitSelected fasle")));
     if(!isSelect)
     {
-        this->setStyleSheet(baseStyleSheet+"QWidget#mainWidget{background-color:white}");
+        this->setProperty("isSelect","false");
+        this->setStyleSheet("QWidget#mainWidget{background-color:transparent}");
     }
     else
     {
-        this->setStyleSheet(baseStyleSheet+"QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
+        this->setProperty("isSelect","true");
+        if (util::isThemeDark)
+        {
+            this->setStyleSheet("QWidget#mainWidget{background-color:rgb(72,72,72)}");
+        }
+        else
+        {
+            this->setStyleSheet("QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
+        }
     }
 }
 

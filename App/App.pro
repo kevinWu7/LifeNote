@@ -88,18 +88,25 @@ CONFIG += file_copies
 
 # 创建 transfer 自定义变量
 # 配置需要复制的文件或目录（支持通配符）
-transfer.files = $$PWD/config # $$PWD 表示工程源代码所在目录
+configtransfer.files = $$PWD/config # $$PWD 表示工程源代码所在目录
+
+# 创建 qssTransfer 自定义变量
+qssTransfer.files = $$PWD/qss # 这里设置你的 qss 文件夹路径
 
 # 配置需要复制的目标目录，$$OUT_PWD 含义为程序输出目录
 win32 {
-    transfer.path = $$OUT_PWD/debug
+     configtransfer.path = $$OUT_PWD/debug
+     qssTransfer.path = $$OUT_PWD/debug
 }
 macx {
-    transfer.path = $$OUT_PWD/App.app/Contents/MacOS
+     configtransfer.path = $$OUT_PWD/App.app/Contents/MacOS
+     qssTransfer.path = $$OUT_PWD/App.app/Contents/MacOS
 }
 
 # 配置 COPIES
-COPIES += transfer
+COPIES += configtransfer
+COPIES += qssTransfer # 添加 qss 文件夹到拷贝列表
+
 
 
 
@@ -107,5 +114,7 @@ COPIES += transfer
 COPIES += transfer
 
 DISTFILES += \
+    qss/dark.qss \
+    qss/light.qss \
     todoList.txt
 

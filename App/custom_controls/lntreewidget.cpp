@@ -48,72 +48,13 @@ LNTreeWidget::LNTreeWidget(QWidget *parent)
     //设置边框不可见
     this->setFrameStyle(QFrame::NoFrame);
 
-    QScrollBar* horizontalScrollBar=this->horizontalScrollBar();
-    QScrollBar* treewidgetVerticalScrollBar=this->verticalScrollBar();
-    //下面这句代码 修改选中行的颜色，但是改的不是很完美，故先注释
 
-    QPalette palette = this->palette();
+    /*QPalette palette = this->palette();
     palette.setColor(QPalette::Active, QPalette::Highlight, QColor(186,214,251));
     palette.setColor(QPalette::Inactive, QPalette::Highlight, QColor(200, 200, 200,70));
     palette.setColor(QPalette::HighlightedText, QColor(0,0,0));
     palette.setColor(QPalette::Inactive, QPalette::HighlightedText, QColor(0, 0, 0));
-    this->setPalette(palette);
-
-    this->setStyleSheet("QTreeView::item { height: 25px;}"
-                        "QTreeWidget{background-color:#FFFFFF;}");
-    treewidgetVerticalScrollBar->setStyleSheet("QScrollBar:vertical"
-                                               "{"
-                                               "width:6px;"
-                                               "background:rgba(0,0,0,0%);"
-                                               "margin:0px,0px,0px,0px;"
-                                               "padding-top:0px;"
-                                               "padding-bottom:0px;"
-                                               "}"
-                                               "QScrollBar::handle:vertical"
-                                               "{"
-                                               "background:rgba(0,0,0,20%);"
-                                               "border-radius:3px;"
-                                               "min-height:20;"
-                                               "}"
-                                               "QScrollBar::handle:vertical:hover"
-                                               "{"
-                                               "background:rgba(0,0,0,35%);"
-                                               "border-radius:3px;"
-                                               "min-height:20;"
-                                               "}"
-                                               "QScrollBar::add-line:vertical" //上箭头，高度设置为0，隐藏掉
-                                               "{height:0px;subcontrol-position:bottom;}"
-                                               "QScrollBar::sub-line:vertical"//下拉箭头，高度设置为0，隐藏掉
-                                               "{height:0px;subcontrol-position:top;}"
-                                               );
-    horizontalScrollBar->setStyleSheet("QScrollBar:horizontal"
-                                       "{"
-                                       "height:6px;"
-                                       "background:rgba(0,0,0,0%);"
-                                       "margin:0px,0px,0px,0px;"
-                                       "padding-left:0px;"
-                                       "padding-right:0px;"
-                                       "}"
-                                       "QScrollBar::handle:horizontal"
-                                       "{"
-                                       "height:6px;"
-                                       "background:rgba(0,0,0,20%);"
-                                       " border-radius:3px;"
-                                       "min-width:20;"
-                                       "}"
-                                       "QScrollBar::handle:horizontal:hover"
-                                       "{"
-                                       "height:6px;"
-                                       "background:rgba(0,0,0,35%);"
-                                       " border-radius:3px;"
-                                       "min-width:20;"
-                                       "}"
-                                       "QScrollBar::add-line:horizontal" //左边箭头，宽度设置为0，隐藏掉
-                                       "{width:0px;subcontrol-position:left;}"
-                                       "QScrollBar::sub-line:horizontal"//右拉箭头，宽度设置为0，隐藏掉
-                                       "{width:0px;subcontrol-position:right;}"
-                                       );
-
+    this->setPalette(palette);*/
 }
 
 

@@ -8,6 +8,7 @@
 #include "util.h"
 #include "extraqtreewidgetitem.h"
 
+bool util::isThemeDark=true;
 
 std::map<int,std::string> util::iconMap={
     {0,"computer.png" },{1,"run.png" },{2,"english.png" },{3,"study.png" },{4,"train.png" },

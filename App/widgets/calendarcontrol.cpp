@@ -11,25 +11,7 @@ CalendarControl::CalendarControl(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->setStyleSheet(QString("QToolButton#arrowLeftBtn{"      //左箭头样式
-                                "width: %1 ; min-width: %1; max-width: %1;"
-                                "height: %1; min-height: %1; max-height: %1;"
-                                "border-radius: 5px;"
-                                "background-color: transparent;"
-                                "}"
-                                "QToolButton#arrowLeftBtn:hover{"
-                                "background-color: rgb(224, 224, 224);}"
-                                "QToolButton#arrowRightBtn{"         //右箭头样式
-                                "width: %1; min-width: %1; max-width: %1;"
-                                "height: %1; min-height: %1; max-height: %1;"
-                                "border-radius: 5px;"
-                                "background-color: transparent;"
-                                "}"
-                                "QToolButton#arrowRightBtn:hover{"
-                                "background-color: rgb(224, 224, 224);}"
-                                "QToolButton#projectIconBtn{"      //图标
-                                 "background-color: transparent;}"
-                              ).arg("12px"));
+
 
     ui->arrowLeftBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->arrowLeftBtn->setIcon(QIcon(":/icons/res/checkin/arrow-left.png"));
@@ -40,18 +22,8 @@ CalendarControl::CalendarControl(QWidget *parent) :
     ui->projectIconBtn->setIconSize(QSize(30,30));
     ui->projectLabel->setFont(QFont("Arial", 22, QFont::Normal));
 
-    ui->centerLine->setStyleSheet(QString("QFrame{border-top: 1px solid %1; border-bottom: none;}").arg(LINE_COLOR));
 
 
-    ui->titleBarWidget->setStyleSheet("QLabel#datetimeLabel{font-size: 16pt;}");
-    ui->weekDayWidget->setStyleSheet(
-        "QLabel {"
-        "width: 32px ; min-width: 32px; max-width: 32px;"
-        "font-size: 12px;"            // 设置字体大小
-        "color: rgba(0, 0, 0,0.3);}"  // 设置文本颜色为黑色，透明度为70%
-        "QLabel#weeklabel_6{color: rgba(255,185,48,0.8);}"
-        "QLabel#weeklabel_7{color: rgba(255,185,48,0.8);}"
-                );
     //设置label的文字居中对齐
     for(int i=0;i<ui->weekDayWidget->layout()->count();i++)
     {

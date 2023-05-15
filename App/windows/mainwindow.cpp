@@ -18,28 +18,13 @@ MainWindow::MainWindow(QWidget *parent)
     _checkinWidget =new checkinWidget;
     logger->logEdit=ui->loggerTextEdit;
     logger->log(QDir::currentPath());
-    logger->log(QString("start the application....."));
 
     ui->tabLayout->addWidget(textEditContainer);
     ui->tabLayout->addWidget(_checkinWidget);
 
 
-    ui->mainPage->setStyleSheet("QWidget#mainPage{background-color:rgb(219,220,223");
 
 
-    //设置左侧侧边栏样式
-    ui->leftBar->setStyleSheet("QAbstractButton#addnewBtn{min-height:20px;max-height:20px;padding-left:10px;"
-                               "margin:0px;border:none;}"
-                               "QAbstractButton#checkinBtn{min-height:20px;max-height:20px;margin:0px;padding-top:4px;padding-left:10px;padding-bottom:4px;border:none;}"
-                               "QWidget#leftBar"
-                               "{background-color:#FFFFFF;"
-                               "border-radius:7px}");
-
-
-
-    ui->loggerTextEdit->setStyleSheet("QWidget#loggerTextEdit"
-                                  "{background-color:#FFFFFF;"
-                                  "border-radius:7px}");
     ui->loggerTextEdit->setVisible(false);
     ui->loggerTextEdit->isAutoHide=false;
 
@@ -93,6 +78,37 @@ MainWindow::MainWindow(QWidget *parent)
     connect(textEditContainer->ui->logCheck,&QCheckBox::stateChanged,this,&MainWindow::logCheckStateChanged);
     connect(ui->checkinBtn,&QToolButton::clicked,this,&MainWindow::checkinBtn_clicked);
 
+    ui->darkRadioButton->setChecked(true);
+    connect(ui->darkRadioButton, &QRadioButton::clicked, [=](){
+         QFile f(QCoreApplication::applicationDirPath()+ "/qss/dark.qss");
+         if (!f.exists())
+         {
+             qDebug() << "Unable to set stylesheet, file not found";
+         }
+         else
+         {
+             util::isThemeDark=true;
+             f.open(QFile::ReadOnly | QFile::Text);
+             QTextStream ts(&f);
+             qApp->setStyleSheet(ts.readAll());
+         }
+    });
+
+
+    connect(ui->lightRadioButton, &QRadioButton::clicked, [=](){
+        QFile f(QCoreApplication::applicationDirPath()+ "/qss/light.qss");
+        if (!f.exists())
+        {
+            qDebug() << "Unable to set stylesheet, file not found";
+        }
+        else
+        {
+            util::isThemeDark=false;
+            f.open(QFile::ReadOnly | QFile::Text);
+            QTextStream ts(&f);
+            qApp->setStyleSheet(ts.readAll());
+        }
+    });
     _checkinWidget->setVisible(false);
 }
 
@@ -355,7 +371,14 @@ void MainWindow::checkinBtn_clicked()
     _checkinWidget->setVisible(true);
     textEditContainer->setVisible(false);
     _checkinWidget->setFocus();
-    ui->checkinBtn->setStyleSheet("background-color:rgb(186,214,251)}");
+    if(util::isThemeDark)
+    {
+         ui->checkinBtn->setStyleSheet("background-color:rgb(82,82,82)");
+    }
+    else
+    {
+        ui->checkinBtn->setStyleSheet("background-color:rgb(186, 214, 251)");
+    }
 }
 
 void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
@@ -517,8 +540,8 @@ void MainWindow::onTreeWidgetItemClicked(QTreeWidgetItem *item, int column)
     {
         _checkinWidget->setVisible(false);
         textEditContainer->setVisible(true);
-        ui->checkinBtn->setStyleSheet("QWidget#checkinWidget{background-color:transparent}");
     }
+    ui->checkinBtn->setStyleSheet("background-color:transparent");
 }
 //切换左侧节点时，保存上一个节点的内容，加载当前节点的内容
 void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)

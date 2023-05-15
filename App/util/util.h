@@ -13,6 +13,7 @@
 
 class util
 {
+
 public:
     util();
     static QString treeItemToNodeDirPath(QTreeWidgetItem* treeItem);//返回path,如 笔记本/每日工作
@@ -49,6 +50,7 @@ public:
         }
         return childWidget;
     }
+    static bool isThemeDark;
 };
 
 #endif // UTIL_H

@@ -15,18 +15,7 @@ TextEditContainer::TextEditContainer(QWidget *parent) :
     ui(new Ui::TextEditContainer)
 {
     ui->setupUi(this);
-    // 合并所有样式表
-       QString styleSheet = QStringLiteral(
-           "QToolButton{border:none;} "
-           "QToolButton:checked{background-color:rgb(218, 218, 218)}"
-           "QToolButton:hover{background-color:rgb(218, 218, 218)}"
-           "QWidget#titleBar{background-color:#FFFFFF}"
-           "QLineEdit {border: 0px;}"
-           "QWidget#editWidget {background-color:#FFFFFF; border-radius:7px;}"
-           "QFrame {border-top: 1px solid %1; border-bottom: none;}").arg(LINE_COLOR);
 
-       // 设置合并后的样式表
-     setStyleSheet(styleSheet);
     initfontCombobox();
 
     //设置标题栏按钮

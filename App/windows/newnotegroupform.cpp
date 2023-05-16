@@ -26,10 +26,9 @@ void NewNoteGroupForm::InitColorPushBtn()
     {
         QToolButton* toolBtn= dynamic_cast<QToolButton*>(ui->colorLayout->itemAt(i)->widget());
         QString color=QString::fromStdString(util::colorBtnMap.at(i));
-
         //动态设置颜色，从map中取值，并设置checked后的样式
         QString style=QString("QToolButton{background-color:%1;}"
-                              "QToolButton:checked {border:2px solid %1;background-color:#FFFFFF;}").arg(color);
+                              "QToolButton:checked {border:2px solid %1;background-color:transparent;}").arg(color);
         toolBtn->setStyleSheet(style);
         connect(toolBtn,&QToolButton::clicked,this,&NewNoteGroupForm::onColorToolBtn_clicked);
     }
@@ -97,13 +96,13 @@ void NewNoteGroupForm::okBtn_clicked()
     if(ui->nameLineEdit->text().isEmpty())
     {
        ui->warningLabel->setText("名称为空，请输入名称!");
-       ui->warningLabel->setStyleSheet("color:red");
+       ui->warningLabel->setVisible(true);
        return;
     }
     else
     {
         ui->warningLabel->setText("");
-        ui->warningLabel->setStyleSheet("color:transparent");
+        ui->warningLabel->setVisible(false);
     }
     emit sendParentWindowData(ui->nameLineEdit->text(),color_index);
     ui->nameLineEdit->setText("");
@@ -113,6 +112,7 @@ void NewNoteGroupForm::okBtn_clicked()
 void NewNoteGroupForm::cancleBtn_clicked()
 {
     ui->nameLineEdit->setText("");
+    ui->warningLabel->setVisible(false);
     this->setVisible(false);
 }
 

@@ -22,7 +22,7 @@
 #define ATTRIBUTE_ISCHECKED "ischeckd"
 #define ATTRIBUTE_ICONINDEX "iconindex"
 #define ATTRIBUTE_SELECTED "selected"
-#define LINE_COLOR "rgb(239, 239, 239)"
+
 
 enum OperationType
 {

@@ -1,6 +1,6 @@
 #include <QMouseEvent>
 #include <QScrollBar>
-#include<QLabel>
+#include <QLabel>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "util.h"
@@ -8,6 +8,7 @@
 #include "ui_texteditcontainer.h"
 #include "noteconfig.h"
 #include "thememanager.h"
+#include "theme.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -91,7 +92,13 @@ MainWindow::MainWindow(QWidget *parent)
              util::isThemeDark=true;
              f.open(QFile::ReadOnly | QFile::Text);
              QTextStream ts(&f);
-             qApp->setStyleSheet(ts.readAll());
+
+             QString allstyle=ts.readAll();
+             for(auto item : themeDark)
+             {
+                 allstyle= allstyle.replace(item.first,item.second);
+             };
+              qApp->setStyleSheet(allstyle);
              ThemeManager::getInstance().triggerThemeGlobalEvent();
          }
     });
@@ -108,7 +115,12 @@ MainWindow::MainWindow(QWidget *parent)
             util::isThemeDark=false;
             f.open(QFile::ReadOnly | QFile::Text);
             QTextStream ts(&f);
-            qApp->setStyleSheet(ts.readAll());
+            QString allstyle=ts.readAll();
+            for(auto item : themeLight)
+            {
+                allstyle= allstyle.replace(item.first,item.second);
+            };
+            qApp->setStyleSheet(allstyle);
             ThemeManager::getInstance().triggerThemeGlobalEvent();
         }
     });

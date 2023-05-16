@@ -2,7 +2,6 @@
 #include "util.h"
 #include "newhabitform.h"
 #include "ui_newhabitform.h"
-#include "baseinfo.h"
 
 
 #define DefaultDisplayTip "未命名项目"
@@ -82,13 +81,13 @@ void NewHabitForm::okBtn_clicked()
     if(ui->nameLineEdit->text().isEmpty())
     {
        ui->warningLabel->setText("项目名称为空，请输入项目名称!");
-       ui->warningLabel->setStyleSheet("color:red");
+       ui->warningLabel->setVisible(true);
        return;
     }
     else
     {
         ui->warningLabel->setText("");
-        ui->warningLabel->setStyleSheet("color:transparent");
+        ui->warningLabel->setVisible(false);
     }
     ui->nameLabel->setText("请输入项目名称");
     emit sendSelectDataToParent(ui->nameLineEdit->text(),iconIndex,formMode);
@@ -100,6 +99,7 @@ void NewHabitForm::okBtn_clicked()
 void NewHabitForm::cancleBtn_clicked()
 {
     ui->nameLineEdit->setText("");
+    ui->warningLabel->setVisible(false);
     this->setVisible(false);
     formMode=0;
 }

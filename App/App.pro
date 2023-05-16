@@ -16,7 +16,8 @@ INCLUDEPATH += \
     $$PWD/base \
     $$PWD/xmlconfig \
     $$PWD/business \
-    $$PWD/util
+    $$PWD/util \
+    $$PWD/ui
 
 SOURCES += \
     business/calendarcentral.cpp \
@@ -28,6 +29,7 @@ SOURCES += \
     custom_controls/lntextedit.cpp \
     custom_controls/weektoolbutton.cpp \
     custom_controls/roundedtooltip.cpp \
+    ui/theme.cpp \
     widgets/habititem.cpp \
     widgets/recorditem.cpp \
     widgets/calendarcontrol.cpp \
@@ -52,6 +54,7 @@ HEADERS += \
     custom_controls/lntextedit.h \
     custom_controls/weektoolbutton.h \  \
     custom_controls/roundedtooltip.h \
+    ui/theme.h \
     widgets/habititem.h \
     xmlconfig/noteconfig.h \
     widgets/recorditem.h \
@@ -116,6 +119,7 @@ COPIES += qssTransfer # 添加 qss 文件夹到拷贝列表
 COPIES += transfer
 
 DISTFILES += \
+    projectStruct.txt \
     qss/dark.qss \
     qss/light.qss \
     todoList.txt

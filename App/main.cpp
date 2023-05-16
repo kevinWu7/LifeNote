@@ -1,6 +1,7 @@
 #include <QApplication>
 #include "mainwindow.h"
 #include "util.h"
+#include "theme.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,7 +16,12 @@ int main(int argc, char *argv[])
         util::isThemeDark=true;
         f.open(QFile::ReadOnly | QFile::Text);
         QTextStream ts(&f);
-        qApp->setStyleSheet(ts.readAll());
+        QString allstyle=ts.readAll();
+        for(auto item : themeDark)
+        {
+            allstyle= allstyle.replace(item.first,item.second);
+        };
+        qApp->setStyleSheet(allstyle);
     }
     MainWindow w;
     w.setWindowTitle(WINDOW_TITLE);

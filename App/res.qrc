@@ -16,28 +16,29 @@
         <file>res/checkin/train.png</file>
         <file>res/checkin/train2.png</file>
         <file>res/note/addnew.png</file>
-        <file>res/note/bold.png</file>
         <file>res/note/childnote.png</file>
         <file>res/note/collect.png</file>
-        <file>res/note/color.png</file>
-        <file>res/note/fontAdd.png</file>
-        <file>res/note/fontReduce.png</file>
-        <file>res/note/img.png</file>
-        <file>res/note/italic.png</file>
         <file>res/note/notechild.svg</file>
         <file>res/note/noteparent.svg</file>
         <file>res/note/parentnote.png</file>
         <file>res/note/recycle.png</file>
-        <file>res/note/save.png</file>
         <file>res/note/search.png</file>
         <file>res/note/today.png</file>
-        <file>res/note/underline.png</file>
-        <file>res/note/undo.png</file>
         <file>res/checkin/tick.png</file>
         <file>res/checkin/arrow-left.png</file>
         <file>res/checkin/arrow-right.png</file>
         <file>res/checkin/bowl.png</file>
         <file>res/note/edit.png</file>
         <file>res/note/delete.svg</file>
+        <file>res/note/bold.svg</file>
+        <file>res/note/color.svg</file>
+        <file>res/note/fontAdd.svg</file>
+        <file>res/note/fontReduce.svg</file>
+        <file>res/note/img.svg</file>
+        <file>res/note/italic.svg</file>
+        <file>res/note/save.svg</file>
+        <file>res/note/underline.svg</file>
+        <file>res/note/undo.svg</file>
+        <file>res/note/img.png</file>
     </qresource>
 </RCC>

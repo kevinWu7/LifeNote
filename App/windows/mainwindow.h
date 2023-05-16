@@ -66,6 +66,8 @@ private:
     checkinWidget *_checkinWidget=nullptr;
     NewNoteGroupForm * newGroupForm=nullptr;
     QTextBlockFormat *blockFormat=nullptr;//to set qtextedit vertical interval 3
+    themeChangedCallback bindThemeChangetCallback;
+    void themeChangedUiStatus();
 
 public slots:
     void onSaveBtn_clicked();

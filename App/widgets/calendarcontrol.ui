@@ -108,7 +108,7 @@
     </widget>
    </item>
    <item>
-    <widget class="Line" name="centerLine">
+    <widget class="Line" name="centerHorizontalLine">
      <property name="enabled">
       <bool>true</bool>
      </property>

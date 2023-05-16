@@ -9,10 +9,8 @@ RecordItem::RecordItem(QWidget *parent) :
     ui(new Ui::RecordItem)
 {
     ui->setupUi(this);
-    ui->numberLabel->setStyleSheet(QString(""));
     ui->numberLabel->setFont(QFont("Arial", 25, QFont::Normal));
     ui->textLabel->setFont(QFont("Arial", 12, QFont::Normal));
-    ui->textLabel->setStyleSheet("color:rgb(160,160,160)");
 
     // 绑定成员函数到实例
     bindFunctionOfreceiveBtnChecked = std::bind(&RecordItem::receiveBtnChecked, this, std::placeholders::_1);

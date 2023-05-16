@@ -1,6 +1,7 @@
 /* 系统控件 */
-QWidget {
-   background-color:transparent;
+QFrame[objectName*="HorizontalLine"] {
+    border-top: 1px solid rgb(72, 72, 72);;
+    border-bottom: none;
 }
 
 QCheckBox{
@@ -33,7 +34,7 @@ QTextEdit {
 
 QLineEdit {
     border:0px;
-    background-color: rgb(41,40,38);
+    background-color: rgb(98,98,98);
     color: white;
 }
 
@@ -102,7 +103,9 @@ QScrollBar::sub-line:horizontal {
     width: 0px;
     subcontrol-position: right;
 }
-
+QTreeWidget {
+    background-color:transparent;
+}
 
 QTreeView::item {
     height: 25px;
@@ -122,6 +125,11 @@ QTreeView::branch:selected:!active {
 
 
 /* mainwindow */
+QWidget#mainPage QLineEdit {
+    border:0px;
+    background-color: rgb(41,40,38);
+    color: white;
+}
 QWidget#mainPage{
     background-color:rgb(63,62,58);
 }
@@ -157,7 +165,7 @@ QWidget#titleBar {
 
 QWidget#titleBar QToolButton:checked,
 QWidget#titleBar QToolButton:hover {
-    background-color:rgb(70,70,70);
+    background-color:rgb(72,72,72);
 }
 
 QWidget#editWidget {
@@ -165,10 +173,6 @@ QWidget#editWidget {
     border-radius: 7px;
 }
 
-QWidget#editWidget QFrame#titleBarBottomLine {
-    border-top: 1px solid rgb(72, 72, 72);
-    border-bottom: none;
-}
 
 
 
@@ -206,10 +210,7 @@ QLabel#datetimeLabel{
     font-size: 16pt;
 }
 
-QFrame#centerLine{
-  border-top: 1px solid rgb(72, 72, 72);
-  border-bottom: none;
-}
+
 
 QWidget#weekDayWidget QLabel{
    width: 32px ;
@@ -218,10 +219,7 @@ QWidget#weekDayWidget QLabel{
    font-size: 12px;
    color: rgb(111, 111, 111);
 }
-QWidget#weekDayWidget QLabel#weeklabel_6 {
-     color: rgba(255,185,48,0.8);
-}
-
+QWidget#weekDayWidget QLabel#weeklabel_6,
 QWidget#weekDayWidget QLabel#weeklabel_7 {
      color: rgba(255,185,48,0.8);
 }
@@ -256,6 +254,9 @@ QToolButton#arrowRightBtn:hover{
     background-color:  rgb(72, 72, 72);
 }
 
+QWidget#recordWidget QLabel#textLabel{
+    color:rgb(160,160,160);
+}
 
 /*habitItem*/
 QWidget#leftNavigateWidget QLabel#dayLabel {
@@ -269,6 +270,76 @@ QWidget#leftNavigateWidget QLabel#textLabel {
 QWidget#leftNavigateWidget QLabel#countLabel {
     font:13px;
 }
+
+
+/*NewHabitForm*/
+QWidget#NewHabitForm {
+    background-color:rgb(41,40,38);
+}
+
+QWidget#NewHabitForm QWidget#iconWidget QToolButton{
+      border: none;
+      width: 34px;  min-width: 34px; max-width: 34px;
+      height:34px; min-height:34px; max-height:34px;
+      border-radius: 17px;
+      padding: 0;
+      margin: 0;
+}
+
+QWidget#NewHabitForm QToolButton:checked,
+QWidget#NewHabitForm QToolButton:hover{
+    background-color:rgb(78,78,78);
+}
+
+
+QWidget#NewHabitForm QLabel{
+    color:rgb(110,111,111);
+    font-size:11px;
+}
+
+QWidget#NewHabitForm QPushButton#okBtn{
+    background-color:rgb(235,181,67);
+    width: 60px;
+    height:20px;
+    border-style: solid;
+    border-color:rgb(235,181,67);
+    border-width: 1px;
+    border-radius: 5px;
+    color:white;
+}
+
+/*NewNoteGroupForm*/
+QWidget#NewNoteGroupForm {
+    background-color:rgb(41,40,38);
+}
+
+QWidget#NewNoteGroupForm QWidget#QColorWidget QToolButton{
+    border: 1px;
+    width:16px; min-width: 16px; max-width: 16px;
+    height: 16px ; min-height: 16px; max-height: 16px;
+    border-radius: 8px;
+    color: rgb(41,40,38);
+    padding: 0;
+    margin: 0;
+}
+
+
+QWidget#NewNoteGroupForm QLabel{
+    color:rgb(110,111,111);
+    font-size:11px;
+}
+
+QWidget#NewNoteGroupForm QPushButton#okBtn{
+    background-color:rgb(235,181,67);
+    width: 90px;
+    height:20px;
+    border-style: solid;
+    border-color:rgb(235,181,67);
+    border-width: 1px;
+    border-radius: 5px;
+    color:white;
+}
+
 
 
 /* other */

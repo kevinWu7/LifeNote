@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QDate>
 #include "checkinconfig.h"
+#include "calendarcentral.h"
+#include "thememanager.h"
 namespace Ui {
 class HabitItem;
 }
@@ -31,14 +33,13 @@ signals:
     void triggerMousePressEvent(HabitItem *habit);
 private:
     Ui::HabitItem *ui;
-    std::function<void(checkin_dateitem *)> bindFunctionOfreceiveBtnChecked;
+
+    checkBtnCallback bindFunctionOfreceiveBtnChecked;
+    themeChangedCallback bindFunctionOfreceiveThemeChanged;
     void receiveBtnChecked(checkin_dateitem* dateItem);
+    void receiveThemeChanged();
     int checkedCount=0;//右侧统计x/7中指代x
-    QString baseStyleSheet;
-
-
-
-
+    void updateHabitUiStatus();
 };
 
 #endif // HABITITEM_H

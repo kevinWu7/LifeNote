@@ -21,6 +21,7 @@ INCLUDEPATH += \
 SOURCES += \
     business/calendarcentral.cpp \
     business/roundedtooltiphelper.cpp \
+    business/thememanager.cpp \
     custom_controls/monthbutton.cpp \
     custom_controls/extraqtreewidgetitem.cpp \
     custom_controls/lntreewidget.cpp \
@@ -44,6 +45,7 @@ SOURCES += \
 HEADERS += \
     business/calendarcentral.h \
     business/roundedtooltiphelper.h \
+    business/thememanager.h \
     custom_controls/monthbutton.h \
     custom_controls/extraqtreewidgetitem.h \
     custom_controls/lntreewidget.h \

@@ -6,7 +6,6 @@
 #include "util.h"
 #include "texteditcontainer.h"
 #include "ui_texteditcontainer.h"
-#include "baseinfo.h"
 #include "roundedtooltiphelper.h"
 
 
@@ -19,32 +18,24 @@ TextEditContainer::TextEditContainer(QWidget *parent) :
     initfontCombobox();
 
     //设置标题栏按钮
-    ui->boldBtn->setIcon(QIcon(":/icons/res/note/bold.png"));
+    themeChangedUpdateUiStatus();
+
     ui->boldBtn->setToolTip("加粗");
     RoundedToolTipHelper::installHelper(ui->boldBtn);
-
-    ui->italicBtn->setIcon(QIcon(":/icons/res/note/italic.png"));
     ui->italicBtn->setToolTip("斜体");
     RoundedToolTipHelper::installHelper(ui->italicBtn);
-    ui->colorBtn->setIcon(QIcon(":/icons/res/note/color.png"));
     ui->colorBtn->setToolTip("颜色");
     RoundedToolTipHelper::installHelper(ui->colorBtn);
-    ui->underlineBtn->setIcon(QIcon(":/icons/res/note/underline.png"));
     ui->underlineBtn->setToolTip("下划线");
     RoundedToolTipHelper::installHelper(ui->underlineBtn);
-    ui->pictureBtn->setIcon(QIcon(":/icons/res/note/img.png"));
     ui->pictureBtn->setToolTip("添加图片");
     RoundedToolTipHelper::installHelper(ui->pictureBtn);
-    ui->saveBtn->setIcon(QIcon(":/icons/res/note/save.png"));
     ui->saveBtn->setToolTip("保存");
     RoundedToolTipHelper::installHelper(ui->saveBtn);
-    ui->undoBtn->setIcon(QIcon(":/icons/res/note/undo.png"));
     ui->undoBtn->setToolTip("撤回");
     RoundedToolTipHelper::installHelper(ui->undoBtn);
-    ui->fontAddBtn->setIcon(QIcon(":/icons/res/note/fontAdd.png"));
     ui->fontAddBtn->setToolTip("增大字号");
     RoundedToolTipHelper::installHelper(ui->fontAddBtn);
-    ui->fontReduceBtn->setIcon(QIcon(":/icons/res/note/fontReduce.png"));
     ui->fontReduceBtn->setToolTip("减小字号");
     RoundedToolTipHelper::installHelper(ui->fontReduceBtn);
 
@@ -61,6 +52,9 @@ TextEditContainer::TextEditContainer(QWidget *parent) :
     connect(ui->fontComboBox, &QComboBox::currentIndexChanged,this, &TextEditContainer::comboBoxCurrentIndexChanged);
 
     connect(ui->textEdit,&QTextEdit::cursorPositionChanged,this,&TextEditContainer::textEditCursorPositionChanged);
+
+    bindThemeChangetCallback=std::bind(&TextEditContainer::themeChangedUpdateUiStatus,this);
+    ThemeManager::getInstance().registerThemeGlobalEvent(bindThemeChangetCallback);
 }
 
 TextEditContainer::~TextEditContainer()
@@ -160,7 +154,21 @@ void TextEditContainer::initfontCombobox()
     {
         ui->fontComboBox->addItem(afont);
     }
-     ui->fontComboBox->setCurrentIndex(3); //default font is 14
+    ui->fontComboBox->setCurrentIndex(3); //default font is 14
+}
+
+void TextEditContainer::themeChangedUpdateUiStatus()
+{
+    QString color=util::isThemeDark?"rgb(255,255,255)":"rgb(0,0,0)";
+    ui->boldBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/note/bold.svg",color));
+    ui->italicBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/note/italic.svg",color));
+    ui->colorBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/note/color.svg",color));
+    ui->underlineBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/note/underline.svg",color));
+    ui->pictureBtn->setIcon(QIcon(":/icons/res/note/img.png"));
+    ui->saveBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/note/save.svg",color));
+    ui->undoBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/note/undo.svg",color));
+    ui->fontAddBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/note/fontAdd.svg",color));
+    ui->fontReduceBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/note/fontReduce.svg",color));
 }
 
 //change comboBox's selectIndex when move cursor

@@ -71,8 +71,6 @@ void checkinWidget::initHabitRightMenu()
     rightHabitMenu=new QMenu(this);
     rightHabitMenu->addAction(editHabitAction);
     rightHabitMenu->addAction(deleteHabitAction);
-    rightHabitMenu->setStyleSheet("QMenu { width: 80px; background-color:white;}");
-                                 // "QMenu::item { height: 10px; padding-bottom: 10px;padding-left：20px }");
     connect(editHabitAction, &QAction::triggered, this, &checkinWidget::onMenuEdit);
     connect(deleteHabitAction, &QAction::triggered, this, &checkinWidget::onMenuDelete);
 }
@@ -185,7 +183,7 @@ void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex,int fo
 {
     if(formMode==0) //新建habit
     {
-        project_info *project=new project_info;
+        project_info *project=new project_info; //这里需要释放或者改成直接创建，否则会导致内存泄漏
         project->iconIndex=QString::number(iconIndex);
         project->project_name=name;
         HabitItem *habit= addHabitItem(project);

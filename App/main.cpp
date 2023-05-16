@@ -5,9 +5,6 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.setWindowTitle(WINDOW_TITLE);
-
     QFile f(QCoreApplication::applicationDirPath()+ "/qss/dark.qss");
     if (!f.exists())
     {
@@ -20,6 +17,10 @@ int main(int argc, char *argv[])
         QTextStream ts(&f);
         qApp->setStyleSheet(ts.readAll());
     }
+    MainWindow w;
+    w.setWindowTitle(WINDOW_TITLE);
+
+
     w.show();
     return a.exec();
 }

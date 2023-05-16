@@ -7,6 +7,7 @@
 #include "logger.h"
 #include "ui_texteditcontainer.h"
 #include "noteconfig.h"
+#include "thememanager.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -91,6 +92,7 @@ MainWindow::MainWindow(QWidget *parent)
              f.open(QFile::ReadOnly | QFile::Text);
              QTextStream ts(&f);
              qApp->setStyleSheet(ts.readAll());
+             ThemeManager::getInstance().triggerThemeGlobalEvent();
          }
     });
 
@@ -107,8 +109,11 @@ MainWindow::MainWindow(QWidget *parent)
             f.open(QFile::ReadOnly | QFile::Text);
             QTextStream ts(&f);
             qApp->setStyleSheet(ts.readAll());
+            ThemeManager::getInstance().triggerThemeGlobalEvent();
         }
     });
+    bindThemeChangetCallback=std::bind(&MainWindow::themeChangedUiStatus, this);
+    ThemeManager::getInstance().registerThemeGlobalEvent(bindThemeChangetCallback);
     _checkinWidget->setVisible(false);
 }
 
@@ -371,14 +376,7 @@ void MainWindow::checkinBtn_clicked()
     _checkinWidget->setVisible(true);
     textEditContainer->setVisible(false);
     _checkinWidget->setFocus();
-    if(util::isThemeDark)
-    {
-         ui->checkinBtn->setStyleSheet("background-color:rgb(82,82,82)");
-    }
-    else
-    {
-        ui->checkinBtn->setStyleSheet("background-color:rgb(186, 214, 251)");
-    }
+    themeChangedUiStatus();
 }
 
 void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
@@ -532,6 +530,25 @@ void MainWindow::setLineVerticalInterval()
     textEditContainer->ui->textEdit->setTextCursor(textCursor);
 }
 
+void MainWindow::themeChangedUiStatus()
+{
+    if(ui->checkinBtn->isChecked())
+    {
+        if(util::isThemeDark)
+        {
+            ui->checkinBtn->setStyleSheet("background-color:rgb(82,82,82)");
+        }
+        else
+        {
+            ui->checkinBtn->setStyleSheet("background-color:rgb(186, 214, 251)");
+        }
+    }
+    else
+    {
+        ui->checkinBtn->setStyleSheet("background-color:transparent");
+    }
+}
+
 
 void MainWindow::onTreeWidgetItemClicked(QTreeWidgetItem *item, int column)
 {
@@ -541,7 +558,8 @@ void MainWindow::onTreeWidgetItemClicked(QTreeWidgetItem *item, int column)
         _checkinWidget->setVisible(false);
         textEditContainer->setVisible(true);
     }
-    ui->checkinBtn->setStyleSheet("background-color:transparent");
+    ui->checkinBtn->setChecked(false);
+    themeChangedUiStatus();
 }
 //切换左侧节点时，保存上一个节点的内容，加载当前节点的内容
 void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
@@ -815,9 +833,9 @@ void MainWindow::onApplicationQuit()
     QString dirPath = fullPath.left(first); //文件夹路径
 
     //如果路径不存在，则创建
-    QDir* dir = new QDir();
-    if(!dir->exists(dirPath)){
-        dir->mkpath(dirPath);
+    QDir dir ;
+    if(!dir.exists(dirPath)){
+        dir.mkpath(dirPath);
     }
 
     //创建一个输出文件的文档

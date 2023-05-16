@@ -6,7 +6,7 @@
 #include "checkinconfig.h"
 #include "logger.h"
 #include "roundedtooltiphelper.h"
-#include "calendarcentral.h"
+
 
 
 HabitItem::HabitItem(QString name,QWidget *parent) :
@@ -23,10 +23,14 @@ HabitItem::HabitItem(QString name,QWidget *parent) :
 
     InitWeekButtons();
     ui->nameLabel->setText(name);
+
+
     // 绑定成员函数到实例
     bindFunctionOfreceiveBtnChecked = std::bind(&HabitItem::receiveBtnChecked, this, std::placeholders::_1);
     // 注册全局事件
     CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
+    bindFunctionOfreceiveThemeChanged=std::bind(&HabitItem::receiveThemeChanged, this);
+    ThemeManager::getInstance().registerThemeGlobalEvent(bindFunctionOfreceiveThemeChanged);
 }
 
 void HabitItem::mousePressEvent(QMouseEvent *event)
@@ -115,6 +119,36 @@ void HabitItem::receiveBtnChecked(checkin_dateitem *dateItem)
     }
 }
 
+void HabitItem::setHabitSelected(bool isSelect)
+{
+    isSelected=isSelect;
+    updateHabitUiStatus();
+}
+
+void HabitItem::receiveThemeChanged()
+{
+    updateHabitUiStatus();
+}
+
+void HabitItem::updateHabitUiStatus()
+{
+    if(!isSelected)
+    {
+        this->setStyleSheet("QWidget#mainWidget{background-color:transparent}");
+    }
+    else
+    {
+        if (util::isThemeDark)
+        {
+            this->setStyleSheet("QWidget#mainWidget{background-color:rgb(72,72,72)}");
+        }
+        else
+        {
+            this->setStyleSheet("QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
+        }
+    }
+}
+
 
 
 void HabitItem::setIconIndex(int index)
@@ -130,31 +164,12 @@ void HabitItem::setProjectName(QString name)
     projectName=name;
 }
 
-void HabitItem::setHabitSelected(bool isSelect)
-{
-    isSelected=isSelect;
-    if(!isSelect)
-    {
-        this->setProperty("isSelect","false");
-        this->setStyleSheet("QWidget#mainWidget{background-color:transparent}");
-    }
-    else
-    {
-        this->setProperty("isSelect","true");
-        if (util::isThemeDark)
-        {
-            this->setStyleSheet("QWidget#mainWidget{background-color:rgb(72,72,72)}");
-        }
-        else
-        {
-            this->setStyleSheet("QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
-        }
-    }
-}
+
 
 
 HabitItem::~HabitItem()
 {
     CalendarCentral::getInstance().unregisterGlobalEvent(bindFunctionOfreceiveBtnChecked);
+    ThemeManager::getInstance().unregisterThemeGlobalEvent(bindFunctionOfreceiveThemeChanged);
     delete ui;
 }

@@ -40,5 +40,8 @@
         <file>res/note/underline.svg</file>
         <file>res/note/undo.svg</file>
         <file>res/note/img.png</file>
+        <file>res/system/min.png</file>
+        <file>res/system/close.png</file>
+        <file>res/system/max.png</file>
     </qresource>
 </RCC>

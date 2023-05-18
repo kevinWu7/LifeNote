@@ -11,8 +11,6 @@ CalendarControl::CalendarControl(QWidget *parent) :
 {
     ui->setupUi(this);
 
-
-
     ui->arrowLeftBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->arrowLeftBtn->setIcon(QIcon(":/icons/res/checkin/arrow-left.png"));
     ui->arrowRightBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);

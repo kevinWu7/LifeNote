@@ -140,7 +140,7 @@ void HabitItem::updateHabitUiStatus()
     {
         if (util::isThemeDark)
         {
-            this->setStyleSheet("QWidget#mainWidget{background-color:rgb(72,72,72)}");
+            this->setStyleSheet("QWidget#mainWidget{background-color:rgb(72,72,72)}");//727272
         }
         else
         {

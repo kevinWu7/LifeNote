@@ -1,9 +1,9 @@
 QT       += core gui svg xml help
 
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
+
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -30,6 +30,7 @@ SOURCES += \
     custom_controls/weektoolbutton.cpp \
     custom_controls/roundedtooltip.cpp \
     ui/theme.cpp \
+    widgets/titlebarwidget.cpp \
     widgets/habititem.cpp \
     widgets/recorditem.cpp \
     widgets/calendarcontrol.cpp \
@@ -55,6 +56,7 @@ HEADERS += \
     custom_controls/weektoolbutton.h \  \
     custom_controls/roundedtooltip.h \
     ui/theme.h \
+    widgets/titlebarwidget.h \
     widgets/habititem.h \
     xmlconfig/noteconfig.h \
     widgets/recorditem.h \
@@ -79,6 +81,10 @@ FORMS += \
     windows/newhabitform.ui \
     windows/mainwindow.ui \
     windows/newnotegroupform.ui
+
+LIBS +=   -framework AppKit  # 链接 Foundation 和 AppKit 框架
+OBJECTIVE_SOURCES += \#引入object-C的类源文件
+    titlebarcontroller.mm
 
 
 # Default rules for deployment.
@@ -123,4 +129,7 @@ DISTFILES += \
     qss/dark.qss \
     qss/light.qss \
     todoList.txt
+
+
+
 

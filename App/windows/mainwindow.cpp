@@ -1,6 +1,8 @@
 #include <QMouseEvent>
 #include <QScrollBar>
 #include <QLabel>
+#include <QToolBar>
+#include <QPushButton>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "util.h"
@@ -10,12 +12,26 @@
 #include "thememanager.h"
 #include "theme.h"
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_TranslucentBackground); // 设置窗口背景透明
+#ifdef Q_OS_MAC
+     ui->mainWindowTiitle->setVisible(false);
+     Cocoa::changeTitleBarColor(winId(), BLUE_BACKGROUND);
+     //Cocoa::changeTitleBarTextColor(winId(),"rgb(255,10,10)");
+#endif
+
+#ifdef Q_OS_WIN
+    this->setWindowFlags(Qt::FramelessWindowHint);
+    connect(ui->mainWindowTiitle->minButton, &QToolButton::clicked, this, &MainWindow::showMinimized);
+    connect(ui->mainWindowTiitle->maxButton, &QToolButton::clicked, this, &MainWindow::toggleMaximized);
+    connect( ui->mainWindowTiitle->closeButton, &QToolButton::clicked, this, &MainWindow::close);
+#endif
+
+
     textEditContainer=new TextEditContainer;
     _checkinWidget =new checkinWidget;
     logger->logEdit=ui->loggerTextEdit;
@@ -24,12 +40,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tabLayout->addWidget(textEditContainer);
     ui->tabLayout->addWidget(_checkinWidget);
 
-
-
-
     ui->loggerTextEdit->setVisible(false);
     ui->loggerTextEdit->isAutoHide=false;
-
 
     //set the splitter default-ratio,total=9,leftbar=2,editwidget=7.
     ui->controlSplitter->setStretchFactor(0, 2); //代表第0个控件，即leftbar所占比例为2
@@ -37,8 +49,6 @@ MainWindow::MainWindow(QWidget *parent)
     //设置logger输出框，占比为3/8
     ui->mainSplitter->setStretchFactor(0,5);
     ui->mainSplitter->setStretchFactor(1,3);
-
-
 
     //通过配置文件，创建node
     noteconfig::loadConfigXML(ui->treeWidget);
@@ -98,7 +108,7 @@ MainWindow::MainWindow(QWidget *parent)
              {
                  allstyle= allstyle.replace(item.first,item.second);
              };
-              qApp->setStyleSheet(allstyle);
+             qApp->setStyleSheet(allstyle);
              ThemeManager::getInstance().triggerThemeGlobalEvent();
          }
     });
@@ -124,10 +134,13 @@ MainWindow::MainWindow(QWidget *parent)
             ThemeManager::getInstance().triggerThemeGlobalEvent();
         }
     });
+
     bindThemeChangetCallback=std::bind(&MainWindow::themeChangedUiStatus, this);
     ThemeManager::getInstance().registerThemeGlobalEvent(bindThemeChangetCallback);
     _checkinWidget->setVisible(false);
 }
+
+
 
 
 #pragma region TitleBar-Button-Funciton{
@@ -860,6 +873,41 @@ void MainWindow::onApplicationQuit()
     }
     myfile.close();
 }
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        // 记录鼠标按下时的窗口位置
+        m_dragPosition =  event->globalPosition().toPoint() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    if (event->buttons() & Qt::LeftButton)
+    {
+        //移动窗口到当前鼠标位置
+        move(event->globalPosition().toPoint() - m_dragPosition);
+        event->accept();
+    }
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        // 鼠标释放时，停止拖动
+        event->accept();
+    }
+}
+
+void MainWindow::toggleMaximized()
+{
+
+}
+
 
 MainWindow::~MainWindow()
 {

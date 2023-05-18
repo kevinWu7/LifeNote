@@ -133,15 +133,21 @@ QTreeView::branch:selected:!active {
 
 
 /* mainwindow*/
-QWidget#mainPage QLineEdit {
-    border:0px;
+QWidget#mainWindowTiitle{
     background-color:BACKGROUND_COLOR1;
-    color: CONTROL_TEXT;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
 }
 
-
+QWidget#mainPage QLineEdit {
+    border:0px;
+    background-color: BACKGROUND_COLOR1;
+    color: CONTROL_TEXT;
+}
 QWidget#mainPage{
     background-color:BACKGROUND_COLOR2;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
 }
 
 QWidget#leftBar {

@@ -21,8 +21,14 @@
 #include "checkinwidget.h"
 
 
-
-
+#ifdef Q_OS_MAC
+namespace Cocoa
+{
+  void changeTitleBarColor(WId winId,QString color);
+  void changeTitleBarHeight(WId winId, double height);
+  void changeTitleBarTextColor(WId winId, QString color);
+}
+#endif
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -33,9 +39,9 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    QPoint m_dragPosition;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
 
 //重写键盘函数
 public:
@@ -68,6 +74,12 @@ private:
     QTextBlockFormat *blockFormat=nullptr;//to set qtextedit vertical interval 3
     themeChangedCallback bindThemeChangetCallback;
     void themeChangedUiStatus();
+
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event)override;
+    void mouseReleaseEvent(QMouseEvent *event)override;
+    void toggleMaximized();
+
 
 public slots:
     void onSaveBtn_clicked();

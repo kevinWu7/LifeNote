@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
         f.open(QFile::ReadOnly | QFile::Text);
         QTextStream ts(&f);
         QString allstyle=ts.readAll();
-        for(auto item : themeDark)
+        for(auto item : themeBlue)
         {
             allstyle= allstyle.replace(item.first,item.second);
         };
@@ -25,7 +25,6 @@ int main(int argc, char *argv[])
     }
     MainWindow w;
     w.setWindowTitle(WINDOW_TITLE);
-
 
     w.show();
     return a.exec();

@@ -159,7 +159,7 @@ void TextEditContainer::initfontCombobox()
 
 void TextEditContainer::themeChangedUpdateUiStatus()
 {
-    QString color=util::isThemeDark?"rgb(255,255,255)":"rgb(0,0,0)";
+    QString color= ThemeManager::ThemeId=="light"?"rgb(0,0,0)":"rgb(255,255,255)";
     ui->boldBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/note/bold.svg",color));
     ui->italicBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/note/italic.svg",color));
     ui->colorBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/note/color.svg",color));

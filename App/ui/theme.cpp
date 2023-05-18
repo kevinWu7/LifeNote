@@ -31,3 +31,5 @@ std::map<QString,QString> themeLight={
     {"CONTROL_POOLTEXT","rgb(180,180,180)"}, //浅文字
     {"SINGLE_LINE_COLOR","rgb(239, 239, 239)"}
 };
+
+

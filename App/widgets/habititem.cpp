@@ -138,7 +138,7 @@ void HabitItem::updateHabitUiStatus()
     }
     else
     {
-        if (util::isThemeDark)
+        if (ThemeManager::ThemeId=="dark")
         {
             this->setStyleSheet("QWidget#mainWidget{background-color:rgb(72,72,72)}");//727272
         }

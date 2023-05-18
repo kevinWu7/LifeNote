@@ -20,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
     setAttribute(Qt::WA_TranslucentBackground); // 设置窗口背景透明
 #ifdef Q_OS_MAC
      ui->mainWindowTiitle->setVisible(false);
-     Cocoa::changeTitleBarColor(winId(), BLUE_BACKGROUND);
      //Cocoa::changeTitleBarTextColor(winId(),"rgb(255,10,10)");
 #endif
 
@@ -31,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect( ui->mainWindowTiitle->closeButton, &QToolButton::clicked, this, &MainWindow::close);
 #endif
 
-
+    ui->mainPage->setProperty("platform",util::getPlatFormName());
     textEditContainer=new TextEditContainer;
     _checkinWidget =new checkinWidget;
     logger->logEdit=ui->loggerTextEdit;
@@ -92,47 +91,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->darkRadioButton->setChecked(true);
     connect(ui->darkRadioButton, &QRadioButton::clicked, [=](){
-         QFile f(QCoreApplication::applicationDirPath()+ "/qss/dark.qss");
-         if (!f.exists())
-         {
-             qDebug() << "Unable to set stylesheet, file not found";
-         }
-         else
-         {
-             util::isThemeDark=true;
-             f.open(QFile::ReadOnly | QFile::Text);
-             QTextStream ts(&f);
-
-             QString allstyle=ts.readAll();
-             for(auto item : themeDark)
-             {
-                 allstyle= allstyle.replace(item.first,item.second);
-             };
-             qApp->setStyleSheet(allstyle);
-             ThemeManager::getInstance().triggerThemeGlobalEvent();
-         }
+        ThemeManager::getInstance().switchTheme("dark");
     });
 
 
     connect(ui->lightRadioButton, &QRadioButton::clicked, [=](){
-        QFile f(QCoreApplication::applicationDirPath()+ "/qss/light.qss");
-        if (!f.exists())
-        {
-            qDebug() << "Unable to set stylesheet, file not found";
-        }
-        else
-        {
-            util::isThemeDark=false;
-            f.open(QFile::ReadOnly | QFile::Text);
-            QTextStream ts(&f);
-            QString allstyle=ts.readAll();
-            for(auto item : themeLight)
-            {
-                allstyle= allstyle.replace(item.first,item.second);
-            };
-            qApp->setStyleSheet(allstyle);
-            ThemeManager::getInstance().triggerThemeGlobalEvent();
-        }
+         ThemeManager::getInstance().switchTheme("light");
     });
 
     bindThemeChangetCallback=std::bind(&MainWindow::themeChangedUiStatus, this);
@@ -559,7 +523,7 @@ void MainWindow::themeChangedUiStatus()
 {
     if(ui->checkinBtn->isChecked())
     {
-        if(util::isThemeDark)
+        if(ThemeManager::ThemeId=="dark")
         {
             ui->checkinBtn->setStyleSheet("background-color:rgb(82,82,82)");
         }
@@ -874,34 +838,8 @@ void MainWindow::onApplicationQuit()
     myfile.close();
 }
 
-void MainWindow::mousePressEvent(QMouseEvent *event)
-{
-    if (event->button() == Qt::LeftButton)
-    {
-        // 记录鼠标按下时的窗口位置
-        m_dragPosition =  event->globalPosition().toPoint() - frameGeometry().topLeft();
-        event->accept();
-    }
-}
 
-void MainWindow::mouseMoveEvent(QMouseEvent *event)
-{
-    if (event->buttons() & Qt::LeftButton)
-    {
-        //移动窗口到当前鼠标位置
-        move(event->globalPosition().toPoint() - m_dragPosition);
-        event->accept();
-    }
-}
 
-void MainWindow::mouseReleaseEvent(QMouseEvent *event)
-{
-    if (event->button() == Qt::LeftButton)
-    {
-        // 鼠标释放时，停止拖动
-        event->accept();
-    }
-}
 
 void MainWindow::toggleMaximized()
 {

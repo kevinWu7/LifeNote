@@ -5,19 +5,24 @@
 #include <QToolButton>
 #include <QSpacerItem>
 #include <QHBoxLayout>
+#include <QMouseEvent>
+#include <QMainWindow>
 
 class TitleBarWidget:public QWidget
 {
 public:
     TitleBarWidget(QWidget *parent = nullptr);
-
+    QPoint m_dragPosition;
     QToolButton *minButton;
     QToolButton *maxButton;
     QToolButton *closeButton;
     QSpacerItem *spacer;
     QHBoxLayout *mainLayout;
-   // (20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event)override;
+    void mouseReleaseEvent(QMouseEvent *event)override;
+private:
+    QMainWindow* mainWindow=nullptr;
 };
 
 #endif // TITLEBARWIDGET_H

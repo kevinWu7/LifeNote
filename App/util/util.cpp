@@ -8,7 +8,6 @@
 #include "util.h"
 #include "extraqtreewidgetitem.h"
 
-bool util::isThemeDark=true;
 
 std::map<int,std::string> util::iconMap={
     {0,"computer.png" },{1,"run.png" },{2,"english.png" },{3,"study.png" },{4,"train.png" },
@@ -316,5 +315,53 @@ std::vector<QDate> util::getThisWeek()
     return thisWeek;
 }
 
+QMainWindow* util::getCurrentMainWindow()
+{
+    QApplication* app = qApp;
+    QMainWindow* mainWindow = nullptr;
+
+    // 判断应用程序对象类型
+    if (app)
+    {
+        // 获取主窗体指针
+        const auto topLevelWidgets = app->topLevelWidgets();
+        for (QWidget* widget : topLevelWidgets)
+        {
+            mainWindow = qobject_cast<QMainWindow*>(widget);
+            if (mainWindow)
+            {
+                break;
+            }
+        }
+    }
+    return mainWindow;
+}
+
+QMainWindow* util::getQMainWindowByWidget(QWidget* widget)
+{
+    QMainWindow* mainWindow = nullptr;
+    while (widget != nullptr)
+    {
+        mainWindow = qobject_cast<QMainWindow*>(widget);
+        if (mainWindow != nullptr)
+        {
+            // 找到了 MainWindow
+            break;
+        }
+        widget = widget->parentWidget();
+    }
+    return mainWindow;
+}
+
+QString util::getPlatFormName()
+{
+#ifdef Q_OS_MAC
+    return "macos";
+#elif Q_OS_WIN
+    return "windows";
+#else
+    return "unknown";
+#endif
+}
 
 

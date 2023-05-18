@@ -12,4 +12,5 @@ extern std::map<QString, QString> themeDark;
 extern std::map<QString, QString> themeLight;
 extern std::map<QString, QString> themeBlue;
 
+
 #endif // THEME_H

@@ -3,6 +3,7 @@
 
 #include <QTreeWidgetItem>
 #include <QDomElement>
+#include <QMainWindow>
 
 
 #ifdef QT_NO_DEBUG
@@ -32,6 +33,10 @@ public:
     static std::vector<QString> fontVector;
     static QDomNode selectSingleNode(const QString& path,QDomDocument* doc);
     static std::vector<QDate> getThisWeek();
+    static QMainWindow* getQMainWindowByWidget(QWidget* widget);
+    static QMainWindow* getCurrentMainWindow();
+    static QString getPlatFormName();
+
     template<typename T>
     static T *findWidget(QWidget *parent, const QString &objectName)
     {
@@ -50,7 +55,7 @@ public:
         }
         return childWidget;
     }
-    static bool isThemeDark;
+
 };
 
 #endif // UTIL_H

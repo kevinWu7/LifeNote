@@ -9,7 +9,7 @@
 #define  ATTRIBUTE_NOTETYPE "nodetype"
 #define  ATTRIBUTE_COLORINDEX "colorindex"
 #define  ATTRIBUTE_STARTFLAG "isStartWithDigit"
-#define  WINDOW_TITLE "理想之城"
+#define  WINDOW_TITLE "LiftNote"
 
 #define NODENAME_TOTALPROJECT "TotalProject"
 #define NODENAME_DETAILPROJECT "DetailProject"

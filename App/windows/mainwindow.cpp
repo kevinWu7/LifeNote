@@ -18,12 +18,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_TranslucentBackground); // 设置窗口背景透明
+
 #ifdef Q_OS_MAC
      ui->mainWindowTiitle->setVisible(false);
-     //Cocoa::changeTitleBarTextColor(winId(),"rgb(255,10,10)");
+
 #endif
 
 #ifdef Q_OS_WIN
+     //此句代码将会使边框消失，配合WA_TranslucentBackground可以达到纯透明效果，否则不管控件如何设置透明度，都无法达到效果
     this->setWindowFlags(Qt::FramelessWindowHint);
     connect(ui->mainWindowTiitle->minButton, &QToolButton::clicked, this, &MainWindow::showMinimized);
     connect(ui->mainWindowTiitle->maxButton, &QToolButton::clicked, this, &MainWindow::toggleMaximized);

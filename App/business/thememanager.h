@@ -11,6 +11,7 @@ namespace Cocoa
   void changeTitleBarColor(WId winId,QString color);
   void changeTitleBarHeight(WId winId, double height);
   void changeTitleBarTextColor(WId winId, QString color);
+  void setWindowTitleColor(WId winId, const char *color);
 }
 #endif
 

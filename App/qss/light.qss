@@ -115,21 +115,15 @@ QTreeView::item {
 }
 
 
-QTreeView::item:selected:active{
-    background-color: CONTROL_SELECTED;
-}
-
+QTreeView::item:selected:active,
 QTreeView::branch:selected:active {
     background-color:CONTROL_SELECTED;
 }
-
 
 QTreeView::item:selected:!active,
 QTreeView::branch:selected:!active {
     background-color:CONTROL_NOSELECTED;
 }
-
-
 
 
 /* mainwindow*/
@@ -143,6 +137,7 @@ QWidget#mainPage QLineEdit {
     color: CONTROL_TEXT;
 }
 
+
 QWidget#mainPage[platform="windows"]{
     background-color:BACKGROUND_COLOR2;
 }
@@ -152,6 +147,7 @@ QWidget#mainPage[platform="macos"]{
     border-bottom-left-radius: 7px;
     border-bottom-right-radius: 7px;
 }
+
 QWidget#leftBar {
     background-color: BACKGROUND_COLOR1;
     border-radius: 7px;
@@ -241,13 +237,13 @@ QWidget#weekDayWidget QLabel#weeklabel_7 {
 
 
 QToolButton#arrowLeftBtn{
-    width: 12px;
-    min-width: 12px;
-    max-width: 12px;
-    height: 12px;
-    min-height: 12px;
-    max-height: 12px;
-    border-radius: 5px;
+    width: 16px;
+    min-width: 16px;
+    max-width: 16px;
+    height: 16px;
+    min-height: 16px;
+    max-height: 16px;
+    border-radius: 8px;
     background-color: transparent;
 }
 
@@ -256,13 +252,13 @@ QToolButton#arrowLeftBtn:hover{
 }
 
 QToolButton#arrowRightBtn{
-    width: 12px;
-    min-width: 12px;
-    max-width: 12px;
-    height: 12px;
-    min-height: 12px;
-    max-height: 12px;
-    border-radius: 5px;
+    width: 16px;
+    min-width: 16px;
+    max-width: 16px;
+    height: 16px;
+    min-height: 16px;
+    max-height: 16px;
+    border-radius: 8px;
     background-color: transparent;
 }
 
@@ -324,9 +320,7 @@ QWidget#NewHabitForm QPushButton#okBtn
     background-color:rgb(235,181,67);
     width: 60px;
     height:20px;
-    border-style: solid;
     border-radius: 5px;
-    color:BACKGROUND_COLOR1;
 }
 
 QWidget#NewHabitForm QPushButton#cancleBtn{
@@ -363,7 +357,6 @@ QWidget#NewNoteGroupForm QPushButton#okBtn{
     width: 90px;
     height:20px;
     border-radius: 5px;
-    color:BACKGROUND_COLOR1;
 }
 
 QWidget#NewNoteGroupForm QPushButton#cancleBtn{

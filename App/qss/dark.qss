@@ -1,4 +1,5 @@
 /* 系统控件 */
+
 QFrame[objectName*="HorizontalLine"] {
     border-top: 1px solid SINGLE_LINE_COLOR;
     border-bottom: none;
@@ -135,6 +136,8 @@ QWidget#mainPage QLineEdit {
     color: CONTROL_TEXT;
 }
 
+
+
 QWidget#mainPage[platform="windows"]{
     background-color:BACKGROUND_COLOR2;
 }
@@ -235,13 +238,13 @@ QWidget#weekDayWidget QLabel#weeklabel_7 {
 }
 
 QToolButton#arrowLeftBtn{
-    width: 12px;
-    min-width: 12px;
-    max-width: 12px;
-    height: 12px;
-    min-height: 12px;
-    max-height: 12px;
-    border-radius: 5px;
+    width: 16px;
+    min-width: 16px;
+    max-width: 16px;
+    height: 16px;
+    min-height: 16px;
+    max-height: 16px;
+    border-radius: 8px;
     color: CONTROL_TEXT;
 }
 
@@ -250,13 +253,13 @@ QToolButton#arrowLeftBtn:hover{
 }
 
 QToolButton#arrowRightBtn{
-    width: 12px;
-    min-width: 12px;
-    max-width: 12px;
-    height: 12px;
-    min-height: 12px;
-    max-height: 12px;
-    border-radius: 5px;
+    width: 16px;
+    min-width: 16px;
+    max-width: 16px;
+    height: 16px;
+    min-height: 16px;
+    max-height: 16px;
+    border-radius: 8px;
     color: CONTROL_TEXT;
 }
 

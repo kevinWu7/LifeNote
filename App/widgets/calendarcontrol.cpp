@@ -3,6 +3,7 @@
 #include "util.h"
 #include "ui_calendarcontrol.h"
 #include "recorditem.h"
+#include "roundedtooltiphelper.h"
 
 
 CalendarControl::CalendarControl(QWidget *parent) :
@@ -13,9 +14,12 @@ CalendarControl::CalendarControl(QWidget *parent) :
 
     ui->arrowLeftBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->arrowLeftBtn->setIcon(QIcon(":/icons/res/checkin/arrow-left.png"));
+    ui->arrowLeftBtn->setToolTip("向前");
+    RoundedToolTipHelper::installHelper(ui->arrowLeftBtn);
     ui->arrowRightBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->arrowRightBtn->setIcon(QIcon(":/icons/res/checkin/arrow-right.png"));
-
+    ui->arrowRightBtn->setToolTip("向后");
+    RoundedToolTipHelper::installHelper(ui->arrowRightBtn);
     ui->projectIconBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->projectIconBtn->setIconSize(QSize(30,30));
     ui->projectLabel->setFont(QFont("Arial", 22, QFont::Normal));

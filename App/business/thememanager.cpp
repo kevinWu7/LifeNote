@@ -114,11 +114,10 @@ void ThemeManager::switchTheme(QString _themeId,bool isFirstInit)
         auto mainWindow=getCurrentMainWindow();
         if(mainWindow)
         {
-            Cocoa::changeTitleBarColor(getCurrentMainWindow()->winId(), titleColor);
+           Cocoa::changeTitleBarColor(getCurrentMainWindow()->winId(), titleColor);
         }
         if(!isFirstInit)
         {
-
             ThemeManager::getInstance().triggerThemeGlobalEvent();
         }
     }

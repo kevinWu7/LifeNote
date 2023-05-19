@@ -1,48 +1,48 @@
 #include <QMouseEvent>
 #include <QScrollBar>
-#include<QLabel>
+#include <QLabel>
+#include <QToolBar>
+#include <QPushButton>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "util.h"
 #include "logger.h"
 #include "ui_texteditcontainer.h"
 #include "noteconfig.h"
-
+#include "thememanager.h"
+#include "theme.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_TranslucentBackground); // 设置窗口背景透明
+
+#ifdef Q_OS_MAC
+     ui->mainWindowTiitle->setVisible(false);
+
+#endif
+
+#ifdef Q_OS_WIN
+     //此句代码将会使边框消失，配合WA_TranslucentBackground可以达到纯透明效果，否则不管控件如何设置透明度，都无法达到效果
+    this->setWindowFlags(Qt::FramelessWindowHint);
+    connect(ui->mainWindowTiitle->minButton, &QToolButton::clicked, this, &MainWindow::showMinimized);
+    connect(ui->mainWindowTiitle->maxButton, &QToolButton::clicked, this, &MainWindow::toggleMaximized);
+    connect( ui->mainWindowTiitle->closeButton, &QToolButton::clicked, this, &MainWindow::close);
+#endif
+
+    ui->mainPage->setProperty("platform",util::getPlatFormName());
     textEditContainer=new TextEditContainer;
     _checkinWidget =new checkinWidget;
     logger->logEdit=ui->loggerTextEdit;
     logger->log(QDir::currentPath());
-    logger->log(QString("start the application....."));
 
     ui->tabLayout->addWidget(textEditContainer);
     ui->tabLayout->addWidget(_checkinWidget);
 
-
-    ui->mainPage->setStyleSheet("QWidget#mainPage{background-color:rgb(219,220,223");
-
-
-    //设置左侧侧边栏样式
-    ui->leftBar->setStyleSheet("QAbstractButton#addnewBtn{min-height:20px;max-height:20px;padding-left:10px;"
-                               "margin:0px;border:none;}"
-                               "QAbstractButton#checkinBtn{min-height:20px;max-height:20px;margin:0px;padding-top:4px;padding-left:10px;padding-bottom:4px;border:none;}"
-                               "QWidget#leftBar"
-                               "{background-color:#FFFFFF;"
-                               "border-radius:7px}");
-
-
-
-    ui->loggerTextEdit->setStyleSheet("QWidget#loggerTextEdit"
-                                  "{background-color:#FFFFFF;"
-                                  "border-radius:7px}");
     ui->loggerTextEdit->setVisible(false);
     ui->loggerTextEdit->isAutoHide=false;
-
 
     //set the splitter default-ratio,total=9,leftbar=2,editwidget=7.
     ui->controlSplitter->setStretchFactor(0, 2); //代表第0个控件，即leftbar所占比例为2
@@ -50,8 +50,6 @@ MainWindow::MainWindow(QWidget *parent)
     //设置logger输出框，占比为3/8
     ui->mainSplitter->setStretchFactor(0,5);
     ui->mainSplitter->setStretchFactor(1,3);
-
-
 
     //通过配置文件，创建node
     noteconfig::loadConfigXML(ui->treeWidget);
@@ -93,8 +91,22 @@ MainWindow::MainWindow(QWidget *parent)
     connect(textEditContainer->ui->logCheck,&QCheckBox::stateChanged,this,&MainWindow::logCheckStateChanged);
     connect(ui->checkinBtn,&QToolButton::clicked,this,&MainWindow::checkinBtn_clicked);
 
+    ui->darkRadioButton->setChecked(true);
+    connect(ui->darkRadioButton, &QRadioButton::clicked, [=](){
+        ThemeManager::getInstance().switchTheme("dark");
+    });
+
+
+    connect(ui->lightRadioButton, &QRadioButton::clicked, [=](){
+         ThemeManager::getInstance().switchTheme("light");
+    });
+
+    bindThemeChangetCallback=std::bind(&MainWindow::themeChangedUiStatus, this);
+    ThemeManager::getInstance().registerThemeGlobalEvent(bindThemeChangetCallback);
     _checkinWidget->setVisible(false);
 }
+
+
 
 
 #pragma region TitleBar-Button-Funciton{
@@ -355,7 +367,7 @@ void MainWindow::checkinBtn_clicked()
     _checkinWidget->setVisible(true);
     textEditContainer->setVisible(false);
     _checkinWidget->setFocus();
-    ui->checkinBtn->setStyleSheet("background-color:rgb(186,214,251)}");
+    themeChangedUiStatus();
 }
 
 void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
@@ -509,6 +521,25 @@ void MainWindow::setLineVerticalInterval()
     textEditContainer->ui->textEdit->setTextCursor(textCursor);
 }
 
+void MainWindow::themeChangedUiStatus()
+{
+    if(ui->checkinBtn->isChecked())
+    {
+        if(ThemeManager::ThemeId=="dark")
+        {
+            ui->checkinBtn->setStyleSheet("background-color:rgb(82,82,82)");
+        }
+        else
+        {
+            ui->checkinBtn->setStyleSheet("background-color:rgb(186, 214, 251)");
+        }
+    }
+    else
+    {
+        ui->checkinBtn->setStyleSheet("background-color:transparent");
+    }
+}
+
 
 void MainWindow::onTreeWidgetItemClicked(QTreeWidgetItem *item, int column)
 {
@@ -517,8 +548,9 @@ void MainWindow::onTreeWidgetItemClicked(QTreeWidgetItem *item, int column)
     {
         _checkinWidget->setVisible(false);
         textEditContainer->setVisible(true);
-        ui->checkinBtn->setStyleSheet("QWidget#checkinWidget{background-color:transparent}");
     }
+    ui->checkinBtn->setChecked(false);
+    themeChangedUiStatus();
 }
 //切换左侧节点时，保存上一个节点的内容，加载当前节点的内容
 void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
@@ -792,9 +824,9 @@ void MainWindow::onApplicationQuit()
     QString dirPath = fullPath.left(first); //文件夹路径
 
     //如果路径不存在，则创建
-    QDir* dir = new QDir();
-    if(!dir->exists(dirPath)){
-        dir->mkpath(dirPath);
+    QDir dir ;
+    if(!dir.exists(dirPath)){
+        dir.mkpath(dirPath);
     }
 
     //创建一个输出文件的文档
@@ -807,6 +839,15 @@ void MainWindow::onApplicationQuit()
     }
     myfile.close();
 }
+
+
+
+
+void MainWindow::toggleMaximized()
+{
+
+}
+
 
 MainWindow::~MainWindow()
 {

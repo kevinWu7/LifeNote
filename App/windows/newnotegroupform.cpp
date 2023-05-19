@@ -2,7 +2,7 @@
 #include "util.h"
 #include "newnotegroupform.h"
 #include "ui_newnotegroupform.h"
-#include "baseinfo.h"
+
 
 
 #define  ROUND_RADIUS 5
@@ -14,31 +14,7 @@ NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setWindowModality(Qt::ApplicationModal);
-    this->setStyleSheet(QString("QLabel{color:rgb(110,111,111);font-size:11px} "
-                                "QWidget#NewNoteGroupForm {background-color:rgb(255,255,255)}"
-                                "QLineEdit {background-color:rgb(244,244,246);border:none}"
-                                "QToolButton{"
-                                "border: 1px;"
-                                "width: %1 ; min-width: %1; max-width: %1;"
-                                "height: %1 ; min-height: %1; max-height: %1;"
-                                "border-radius: %2;"
-                                "color: white;"
-                                "padding: 0;"
-                                "margin: 0;"
-                                "}"
-                                "QPushButton#okBtn{"
-                                "background-color:rgb(235,181,67);"
-                                "width: %3 ; min-width: %3; max-width: %3;"
-                                "height: %4 ; min-height: %4; max-height: %4;"
-                                "border-style: solid; "
-                                "border-color:rgb(235,181,67); "
-                                "border-width: 1px; "
-                                "border-radius: 5px; "
-                                "color:rgb(255,255,255)"
-                                "}"
-                                ).arg("16px","8px","85px","18px"));
-    ui->bottomLine->setStyleSheet(QString("QFrame{border-top: 1px solid %1; border-bottom: none;}").arg(LINE_COLOR));
-    ui->topLine->setStyleSheet(QString("QFrame{border-top: 1px solid %1; border-bottom: none;}").arg(LINE_COLOR));
+
     InitColorPushBtn();
     InitRoundRadius();
     InitEvent();
@@ -50,10 +26,9 @@ void NewNoteGroupForm::InitColorPushBtn()
     {
         QToolButton* toolBtn= dynamic_cast<QToolButton*>(ui->colorLayout->itemAt(i)->widget());
         QString color=QString::fromStdString(util::colorBtnMap.at(i));
-
         //动态设置颜色，从map中取值，并设置checked后的样式
         QString style=QString("QToolButton{background-color:%1;}"
-                              "QToolButton:checked {border:2px solid %1;background-color:#FFFFFF;}").arg(color);
+                              "QToolButton:checked {border:2px solid %1;background-color:transparent;}").arg(color);
         toolBtn->setStyleSheet(style);
         connect(toolBtn,&QToolButton::clicked,this,&NewNoteGroupForm::onColorToolBtn_clicked);
     }
@@ -121,13 +96,13 @@ void NewNoteGroupForm::okBtn_clicked()
     if(ui->nameLineEdit->text().isEmpty())
     {
        ui->warningLabel->setText("名称为空，请输入名称!");
-       ui->warningLabel->setStyleSheet("color:red");
+       ui->warningLabel->setVisible(true);
        return;
     }
     else
     {
         ui->warningLabel->setText("");
-        ui->warningLabel->setStyleSheet("color:transparent");
+        ui->warningLabel->setVisible(false);
     }
     emit sendParentWindowData(ui->nameLineEdit->text(),color_index);
     ui->nameLineEdit->setText("");
@@ -137,6 +112,7 @@ void NewNoteGroupForm::okBtn_clicked()
 void NewNoteGroupForm::cancleBtn_clicked()
 {
     ui->nameLineEdit->setText("");
+    ui->warningLabel->setVisible(false);
     this->setVisible(false);
 }
 

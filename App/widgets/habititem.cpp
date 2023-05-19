@@ -6,7 +6,7 @@
 #include "checkinconfig.h"
 #include "logger.h"
 #include "roundedtooltiphelper.h"
-#include "calendarcentral.h"
+
 
 
 HabitItem::HabitItem(QString name,QWidget *parent) :
@@ -16,27 +16,21 @@ HabitItem::HabitItem(QString name,QWidget *parent) :
     ui->setupUi(this);
     setContextMenuPolicy(Qt::CustomContextMenu);
     projectName=name;
-    ui->imgBtn->setStyleSheet(QString("QToolButton#imgBtn{"
-                           "background-color: transparent;"
-                           "width: %1 ; min-width: %1; max-width: %1;"
-                           "height: %1 ; min-height: %1; max-height: %1;}"                   
-                          ).arg("20px"));
-    baseStyleSheet="QLabel#countLabel{font:13px}"
-                   "QLabel#textLabel{font:10px}"
-                   "QLabel#dayLabel{font:9px}";
-    this->setStyleSheet(baseStyleSheet);
-    ui->textLabel->setStyleSheet("color:rgb(160,160,160)");
-       ui->dayLabel->setStyleSheet("color:rgb(160,160,160)");
+
     ui->imgBtn->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->imgBtn->setIconSize(QSize(20,20));
     ui->nameLabel->setFont(QFont("Arial", 14, QFont::Normal));
 
     InitWeekButtons();
     ui->nameLabel->setText(name);
+
+
     // 绑定成员函数到实例
     bindFunctionOfreceiveBtnChecked = std::bind(&HabitItem::receiveBtnChecked, this, std::placeholders::_1);
     // 注册全局事件
     CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
+    bindFunctionOfreceiveThemeChanged=std::bind(&HabitItem::receiveThemeChanged, this);
+    ThemeManager::getInstance().registerThemeGlobalEvent(bindFunctionOfreceiveThemeChanged);
 }
 
 void HabitItem::mousePressEvent(QMouseEvent *event)
@@ -125,6 +119,36 @@ void HabitItem::receiveBtnChecked(checkin_dateitem *dateItem)
     }
 }
 
+void HabitItem::setHabitSelected(bool isSelect)
+{
+    isSelected=isSelect;
+    updateHabitUiStatus();
+}
+
+void HabitItem::receiveThemeChanged()
+{
+    updateHabitUiStatus();
+}
+
+void HabitItem::updateHabitUiStatus()
+{
+    if(!isSelected)
+    {
+        this->setStyleSheet("QWidget#mainWidget{background-color:transparent}");
+    }
+    else
+    {
+        if (ThemeManager::ThemeId=="dark")
+        {
+            this->setStyleSheet("QWidget#mainWidget{background-color:rgb(72,72,72)}");//727272
+        }
+        else
+        {
+            this->setStyleSheet("QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
+        }
+    }
+}
+
 
 
 void HabitItem::setIconIndex(int index)
@@ -140,23 +164,12 @@ void HabitItem::setProjectName(QString name)
     projectName=name;
 }
 
-void HabitItem::setHabitSelected(bool isSelect)
-{
-    isSelected=isSelect;
-    logger->log(projectName+(isSelect?QString("setHabitSelected true"):QString("setHabitSelected fasle")));
-    if(!isSelect)
-    {
-        this->setStyleSheet(baseStyleSheet+"QWidget#mainWidget{background-color:white}");
-    }
-    else
-    {
-        this->setStyleSheet(baseStyleSheet+"QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
-    }
-}
+
 
 
 HabitItem::~HabitItem()
 {
     CalendarCentral::getInstance().unregisterGlobalEvent(bindFunctionOfreceiveBtnChecked);
+    ThemeManager::getInstance().unregisterThemeGlobalEvent(bindFunctionOfreceiveThemeChanged);
     delete ui;
 }

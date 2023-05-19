@@ -1,9 +1,9 @@
 QT       += core gui svg xml help
 
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
+
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -16,17 +16,21 @@ INCLUDEPATH += \
     $$PWD/base \
     $$PWD/xmlconfig \
     $$PWD/business \
-    $$PWD/util
+    $$PWD/util \
+    $$PWD/ui
 
 SOURCES += \
     business/calendarcentral.cpp \
     business/roundedtooltiphelper.cpp \
+    business/thememanager.cpp \
     custom_controls/monthbutton.cpp \
     custom_controls/extraqtreewidgetitem.cpp \
     custom_controls/lntreewidget.cpp \
     custom_controls/lntextedit.cpp \
     custom_controls/weektoolbutton.cpp \
     custom_controls/roundedtooltip.cpp \
+    ui/theme.cpp \
+    widgets/titlebarwidget.cpp \
     widgets/habititem.cpp \
     widgets/recorditem.cpp \
     widgets/calendarcontrol.cpp \
@@ -44,12 +48,15 @@ SOURCES += \
 HEADERS += \
     business/calendarcentral.h \
     business/roundedtooltiphelper.h \
+    business/thememanager.h \
     custom_controls/monthbutton.h \
     custom_controls/extraqtreewidgetitem.h \
     custom_controls/lntreewidget.h \
     custom_controls/lntextedit.h \
     custom_controls/weektoolbutton.h \  \
     custom_controls/roundedtooltip.h \
+    ui/theme.h \
+    widgets/titlebarwidget.h \
     widgets/habititem.h \
     xmlconfig/noteconfig.h \
     widgets/recorditem.h \
@@ -75,6 +82,10 @@ FORMS += \
     windows/mainwindow.ui \
     windows/newnotegroupform.ui
 
+LIBS +=   -framework AppKit  # 链接 Foundation 和 AppKit 框架
+OBJECTIVE_SOURCES += \#引入object-C的类源文件
+    titlebarcontroller.mm
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -88,18 +99,25 @@ CONFIG += file_copies
 
 # 创建 transfer 自定义变量
 # 配置需要复制的文件或目录（支持通配符）
-transfer.files = $$PWD/config # $$PWD 表示工程源代码所在目录
+configtransfer.files = $$PWD/config # $$PWD 表示工程源代码所在目录
+
+# 创建 qssTransfer 自定义变量
+qssTransfer.files = $$PWD/qss # 这里设置你的 qss 文件夹路径
 
 # 配置需要复制的目标目录，$$OUT_PWD 含义为程序输出目录
 win32 {
-    transfer.path = $$OUT_PWD/debug
+     configtransfer.path = $$OUT_PWD/debug
+     qssTransfer.path = $$OUT_PWD/debug
 }
 macx {
-    transfer.path = $$OUT_PWD/App.app/Contents/MacOS
+     configtransfer.path = $$OUT_PWD/App.app/Contents/MacOS
+     qssTransfer.path = $$OUT_PWD/App.app/Contents/MacOS
 }
 
 # 配置 COPIES
-COPIES += transfer
+COPIES += configtransfer
+COPIES += qssTransfer # 添加 qss 文件夹到拷贝列表
+
 
 
 
@@ -107,5 +125,11 @@ COPIES += transfer
 COPIES += transfer
 
 DISTFILES += \
+    projectStruct.txt \
+    qss/dark.qss \
+    qss/light.qss \
     todoList.txt
+
+
+
 

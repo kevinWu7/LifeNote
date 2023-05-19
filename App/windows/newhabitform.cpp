@@ -2,7 +2,6 @@
 #include "util.h"
 #include "newhabitform.h"
 #include "ui_newhabitform.h"
-#include "baseinfo.h"
 
 
 #define DefaultDisplayTip "未命名项目"
@@ -15,33 +14,7 @@ NewHabitForm::NewHabitForm(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setWindowModality(Qt::ApplicationModal);
-    ui->iconWidget->setStyleSheet(QString("QToolButton{border:none;"
-                                  "border: none;"
-                                  "width: %1 ; min-width: %1; max-width: %1;"
-                                  "height: %1 ; min-height: %1; max-height: %1;"
-                                  "border-radius: %2;"
-                                  "padding: 0;"
-                                  "margin: 0;}"
-                                  "QToolButton:checked{background-color:rgb(218, 218, 218)}"
-                                  "QToolButton:hover{background-color:rgb(218, 218, 218)}"
-                                   ).arg("30px","15px")
-                               );
-    this->setStyleSheet(QString("QLabel{color:rgb(110,111,111);font-size:11px} "
-                                "QWidget#NewHabitForm {background-color:rgb(255,255,255)}"
-                                "QLineEdit {background-color:rgb(244,244,246);border:none}"
-                                "QPushButton#okBtn{"
-                                "background-color:rgb(235,181,67);"
-                                "width: %1 ; min-width: %1; max-width: %1;"
-                                "height: %2 ; min-height: %2; max-height: %2;"
-                                "border-style: solid; "
-                                "border-color:rgb(235,181,67); "
-                                "border-width: 1px; "
-                                "border-radius: 5px; "
-                                "color:rgb(255,255,255)"
-                                "}"
-                                ).arg("60px","18px"));
-    ui->bottomLine->setStyleSheet(QString("QFrame{border-top: 1px solid %1; border-bottom: none;}").arg(LINE_COLOR));
-    ui->topLine->setStyleSheet(QString("QFrame{border-top: 1px solid %1; border-bottom: none;}").arg(LINE_COLOR));
+
     initIConBtn();
     InitRoundRadius();
     connect(ui->okBtn,&QPushButton::clicked,this,&NewHabitForm::okBtn_clicked);
@@ -108,13 +81,13 @@ void NewHabitForm::okBtn_clicked()
     if(ui->nameLineEdit->text().isEmpty())
     {
        ui->warningLabel->setText("项目名称为空，请输入项目名称!");
-       ui->warningLabel->setStyleSheet("color:red");
+       ui->warningLabel->setVisible(true);
        return;
     }
     else
     {
         ui->warningLabel->setText("");
-        ui->warningLabel->setStyleSheet("color:transparent");
+        ui->warningLabel->setVisible(false);
     }
     ui->nameLabel->setText("请输入项目名称");
     emit sendSelectDataToParent(ui->nameLineEdit->text(),iconIndex,formMode);
@@ -126,6 +99,7 @@ void NewHabitForm::okBtn_clicked()
 void NewHabitForm::cancleBtn_clicked()
 {
     ui->nameLineEdit->setText("");
+    ui->warningLabel->setVisible(false);
     this->setVisible(false);
     formMode=0;
 }

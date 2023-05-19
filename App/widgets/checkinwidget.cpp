@@ -27,20 +27,6 @@ checkinWidget::checkinWidget(QWidget *parent) :
     ui->iconBtn->setIconSize(QSize(27,27));
     ui->dateTimeLabel->setFont(QFont("Arial", 16, QFont::Normal));
 
-
-    ui->titleBarControl->setStyleSheet("QToolButton"
-                                       "{width:32px;min-width:32px;max-width:32px;"
-                                       "height:32px;min-height:32px; max-height:32px;"
-                                       "margin:0px; border:none;}");
-    this->setStyleSheet("QWidget#mainWidget{background-color:#FFFFFF;border-radius:7px}");
-
-    ui->mainSplitter->setStyleSheet("QSplitter::handle { background-color: transparent; }"
-                                    "QSplitter::handle:horizontal {"
-                                    "width: 1px;" // 将宽度设置为3像素，以便在左右边框之间留出空间
-                                    "margin: 0px;"
-                                    "border-right: none;" // 设置左边框颜色和宽度
-                                    "border-left:1px solid rgb(240,239,239);" // 设置右边框颜色和宽度
-                                    "}");
     initHabitRightMenu();
     connect(ui->addItemBtn,&QToolButton::clicked,this,&checkinWidget::addItemBtn_clicked);
 
@@ -85,8 +71,6 @@ void checkinWidget::initHabitRightMenu()
     rightHabitMenu=new QMenu(this);
     rightHabitMenu->addAction(editHabitAction);
     rightHabitMenu->addAction(deleteHabitAction);
-    rightHabitMenu->setStyleSheet("QMenu { width: 80px; background-color:white;}");
-                                 // "QMenu::item { height: 10px; padding-bottom: 10px;padding-left：20px }");
     connect(editHabitAction, &QAction::triggered, this, &checkinWidget::onMenuEdit);
     connect(deleteHabitAction, &QAction::triggered, this, &checkinWidget::onMenuDelete);
 }
@@ -199,7 +183,7 @@ void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex,int fo
 {
     if(formMode==0) //新建habit
     {
-        project_info *project=new project_info;
+        project_info *project=new project_info; //这里需要释放或者改成直接创建，否则会导致内存泄漏
         project->iconIndex=QString::number(iconIndex);
         project->project_name=name;
         HabitItem *habit= addHabitItem(project);

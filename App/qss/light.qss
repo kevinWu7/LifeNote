@@ -1,0 +1,376 @@
+/* 系统控件*/
+QFrame[objectName*="HorizontalLine"] {
+    border-top: 1px solid SINGLE_LINE_COLOR;
+    border-bottom: none;
+}
+
+QCheckBox{
+    color:CONTROL_TEXT;
+}
+
+QToolButton {
+    background-color: transparent;
+    color:CONTROL_TEXT;
+    border: none;
+}
+
+QPushButton {
+    background-color: transparent;
+    color:CONTROL_TEXT;
+    border: none;
+}
+
+QLabel{
+    background-color: transparent;
+    color:CONTROL_TEXT;
+    border: none;
+}
+
+QTextEdit {
+    border:0px;
+    background-color: BACKGROUND_COLOR1;
+    color:CONTROL_TEXT;
+}
+
+QLineEdit {
+    border:0px;
+    background-color:rgb(244,244,246);
+    color: CONTROL_TEXT;
+}
+
+QRadioButton {
+    color:CONTROL_TEXT;
+}
+
+
+QScrollBar:vertical {
+    width: 6px;
+    background: BACKGROUND_COLOR1;
+    margin: 0px, 0px, 0px, 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+QScrollBar::handle:vertical {
+    background: rgba(0,0,0,20%);
+    border-radius: 3px;
+    min-height: 20;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: rgba(0,0,0,35%);
+    border-radius: 3px;
+    min-height: 20;
+}
+
+QScrollBar::add-line:vertical {
+    height: 0px;
+    subcontrol-position: bottom;
+}
+
+QScrollBar::sub-line:vertical {
+    height: 0px;
+    subcontrol-position: top;
+}
+
+QScrollBar:horizontal {
+    height: 6px;
+    background: BACKGROUND_COLOR1;
+    margin: 0px, 0px, 0px, 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+QScrollBar::handle:horizontal {
+    height: 6px;
+    background: rgba(0,0,0,20%);
+    border-radius: 3px;
+    min-width: 20;
+}
+
+QScrollBar::handle:horizontal:hover {
+    height: 6px;
+    background: rgba(0,0,0,35%);
+    border-radius: 3px;
+    min-width: 20;
+}
+
+QScrollBar::add-line:horizontal {
+    width: 0px;
+    subcontrol-position: left;
+}
+
+QScrollBar::sub-line:horizontal {
+    width: 0px;
+    subcontrol-position: right;
+}
+
+QTreeWidget {
+    background-color:transparent;
+}
+
+QTreeView::item {
+    height: 25px;
+    color: CONTROL_TEXT;
+}
+
+
+QTreeView::item:selected:active,
+QTreeView::branch:selected:active {
+    background-color:CONTROL_SELECTED;
+}
+
+QTreeView::item:selected:!active,
+QTreeView::branch:selected:!active {
+    background-color:CONTROL_NOSELECTED;
+}
+
+
+/* mainwindow*/
+QWidget#mainWindowTiitle[platform="windows"]{
+    background-color:BACKGROUND_COLOR1;
+}
+
+QWidget#mainPage QLineEdit {
+    border:0px;
+    background-color: BACKGROUND_COLOR1;
+    color: CONTROL_TEXT;
+}
+
+
+QWidget#mainPage[platform="windows"]{
+    background-color:BACKGROUND_COLOR2;
+}
+
+QWidget#mainPage[platform="macos"]{
+    background-color:BACKGROUND_COLOR2;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+QWidget#leftBar {
+    background-color: BACKGROUND_COLOR1;
+    border-radius: 7px;
+}
+
+QWidget#leftBar QToolButton#addnewBtn {
+    min-height: 20px;
+    max-height: 20px;
+    padding-left: 10px;
+    margin: 0px;
+    border: none;
+}
+
+QWidget#leftBar  QToolButton#checkinBtn {
+    min-height: 20px;
+    max-height: 20px;
+    margin: 0px;
+    padding-top: 4px;
+    padding-left: 10px;
+    padding-bottom: 4px;
+    border: none;
+}
+
+
+QWidget#titleBar {
+    background-color: BACKGROUND_COLOR1;
+}
+
+QWidget#titleBar QToolButton:checked,
+QWidget#titleBar QToolButton:hover {
+    background-color: CONTROL_SELECTED;
+}
+
+QWidget#editWidget {
+    background-color: BACKGROUND_COLOR1;
+    border-radius: 7px;
+}
+
+
+
+/* checkinwidget */
+QWidget#titleBarControl QToolButton {
+    width: 32px;
+    min-width: 32px;
+    max-width: 32px;
+    height: 32px;
+    min-height: 32px;
+    max-height: 32px;
+    margin: 0px;
+    border: none;
+}
+
+QWidget#checkinWidget QWidget#mainWidget {
+    background-color: BACKGROUND_COLOR1;
+    border-radius: 7px;
+}
+
+QWidget#checkinWidget QSplitter::handle {
+    background-color: transparent;
+}
+
+QWidget#checkinWidget QSplitter::handle:horizontal {
+    width: 1px;  /* 将宽度设置为1像素，以便在左右边框之间留出空间 */
+    margin: 0px;
+    border-right: none; /* 设置左边框颜色和宽度 */
+    border-left: 1px solid SINGLE_LINE_COLOR; /* 设置右边框颜色和宽度 */
+}
+
+
+/* calendarcontrol */
+QLabel#datetimeLabel{
+    font-size: 16pt;
+}
+
+
+QWidget#weekDayWidget QLabel{
+   width: 32px ;
+   min-width: 32px;
+   max-width: 32px;
+   font-size: 12px;
+   color: CONTROL_POOLTEXT;
+}
+QWidget#weekDayWidget QLabel#weeklabel_6,
+QWidget#weekDayWidget QLabel#weeklabel_7 {
+     color: rgba(255,185,48,0.8);
+}
+
+
+QToolButton#arrowLeftBtn{
+    width: 16px;
+    min-width: 16px;
+    max-width: 16px;
+    height: 16px;
+    min-height: 16px;
+    max-height: 16px;
+    border-radius: 8px;
+    background-color: transparent;
+}
+
+QToolButton#arrowLeftBtn:hover{
+    background-color: CONTROL_SELECTED;
+}
+
+QToolButton#arrowRightBtn{
+    width: 16px;
+    min-width: 16px;
+    max-width: 16px;
+    height: 16px;
+    min-height: 16px;
+    max-height: 16px;
+    border-radius: 8px;
+    background-color: transparent;
+}
+
+QToolButton#arrowRightBtn:hover{
+    background-color: CONTROL_SELECTED;
+}
+
+QWidget#recordWidget QLabel#textLabel{
+    color:CONTROL_POOLTEXT;
+}
+
+/*habitItem*/
+QWidget#leftNavigateWidget QLabel#dayLabel {
+    font:9px;
+    color:CONTROL_POOLTEXT;
+}
+QWidget#leftNavigateWidget QLabel#textLabel {
+    font:10px;
+    color:CONTROL_POOLTEXT;
+}
+QWidget#leftNavigateWidget QLabel#countLabel {
+    font:13px;
+}
+
+
+
+/*NewHabitForm*/
+QWidget#NewHabitForm {
+    background-color:BACKGROUND_COLOR1;
+}
+
+QWidget#NewHabitForm QWidget#iconWidget QToolButton{
+      border: none;
+      width: 34px;  min-width: 34px; max-width: 34px;
+      height:34px; min-height:34px; max-height:34px;
+      border-radius: 17px;
+      padding: 0;
+      margin: 0;
+}
+
+QWidget#NewHabitForm QToolButton:checked,
+QWidget#NewHabitForm QToolButton:hover{
+    background-color:CONTROL_SELECTED;
+}
+
+
+QWidget#NewHabitForm QLabel{
+    color:CONTROL_POOLTEXT;
+    font-size:11px;
+}
+
+QWidget#NewHabitForm QLabel#warningLabel{
+    color:red;
+}
+
+
+QWidget#NewHabitForm QPushButton#okBtn
+{
+    background-color:rgb(235,181,67);
+    width: 60px;
+    height:20px;
+    border-radius: 5px;
+}
+
+QWidget#NewHabitForm QPushButton#cancleBtn{
+    width:50px;
+    height:20px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color:SINGLE_LINE_COLOR;
+}
+
+/*NewNoteGroupForm*/
+QWidget#NewNoteGroupForm {
+    background-color:BACKGROUND_COLOR1;
+}
+
+QWidget#NewNoteGroupForm QWidget#QColorWidget QToolButton{
+    width:16px; min-width: 16px; max-width: 16px;
+    height: 16px ; min-height: 16px; max-height: 16px;
+    border-radius: 8px;
+}
+
+QWidget#NewNoteGroupForm QLabel{
+    color:CONTROL_POOLTEXT;
+    font-size:11px;
+}
+
+QWidget#NewNoteGroupForm QLabel#warningLabel{
+    color:red;
+}
+
+QWidget#NewNoteGroupForm QPushButton#okBtn{
+    background-color:rgb(235,181,67);
+    width: 90px;
+    height:20px;
+    border-radius: 5px;
+}
+
+QWidget#NewNoteGroupForm QPushButton#cancleBtn{
+    width:50px;
+    height:20px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color:SINGLE_LINE_COLOR;
+}
+
+
+/* other */
+QWidget#loggerTextEdit{
+    border-radius:7px;
+}
+

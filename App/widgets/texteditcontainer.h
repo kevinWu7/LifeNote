@@ -2,6 +2,7 @@
 #define TEXTEDITCONTAINER_H
 
 #include <QWidget>
+#include "thememanager.h"
 
 namespace Ui {
 class TextEditContainer;
@@ -33,6 +34,8 @@ public:
 private:
     void InsertImageDialog();
     void initfontCombobox();
+    void themeChangedUpdateUiStatus();
+    themeChangedCallback bindThemeChangetCallback;
 };
 
 #endif // TEXTEDITCONTAINER_H

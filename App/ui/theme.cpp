@@ -33,3 +33,21 @@ std::map<QString,QString> themeLight={
 };
 
 
+std::unordered_map<std::string, QString> diyThemeColor = {
+    {"RED1_BACKGROUND", "rgb(248,211,210)"},
+    {"RED2_BACKGROUND", "rgb(243,167,165)"},
+    {"RED3_BACKGROUND", "rgb(238,125,122)"},
+    {"RED4_BACKGROUND", "rgb(236,98,93)"},
+    {"RED5_BACKGROUND", "rgb(235,79,71)"},
+    {"RED6_BACKGROUND", "rgb(189,62,56)"},
+    {"RED7_BACKGROUND", "rgb(117,49,46)"},
+    {"RED8_BACKGROUND", "rgb(71,35,34)"},
+    {"GREEN1_BACKGROUND", "rgb(203,241,213)"},
+    {"GREEN2_BACKGROUND", "rgb(168,240,185)"},
+    {"GREEN3_BACKGROUND", "rgb(130,226,150)"},
+    {"GREEN4_BACKGROUND", "rgb(106,213,118)"},
+    {"GREEN5_BACKGROUND", "rgb(95,201,100)"},
+    {"GREEN6_BACKGROUND", "rgb(69,151,74)"},
+    {"GREEN7_BACKGROUND", "rgb(61,125,69)"},
+    {"GREEN8_BACKGROUND", "rgb(45,75,51)"}
+};

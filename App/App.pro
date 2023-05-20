@@ -30,6 +30,7 @@ SOURCES += \
     custom_controls/weektoolbutton.cpp \
     custom_controls/roundedtooltip.cpp \
     ui/theme.cpp \
+    widgets/themeswitchwidget.cpp \
     widgets/titlebarwidget.cpp \
     widgets/habititem.cpp \
     widgets/recorditem.cpp \
@@ -56,6 +57,7 @@ HEADERS += \
     custom_controls/weektoolbutton.h \  \
     custom_controls/roundedtooltip.h \
     ui/theme.h \
+    widgets/themeswitchwidget.h \
     widgets/titlebarwidget.h \
     widgets/habititem.h \
     xmlconfig/noteconfig.h \
@@ -73,6 +75,7 @@ HEADERS += \
     xmlconfig/checkinconfig.h
 
 FORMS += \
+    widgets/themeswitchwidget.ui \
     widgets/habititem.ui \
     widgets/recorditem.ui \
     widgets/calendarcontrol.ui \

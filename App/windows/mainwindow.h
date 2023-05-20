@@ -19,7 +19,7 @@
 #include "texteditcontainer.h"
 #include "newnotegroupform.h"
 #include "checkinwidget.h"
-
+#include "themeswitchwidget.h"
 
 
 
@@ -64,6 +64,7 @@ private:
     TextEditContainer * textEditContainer=nullptr;
     checkinWidget *_checkinWidget=nullptr;
     NewNoteGroupForm * newGroupForm=nullptr;
+    ThemeSwitchWidget *_themeSwitchWidget=nullptr;
     QTextBlockFormat *blockFormat=nullptr;//to set qtextedit vertical interval 3
     themeChangedCallback bindThemeChangetCallback;
     void themeChangedUiStatus();
@@ -92,6 +93,6 @@ public slots:
     void onReceiveNewGroupFormData(QString nodeName,int color_index);
     void onApplicationQuit();
     void checkinBtn_clicked();
-
+    void themeSettingBtn_clicked();
 };
 #endif // MAINWINDOW_H

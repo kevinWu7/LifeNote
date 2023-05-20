@@ -159,9 +159,10 @@ QWidget#leftBar QToolButton#addnewBtn {
     padding-left: 10px;
     margin: 0px;
     border: none;
+    font-size: 13pt;
 }
 
-QWidget#leftBar  QToolButton#checkinBtn {
+QWidget#leftBar  QToolButton#checkinBtn{
     min-height: 20px;
     max-height: 20px;
     margin: 0px;
@@ -169,6 +170,20 @@ QWidget#leftBar  QToolButton#checkinBtn {
     padding-left: 10px;
     padding-bottom: 4px;
     border: none;
+    font-size: 13pt;
+}
+
+QWidget#leftBar  QToolButton#systemSettingBtn,
+QWidget#leftBar  QToolButton#themeSettingBtn{
+    min-height: 20px;
+    max-height: 20px;
+    margin: 0px;
+    padding-left: 10px;
+    padding-top: 4px;
+    padding-bottom: 8px;
+    border: none;
+    font-size: 13pt;
+    color:CONTROL_POOLTEXT;
 }
 
 

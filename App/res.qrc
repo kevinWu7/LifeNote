@@ -43,5 +43,7 @@
         <file>res/system/min.png</file>
         <file>res/system/close.png</file>
         <file>res/system/max.png</file>
+        <file>res/system/setting.png</file>
+        <file>res/system/theme.png</file>
     </qresource>
 </RCC>

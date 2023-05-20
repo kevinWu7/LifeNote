@@ -18,9 +18,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_TranslucentBackground); // 设置窗口背景透明
+    setWindowOpacity(0.9);
 
 #ifdef Q_OS_MAC
      ui->mainWindowTiitle->setVisible(false);
+
 
 #endif
 
@@ -35,11 +37,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->mainPage->setProperty("platform",util::getPlatFormName());
     textEditContainer=new TextEditContainer;
     _checkinWidget =new checkinWidget;
+    _themeSwitchWidget =new ThemeSwitchWidget;
     logger->logEdit=ui->loggerTextEdit;
     logger->log(QDir::currentPath());
 
     ui->tabLayout->addWidget(textEditContainer);
     ui->tabLayout->addWidget(_checkinWidget);
+    ui->tabLayout->addWidget(_themeSwitchWidget);
 
     ui->loggerTextEdit->setVisible(false);
     ui->loggerTextEdit->isAutoHide=false;
@@ -70,6 +74,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->checkinBtn->setIconSize(QSize(16, 16));
     ui->checkinBtn->setCursor(Qt::PointingHandCursor);
 
+    ui->systemSettingBtn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    ui->systemSettingBtn->setIcon(QIcon(":/icons/res/system/setting.png"));
+    ui->systemSettingBtn->setText("  设     置");
+    ui->systemSettingBtn->setIconSize(QSize(16, 16));
+    ui->systemSettingBtn->setCursor(Qt::PointingHandCursor);
+
+    ui->themeSettingBtn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    ui->themeSettingBtn->setIcon(QIcon(":/icons/res/system/theme.png"));
+    ui->themeSettingBtn->setText("  换     肤");
+    ui->themeSettingBtn->setIconSize(QSize(16, 16));
+    ui->themeSettingBtn->setCursor(Qt::PointingHandCursor);
+
     initRightMenu();
 
     //设置信号槽
@@ -90,7 +106,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(qApp, &QApplication::aboutToQuit,this ,&MainWindow::onApplicationQuit);
     connect(textEditContainer->ui->logCheck,&QCheckBox::stateChanged,this,&MainWindow::logCheckStateChanged);
     connect(ui->checkinBtn,&QToolButton::clicked,this,&MainWindow::checkinBtn_clicked);
-
+    connect(ui->themeSettingBtn,&QToolButton::clicked,this,&MainWindow::themeSettingBtn_clicked);
     ui->darkRadioButton->setChecked(true);
     connect(ui->darkRadioButton, &QRadioButton::clicked, [=](){
         ThemeManager::getInstance().switchTheme("dark");
@@ -104,6 +120,7 @@ MainWindow::MainWindow(QWidget *parent)
     bindThemeChangetCallback=std::bind(&MainWindow::themeChangedUiStatus, this);
     ThemeManager::getInstance().registerThemeGlobalEvent(bindThemeChangetCallback);
     _checkinWidget->setVisible(false);
+    _themeSwitchWidget->setVisible(false);
 }
 
 
@@ -366,8 +383,18 @@ void MainWindow::checkinBtn_clicked()
 {
     _checkinWidget->setVisible(true);
     textEditContainer->setVisible(false);
+    _themeSwitchWidget->setVisible(false);
     _checkinWidget->setFocus();
     themeChangedUiStatus();
+}
+
+void MainWindow::themeSettingBtn_clicked()
+{
+     _themeSwitchWidget->setVisible(true);
+     textEditContainer->setVisible(false);
+     _checkinWidget->setVisible(false);
+    _themeSwitchWidget->setFocus();
+    //themeChangedUiStatus();
 }
 
 void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
@@ -547,6 +574,7 @@ void MainWindow::onTreeWidgetItemClicked(QTreeWidgetItem *item, int column)
     if(!textEditContainer->isVisible())
     {
         _checkinWidget->setVisible(false);
+        _themeSwitchWidget->setVisible(false);
         textEditContainer->setVisible(true);
     }
     ui->checkinBtn->setChecked(false);

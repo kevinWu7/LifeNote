@@ -14,9 +14,33 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QWidget" name="mainSwitchWidget" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
@@ -90,7 +114,7 @@
           </widget>
          </item>
          <item row="2" column="4">
-          <widget class="QToolButton" name="toolButton_19">
+          <widget class="QToolButton" name="btnTintBlue5">
            <property name="text">
             <string>...</string>
            </property>
@@ -111,14 +135,14 @@
           </widget>
          </item>
          <item row="3" column="4">
-          <widget class="QToolButton" name="toolButton_33">
+          <widget class="QToolButton" name="btnBlue5">
            <property name="text">
             <string>...</string>
            </property>
           </widget>
          </item>
          <item row="2" column="2">
-          <widget class="QToolButton" name="toolButton_15">
+          <widget class="QToolButton" name="btnTintBlue3">
            <property name="text">
             <string>...</string>
            </property>
@@ -146,7 +170,7 @@
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QToolButton" name="toolButton_13">
+          <widget class="QToolButton" name="btnTintBlue1">
            <property name="text">
             <string>...</string>
            </property>
@@ -181,14 +205,14 @@
           </widget>
          </item>
          <item row="3" column="6">
-          <widget class="QToolButton" name="toolButton_35">
+          <widget class="QToolButton" name="btnBlue7">
            <property name="text">
             <string>...</string>
            </property>
           </widget>
          </item>
          <item row="2" column="7">
-          <widget class="QToolButton" name="toolButton_28">
+          <widget class="QToolButton" name="btnTintBlue8">
            <property name="text">
             <string>...</string>
            </property>
@@ -202,14 +226,14 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QToolButton" name="toolButton_14">
+          <widget class="QToolButton" name="btnTintBlue2">
            <property name="text">
             <string>...</string>
            </property>
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QToolButton" name="toolButton_30">
+          <widget class="QToolButton" name="btnBlue2">
            <property name="text">
             <string>...</string>
            </property>
@@ -258,7 +282,7 @@
           </widget>
          </item>
          <item row="3" column="5">
-          <widget class="QToolButton" name="toolButton_34">
+          <widget class="QToolButton" name="btnBlue6">
            <property name="text">
             <string>...</string>
            </property>
@@ -279,7 +303,7 @@
           </widget>
          </item>
          <item row="3" column="2">
-          <widget class="QToolButton" name="toolButton_31">
+          <widget class="QToolButton" name="btnBlue3">
            <property name="text">
             <string>...</string>
            </property>
@@ -335,7 +359,7 @@
           </widget>
          </item>
          <item row="2" column="3">
-          <widget class="QToolButton" name="toolButton_16">
+          <widget class="QToolButton" name="btnTintBlue4">
            <property name="text">
             <string>...</string>
            </property>
@@ -377,7 +401,7 @@
           </widget>
          </item>
          <item row="2" column="6">
-          <widget class="QToolButton" name="toolButton_25">
+          <widget class="QToolButton" name="btnTintBlue7">
            <property name="text">
             <string>...</string>
            </property>
@@ -482,14 +506,14 @@
           </widget>
          </item>
          <item row="2" column="5">
-          <widget class="QToolButton" name="toolButton_22">
+          <widget class="QToolButton" name="btnTintBlue6">
            <property name="text">
             <string>...</string>
            </property>
           </widget>
          </item>
          <item row="3" column="7">
-          <widget class="QToolButton" name="toolButton_36">
+          <widget class="QToolButton" name="btnBlue8">
            <property name="text">
             <string>...</string>
            </property>
@@ -510,7 +534,7 @@
           </widget>
          </item>
          <item row="3" column="3">
-          <widget class="QToolButton" name="toolButton_32">
+          <widget class="QToolButton" name="btnBlue4">
            <property name="text">
             <string>...</string>
            </property>
@@ -545,7 +569,7 @@
           </widget>
          </item>
          <item row="3" column="0">
-          <widget class="QToolButton" name="toolButton_29">
+          <widget class="QToolButton" name="btnBlue1">
            <property name="text">
             <string>...</string>
            </property>

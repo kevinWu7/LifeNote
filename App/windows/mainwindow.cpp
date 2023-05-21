@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_TranslucentBackground); // 设置窗口背景透明
-    setWindowOpacity(0.9);
+    setWindowOpacity(1);
 
 #ifdef Q_OS_MAC
      ui->mainWindowTiitle->setVisible(false);
@@ -109,12 +109,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->themeSettingBtn,&QToolButton::clicked,this,&MainWindow::themeSettingBtn_clicked);
     ui->darkRadioButton->setChecked(true);
     connect(ui->darkRadioButton, &QRadioButton::clicked, [=](){
-        ThemeManager::getInstance().switchTheme("dark");
+        ThemeManager::getInstance().switchTheme("dark",DARK_BACKGROUND);
     });
 
 
     connect(ui->lightRadioButton, &QRadioButton::clicked, [=](){
-         ThemeManager::getInstance().switchTheme("light");
+         ThemeManager::getInstance().switchTheme("light",LIGHT_BACKGROUND);
     });
 
     bindThemeChangetCallback=std::bind(&MainWindow::themeChangedUiStatus, this);

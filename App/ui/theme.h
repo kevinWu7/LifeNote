@@ -31,7 +31,7 @@
 extern std::map<QString, QString> themeDark;
 extern std::map<QString, QString> themeLight;
 extern std::map<QString, QString> themeBlue;
-extern std::unordered_map<std::string,QString> diyThemeColor;
+extern std::map<QString, QString> diyThemeColor;
 
 
 #endif // THEME_H

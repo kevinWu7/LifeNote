@@ -1,8 +1,9 @@
 #include "themeswitchwidget.h"
 #include "ui_themeswitchwidget.h"
 #include "theme.h"
-#include "thememanager.h"
 #include "util.h"
+#include "thememanager.h"
+#include "logger.h"
 
 ThemeSwitchWidget::ThemeSwitchWidget(QWidget *parent) :
     QWidget(parent),
@@ -17,24 +18,30 @@ ThemeSwitchWidget::~ThemeSwitchWidget()
     delete ui;
 }
 
+void ThemeSwitchWidget::colorButtonClicked()
+{
+    QToolButton *button = qobject_cast<QToolButton*>(sender());
+    if(button)
+    {
+        auto themeId=button->property("themeId").toString();
+        auto color=button->property("color").toString();
+        ThemeManager::getInstance().switchTheme(themeId,color);
+        logger->log(QString(button->property("color").toString()));
+    }
+
+}
+
 void ThemeSwitchWidget::InitDiyColorButtons()
 {
-    for(int i=0;i<ui->diyColorWidget->layout()->count();i++)
+    for(auto colorKry :diyThemeColor)
     {
-        //QToolButton* button=dynamic_cast<QToolButton*>(ui->diyColorWidget->layout()->itemAt(i)->widget());
-        QToolButton* button = util::findWidget<QToolButton>(ui->diyColorWidget,"btnRed"+QString::number(i+1));
+        QToolButton* button = util::findWidget<QToolButton>(ui->diyColorWidget,"btn"+colorKry.first);
         if(button)
         {
-            int mapIndex=0;
-            for(auto colorKry :diyThemeColor)
-            {
-                if(mapIndex==i)
-                {
-                    button->setStyleSheet(QString("background-color:%1").arg(QString(colorKry.second)));
-                    break;
-                }
-                mapIndex++;
-            }
+            button->setStyleSheet(QString("background-color:%1").arg(QString(colorKry.second)));
+            button->setProperty("themeId",colorKry.first);
+            button->setProperty("color",colorKry.second);
+            connect(button,&QToolButton::clicked,this,&ThemeSwitchWidget::colorButtonClicked);
         }
     }
 }

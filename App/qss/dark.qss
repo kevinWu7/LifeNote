@@ -298,6 +298,10 @@ QWidget#leftNavigateWidget QLabel#countLabel {
     font:13px;
 }
 
+QWidget#ThemeSwitchWidget  QWidget#mainSwitchWidget{
+   background-color:BACKGROUND_COLOR1;
+   border-radius: 7px;
+}
 
 /*NewHabitForm*/
 QWidget#NewHabitForm {
@@ -382,6 +386,8 @@ QWidget#NewNoteGroupForm QPushButton#cancleBtn{
     border-radius: 5px;
     border-color:SINGLE_LINE_COLOR;
 }
+
+
 
 /* other */
 QWidget#loggerTextEdit {

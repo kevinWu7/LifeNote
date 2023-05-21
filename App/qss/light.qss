@@ -299,6 +299,13 @@ QWidget#leftNavigateWidget QLabel#countLabel {
 }
 
 
+QWidget#ThemeSwitchWidget  QWidget#mainSwitchWidget{
+   background-color:BACKGROUND_COLOR1;
+      border-radius: 7px;
+}
+QWidget#ThemeSwitchWidget {
+   background-color:BACKGROUND_COLOR1;
+}
 
 /*NewHabitForm*/
 QWidget#NewHabitForm {

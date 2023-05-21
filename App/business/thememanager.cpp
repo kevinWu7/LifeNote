@@ -14,6 +14,39 @@ ThemeManager::ThemeManager()
 {
 }
 
+//根据background1来，获取background2 颜色
+QString ThemeManager::getBackGround2(QString baseColor,int diff)
+{
+    // 解析RGB颜色值
+    QString colorString = baseColor.mid(4, baseColor.length() - 5); // 去掉"rgb("和")"
+    QStringList colorComponents = colorString.split(',');
+
+    if (colorComponents.size() != 3) {
+        // 非法的颜色值格式
+        return baseColor;
+    }
+
+    // 提取颜色分量
+    int red = colorComponents[0].toInt();
+    int green = colorComponents[1].toInt();
+    int blue = colorComponents[2].toInt();
+
+    // 加上diff的值
+    red += diff;
+    green += diff;
+    blue += diff;
+
+    // 检查是否超出范围
+    red = qBound(0, red, 255);
+    green = qBound(0, green, 255);
+    blue = qBound(0, blue, 255);
+
+    // 构建新的颜色字符串
+    QString newColor = QString("rgb(%1,%2,%3)").arg(red).arg(green).arg(blue);
+    return newColor;
+}
+
+
 ThemeManager& ThemeManager::getInstance()
 {
     std::call_once(onceFlag, []()
@@ -71,29 +104,40 @@ QMainWindow* ThemeManager::getCurrentMainWindow()
     return mainWindow;
 }
 
-void ThemeManager::switchTheme(QString _themeId,bool isFirstInit)
+void ThemeManager::switchTheme(QString _themeId,QString baseBackgroundColor,bool isFirstInit)
 {
     QString path;
     QString titleColor;
     std::map<QString,QString> themeMap;
+    titleColor=baseBackgroundColor;
     if(_themeId=="dark")
     {
         path=QCoreApplication::applicationDirPath()+ "/qss/dark.qss";
-        titleColor=DARK_BACKGROUND;
         themeMap=themeDark;
     }
     else if(_themeId=="light")
     {
         path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
-        titleColor=LIGHT_BACKGROUND;
         themeMap=themeLight;
     }
-    else if(_themeId=="blue")
+    else  //纯色主题
     {
-        path=QCoreApplication::applicationDirPath()+ "/qss/dark.qss";
-        titleColor=BLUE_BACKGROUND;
-        themeMap=themeBlue;
+        int number=_themeId.right(1).toInt();
+        if(number<5)
+        {
+            path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
+            themeMap=themeLight;
+            themeMap["BACKGROUND_COLOR2"]= getBackGround2(baseBackgroundColor,30);
+        }
+        else
+        {
+            path=QCoreApplication::applicationDirPath()+ "/qss/dark.qss";
+            themeMap=themeDark;
+            themeMap["BACKGROUND_COLOR2"]= getBackGround2(baseBackgroundColor,-30);
+        }
+        themeMap["BACKGROUND_COLOR1"]=baseBackgroundColor;
     }
+
     QFile f(path);
     if (!f.exists())
     {

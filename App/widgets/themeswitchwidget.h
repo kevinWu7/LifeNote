@@ -15,6 +15,8 @@ public:
     explicit ThemeSwitchWidget(QWidget *parent = nullptr);
     ~ThemeSwitchWidget();
 
+public slots:
+    void colorButtonClicked();
 private:
     Ui::ThemeSwitchWidget *ui;
     void InitDiyColorButtons();

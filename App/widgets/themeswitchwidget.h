@@ -2,6 +2,7 @@
 #define THEMESWITCHWIDGET_H
 
 #include <QWidget>
+#include <QToolBUtton>
 
 namespace Ui {
 class ThemeSwitchWidget;
@@ -20,6 +21,8 @@ public slots:
 private:
     Ui::ThemeSwitchWidget *ui;
     void InitDiyColorButtons();
+    void InitSystemColorButtons();
+    QToolButton* currentCheckedBtn=nullptr;
 };
 
 #endif // THEMESWITCHWIDGET_H

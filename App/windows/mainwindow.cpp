@@ -109,12 +109,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->themeSettingBtn,&QToolButton::clicked,this,&MainWindow::themeSettingBtn_clicked);
     ui->darkRadioButton->setChecked(true);
     connect(ui->darkRadioButton, &QRadioButton::clicked, [=](){
-        ThemeManager::getInstance().switchTheme("dark",DARK_BACKGROUND);
+        ThemeManager::getInstance().switchTheme("dark",themeDark["BACKGROUND_COLOR1"]);
     });
 
 
     connect(ui->lightRadioButton, &QRadioButton::clicked, [=](){
-         ThemeManager::getInstance().switchTheme("light",LIGHT_BACKGROUND);
+         ThemeManager::getInstance().switchTheme("light",themeLight["BACKGROUND_COLOR1"]);
     });
 
     bindThemeChangetCallback=std::bind(&MainWindow::themeChangedUiStatus, this);
@@ -552,14 +552,7 @@ void MainWindow::themeChangedUiStatus()
 {
     if(ui->checkinBtn->isChecked())
     {
-        if(ThemeManager::ThemeId=="dark")
-        {
-            ui->checkinBtn->setStyleSheet("background-color:rgb(82,82,82)");
-        }
-        else
-        {
-            ui->checkinBtn->setStyleSheet("background-color:rgb(186, 214, 251)");
-        }
+        ui->checkinBtn->setStyleSheet(QString("background-color:%1").arg(currentTheme["CONTROL_SELECTED"]));
     }
     else
     {

@@ -4,7 +4,7 @@
 #include <QFile>
 #include "thememanager.h"
 #include "theme.h"
-
+#include "util.h"
 
 ThemeManager* ThemeManager::instance = nullptr;
 QString ThemeManager::ThemeId="dark";
@@ -108,17 +108,17 @@ void ThemeManager::switchTheme(QString _themeId,QString baseBackgroundColor,bool
 {
     QString path;
     QString titleColor;
-    std::map<QString,QString> themeMap;
+    currentTheme.clear();
     titleColor=baseBackgroundColor;
     if(_themeId=="dark")
     {
         path=QCoreApplication::applicationDirPath()+ "/qss/dark.qss";
-        themeMap=themeDark;
+        currentTheme=themeDark;
     }
     else if(_themeId=="light")
     {
         path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
-        themeMap=themeLight;
+        currentTheme=themeLight;
     }
     else  //纯色主题
     {
@@ -126,16 +126,28 @@ void ThemeManager::switchTheme(QString _themeId,QString baseBackgroundColor,bool
         if(number<5)
         {
             path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
-            themeMap=themeLight;
-            themeMap["BACKGROUND_COLOR2"]= getBackGround2(baseBackgroundColor,30);
+            currentTheme=themeLight;
+            currentTheme["BACKGROUND_COLOR2"]= getBackGround2(baseBackgroundColor,-20);
+            currentTheme["CONTROL_SELECTED"]= getBackGround2(baseBackgroundColor,-30);
+            currentTheme["CONTROL_NOSELECTED"]= getBackGround2(baseBackgroundColor,-15);
+            currentTheme["CONTROL_POOLTEXT"]= getBackGround2(baseBackgroundColor,-100);
+            currentTheme["SINGLE_LINE_COLOR"]=util::generateRGBAString(currentTheme["CONTROL_SELECTED"],0.5);
+            currentTheme["SCROLLBAR_HANDLE"]= getBackGround2(baseBackgroundColor,-50);
+            currentTheme["SCROLLBAR_HOVER"]= getBackGround2(currentTheme["SCROLLBAR_HANDLE"],20);
         }
         else
         {
             path=QCoreApplication::applicationDirPath()+ "/qss/dark.qss";
-            themeMap=themeDark;
-            themeMap["BACKGROUND_COLOR2"]= getBackGround2(baseBackgroundColor,-30);
+            currentTheme=themeDark;
+            currentTheme["BACKGROUND_COLOR2"]= getBackGround2(baseBackgroundColor,30);
+            currentTheme["CONTROL_SELECTED"]= getBackGround2(baseBackgroundColor,70);
+            currentTheme["CONTROL_NOSELECTED"]= getBackGround2(baseBackgroundColor,20);
+            currentTheme["CONTROL_POOLTEXT"]= getBackGround2(baseBackgroundColor,100);
+            currentTheme["SINGLE_LINE_COLOR"]=util::generateRGBAString(currentTheme["CONTROL_SELECTED"],0.5);
+            currentTheme["SCROLLBAR_HANDLE"]= getBackGround2(baseBackgroundColor,50);
+            currentTheme["SCROLLBAR_HOVER"]= getBackGround2(currentTheme["SCROLLBAR_HANDLE"],30);
         }
-        themeMap["BACKGROUND_COLOR1"]=baseBackgroundColor;
+        currentTheme["BACKGROUND_COLOR1"]=baseBackgroundColor;
     }
 
     QFile f(path);
@@ -150,7 +162,7 @@ void ThemeManager::switchTheme(QString _themeId,QString baseBackgroundColor,bool
         QTextStream ts(&f);
 
         QString allstyle=ts.readAll();
-        for(auto item : themeMap)
+        for(auto item : currentTheme)
         {
             allstyle= allstyle.replace(item.first,item.second);
         };

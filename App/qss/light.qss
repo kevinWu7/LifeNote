@@ -34,7 +34,7 @@ QTextEdit {
 
 QLineEdit {
     border:0px;
-    background-color:rgb(244,244,246);
+    background-color:BACKGROUND_COLOR2;
     color: CONTROL_TEXT;
 }
 
@@ -52,13 +52,13 @@ QScrollBar:vertical {
 }
 
 QScrollBar::handle:vertical {
-    background: rgba(0,0,0,20%);
+    background: SCROLLBAR_HANDLE;
     border-radius: 3px;
     min-height: 20;
 }
 
 QScrollBar::handle:vertical:hover {
-    background: rgba(0,0,0,35%);
+    background: SCROLLBAR_HOVER;
     border-radius: 3px;
     min-height: 20;
 }
@@ -83,14 +83,14 @@ QScrollBar:horizontal {
 
 QScrollBar::handle:horizontal {
     height: 6px;
-    background: rgba(0,0,0,20%);
+    background: SCROLLBAR_HANDLE;
     border-radius: 3px;
     min-width: 20;
 }
 
 QScrollBar::handle:horizontal:hover {
     height: 6px;
-    background: rgba(0,0,0,35%);
+    background: SCROLLBAR_HOVER;
     border-radius: 3px;
     min-width: 20;
 }
@@ -247,7 +247,7 @@ QWidget#weekDayWidget QLabel{
 }
 QWidget#weekDayWidget QLabel#weeklabel_6,
 QWidget#weekDayWidget QLabel#weeklabel_7 {
-     color: rgba(255,185,48,0.8);
+     color: CONTROL_WARNINGTEXT;
 }
 
 
@@ -303,8 +303,42 @@ QWidget#ThemeSwitchWidget  QWidget#mainSwitchWidget{
    background-color:BACKGROUND_COLOR1;
       border-radius: 7px;
 }
+
+/*ThemeSwitchWidget*/
 QWidget#ThemeSwitchWidget {
    background-color:BACKGROUND_COLOR1;
+}
+
+QWidget#ThemeSwitchWidget QWidget#diyColorWidget QToolButton{
+width: 50px;
+min-width: 50px;
+max-width: 50px;
+height: 25px;
+min-height: 25px;
+max-height: 25px;
+border-radius: 6px;
+}
+
+QWidget#ThemeSwitchWidget  QWidget#diyColorWidget QToolButton:checked{
+    width: 50px;
+    min-width: 50px;
+    max-width: 50px;
+    height: 25px;
+    min-height: 25px;
+    max-height: 25px;
+    border-radius: 6px;
+   border:1px solid CONTROL_SELECTED;
+}
+
+QWidget#ThemeSwitchWidget  QWidget#systemThemeWidget QToolButton:checked{
+    width: 70px;
+    min-width: 70px;
+    max-width: 70px;
+    height: 35px;
+    min-height: 35px;
+    max-height: 35px;
+    border-radius: 6px;
+    border:1px solid CONTROL_SELECTED;
 }
 
 /*NewHabitForm*/
@@ -333,13 +367,12 @@ QWidget#NewHabitForm QLabel{
 }
 
 QWidget#NewHabitForm QLabel#warningLabel{
-    color:red;
+    color:CONTROL_WARNINGTEXT;
 }
 
 
-QWidget#NewHabitForm QPushButton#okBtn
-{
-    background-color:rgb(235,181,67);
+QWidget#NewHabitForm QPushButton#okBtn{
+    background-color:BACKGROUND_COLOR2;
     width: 60px;
     height:20px;
     border-radius: 5px;
@@ -371,11 +404,11 @@ QWidget#NewNoteGroupForm QLabel{
 }
 
 QWidget#NewNoteGroupForm QLabel#warningLabel{
-    color:red;
+    color:CONTROL_WARNINGTEXT;
 }
 
 QWidget#NewNoteGroupForm QPushButton#okBtn{
-    background-color:rgb(235,181,67);
+    background-color:BACKGROUND_COLOR2;
     width: 90px;
     height:20px;
     border-radius: 5px;

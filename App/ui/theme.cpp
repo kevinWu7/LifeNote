@@ -1,25 +1,20 @@
 #include "theme.h"
 
+std::map<QString,QString> currentTheme={
 
+};
 
 std::map<QString,QString> themeDark={
     {"BACKGROUND_COLOR1","rgb(43,44,45)"},
     {"BACKGROUND_COLOR2", "rgb(63,62,58)"},
     {"CONTROL_SELECTED" , "rgb(72,72,72)"},
     {"CONTROL_NOSELECTED", "rgb(62,62,62)"},
-    {"CONTROL_TEXT","rgb(255,255,255)"},
+    {"CONTROL_TEXT","rgb(225,225,225)"},
+    {"CONTROL_WARNINGTEXT","rgb(255,255,255)"}, //警告色
     {"CONTROL_POOLTEXT","rgb(160,160,160)"}, //浅文字
-    {"SINGLE_LINE_COLOR" ,"rgb(72,72,72)"}
-};
-
-std::map<QString,QString> themeBlue={
-    {"BACKGROUND_COLOR1","rgb(83,107,174)"},
-    {"BACKGROUND_COLOR2", "rgb(70,90,146)"},
-    {"CONTROL_SELECTED" , "rgb(131,148,196)"},
-    {"CONTROL_NOSELECTED", "rgb(101,122,182)"},
-    {"CONTROL_TEXT",   "rgb(255,255,255)"},
-    {"CONTROL_POOLTEXT","rgb(160,160,160)"}, //浅文字
-    {"SINGLE_LINE_COLOR" ,"rgb(72,72,72)"}
+    {"SINGLE_LINE_COLOR" ,"rgb(72,72,72)"},
+    {"SCROLLBAR_HANDLE" ,"rgba(86,86,86,80%)"},
+    {"SCROLLBAR_HOVER" ,"rgb(86,86,86)"},
 };
 
 std::map<QString,QString> themeLight={
@@ -27,11 +22,13 @@ std::map<QString,QString> themeLight={
     {"BACKGROUND_COLOR2", "rgb(236,236,236)"},
     {"CONTROL_SELECTED" , "rgb(213, 230, 253)"},
     {"CONTROL_NOSELECTED", "rgb(232,232,232)"},
-    {"CONTROL_TEXT", "rgb(0, 0, 0)"},
+    {"CONTROL_TEXT", "rgb(30, 30, 30)"},
+    {"CONTROL_WARNINGTEXT","rgb(0,0,0)"}, //警告色
     {"CONTROL_POOLTEXT","rgb(180,180,180)"}, //浅文字
-    {"SINGLE_LINE_COLOR","rgb(239, 239, 239)"}
+    {"SINGLE_LINE_COLOR","rgb(239, 239, 239)"},
+    {"SCROLLBAR_HANDLE" ,"rgba(0,0,0,25%)"},
+    {"SCROLLBAR_HOVER" ,"rgba(0,0,0,15%)"},
 };
-
 
 std::map<QString, QString> diyThemeColor = {
     {"Red1", "rgb(248,211,210)"},
@@ -66,4 +63,52 @@ std::map<QString, QString> diyThemeColor = {
     {"Blue6", "rgb(48,57,181)"},
     {"Blue7", "rgb(45,50,122)"},
     {"Blue8", "rgb(34,37,73)"},
+    {"Cyan1", "rgb(202,238,241)"},
+    {"Cyan2", "rgb(166,235,240)"},
+    {"Cyan3", "rgb(128,219,227)"},
+    {"Cyan4", "rgb(106,205,214)"},
+    {"Cyan5", "rgb(90,195,207)"},
+    {"Cyan6", "rgb(76,166,176)"},
+    {"Cyan7", "rgb(53,108,113)"},
+    {"Cyan8", "rgb(45,73,75)"},
+    {"Yellow1", "rgb(254,245,208)"},
+    {"Yellow2", "rgb(253,237,163)"},
+    {"Yellow3", "rgb(251,227,122)"},
+    {"Yellow4", "rgb(250,218,88)"},
+    {"Yellow5", "rgb(249,210,71)"},
+    {"Yellow6", "rgb(198,167,55)"},
+    {"Yellow7", "rgb(125,108,42)"},
+    {"Yellow8", "rgb(76,67,38)"},
+    {"TintYellow1", "rgb(236,220,199)"},
+    {"TintYellow2", "rgb(214,189,157)"},
+    {"TintYellow3", "rgb(212,176,127)"},
+    {"TintYellow4", "rgb(212,162,100)"},
+    {"TintYellow5", "rgb(207,141,65)"},
+    {"TintYellow6", "rgb(165,111,51)"},
+    {"TintYellow7", "rgb(113,76,35)"},
+    {"TintYellow8", "rgb(67,52,33)"},
+    {"Pink1", "rgb(213,179,205)"},
+    {"Pink2", "rgb(196,146,182)"},
+    {"Pink3", "rgb(200,120,180)"},
+    {"Pink4", "rgb(180,90,155)"},
+    {"Pink5", "rgb(190,65,150)"},
+    {"Pink6", "rgb(150,50,120)"},
+    {"Pink7", "rgb(102,43,84)"},
+    {"Pink8", "rgb(60,30,52)"},
+    {"Purple1", "rgb(219,198,243)"},
+    {"Purple2", "rgb(200,170,236)"},
+    {"Purple3", "rgb(182,143,230)"},
+    {"Purple4", "rgb(164,118,225)"},
+    {"Purple5", "rgb(141,81,219)"},
+    {"Purple6", "rgb(111,62,170)"},
+    {"Purple7", "rgb(86,58,122)"},
+    {"Purple8", "rgb(52,33,73)"},
+    {"Gray1", "rgb(207,208,209)"},
+    {"Gray2", "rgb(156,156,158)"},
+    {"Gray3", "rgb(110,110,114)"},
+    {"Gray4", "rgb(85,87,92)"},
+    {"Gray5", "rgb(64,65,70)"},
+    {"Gray6", "rgb(58,59,64)"},
+    {"Gray7", "rgb(42,43,46)"},
+    {"Gray8", "rgb(37,38,42)"},
 };

@@ -45,5 +45,6 @@
         <file>res/system/max.png</file>
         <file>res/system/setting.png</file>
         <file>res/system/theme.png</file>
+        <file>res/checkin/selected.png</file>
     </qresource>
 </RCC>

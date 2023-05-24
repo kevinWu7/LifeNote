@@ -44,6 +44,7 @@ SOURCES += \
     util/logger.cpp \
     util/util.cpp \
     xmlconfig/noteconfig.cpp \
+    xmlconfig/themeconfig.cpp \
     xmlconfig/checkinconfig.cpp
 
 HEADERS += \
@@ -72,6 +73,7 @@ HEADERS += \
     util/util.h \
     util/logger.h \
     xmlconfig/noteconfig.h \
+    xmlconfig/themeconfig.h \
     xmlconfig/checkinconfig.h
 
 FORMS += \

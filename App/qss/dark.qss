@@ -1,4 +1,12 @@
 /* 系统控件 */
+QScrollArea[objectName*="scrollArea"]{
+    background-color: transparent;
+    border: none;
+}
+
+QWidget[objectName*="scrollAreaWidgetContents"]{
+    border: none;
+}
 
 QFrame[objectName*="HorizontalLine"] {
     border-top: 1px solid SINGLE_LINE_COLOR;
@@ -297,9 +305,13 @@ QWidget#leftNavigateWidget QLabel#countLabel {
 }
 
 /*ThemeSwitchWidget*/
-QWidget#ThemeSwitchWidget  QWidget#mainSwitchWidget{
+QWidget#themeScrollAreaContainer{
    background-color:BACKGROUND_COLOR1;
    border-radius: 7px;
+}
+
+QWidget#ThemeSwitchWidget  QWidget#mainSwitchWidget{
+   background-color:BACKGROUND_COLOR1;
 }
 
 QWidget#ThemeSwitchWidget  QWidget#diyColorWidget QToolButton{
@@ -320,7 +332,7 @@ QWidget#ThemeSwitchWidget  QWidget#diyColorWidget QToolButton:checked{
     min-height: 25px;
     max-height: 25px;
     border-radius: 6px;
-    border:1px solid CONTROL_SELECTED;
+    border:2px solid CONTROL_SELECTED;
 }
 
 QWidget#ThemeSwitchWidget  QWidget#systemThemeWidget QToolButton:checked{
@@ -331,7 +343,7 @@ QWidget#ThemeSwitchWidget  QWidget#systemThemeWidget QToolButton:checked{
     min-height: 35px;
     max-height: 35px;
     border-radius: 8px;
-    border:1px solid CONTROL_SELECTED;
+    border:2px solid CONTROL_SELECTED;
 }
 
 /*NewHabitForm*/

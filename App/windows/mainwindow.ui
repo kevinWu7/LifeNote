@@ -277,38 +277,6 @@
                  </layout>
                 </widget>
                </item>
-               <item>
-                <widget class="QWidget" name="widget_2" native="true">
-                 <layout class="QHBoxLayout" name="horizontalLayout">
-                  <property name="leftMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="topMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="rightMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="bottomMargin">
-                   <number>0</number>
-                  </property>
-                  <item>
-                   <widget class="QRadioButton" name="darkRadioButton">
-                    <property name="text">
-                     <string>深色</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QRadioButton" name="lightRadioButton">
-                    <property name="text">
-                     <string>浅色</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </widget>
-               </item>
               </layout>
              </widget>
             </item>

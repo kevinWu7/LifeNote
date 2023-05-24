@@ -25,8 +25,6 @@ public:
     static void updateXml( OperationType type,QTreeWidgetItem *currenttNode,QTreeWidgetItem *newNode=nullptr);//节点发生改变时，重新生成配置文件
     static void updateXmlRenameNode(const QString& oldName,QTreeWidgetItem *currentNode);
     static void updateXmlAddTopLevelNode(ExtraQTreeWidgetItem *newNode,QTreeWidgetItem *collectNode);
-
-
 };
 
 #endif // NOTECONFIG_H

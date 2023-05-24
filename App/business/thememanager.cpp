@@ -4,6 +4,7 @@
 #include <QFile>
 #include "thememanager.h"
 #include "theme.h"
+#include "themeconfig.h""
 #include "util.h"
 
 ThemeManager* ThemeManager::instance = nullptr;
@@ -149,7 +150,7 @@ void ThemeManager::switchTheme(QString _themeId,QString baseBackgroundColor,bool
         }
         currentTheme["BACKGROUND_COLOR1"]=baseBackgroundColor;
     }
-
+    themeConfig::getInstance().updateXml(_themeId);
     QFile f(path);
     if (!f.exists())
     {

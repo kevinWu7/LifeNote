@@ -107,16 +107,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(textEditContainer->ui->logCheck,&QCheckBox::stateChanged,this,&MainWindow::logCheckStateChanged);
     connect(ui->checkinBtn,&QToolButton::clicked,this,&MainWindow::checkinBtn_clicked);
     connect(ui->themeSettingBtn,&QToolButton::clicked,this,&MainWindow::themeSettingBtn_clicked);
-    ui->darkRadioButton->setChecked(true);
-    connect(ui->darkRadioButton, &QRadioButton::clicked, [=](){
-        ThemeManager::getInstance().switchTheme("dark",themeDark["BACKGROUND_COLOR1"]);
-    });
-
-
-    connect(ui->lightRadioButton, &QRadioButton::clicked, [=](){
-         ThemeManager::getInstance().switchTheme("light",themeLight["BACKGROUND_COLOR1"]);
-    });
-
     bindThemeChangetCallback=std::bind(&MainWindow::themeChangedUiStatus, this);
     ThemeManager::getInstance().registerThemeGlobalEvent(bindThemeChangetCallback);
     _checkinWidget->setVisible(false);

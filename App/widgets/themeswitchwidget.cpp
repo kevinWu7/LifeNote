@@ -10,8 +10,9 @@ ThemeSwitchWidget::ThemeSwitchWidget(QWidget *parent) :
     ui(new Ui::ThemeSwitchWidget)
 {
     ui->setupUi(this);
-   InitSystemColorButtons();
+    InitSystemColorButtons();
     InitDiyColorButtons();
+
 }
 
 ThemeSwitchWidget::~ThemeSwitchWidget()
@@ -28,7 +29,14 @@ void ThemeSwitchWidget::colorButtonClicked()
         auto color=button->property("color").toString();
         ThemeManager::getInstance().switchTheme(themeId,color);
         logger->log(QString(button->property("color").toString()));
-        button->setIcon(QIcon(":/icons/res/checkin/tick.png"));
+        if(themeId.contains("Red"))
+        {
+            button->setIcon(QIcon(":/icons/res/checkin/tick.png"));
+        }
+        else
+        {
+            button->setIcon(QIcon(":/icons/res/checkin/selected.png"));
+        }
         if(currentCheckedBtn&&currentCheckedBtn!=button)
         {
             currentCheckedBtn->setChecked(false);
@@ -50,6 +58,19 @@ void ThemeSwitchWidget::InitDiyColorButtons()
             button->setProperty("color",colorKry.second);
             button->setText("");
             button->setIconSize(QSize(12,12));
+            if(colorKry.first==ThemeManager::getInstance().ThemeId)
+            {
+                if(ThemeManager::getInstance().ThemeId.contains("Red"))
+                {
+                    button->setIcon(QIcon(":/icons/res/checkin/tick.png"));
+                }
+                else
+                {
+                    button->setIcon(QIcon(":/icons/res/checkin/selected.png"));
+                }
+                button->setChecked(true);
+                currentCheckedBtn=button;
+            }
             connect(button,&QToolButton::clicked,this,&ThemeSwitchWidget::colorButtonClicked);
         }
     }
@@ -69,6 +90,18 @@ void ThemeSwitchWidget::InitSystemColorButtons()
     ui->darkSystemBtn->setProperty("color",themeDark["BACKGROUND_COLOR1"]);
     ui->lightSystemBtn->setProperty("themeId","light");
     ui->lightSystemBtn->setProperty("color",themeLight["BACKGROUND_COLOR1"]);
+    if("dark"==ThemeManager::getInstance().ThemeId)
+    {
+         ui->darkSystemBtn->setIcon(QIcon(":/icons/res/checkin/selected.png"));
+         ui->darkSystemBtn->setChecked(true);
+         currentCheckedBtn=ui->darkSystemBtn;
+    }
+    else if("light"==ThemeManager::getInstance().ThemeId)
+    {
+         ui->lightSystemBtn->setIcon(QIcon(":/icons/res/checkin/selected.png"));
+         ui->lightSystemBtn->setChecked(true);
+         currentCheckedBtn=ui->lightSystemBtn;
+    }
     connect(ui->darkSystemBtn,&QToolButton::clicked,this,&ThemeSwitchWidget::colorButtonClicked);
     connect(ui->lightSystemBtn,&QToolButton::clicked,this,&ThemeSwitchWidget::colorButtonClicked);
 }

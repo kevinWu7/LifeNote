@@ -36,7 +36,7 @@ public:
     static QMainWindow* getQMainWindowByWidget(QWidget* widget);
     static QMainWindow* getCurrentMainWindow();
     static QString getPlatFormName();
-
+    static QString generateRGBAString(const QString& colorString, float alpha);
     template<typename T>
     static T *findWidget(QWidget *parent, const QString &objectName)
     {

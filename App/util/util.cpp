@@ -353,6 +353,31 @@ QMainWindow* util::getQMainWindowByWidget(QWidget* widget)
     return mainWindow;
 }
 
+QString util::generateRGBAString(const QString& colorString, float alpha)
+{
+    // 解析RGB颜色值
+    QString rgbString = colorString.mid(4, colorString.length() - 5); // 去掉"rgb("和")"
+    QStringList colorComponents = rgbString.split(',');
+
+    if (colorComponents.size() != 3) {
+        // 非法的颜色值格式
+        return colorString;
+    }
+
+    // 提取颜色分量
+    int red = colorComponents[0].toInt();
+    int green = colorComponents[1].toInt();
+    int blue = colorComponents[2].toInt();
+
+    // 确保透明度在0到1之间
+    alpha = qBound(0.0f, alpha, 1.0f);
+
+    // 构建RGBA字符串
+    QString rgbaString = QString("rgba(%1,%2,%3,%4)").arg(red).arg(green).arg(blue).arg(alpha);
+    return rgbaString;
+}
+
+
 QString util::getPlatFormName()
 {
 #ifdef Q_OS_MAC

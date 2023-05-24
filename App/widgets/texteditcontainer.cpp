@@ -7,6 +7,7 @@
 #include "texteditcontainer.h"
 #include "ui_texteditcontainer.h"
 #include "roundedtooltiphelper.h"
+#include "theme.h"
 
 
 TextEditContainer::TextEditContainer(QWidget *parent) :
@@ -159,7 +160,7 @@ void TextEditContainer::initfontCombobox()
 
 void TextEditContainer::themeChangedUpdateUiStatus()
 {
-    QString color= ThemeManager::ThemeId=="light"?"rgb(0,0,0)":"rgb(255,255,255)";
+    QString color= currentTheme["CONTROL_TEXT"];
     ui->boldBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/note/bold.svg",color));
     ui->italicBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/note/italic.svg",color));
     ui->colorBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/note/color.svg",color));

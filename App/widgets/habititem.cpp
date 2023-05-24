@@ -5,6 +5,7 @@
 #include "weektoolbutton.h"
 #include "checkinconfig.h"
 #include "logger.h"
+#include "theme.h"
 #include "roundedtooltiphelper.h"
 
 
@@ -138,14 +139,7 @@ void HabitItem::updateHabitUiStatus()
     }
     else
     {
-        if (ThemeManager::ThemeId=="dark")
-        {
-            this->setStyleSheet("QWidget#mainWidget{background-color:rgb(72,72,72)}");//727272
-        }
-        else
-        {
-            this->setStyleSheet("QWidget#mainWidget{background-color:rgba(234,240,255,0.7)}");
-        }
+        this->setStyleSheet(QString("QWidget#mainWidget{background-color:%1}").arg(currentTheme["CONTROL_SELECTED"]));
     }
 }
 

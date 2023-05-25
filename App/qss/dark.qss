@@ -352,6 +352,12 @@ QWidget#ThemeSwitchWidget  QLineEdit#transparencyEdit {
     color: CONTROL_TEXT;
     border-radius: 8px;
 }
+
+QWidget#ThemeSwitchWidget  QLabel#transparencyRangeEdit {
+    color: CONTROL_POOLTEXT;
+    font:12pt;
+}
+
 /*NewHabitForm*/
 QWidget#NewHabitForm {
     background-color:BACKGROUND_COLOR1;

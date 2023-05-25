@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <root>
-   <ThemeId id="dark">
-   </ThemeId>
+   <ThemeId>dark</ThemeId>
+   <Transparency>100</Transparency>
 </root>

@@ -349,6 +349,13 @@ QWidget#ThemeSwitchWidget  QWidget#systemThemeWidget QToolButton:checked{
     border:2px solid CONTROL_SELECTED;
 }
 
+QWidget#ThemeSwitchWidget  QLineEdit#transparencyEdit {
+    border:0px;
+    background-color: BACKGROUND_COLOR2;
+    color: CONTROL_TEXT;
+    border-radius: 8px;
+}
+
 /*NewHabitForm*/
 QWidget#NewHabitForm {
     background-color:BACKGROUND_COLOR1;

@@ -9,6 +9,7 @@
 
 ThemeManager* ThemeManager::instance = nullptr;
 QString ThemeManager::ThemeId="dark";
+double  ThemeManager::Transparency=1.0;
 std::once_flag ThemeManager::onceFlag;
 
 ThemeManager::ThemeManager()
@@ -150,7 +151,7 @@ void ThemeManager::switchTheme(QString _themeId,QString baseBackgroundColor,bool
         }
         currentTheme["BACKGROUND_COLOR1"]=baseBackgroundColor;
     }
-    themeConfig::getInstance().updateXml(_themeId);
+    themeConfig::getInstance().updateXml("ThemeId",_themeId);
     QFile f(path);
     if (!f.exists())
     {

@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_TranslucentBackground); // 设置窗口背景透明
-    setWindowOpacity(1);
+
 
 #ifdef Q_OS_MAC
      ui->mainWindowTiitle->setVisible(false);

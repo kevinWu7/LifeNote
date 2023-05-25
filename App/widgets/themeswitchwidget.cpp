@@ -1,10 +1,12 @@
+#include <QIntValidator>
 #include "themeswitchwidget.h"
 #include "ui_themeswitchwidget.h"
 #include "theme.h"
 #include "util.h"
 #include "thememanager.h"
+#include "themeconfig.h"
 #include "logger.h"
-
+#include <QLineEdit>
 ThemeSwitchWidget::ThemeSwitchWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ThemeSwitchWidget)
@@ -12,7 +14,14 @@ ThemeSwitchWidget::ThemeSwitchWidget(QWidget *parent) :
     ui->setupUi(this);
     InitSystemColorButtons();
     InitDiyColorButtons();
-
+    //QIntValidator *validator = new QIntValidator(10, 100, this);
+    //ui->transparencyEdit->setValidator(validator);
+    QIntValidator *validator = new QIntValidator(30, 100, this);
+    ui->transparencyEdit->setValidator(validator);
+    ui->transparencyEdit->setText(QString::number(ThemeManager::getInstance().Transparency));
+    ui->transparencyHSlider->setValue(ThemeManager::getInstance().Transparency);
+    connect(ui->transparencyHSlider,&QSlider::sliderMoved,this,&ThemeSwitchWidget::transparencySliderMoved);
+    connect(ui->transparencyEdit,&QLineEdit::textEdited,this,&ThemeSwitchWidget::transparencyEditEvent);
 }
 
 ThemeSwitchWidget::~ThemeSwitchWidget()
@@ -23,6 +32,12 @@ ThemeSwitchWidget::~ThemeSwitchWidget()
 void ThemeSwitchWidget::colorButtonClicked()
 {
     QToolButton *button = qobject_cast<QToolButton*>(sender());
+    //若为当前的按钮，重复点击的情况
+    if(currentCheckedBtn==button)
+    {
+        currentCheckedBtn->setChecked(true);
+        return;
+    }
     if(button&&button->isChecked())
     {
         auto themeId=button->property("themeId").toString();
@@ -44,6 +59,28 @@ void ThemeSwitchWidget::colorButtonClicked()
         }
         currentCheckedBtn=button;
     }
+}
+
+void ThemeSwitchWidget::transparencySliderMoved(int value)
+{
+    auto window=util::getCurrentMainWindow();
+    window->setWindowOpacity(value/100.0);
+    ui->transparencyEdit->setText(QString::number(value));
+    themeConfig::getInstance().updateXml("Transparency",QString::number(value));
+}
+
+void ThemeSwitchWidget::transparencyEditEvent()
+{
+     logger->log(QString(ui->transparencyEdit->text()));
+     int number=ui->transparencyEdit->text().toInt();
+     if(number>=30&&number<=100)
+     {
+         ThemeManager::getInstance().Transparency=number;
+         ui->transparencyHSlider->setValue(number);
+         auto window=util::getCurrentMainWindow();
+         window->setWindowOpacity(number/100.0);
+         themeConfig::getInstance().updateXml("Transparency",QString::number(number));
+     }
 }
 
 void ThemeSwitchWidget::InitDiyColorButtons()

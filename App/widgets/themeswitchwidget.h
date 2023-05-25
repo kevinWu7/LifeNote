@@ -18,6 +18,8 @@ public:
 
 public slots:
     void colorButtonClicked();
+    void transparencySliderMoved(int value);
+    void transparencyEditEvent();
 private:
     Ui::ThemeSwitchWidget *ui;
     void InitDiyColorButtons();

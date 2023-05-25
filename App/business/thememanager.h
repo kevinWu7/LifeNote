@@ -21,6 +21,7 @@ class ThemeManager
 public:
     static ThemeManager& getInstance();
     static QString ThemeId;
+    static double Transparency;
     // 注册全局事件
     void registerThemeGlobalEvent(themeChangedCallback callback);
     void unregisterThemeGlobalEvent(themeChangedCallback callback);

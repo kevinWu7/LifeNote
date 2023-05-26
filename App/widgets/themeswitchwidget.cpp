@@ -42,7 +42,9 @@ void ThemeSwitchWidget::colorButtonClicked()
     {
         auto themeId=button->property("themeId").toString();
         auto color=button->property("color").toString();
-        ThemeManager::getInstance().switchTheme(themeId,color);
+
+        ThemeManager::getInstance().switchTheme(themeId);
+
         logger->log(QString(button->property("color").toString()));
         if(themeId.contains("Red"))
         {

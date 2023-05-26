@@ -11,11 +11,11 @@ int main(int argc, char *argv[])
     auto themeData=themeConfig::getInstance().LoadThemeConfig();
     ThemeManager::getInstance().ThemeId=themeData.themeId;
     ThemeManager::getInstance().Transparency=themeData.transparency;
+    ThemeManager::getInstance().switchTheme(ThemeManager::getInstance().ThemeId,true);
     MainWindow window;
     window.setWindowTitle(WINDOW_TITLE);
     window.setWindowOpacity(ThemeManager::getInstance().Transparency/100.0);
-    ThemeManager::getInstance().switchTheme(ThemeManager::getInstance().ThemeId,
-                  diyThemeColor[ThemeManager::getInstance().ThemeId],true);
+    Cocoa::changeTitleBarColor(window.winId(), currentTheme["BACKGROUND_COLOR1"]);
     window.show();
     return a.exec();
 }

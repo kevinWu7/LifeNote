@@ -26,7 +26,7 @@ public:
     void registerThemeGlobalEvent(themeChangedCallback callback);
     void unregisterThemeGlobalEvent(themeChangedCallback callback);
     void triggerThemeGlobalEvent();
-    void switchTheme(QString themeId,QString baseBackgroundColor,bool isFirstIni=false);
+    void switchTheme(QString themeId,bool isFirstIni=false);
     QMainWindow* getCurrentMainWindow();
     std::vector<themeChangedCallback> callbackList;
 private:

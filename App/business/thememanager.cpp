@@ -106,25 +106,27 @@ QMainWindow* ThemeManager::getCurrentMainWindow()
     return mainWindow;
 }
 
-void ThemeManager::switchTheme(QString _themeId,QString baseBackgroundColor,bool isFirstInit)
+void ThemeManager::switchTheme(QString _themeId,bool isFirstInit)
 {
     QString path;
-    QString titleColor;
+    QString baseBackgroundColor;
     currentTheme.clear();
-    titleColor=baseBackgroundColor;
     if(_themeId=="dark")
     {
         path=QCoreApplication::applicationDirPath()+ "/qss/dark.qss";
         currentTheme=themeDark;
+        baseBackgroundColor=currentTheme["BACKGROUND_COLOR1"];
     }
     else if(_themeId=="light")
     {
         path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
         currentTheme=themeLight;
+        baseBackgroundColor=currentTheme["BACKGROUND_COLOR1"];
     }
     else  //纯色主题
     {
         int number=_themeId.right(1).toInt();
+        baseBackgroundColor=diyThemeColor[_themeId];
         if(number<5)
         {
             path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
@@ -151,7 +153,10 @@ void ThemeManager::switchTheme(QString _themeId,QString baseBackgroundColor,bool
         }
         currentTheme["BACKGROUND_COLOR1"]=baseBackgroundColor;
     }
-    themeConfig::getInstance().updateXml("ThemeId",_themeId);
+    if(_themeId!=  this->ThemeId)
+    {
+        themeConfig::getInstance().updateXml("ThemeId",_themeId);
+    }
     QFile f(path);
     if (!f.exists())
     {
@@ -172,7 +177,7 @@ void ThemeManager::switchTheme(QString _themeId,QString baseBackgroundColor,bool
         auto mainWindow=getCurrentMainWindow();
         if(mainWindow)
         {
-           Cocoa::changeTitleBarColor(getCurrentMainWindow()->winId(), titleColor);
+           Cocoa::changeTitleBarColor(getCurrentMainWindow()->winId(), baseBackgroundColor);
         }
         if(!isFirstInit)
         {

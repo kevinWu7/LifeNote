@@ -3,7 +3,6 @@
 
 #include <map>
 #include <QString>
-#include <unordered_map>
 
 extern std::map<QString, QString> currentTheme;
 

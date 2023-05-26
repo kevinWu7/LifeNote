@@ -87,10 +87,11 @@ FORMS += \
     windows/mainwindow.ui \
     windows/newnotegroupform.ui
 
+macx {
 LIBS +=   -framework AppKit  # 链接 Foundation 和 AppKit 框架
 OBJECTIVE_SOURCES += \#引入object-C的类源文件
     titlebarcontroller.mm
-
+}
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

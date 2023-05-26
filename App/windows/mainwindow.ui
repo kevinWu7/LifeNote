@@ -66,6 +66,9 @@
        </property>
        <item>
         <widget class="QSplitter" name="mainSplitter">
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -117,7 +120,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>...</string>
+               <string>打卡记录</string>
               </property>
               <property name="checkable">
                <bool>true</bool>

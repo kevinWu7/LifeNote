@@ -174,11 +174,13 @@ void ThemeManager::switchTheme(QString _themeId,bool isFirstInit)
             allstyle= allstyle.replace(item.first,item.second);
         };
         qApp->setStyleSheet(allstyle);
+#ifdef Q_OS_MAC
         auto mainWindow=getCurrentMainWindow();
         if(mainWindow)
         {
            Cocoa::changeTitleBarColor(getCurrentMainWindow()->winId(), baseBackgroundColor);
         }
+#endif
         if(!isFirstInit)
         {
             ThemeManager::getInstance().triggerThemeGlobalEvent();

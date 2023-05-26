@@ -377,16 +377,16 @@ QString util::generateRGBAString(const QString& colorString, float alpha)
     return rgbaString;
 }
 
-
 QString util::getPlatFormName()
 {
+    QString platformName;
 #ifdef Q_OS_MAC
-    return "macos";
-#elif Q_OS_WIN
-    return "windows";
+    platformName = "macos";
+#elif defined(Q_OS_WIN)
+    platformName = "windows";
 #else
-    return "unknown";
+    platformName = "unknown";
 #endif
+    return platformName;
 }
-
 

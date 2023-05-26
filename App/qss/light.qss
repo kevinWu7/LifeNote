@@ -1,4 +1,8 @@
 /* 系统控件*/
+QSplitter::handle{
+   background-color:transparent;
+}
+
 QScrollArea[objectName*="scrollArea"]{
     background-color: transparent;
     border: none;
@@ -147,14 +151,8 @@ QWidget#mainPage QLineEdit {
 }
 
 
-QWidget#mainPage[platform="windows"]{
+QWidget#mainPage{
     background-color:BACKGROUND_COLOR2;
-}
-
-QWidget#mainPage[platform="macos"]{
-    background-color:BACKGROUND_COLOR2;
-    border-bottom-left-radius: 7px;
-    border-bottom-right-radius: 7px;
 }
 
 QWidget#leftBar {

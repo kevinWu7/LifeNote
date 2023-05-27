@@ -22,8 +22,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 #ifdef Q_OS_MAC
      ui->mainWindowTiitle->setVisible(false);
-
-
 #endif
 
 #ifdef Q_OS_WIN

@@ -7,9 +7,13 @@
 
 
 #ifdef QT_NO_DEBUG
-#define STORAGE_PATH  QString("/Users/wuchengcheng/Documents/Lifenote_dir")
+    #ifdef Q_OS_MAC
+        #define STORAGE_PATH  QString("/Users/wuchengcheng/Documents/Lifenote_dir")
+    #elif defined(Q_OS_WIN)
+        #define STORAGE_PATH QCoreApplication::applicationDirPath()
+    #endif
 #else
-#define STORAGE_PATH QCoreApplication::applicationDirPath()
+    #define STORAGE_PATH QCoreApplication::applicationDirPath()
 #endif
 
 class util

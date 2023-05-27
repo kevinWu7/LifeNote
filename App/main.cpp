@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include "thememanager.h"
 #include "themeconfig.h"
+#include "theme.h"
 
 int main(int argc, char *argv[])
 {

@@ -153,6 +153,18 @@ QTreeView::branch:selected:!active {
 /* mainwindow */
 QWidget#mainWindowTiitle[platform="windows"]{
     background-color:BACKGROUND_COLOR1;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+
+QWidget#mainPage[platform="windows"]{
+    background-color:BACKGROUND_COLOR2;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+QWidget#mainPage{
+    background-color:BACKGROUND_COLOR2;
 }
 
 QWidget#mainPage QLineEdit {
@@ -162,9 +174,7 @@ QWidget#mainPage QLineEdit {
 }
 
 
-QWidget#mainPage{
-    background-color:BACKGROUND_COLOR2;
-}
+
 
 QWidget#leftBar {
     background-color:BACKGROUND_COLOR1;

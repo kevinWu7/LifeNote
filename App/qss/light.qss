@@ -127,6 +127,7 @@ QScrollBar::add-line:horizontal {
 QScrollBar::sub-line:horizontal {
     width: 0px;
     subcontrol-position: right;
+    background:none;
 }
 
 QTreeWidget {
@@ -153,17 +154,24 @@ QTreeView::branch:selected:!active {
 /* mainwindow*/
 QWidget#mainWindowTiitle[platform="windows"]{
     background-color:BACKGROUND_COLOR1;
+    border-top-left-radius: 6px;
+    border-top-right-radius:6px;
+}
+
+QWidget#mainPage[platform="windows"]{
+    background-color:BACKGROUND_COLOR2;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+QWidget#mainPage{
+    background-color:BACKGROUND_COLOR2;
 }
 
 QWidget#mainPage QLineEdit {
     border:0px;
     background-color: BACKGROUND_COLOR1;
     color: CONTROL_TEXT;
-}
-
-
-QWidget#mainPage{
-    background-color:BACKGROUND_COLOR2;
 }
 
 QWidget#leftBar {

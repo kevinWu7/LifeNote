@@ -3,6 +3,7 @@
 #include <QLabel>
 #include <QToolBar>
 #include <QPushButton>
+#include <QGraphicsDropShadowEffect>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "util.h"
@@ -26,10 +27,24 @@ MainWindow::MainWindow(QWidget *parent)
 
 #ifdef Q_OS_WIN
      //此句代码将会使边框消失，配合WA_TranslucentBackground可以达到纯透明效果，否则不管控件如何设置透明度，都无法达到效果
-    this->setWindowFlags(Qt::FramelessWindowHint);
-    connect(ui->mainWindowTiitle->minButton, &QToolButton::clicked, this, &MainWindow::showMinimized);
-    connect(ui->mainWindowTiitle->maxButton, &QToolButton::clicked, this, &MainWindow::toggleMaximized);
-    connect( ui->mainWindowTiitle->closeButton, &QToolButton::clicked, this, &MainWindow::close);
+     setWindowFlags(Qt::FramelessWindowHint);
+
+     QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
+     effect->setOffset(0, 0);          //设置向哪个方向产生阴影效果(dx,dy)，特别地，(0,0)代表向四周发散
+     effect->setColor(QColor(128,128,128,50));       //设置阴影颜色
+     effect->setBlurRadius(25);        //设定阴影的模糊半径，数值越大越模糊
+     ui->centralwidget->setGraphicsEffect(effect);
+     ui->centralwidget->setContentsMargins(5,5,5,5); //设置间隔,实际就是阴影的宽度
+
+     connect(ui->mainWindowTiitle->minButton, &QToolButton::clicked, this, &MainWindow::showMinimized);
+     connect(ui->mainWindowTiitle->maxButton, &QToolButton::clicked, this, &MainWindow::toggleMaximized);
+     connect( ui->mainWindowTiitle->closeButton, &QToolButton::clicked, this, &MainWindow::close);
+     //追踪鼠标，默认情况是只有当按键按下才会被qt监控，要不发生按下事件时也接收鼠标信号，需手动设置部件追踪鼠标。
+     this->setMouseTracking(true);
+     ui->mainPage->setMouseTracking(true);
+     ui->centralwidget->setMouseTracking(true);
+     ui->mainWindowTiitle->setMouseTracking(true);
+
 #endif
 
     ui->mainPage->setProperty("platform",util::getPlatFormName());
@@ -289,7 +304,7 @@ void MainWindow::onDeleteNoteItemClick()
             auto recyclePath=QString("%1/storage/%2/%3").arg(currentPath,NODENAME_RECYLE,fileName);
             bool moveResult= QFile::rename(fullPath,recyclePath); //A路径移动到B路径
             std::string str="delete node and move file "+ std::string(moveResult ? "true": "false") ;
-            logger->log(str);
+            logger->log(QString::fromStdString(str));
             if(!moveResult)
             {
                  QMessageBox::warning(this, tr("错误"),tr("\n文件移动失败,无法完成操作"));
@@ -777,8 +792,8 @@ void MainWindow::onTitleLineEditEditingFinished()
             QString newDir=QString("%1/%2").arg(parentFullPath,textEditContainer->ui->titleLineEdit->text());
             QString oldDir=QString("%1/%2").arg(parentFullPath,oldName);
             QDir _dir(oldDir);
-            logger->log(oldDir.toStdString());
-            logger->log(newDir.toStdString());
+            logger->log(oldDir);
+            logger->log(newDir);
             if (_dir.exists())
             {
                 _dir.rename(oldDir, newDir);
@@ -850,12 +865,210 @@ void MainWindow::onApplicationQuit()
 }
 
 
-
-
 void MainWindow::toggleMaximized()
 {
+    QString color= currentTheme["CONTROL_TEXT"];
+    if (isMaximized())
+    {
+        ui->centralwidget->setContentsMargins(5,5,5,5); //设置间隔,实际就是阴影的宽度
+        ui->mainWindowTiitle->maxButton->setIcon(util::CreateColorSvgIcon(":/icons/res/system/win_max.svg",color));
+        showNormal();
 
+    }
+    else
+    {
+        ui->centralwidget->setContentsMargins(0,0,0,0); //设置间隔,实际就是阴影的宽度
+        ui->mainWindowTiitle->maxButton->setIcon(util::CreateColorSvgIcon(":/icons/res/system/win_restore.svg",color));
+        showMaximized();
+    }
 }
+
+
+#ifdef Q_OS_WIN
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    if (event->buttons() & Qt::LeftButton)
+    {
+        const QPoint p = event->pos();
+        const QPoint globalPos = event->globalPosition().toPoint();
+        const QPoint baseTopLeft = mapToGlobal(QPoint(0, 0));
+        const QRect frameRect = frameGeometry();
+
+
+        // Check if the mouse press is within the resize border region (e.g., 8 pixels)
+        if (p.x()>MOUSE_MARGIN && p.y()< MOUSE_MARGIN && p.x()<this->width()-MOUSE_MARGIN)
+        {
+            isResizingTop = true;
+            resizingOffset = frameRect.topLeft() - globalPos;
+            event->accept();
+        }
+        else if (p.x()>MOUSE_MARGIN && p.x() < this->width()-MOUSE_MARGIN && p.y() > this->height()-MOUSE_MARGIN)
+        {
+            isResizingBottom = true;
+            resizingOffset = frameRect.bottomLeft() - globalPos;
+            event->accept();
+        }
+        else if (p.x() < MOUSE_MARGIN && p.y() < this->height()-MOUSE_MARGIN && p.y()>MOUSE_MARGIN)
+        {
+            isResizingLeft = true;
+            resizingOffset = frameRect.topLeft() - globalPos;
+            event->accept();
+        }
+        else if (p.x() > this->width()-MOUSE_MARGIN && p.y() > MOUSE_MARGIN && p.y()<this->height()-MOUSE_MARGIN)
+        {
+            isResizingRight = true;
+            resizingOffset = frameRect.topRight() - globalPos;
+            event->accept();
+        }
+        else if (p.x()<MOUSE_MARGIN && p.y() < MOUSE_MARGIN)
+        {
+            isResizingTopLeft = true;
+            resizingOffset = frameRect.topLeft() - globalPos;
+            event->accept();
+        }
+        else if (p.x() > this->width()-MOUSE_MARGIN && p.y() < MOUSE_MARGIN)
+        {
+            isResizingTopRight = true;
+            resizingOffset = frameRect.topRight() - globalPos;
+            event->accept();
+        }
+        else if (p.x() < MOUSE_MARGIN && p.y() > this->height()-MOUSE_MARGIN)
+        {
+            isResizingBottomLeft = true;
+            resizingOffset = frameRect.bottomLeft() - globalPos;
+            event->accept();
+        }
+        else if (p.x() > this->width()-MOUSE_MARGIN && p.y() > this->height()-MOUSE_MARGIN)
+        {
+            isResizingBottomRight = true;
+            resizingOffset = frameRect.bottomRight() - globalPos;
+            event->accept();
+        }
+    }
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        isResizingTop = false;
+        isResizingBottom = false;
+        isResizingLeft = false;
+        isResizingRight = false;
+        isResizingTopLeft = false;
+        isResizingTopRight = false;
+        isResizingBottomLeft = false;
+        isResizingBottomRight = false;
+    }
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    const QPoint p = event->globalPosition().toPoint();
+    const QPoint windowPos = mapToGlobal(QPoint(0, 0));
+    const QRect frameRect = frameGeometry();
+
+
+    if (isResizingTop)
+    {
+        const QPoint newTopLeft = p + resizingOffset;
+        const int newHeight = height() + (frameRect.top() - newTopLeft.y());
+        if(newHeight>this->minimumHeight())
+        {
+           setGeometry(frameRect.x(), newTopLeft.y(), frameRect.width(), newHeight);
+        }
+    }
+    else if (isResizingBottom)
+    {
+        const QPoint newBottomLeft = p + resizingOffset;
+        const int newHeight = newBottomLeft.y() - frameRect.top();
+        setGeometry(frameRect.x(), frameRect.y(), frameRect.width(), newHeight);
+    }
+    else if (isResizingLeft)
+    {
+        // resizingOffset = frameRect.topLeft() - globalPos;
+        const QPoint newTopLeft = p + resizingOffset;
+        const int newWidth = width() + (frameRect.left() - newTopLeft.x());
+        if(newWidth>this->minimumWidth())
+        {
+            setGeometry(newTopLeft.x(), frameRect.y(), newWidth, frameRect.height());
+        }
+    }
+    else if (isResizingRight)
+    {
+        const QPoint newTopRight = p + resizingOffset;
+        const int newWidth = newTopRight.x() - frameRect.left();
+        setGeometry(frameRect.x(), frameRect.y(), newWidth, frameRect.height());
+    }
+    else if (isResizingTopLeft)
+    {
+        const QPoint newTopLeft = p + resizingOffset;
+        const int newWidth = width() + (frameRect.left() - newTopLeft.x());
+        const int newHeight = height() + (frameRect.top() - newTopLeft.y());
+        setGeometry(newTopLeft.x(), newTopLeft.y(), newWidth, newHeight);
+    }
+    else if (isResizingTopRight)
+    {
+        const QPoint newTopRight = p + resizingOffset;
+        const int newWidth = newTopRight.x() - frameRect.left();
+        const int newHeight = height() + (frameRect.top() - newTopRight.y());
+        setGeometry(frameRect.x(), newTopRight.y(), newWidth, newHeight);
+    }
+    else if (isResizingBottomLeft)
+    {
+        const QPoint newBottomLeft = p + resizingOffset;
+        const int newWidth = width() + (frameRect.left() - newBottomLeft.x());
+        const int newHeight = newBottomLeft.y() - frameRect.top();
+        setGeometry(newBottomLeft.x(), frameRect.y(), newWidth, newHeight);
+    }
+    else if (isResizingBottomRight)
+    {
+        const QPoint newBottomRight = p + resizingOffset;
+        const int newWidth = newBottomRight.x() - frameRect.left();
+        const int newHeight = newBottomRight.y() - frameRect.top();
+        setGeometry(frameRect.x(), frameRect.y(), newWidth, newHeight);
+    }
+
+    // Set cursor shape based on the mouse position
+    const QPoint pos = event->pos();
+    Qt::CursorShape cursorShape = Qt::ArrowCursor;
+    logger->log("x:"+QString::number(pos.x())+"y:"+QString::number(pos.y()));
+    if (pos.x()>MOUSE_MARGIN && pos.y()< MOUSE_MARGIN && pos.x()<this->width()-MOUSE_MARGIN)
+    {
+          cursorShape = Qt::SizeVerCursor; // Vertical resize
+    }
+    else if (pos.x()>MOUSE_MARGIN && pos.x() < this->width()-MOUSE_MARGIN && pos.y() > this->height()-MOUSE_MARGIN)
+    {
+           cursorShape = Qt::SizeVerCursor; // Vertical resize
+    }
+    else if (pos.x() < MOUSE_MARGIN && pos.y() < this->height()-MOUSE_MARGIN && pos.y()>MOUSE_MARGIN)
+    {
+        cursorShape = Qt::SizeHorCursor; // Horizontal resize
+    }
+    else if (pos.x() > this->width()-MOUSE_MARGIN && pos.y() > MOUSE_MARGIN && pos.y()<this->height()-MOUSE_MARGIN)
+    {
+         cursorShape = Qt::SizeHorCursor; // Horizontal resize
+    }
+    else if (pos.x()<MOUSE_MARGIN && pos.y() < MOUSE_MARGIN)
+    {
+             cursorShape = Qt::SizeFDiagCursor; // Diagonal resize (top-left to bottom-right)
+    }
+    else if (pos.x() > this->width()-MOUSE_MARGIN && pos.y() > this->height()-MOUSE_MARGIN)
+    {
+            cursorShape = Qt::SizeFDiagCursor; // Diagonal resize (top-left to bottom-right)
+    }
+    else if (pos.x() < MOUSE_MARGIN && pos.y() > this->height()-MOUSE_MARGIN)
+    {
+        cursorShape = Qt::SizeBDiagCursor; // Diagonal resize (top-right to bottom-left)
+    }
+    else if (pos.x() > this->width()-MOUSE_MARGIN && pos.y() < MOUSE_MARGIN)
+    {
+        cursorShape = Qt::SizeBDiagCursor; // Diagonal resize (top-right to bottom-left)
+    }
+    logger->log("cursor:"+QString::number(cursorShape));
+    setCursor(cursorShape);
+}
+#endif
 
 
 MainWindow::~MainWindow()

@@ -10,7 +10,7 @@ Logger::Logger(const std::string& file_name) : log_file_(file_name, std::ios::ap
 }
 
 
-void Logger::log(const std::string& message)
+/*void Logger::log(const std::string& message)
 {
     time_t now = time(0);
     char* dt = ctime(&now);
@@ -22,7 +22,7 @@ void Logger::log(const std::string& message)
     {
         logEdit->append(QString::fromStdString(logStr));
     }
-}
+}*/
 
 void Logger::log(const QString& message)
 {

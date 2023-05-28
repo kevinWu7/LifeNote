@@ -26,6 +26,7 @@
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+#define MOUSE_MARGIN 8
 
 class MainWindow : public QMainWindow
 {
@@ -68,9 +69,22 @@ private:
     QTextBlockFormat *blockFormat=nullptr;//to set qtextedit vertical interval 3
     themeChangedCallback bindThemeChangetCallback;
     void themeChangedUiStatus();
-
-
     void toggleMaximized();
+
+    //拖动窗体的相关方法
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void mousePressEvent(QMouseEvent *e)override;
+    bool isResizingTop = false;
+    bool isResizingBottom = false;
+    bool isResizingLeft = false;
+    bool isResizingRight = false;
+    bool isResizingTopLeft = false;
+    bool isResizingTopRight = false;
+    bool isResizingBottomLeft = false;
+    bool isResizingBottomRight = false;
+    QPoint resizingOffset;
+
 
 
 public slots:

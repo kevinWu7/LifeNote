@@ -40,11 +40,14 @@
         <file>res/note/underline.svg</file>
         <file>res/note/undo.svg</file>
         <file>res/note/img.png</file>
-        <file>res/system/min.png</file>
-        <file>res/system/close.png</file>
-        <file>res/system/max.png</file>
         <file>res/system/setting.png</file>
         <file>res/system/theme.png</file>
         <file>res/checkin/selected.png</file>
+        <file>res/system/win_close.svg</file>
+        <file>res/system/win_max.svg</file>
+        <file>res/system/win_min.svg</file>
+        <file>res/system/win_restore.svg</file>
+        <file>res/system/logo.png</file>
+        <file>res/system/logo_koda.png</file>
     </qresource>
 </RCC>

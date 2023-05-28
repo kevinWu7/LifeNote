@@ -202,7 +202,6 @@ void LNTreeWidget::dropEvent(QDropEvent *event)
             moveResult= QFile::rename(fullPath,tragetFile); //A路径移动到B路径
         }
         std::string str="move node and move file "+ std::string(moveResult ? "true": "false") ;
-        logger->log(str);
         if(!moveResult)
         {
             QMessageBox::warning(this, tr("错误"),tr("\n文件移动失败,无法完成操作"));

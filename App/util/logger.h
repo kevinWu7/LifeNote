@@ -15,7 +15,7 @@ private:
 
 public:
     Logger(const std::string& file_name);
-    void log(const std::string& message);
+    //void log(const std::string& message);
     void log(const QString& message);
     QTextEdit * logEdit=nullptr;
 };

@@ -71,6 +71,7 @@ private:
     void themeChangedUiStatus();
     void toggleMaximized();
 
+#ifdef Q_OS_WIN
     //拖动窗体的相关方法
     void mouseMoveEvent(QMouseEvent *e) override;
     void mouseReleaseEvent(QMouseEvent *e) override;
@@ -84,7 +85,7 @@ private:
     bool isResizingBottomLeft = false;
     bool isResizingBottomRight = false;
     QPoint resizingOffset;
-
+#endif
 
 
 public slots:

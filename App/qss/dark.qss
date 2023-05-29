@@ -1,4 +1,33 @@
 /* 系统控件 */
+QMenu{
+    background-color:BACKGROUND_COLOR1;
+    color:CONTROL_TEXT;
+    font:12px;
+    padding:5px;
+    border-radius: 6px;
+    margin:6px;
+}
+
+QMenu::item:text {
+        padding-top:6px;
+        padding-bottom:6px;
+        padding-left:10px;
+        padding-right:10px;
+
+}
+QMenu::item:selected{
+        color:CONTROL_TEXT;
+        background-color: CONTROL_SELECTED;
+        border-radius:3px;
+}
+QMenu::separator{
+        height:1px;
+        background:SINGLE_LINE_COLOR;
+        margin:5px;
+        margin-left:10px;
+        margin-right:10px;
+}
+
 QSplitter::handle{
    background-color:transparent;
 }
@@ -199,6 +228,19 @@ QWidget#leftBar  QToolButton#checkinBtn{
     padding-bottom: 4px;
     border: none;
     font-size: 13pt;
+    background-color:transparent;
+}
+
+QWidget#leftBar  QToolButton#checkinBtn:checked{
+    min-height: 20px;
+    max-height: 20px;
+    margin: 0px;
+    padding-top: 4px;
+    padding-left: 10px;
+    padding-bottom: 4px;
+    border: none;
+    font-size: 13pt;
+    background-color:CONTROL_SELECTED;
 }
 
 QWidget#leftBar  QToolButton#systemSettingBtn,

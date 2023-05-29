@@ -28,7 +28,6 @@
         <file>res/checkin/arrow-left.png</file>
         <file>res/checkin/arrow-right.png</file>
         <file>res/checkin/bowl.png</file>
-        <file>res/note/edit.png</file>
         <file>res/note/delete.svg</file>
         <file>res/note/bold.svg</file>
         <file>res/note/color.svg</file>
@@ -49,5 +48,6 @@
         <file>res/system/win_restore.svg</file>
         <file>res/system/logo.png</file>
         <file>res/system/logo_koda.png</file>
+        <file>res/note/edit.svg</file>
     </qresource>
 </RCC>

@@ -5,6 +5,8 @@
 #include "roundedtooltiphelper.h"
 #include "ui_checkinwidget.h"
 #include "logger.h"
+#include "theme.h"
+#include "util.h"
 
 
 #define CHECKIN_CONFIG_PATH "/config/checkin.xml"
@@ -50,6 +52,17 @@ checkinWidget::checkinWidget(QWidget *parent) :
     ui->mainSplitter->setStretchFactor(1,4);//代表第1个控件，即右边所占比例为7.一共是9
     InitCurrentDateAndTimer();
 
+    // 注册theme全局事件
+    bindFunctionOfreceiveThemeChanged=std::bind(&checkinWidget::receiveThemeChanged, this);
+    ThemeManager::getInstance().registerThemeGlobalEvent(bindFunctionOfreceiveThemeChanged);
+
+}
+
+void checkinWidget::receiveThemeChanged()
+{
+    util::ChangeQMenuStyle(*rightHabitMenu);
+    editHabitAction->setIcon(util::CreateColorSvgIcon(":/icons/res/note/edit.svg",currentTheme["CONTROL_TEXT"]));
+    deleteHabitAction->setIcon(util::CreateColorSvgIcon(":/icons/res/note/delete.svg",currentTheme["CONTROL_TEXT"]));
 }
 
 void checkinWidget::onRightMenuRequested(const QPoint &pos)
@@ -66,11 +79,12 @@ void checkinWidget::onRightMenuRequested(const QPoint &pos)
 
 void checkinWidget::initHabitRightMenu()
 {
-    editHabitAction = new QAction(QIcon(":/icons/res/note/edit.png"),"编辑",this);
-    deleteHabitAction = new QAction(QIcon(":/icons/res/note/delete.svg"),"删除",this);
+    editHabitAction = new QAction(util::CreateColorSvgIcon(":/icons/res/note/edit.svg",currentTheme["CONTROL_TEXT"]),"编辑",this);
+    deleteHabitAction = new QAction(util::CreateColorSvgIcon(":/icons/res/note/delete.svg",currentTheme["CONTROL_TEXT"]),"删除",this);
     rightHabitMenu=new QMenu(this);
     rightHabitMenu->addAction(editHabitAction);
     rightHabitMenu->addAction(deleteHabitAction);
+    util::ChangeQMenuStyle(*rightHabitMenu);
     connect(editHabitAction, &QAction::triggered, this, &checkinWidget::onMenuEdit);
     connect(deleteHabitAction, &QAction::triggered, this, &checkinWidget::onMenuDelete);
 }
@@ -250,5 +264,6 @@ void checkinWidget::onReceiveHabitMousePressed(HabitItem *habit)
 
 checkinWidget::~checkinWidget()
 {
+    ThemeManager::getInstance().unregisterThemeGlobalEvent(bindFunctionOfreceiveThemeChanged);
     delete ui;
 }

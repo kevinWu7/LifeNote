@@ -44,6 +44,8 @@ private:
     QAction * deleteHabitAction;
     QMenu *rightHabitMenu;
     QTimer timer;
+    themeChangedCallback bindFunctionOfreceiveThemeChanged;
+    void receiveThemeChanged();
 };
 
 #endif // CHECKINWIDGET_H

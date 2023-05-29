@@ -388,7 +388,6 @@ void MainWindow::checkinBtn_clicked()
     textEditContainer->setVisible(false);
     _themeSwitchWidget->setVisible(false);
     _checkinWidget->setFocus();
-    themeChangedUiStatus();
 }
 
 void MainWindow::themeSettingBtn_clicked()
@@ -461,6 +460,7 @@ void MainWindow::initRightMenu()
     rightMenu->addAction(lockAction);
     rightMenu->addAction(deleteNoteAction);
     rightMenu->addAction(recoverNoteAction);
+    util::ChangeQMenuStyle(*rightMenu);
 }
 
 void MainWindow::onMenuToShow()
@@ -553,14 +553,15 @@ void MainWindow::setLineVerticalInterval()
 
 void MainWindow::themeChangedUiStatus()
 {
-    if(ui->checkinBtn->isChecked())
+    /*if(ui->checkinBtn->isChecked())
     {
         ui->checkinBtn->setStyleSheet(QString("background-color:%1").arg(currentTheme["CONTROL_SELECTED"]));
     }
     else
     {
         ui->checkinBtn->setStyleSheet("background-color:transparent");
-    }
+    }*/
+    util::ChangeQMenuStyle(*rightMenu);
 }
 
 
@@ -574,7 +575,6 @@ void MainWindow::onTreeWidgetItemClicked(QTreeWidgetItem *item, int column)
         textEditContainer->setVisible(true);
     }
     ui->checkinBtn->setChecked(false);
-    themeChangedUiStatus();
 }
 //切换左侧节点时，保存上一个节点的内容，加载当前节点的内容
 void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)

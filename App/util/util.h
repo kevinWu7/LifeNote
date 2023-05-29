@@ -4,6 +4,8 @@
 #include <QTreeWidgetItem>
 #include <QDomElement>
 #include <QMainWindow>
+#include <QMenu>
+#include <QGraphicsDropShadowEffect>
 
 
 #ifdef QT_NO_DEBUG
@@ -41,6 +43,8 @@ public:
     static QMainWindow* getCurrentMainWindow();
     static QString getPlatFormName();
     static QString generateRGBAString(const QString& colorString, float alpha);
+    static QColor generateRGBAColor(const QString& colorString, float alpha);
+    static void ChangeQMenuStyle( QMenu& menu);
     template<typename T>
     static T *findWidget(QWidget *parent, const QString &objectName)
     {
@@ -59,6 +63,7 @@ public:
         }
         return childWidget;
     }
+private:
 
 };
 

@@ -68,11 +68,4 @@ void changeTitleBarHeight(WId winId, double height)
     [window setFrame:newFrame display:YES];
 }
 
-
-
-
-
-
-
-
 }

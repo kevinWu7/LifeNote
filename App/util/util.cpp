@@ -7,7 +7,7 @@
 #include "logger.h"
 #include "util.h"
 #include "extraqtreewidgetitem.h"
-
+#include "theme.h"
 
 std::map<int,std::string> util::iconMap={
     {0,"computer.png" },{1,"run.png" },{2,"english.png" },{3,"study.png" },{4,"train.png" },
@@ -250,10 +250,10 @@ bool util::isChildItem(QTreeWidgetItem* parentItem, QTreeWidgetItem* childItem)
 }
 
 
+/*勿删
 //根据xml的路径，找出xml的相应节点QDomNode
 //循环遍历xml节点，通过判断节点名是否和path的相应部分匹配，不断向下找
 //为什么写这个方法，是因为原先只能通过在xml中设置属性，通过属性来判断，如下面这段代码，但是这样会导致xml内容臃肿，所以selectSingleNode能让xml看起来更简洁
-/*勿删
  QDomNodeList list = doc.elementsByTagName(path);
  for(int i=0;i<list.size();i++)
  {
@@ -352,6 +352,20 @@ QMainWindow* util::getQMainWindowByWidget(QWidget* widget)
     }
     return mainWindow;
 }
+void util::ChangeQMenuStyle(QMenu& menu)
+{
+    menu.setWindowFlags(menu.windowFlags()  | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
+    menu.setAttribute(Qt::WA_TranslucentBackground,true);
+    QGraphicsDropShadowEffect *MenuShadow = new QGraphicsDropShadowEffect();
+    MenuShadow->setOffset(0, 0);
+    MenuShadow->setColor(generateRGBAColor(currentTheme["CONTROL_SELECTED"],1));
+    MenuShadow->setBlurRadius(5);
+    if(menu.graphicsEffect())
+    {
+        delete menu.graphicsEffect();
+    }
+    menu.setGraphicsEffect(MenuShadow);
+}
 
 QString util::generateRGBAString(const QString& colorString, float alpha)
 {
@@ -375,6 +389,30 @@ QString util::generateRGBAString(const QString& colorString, float alpha)
     // 构建RGBA字符串
     QString rgbaString = QString("rgba(%1,%2,%3,%4)").arg(red).arg(green).arg(blue).arg(alpha);
     return rgbaString;
+}
+
+QColor util::generateRGBAColor(const QString& colorString, float alpha)
+{
+    // 解析RGB颜色值
+    QString rgbString = colorString.mid(4, colorString.length() - 5); // 去掉"rgb("和")"
+    QStringList colorComponents = rgbString.split(',');
+
+    if (colorComponents.size() != 3) {
+        // 非法的颜色值格式
+        return QColor(); // Return an invalid QColor
+    }
+
+    // 提取颜色分量
+    int red = colorComponents[0].toInt();
+    int green = colorComponents[1].toInt();
+    int blue = colorComponents[2].toInt();
+
+    // 确保透明度在0到255之间
+    int alphaInt = qBound(0, static_cast<int>(alpha * 255), 255);
+
+    // 构建QColor
+    QColor color(red, green, blue, alphaInt);
+    return color;
 }
 
 QString util::getPlatFormName()

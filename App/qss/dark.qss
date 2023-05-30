@@ -3,17 +3,18 @@ QMenu{
     background-color:BACKGROUND_COLOR1;
     color:CONTROL_TEXT;
     font:12px;
-    padding:5px;
+    padding:6px;
+    border-width: 1px;
+    border-color: SINGLE_LINE_COLOR;
+    border-style: solid;
     border-radius: 6px;
-    margin:6px;
 }
 
 QMenu::item:text {
         padding-top:6px;
         padding-bottom:6px;
-        padding-left:10px;
+        padding-left:4px;
         padding-right:10px;
-
 }
 QMenu::item:selected{
         color:CONTROL_TEXT;

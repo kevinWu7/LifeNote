@@ -356,15 +356,15 @@ void util::ChangeQMenuStyle(QMenu& menu)
 {
     menu.setWindowFlags(menu.windowFlags()  | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
     menu.setAttribute(Qt::WA_TranslucentBackground,true);
-    QGraphicsDropShadowEffect *MenuShadow = new QGraphicsDropShadowEffect();
+    /*QGraphicsDropShadowEffect *MenuShadow = new QGraphicsDropShadowEffect();
     MenuShadow->setOffset(0, 0);
-    MenuShadow->setColor(generateRGBAColor(currentTheme["CONTROL_SELECTED"],1));
+    MenuShadow->setColor(generateRGBAColor(currentTheme["CONTROL_TEXT"],1));
     MenuShadow->setBlurRadius(5);
     if(menu.graphicsEffect())
     {
         delete menu.graphicsEffect();
     }
-    menu.setGraphicsEffect(MenuShadow);
+    menu.setGraphicsEffect(MenuShadow);*/
 }
 
 QString util::generateRGBAString(const QString& colorString, float alpha)

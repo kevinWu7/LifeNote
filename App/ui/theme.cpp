@@ -30,21 +30,38 @@ std::map<QString,QString> themeLight={
     {"SCROLLBAR_HOVER" ,"rgba(0,0,0,15%)"},
 };
 
+//还需要一个定制化的CONTROL_SELECTED的控制
+//以及各个主题色的定制化需求
+
+//控制哪个主题开始，浅深切换
+std::map<QString, int> diyThemeIndex= {
+    {"Red", 2},
+    {"Green", 4},
+    {"TintBlue", 4},
+    {"Blue", 2},
+    {"Cyan", 6},
+    {"Yellow", 4},
+    {"TintYellow", 4},
+    {"Pink",3},
+    {"Purple", 4},
+    {"Gray", 2},
+};
+
 std::map<QString, QString> diyThemeColor = {
     {"Red1", "rgb(248,211,210)"},
     {"Red2", "rgb(243,167,165)"},
-    {"Red3", "rgb(238,125,122)"},
-    {"Red4", "rgb(236,98,93)"},
-    {"Red5", "rgb(235,79,71)"},
-    {"Red6", "rgb(189,62,56)"},
+    {"Red3", "rgb(228,150,150)"},
+    {"Red4", "rgb(218,120,93)"},
+    {"Red5", "rgb(189,80,56)"},
+    {"Red6", "rgb(170,81,78)"},
     {"Red7", "rgb(117,49,46)"},
     {"Red8", "rgb(71,35,34)"},
     {"Green1", "rgb(203,241,213)"},
-    {"Green2", "rgb(168,240,185)"},
-    {"Green3", "rgb(130,226,150)"},
-    {"Green4", "rgb(106,213,118)"},
-    {"Green5", "rgb(95,201,100)"},
-    {"Green6", "rgb(69,151,74)"},
+    {"Green2", "rgb(196,212,151)"},
+    {"Green3", "rgb(168,240,185)"},
+    {"Green4", "rgb(130,226,150)"},
+    {"Green5", "rgb(155,182,84)"},
+    {"Green6", "rgb(81,96,34)"},
     {"Green7", "rgb(61,125,69)"},
     {"Green8", "rgb(45,75,51)"},
     {"TintBlue1", "rgb(215,235,253)"},
@@ -74,9 +91,9 @@ std::map<QString, QString> diyThemeColor = {
     {"Yellow1", "rgb(254,245,208)"},
     {"Yellow2", "rgb(253,237,163)"},
     {"Yellow3", "rgb(251,227,122)"},
-    {"Yellow4", "rgb(250,218,88)"},
-    {"Yellow5", "rgb(249,210,71)"},
-    {"Yellow6", "rgb(198,167,55)"},
+    {"Yellow4", "rgb(198,167,55)"},
+    {"Yellow5", "rgb(203,163,73)"},
+    {"Yellow6", "rgb(178,142,60)"},
     {"Yellow7", "rgb(125,108,42)"},
     {"Yellow8", "rgb(76,67,38)"},
     {"TintYellow1", "rgb(236,220,199)"},

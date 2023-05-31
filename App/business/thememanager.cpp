@@ -2,6 +2,7 @@
 #include <QCoreApplication>
 #include <QApplication>
 #include <QFile>
+#include <QRegularExpression>
 #include "thememanager.h"
 #include "theme.h"
 #include "themeconfig.h""
@@ -127,7 +128,14 @@ void ThemeManager::switchTheme(QString _themeId,bool isFirstInit)
     {
         int number=_themeId.right(1).toInt();
         baseBackgroundColor=diyThemeColor[_themeId];
-        if(number<5)
+        QRegularExpression regex("\\d");
+        // 在输入字符串中查找第一个数字出现的位置
+        QRegularExpressionMatch match = regex.match(_themeId);
+        int digitIndex = match.capturedStart();
+        // 获取左边的颜色部分
+        QString themeLeftColor = _themeId.left(digitIndex);
+
+        if(number<=diyThemeIndex[themeLeftColor])
         {
             path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
             currentTheme=themeLight;

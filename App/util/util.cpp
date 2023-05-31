@@ -356,6 +356,7 @@ void util::ChangeQMenuStyle(QMenu& menu)
 {
     menu.setWindowFlags(menu.windowFlags()  | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
     menu.setAttribute(Qt::WA_TranslucentBackground,true);
+    //阴影可以通过下方代码设置，但是要配合qss中QMenu{ margin:10px} 来实现，否则阴影没有宽度，则不会显示。
     /*QGraphicsDropShadowEffect *MenuShadow = new QGraphicsDropShadowEffect();
     MenuShadow->setOffset(0, 0);
     MenuShadow->setColor(generateRGBAColor(currentTheme["CONTROL_TEXT"],1));

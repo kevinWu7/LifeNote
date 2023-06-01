@@ -59,5 +59,13 @@
         <file>res/images/pic7.jpg</file>
         <file>res/images/pic8.jpg</file>
         <file>res/images/pic2.jpg</file>
+        <file>res/images/pic10.jpg</file>
+        <file>res/images/pic11.jpg</file>
+        <file>res/images/pic12.png</file>
+        <file>res/images/pic13.jpg</file>
+        <file>res/images/pic14.jpg</file>
+        <file>res/images/pic15.jpg</file>
+        <file>res/images/pic16.jpg</file>
+        <file>res/images/pic17.jpg</file>
     </qresource>
 </RCC>

@@ -57,7 +57,7 @@
     </item>
     <item>
      <widget class="QWidget" name="mainPage" native="true">
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="mainPage_layout">
        <property name="leftMargin">
         <number>8</number>
        </property>

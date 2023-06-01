@@ -368,6 +368,7 @@ void util::ChangeQMenuStyle(QMenu& menu)
     menu.setGraphicsEffect(MenuShadow);*/
 }
 
+//根据rgb，返回rgba
 QString util::generateRGBAString(const QString& colorString, float alpha)
 {
     // 解析RGB颜色值

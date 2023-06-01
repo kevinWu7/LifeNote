@@ -71,7 +71,7 @@ QLabel{
 
 QTextEdit {
     border:0px;
-    background-color: BACKGROUND_COLOR1;
+    background-color: transparent;
     color: CONTROL_TEXT;
 }
 
@@ -199,7 +199,7 @@ QWidget#mainPage{
 
 QWidget#mainPage QLineEdit {
     border:0px;
-    background-color: BACKGROUND_COLOR1;
+    background-color: transparent;
     color: CONTROL_TEXT;
 }
 
@@ -258,8 +258,8 @@ QWidget#leftBar  QToolButton#themeSettingBtn{
 }
 
 
-QWidget#titleBar {
-    background-color:BACKGROUND_COLOR1;
+QWidget#editTitleBar {
+    background-color:transparent;
 }
 
 QWidget#titleBar QToolButton:checked,
@@ -373,7 +373,7 @@ QWidget#themeScrollAreaContainer{
 }
 
 QWidget#ThemeSwitchWidget  QWidget#mainSwitchWidget{
-   background-color:BACKGROUND_COLOR1;
+   background-color:transparent;
 }
 
 QWidget#ThemeSwitchWidget  QWidget#diyColorWidget QToolButton{
@@ -418,6 +418,27 @@ QWidget#ThemeSwitchWidget  QLineEdit#transparencyEdit {
 QWidget#ThemeSwitchWidget  QLabel#transparencyRangeEdit {
     color: CONTROL_POOLTEXT;
     font:12pt;
+}
+
+QWidget#ThemeSwitchWidget   QWidget#pictureWidget QToolButton{
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
+    height: 100px;
+    min-height: 100px;
+    max-height: 100px;
+    border-radius: 8px;
+}
+
+QWidget#ThemeSwitchWidget   QWidget#pictureWidget QToolButton:checked{
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
+    height: 100px;
+    min-height: 100px;
+    max-height: 100px;
+    border-radius: 8px;
+    border:2px solid CONTROL_SELECTED;
 }
 
 /*NewHabitForm*/

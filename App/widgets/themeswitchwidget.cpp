@@ -7,6 +7,7 @@
 #include "themeconfig.h"
 #include "logger.h"
 #include <QLineEdit>
+
 ThemeSwitchWidget::ThemeSwitchWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ThemeSwitchWidget)
@@ -22,6 +23,24 @@ ThemeSwitchWidget::ThemeSwitchWidget(QWidget *parent) :
     ui->transparencyHSlider->setValue(ThemeManager::getInstance().Transparency);
     connect(ui->transparencyHSlider,&QSlider::sliderMoved,this,&ThemeSwitchWidget::transparencySliderMoved);
     connect(ui->transparencyEdit,&QLineEdit::textEdited,this,&ThemeSwitchWidget::transparencyEditEvent);
+    for(int index=0;index<ui->pictureWidget->children().count();index++)
+    {
+        QToolButton* picBtn= util::findWidget<QToolButton>(ui->pictureWidget,"pictureBtn"+QString::number(index));
+        if(picBtn)
+        {
+            QString backgroundImage= QString(":/imgs/res/images/pic%1.jpg").arg(QString::number(index)); // 替换为你的背景图片路径
+            // 设置样式表, 性能很卡，切换纯色主题时会卡死，故换成下面的icon方式
+            //QString style = QString("QToolButton{border-image:url(%1);}").arg(backgroundImage);
+            //picBtn->setStyleSheet(style);
+
+            QIcon btn_icon;
+            btn_icon.addFile(backgroundImage);
+            picBtn->setIcon(btn_icon);
+            picBtn->setIconSize(QSize(200, 120));
+            picBtn->setProperty("iconPath",backgroundImage);
+            connect(picBtn,&QToolButton::clicked,this,&ThemeSwitchWidget::pictureBtnClicked);
+        }
+    }
 }
 
 ThemeSwitchWidget::~ThemeSwitchWidget()
@@ -83,6 +102,16 @@ void ThemeSwitchWidget::transparencyEditEvent()
          window->setWindowOpacity(number/100.0);
          themeConfig::getInstance().updateXml("Transparency",QString::number(number));
      }
+}
+
+void ThemeSwitchWidget::pictureBtnClicked()
+{
+   QToolButton *button = qobject_cast<QToolButton*>(sender());
+   QString imgPath= button->property("iconPath").toString();
+   logger->log(imgPath);
+
+   ThemeManager::getInstance().switchTheme(button->objectName().replace("tureBtn",""));
+
 }
 
 void ThemeSwitchWidget::InitDiyColorButtons()

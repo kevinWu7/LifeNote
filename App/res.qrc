@@ -50,4 +50,14 @@
         <file>res/system/logo_koda.png</file>
         <file>res/note/edit.svg</file>
     </qresource>
+    <qresource prefix="/imgs">
+        <file>res/images/pic1.jpg</file>
+        <file>res/images/pic3.jpg</file>
+        <file>res/images/pic4.jpg</file>
+        <file>res/images/pic5.jpg</file>
+        <file>res/images/pic6.jpg</file>
+        <file>res/images/pic7.jpg</file>
+        <file>res/images/pic8.jpg</file>
+        <file>res/images/pic2.jpg</file>
+    </qresource>
 </RCC>

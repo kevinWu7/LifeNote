@@ -20,11 +20,14 @@ public slots:
     void colorButtonClicked();
     void transparencySliderMoved(int value);
     void transparencyEditEvent();
+    void pictureBtnClicked();
+
 private:
     Ui::ThemeSwitchWidget *ui;
     void InitDiyColorButtons();
     void InitSystemColorButtons();
     QToolButton* currentCheckedBtn=nullptr;
+
 };
 
 #endif // THEMESWITCHWIDGET_H

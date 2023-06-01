@@ -20,9 +20,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     setAttribute(Qt::WA_TranslucentBackground); // 设置窗口背景透明
 
+    QString backgroundImage=":/imgs/res/images/pic1.jpg"; // 替换为你的背景图片路径
+      // 设置样式表
+    QString styleSheet = QString("QWidget#mainPage{border-image:url(%1);}").arg(backgroundImage);
+    setStyleSheet(styleSheet);
 
 #ifdef Q_OS_MAC
      ui->mainWindowTiitle->setVisible(false);
+     Cocoa::setWindowTitleMerged(winId());
+     ui->mainPage_layout->setContentsMargins(8,24,8,8);
 #endif
 
 #ifdef Q_OS_WIN
@@ -553,14 +559,6 @@ void MainWindow::setLineVerticalInterval()
 
 void MainWindow::themeChangedUiStatus()
 {
-    /*if(ui->checkinBtn->isChecked())
-    {
-        ui->checkinBtn->setStyleSheet(QString("background-color:%1").arg(currentTheme["CONTROL_SELECTED"]));
-    }
-    else
-    {
-        ui->checkinBtn->setStyleSheet("background-color:transparent");
-    }*/
     util::ChangeQMenuStyle(*rightMenu);
 }
 
@@ -623,7 +621,7 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
         textEditContainer->ui->titleLineEdit->setText(current->text(0));
         //not allow to edit the Nodegroup
         textEditContainer->ui->textEdit->setEnabled(false);
-        for(auto child_toolBtn :textEditContainer->ui->titleBar->children())
+        for(auto child_toolBtn :textEditContainer->ui->editTitleBar->children())
         {
             QToolButton* btn=dynamic_cast<QToolButton*>(child_toolBtn);
             if(btn!=nullptr)
@@ -636,7 +634,7 @@ void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetIte
     else
     {
         textEditContainer->ui->textEdit->setEnabled(true);
-        for(auto child_toolBtn :textEditContainer->ui->titleBar->children())
+        for(auto child_toolBtn :textEditContainer->ui->editTitleBar->children())
         {
             QToolButton* btn=dynamic_cast<QToolButton*>(child_toolBtn);
             if(btn!=nullptr)

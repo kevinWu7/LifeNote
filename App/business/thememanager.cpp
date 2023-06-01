@@ -109,9 +109,23 @@ QMainWindow* ThemeManager::getCurrentMainWindow()
 
 void ThemeManager::switchTheme(QString _themeId,bool isFirstInit)
 {
-    QString path;
+    QString path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
     QString baseBackgroundColor;
     currentTheme.clear();
+    QString allstyle;
+    QFile f(path);
+    if (!f.exists())
+    {
+        qDebug() << "Unable to set stylesheet, file not found";
+        return;
+    }
+    else
+    {
+        this->ThemeId=_themeId;
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        allstyle=ts.readAll();
+    }
     if(_themeId=="dark")
     {
         path=QCoreApplication::applicationDirPath()+ "/qss/dark.qss";
@@ -124,6 +138,7 @@ void ThemeManager::switchTheme(QString _themeId,bool isFirstInit)
         currentTheme=themeLight;
         baseBackgroundColor=currentTheme["BACKGROUND_COLOR1"];
     }
+
     else  //纯色主题
     {
         int number=_themeId.right(1).toInt();
@@ -161,37 +176,34 @@ void ThemeManager::switchTheme(QString _themeId,bool isFirstInit)
         }
         currentTheme["BACKGROUND_COLOR1"]=baseBackgroundColor;
     }
+
+    {
+
+       // QString picIndex=_themeId.right(1);
+        currentTheme["BACKGROUND_COLOR1"]=  util::generateRGBAString(currentTheme["BACKGROUND_COLOR1"],0.35);
+        QString picStyle = QString("QWidget#mainPage{border-image:url(%1);}").
+                arg(QString(":/imgs/res/images/pic%1.jpg").arg("3"));
+       // allstyle+=picStyle;
+    }
     if(_themeId!=  this->ThemeId)
     {
         themeConfig::getInstance().updateXml("ThemeId",_themeId);
     }
-    QFile f(path);
-    if (!f.exists())
+    for(auto item : currentTheme)
     {
-        qDebug() << "Unable to set stylesheet, file not found";
-    }
-    else
-    {
-        this->ThemeId=_themeId;
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream ts(&f);
-
-        QString allstyle=ts.readAll();
-        for(auto item : currentTheme)
-        {
-            allstyle= allstyle.replace(item.first,item.second);
-        };
-        qApp->setStyleSheet(allstyle);
+        allstyle= allstyle.replace(item.first,item.second);
+    };
+    qApp->setStyleSheet(allstyle);
 #ifdef Q_OS_MAC
-        auto mainWindow=getCurrentMainWindow();
-        if(mainWindow)
-        {
-           Cocoa::changeTitleBarColor(getCurrentMainWindow()->winId(), baseBackgroundColor);
-        }
+    // auto mainWindow=getCurrentMainWindow();
+    //if(mainWindow)
+    //{
+    //  Cocoa::changeTitleBarColor(getCurrentMainWindow()->winId(), baseBackgroundColor);
+    // }
 #endif
-        if(!isFirstInit)
-        {
-            ThemeManager::getInstance().triggerThemeGlobalEvent();
-        }
+    if(!isFirstInit)
+    {
+        ThemeManager::getInstance().triggerThemeGlobalEvent();
     }
+
 }

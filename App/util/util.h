@@ -63,6 +63,21 @@ public:
         }
         return childWidget;
     }
+    template<typename T>
+   static T* findParentWidget(QObject* object)
+    {
+        QObject* parent = object->parent();
+        while (parent)
+        {
+            if (T* typedParent = qobject_cast<T*>(parent))
+                return typedParent;
+
+            parent = parent->parent();
+        }
+
+        return nullptr;
+    }
+
 private:
 
 };

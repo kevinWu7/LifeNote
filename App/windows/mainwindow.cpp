@@ -19,12 +19,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_TranslucentBackground); // 设置窗口背景透明
-
-    QString backgroundImage=":/imgs/res/images/pic16.jpg"; // 替换为你的背景图片路径
-      // 设置样式表
-    QString styleSheet = QString("QWidget#mainPage{border-image:url(%1);}").arg(backgroundImage);
-    setStyleSheet(styleSheet);
-
 #ifdef Q_OS_MAC
      ui->mainWindowTiitle->setVisible(false);
      Cocoa::setWindowTitleMerged(winId());

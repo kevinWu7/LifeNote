@@ -195,6 +195,7 @@ QWidget#mainPage[platform="windows"]{
 
 QWidget#mainPage{
     background-color:BACKGROUND_COLOR2;
+    border-image:url(PICTURE_PATH);
 }
 
 QWidget#mainPage QLineEdit {
@@ -407,36 +408,31 @@ QWidget#ThemeSwitchWidget  QWidget#systemThemeWidget QToolButton:checked{
     border:2px solid CONTROL_SELECTED;
 }
 
-QWidget#ThemeSwitchWidget  QLineEdit#transparencyEdit {
+QWidget#ThemeSwitchWidget  QLineEdit#transparencyEdit,
+QWidget#ThemeSwitchWidget  QLineEdit#leftTransparencyEdit,
+QWidget#ThemeSwitchWidget  QLineEdit#rightTransparencyEdit{
     border:0px;
     background-color: BACKGROUND_COLOR2;
     color: CONTROL_TEXT;
     border-radius: 8px;
 }
 
-QWidget#ThemeSwitchWidget  QLabel#transparencyRangeEdit {
+QWidget#ThemeSwitchWidget  QLabel#transparencyRangeEdit,
+QWidget#ThemeSwitchWidget  QLabel#leftTransparencyRangeEdit,
+QWidget#ThemeSwitchWidget  QLabel#rightTransparencyRangeEdit,{
     color: CONTROL_POOLTEXT;
-    font:11pt;
+    font:12pt;
 }
 
-
 QWidget#ThemeSwitchWidget   QWidget#pictureWidget QToolButton{
-    width: 180px;
-    min-width: 180px;
-    max-width: 180px;
-    height: 100px;
-    min-height: 100px;
-    max-height: 100px;
+    min-width: 160px;
+    min-height: 90px;
     border-radius: 8px;
 }
 
 QWidget#ThemeSwitchWidget   QWidget#pictureWidget QToolButton:checked{
-    width: 180px;
-    min-width: 180px;
-    max-width: 180px;
-    height: 100px;
-    min-height: 100px;
-    max-height: 100px;
+    min-width: 160px;
+    min-height: 90px;
     border-radius: 8px;
     border:2px solid CONTROL_SELECTED;
 }

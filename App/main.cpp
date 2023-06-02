@@ -10,8 +10,9 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     auto themeData=themeConfig::getInstance().LoadThemeConfig();
     ThemeManager::getInstance().ThemeId=themeData.themeId;
+    ThemeManager::getInstance().PictureThemeId=themeData.picture_themeId;
     ThemeManager::getInstance().Transparency=themeData.transparency;
-    ThemeManager::getInstance().switchTheme(ThemeManager::getInstance().ThemeId,true);
+    ThemeManager::getInstance().switchTheme(ThemeManager::getInstance().ThemeId,ThemeManager::getInstance().PictureThemeId,true);
     MainWindow window;
     window.setWindowTitle(WINDOW_TITLE);
 
@@ -22,3 +23,4 @@ int main(int argc, char *argv[])
     window.show();
     return a.exec();
 }
+

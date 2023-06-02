@@ -52,6 +52,10 @@ themeData themeConfig::LoadThemeConfig()
             {
                 _data.themeId= reader.readElementText();
             }
+            if(reader.name().toString()=="PictureThemeId")
+            {
+                _data.picture_themeId= reader.readElementText();
+            }
             if(reader.name().toString()=="Transparency")
             {
                 _data.transparency= reader.readElementText().toDouble();
@@ -67,7 +71,7 @@ themeData themeConfig::LoadThemeConfig()
     //是否是正常结束
     if (reader.error())
     {
-        QString str="Error: "+reader.errorString()+"in file test.xml at line "+QString::number(reader.lineNumber())+
+        QString str="Error: "+reader.errorString()+"LoadThemeConfig at line "+QString::number(reader.lineNumber())+
                 ",column "+QString::number(reader.columnNumber());
         logger->log(str);
         return _data;

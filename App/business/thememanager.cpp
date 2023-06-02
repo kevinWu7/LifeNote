@@ -7,10 +7,19 @@
 #include "theme.h"
 #include "themeconfig.h""
 #include "util.h"
+#include "logger.h"
 
 ThemeManager* ThemeManager::instance = nullptr;
+#ifdef QT_NO_DEBUG
+QString ThemeManager::ThemeId="light";
+#else
 QString ThemeManager::ThemeId="dark";
+#endif
+QString ThemeManager::PictureThemeId="none";;
 double  ThemeManager::Transparency=1.0;
+double  ThemeManager::LeftTransparency=1.0;
+double  ThemeManager::RightTransparency=1.0;
+
 std::once_flag ThemeManager::onceFlag;
 
 ThemeManager::ThemeManager()
@@ -107,7 +116,7 @@ QMainWindow* ThemeManager::getCurrentMainWindow()
     return mainWindow;
 }
 
-void ThemeManager::switchTheme(QString _themeId,bool isFirstInit)
+void ThemeManager::switchTheme(QString _themeId,QString picture_ThemeId,bool isFirstInit)
 {
     QString path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
     QString baseBackgroundColor;
@@ -126,6 +135,13 @@ void ThemeManager::switchTheme(QString _themeId,bool isFirstInit)
         QTextStream ts(&f);
         allstyle=ts.readAll();
     }
+    QRegularExpression regex("\\d");
+    // 在输入字符串中查找第一个数字出现的位置
+    QRegularExpressionMatch match = regex.match(_themeId);
+    // 获取左边的颜色部分
+    QString themeLeftColor = _themeId.left( match.capturedStart());
+    QRegularExpressionMatch pic_match = regex.match(picture_ThemeId);
+    QString picIndex = picture_ThemeId.right(picture_ThemeId.length()- pic_match.capturedStart());
     if(_themeId=="dark")
     {
         path=QCoreApplication::applicationDirPath()+ "/qss/dark.qss";
@@ -138,18 +154,10 @@ void ThemeManager::switchTheme(QString _themeId,bool isFirstInit)
         currentTheme=themeLight;
         baseBackgroundColor=currentTheme["BACKGROUND_COLOR1"];
     }
-
     else  //纯色主题
     {
         int number=_themeId.right(1).toInt();
         baseBackgroundColor=diyThemeColor[_themeId];
-        QRegularExpression regex("\\d");
-        // 在输入字符串中查找第一个数字出现的位置
-        QRegularExpressionMatch match = regex.match(_themeId);
-        int digitIndex = match.capturedStart();
-        // 获取左边的颜色部分
-        QString themeLeftColor = _themeId.left(digitIndex);
-
         if(number<=diyThemeIndex[themeLeftColor])
         {
             path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
@@ -175,35 +183,35 @@ void ThemeManager::switchTheme(QString _themeId,bool isFirstInit)
             currentTheme["SCROLLBAR_HOVER"]= getBackGround2(currentTheme["SCROLLBAR_HANDLE"],30);
         }
         currentTheme["BACKGROUND_COLOR1"]=baseBackgroundColor;
+        currentTheme["LEFT_BACKGROUND_COLOR1"]=baseBackgroundColor;
+        currentTheme["RIGHT_BACKGROUND_COLOR1"]=baseBackgroundColor;
     }
-
-    {
-
-       // QString picIndex=_themeId.right(1);
-        currentTheme["BACKGROUND_COLOR1"]=  util::generateRGBAString(currentTheme["BACKGROUND_COLOR1"],0.35);
-        QString picStyle = QString("QWidget#mainPage{border-image:url(%1);}").
-                arg(QString(":/imgs/res/images/pic%1.jpg").arg("3"));
-       // allstyle+=picStyle;
-    }
-    if(_themeId!=  this->ThemeId)
+    if(_themeId!= this->ThemeId)
     {
         themeConfig::getInstance().updateXml("ThemeId",_themeId);
+    }
+    QString picPath =QString(":/imgs/res/images/pic%1.jpg").arg(picIndex);
+    currentTheme["PICTURE_PATH"]=picPath;
+    if(picture_ThemeId!=  this->PictureThemeId)
+    {
+        this->PictureThemeId=picture_ThemeId;
+        themeConfig::getInstance().updateXml("PictureThemeId",picture_ThemeId);
+        auto base_color1=currentTheme["BACKGROUND_COLOR1"];
+        currentTheme["BACKGROUND_COLOR1"]=  util::generateRGBAString(base_color1,0.35);
+        //currentTheme["LEFT_BACKGROUND_COLOR1"]=  util::generateRGBAString(base_color1,0.35);
+        //currentTheme["RIGHT_BACKGROUND_COLOR1"]=  util::generateRGBAString(base_color1,0.35);
     }
     for(auto item : currentTheme)
     {
         allstyle= allstyle.replace(item.first,item.second);
     };
     qApp->setStyleSheet(allstyle);
-#ifdef Q_OS_MAC
-    // auto mainWindow=getCurrentMainWindow();
-    //if(mainWindow)
-    //{
-    //  Cocoa::changeTitleBarColor(getCurrentMainWindow()->winId(), baseBackgroundColor);
-    // }
-#endif
     if(!isFirstInit)
     {
         ThemeManager::getInstance().triggerThemeGlobalEvent();
     }
-
 }
+
+
+
+

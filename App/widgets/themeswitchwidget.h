@@ -2,7 +2,7 @@
 #define THEMESWITCHWIDGET_H
 
 #include <QWidget>
-#include <QToolBUtton>
+#include <QToolButton>
 
 namespace Ui {
 class ThemeSwitchWidget;

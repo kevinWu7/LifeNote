@@ -9,6 +9,7 @@
 struct themeData
 {
     QString themeId;
+    QString picture_themeId;
     double transparency;
 };
 

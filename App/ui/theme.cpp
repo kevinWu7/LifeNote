@@ -5,7 +5,9 @@ std::map<QString,QString> currentTheme={
 };
 
 std::map<QString,QString> themeDark={
-    {"BACKGROUND_COLOR1","rgba(43,44,45,15%)"},
+    {"BACKGROUND_COLOR1","rgb(43,44,45)"},
+    {"LEFT_BACKGROUND_COLOR1","rgb(43,44,45)"},
+    {"RIGHT_BACKGROUND_COLOR1","rgb(43,44,45)"},
     {"BACKGROUND_COLOR2", "rgb(63,62,58)"},
     {"CONTROL_SELECTED" , "rgb(72,72,72)"},
     {"CONTROL_NOSELECTED", "rgb(62,62,62)"},
@@ -15,10 +17,13 @@ std::map<QString,QString> themeDark={
     {"SINGLE_LINE_COLOR" ,"rgb(72,72,72)"},
     {"SCROLLBAR_HANDLE" ,"rgba(86,86,86,80%)"},
     {"SCROLLBAR_HOVER" ,"rgb(86,86,86)"},
+    {"PICTURE_PATH","none"}
 };
 
 std::map<QString,QString> themeLight={
-    {"BACKGROUND_COLOR1","rgba(255,255,255,15%)"},
+    {"BACKGROUND_COLOR1","rgb(255,255,255)"},
+    {"LEFT_BACKGROUND_COLOR1","rgb(255,255,255)"},
+    {"RIGHT_BACKGROUND_COLOR1","rgb(255,255,255)"},
     {"BACKGROUND_COLOR2", "rgb(236,236,236)"},
     {"CONTROL_SELECTED" , "rgb(213, 230, 253)"},
     {"CONTROL_NOSELECTED", "rgb(232,232,232)"},
@@ -28,6 +33,7 @@ std::map<QString,QString> themeLight={
     {"SINGLE_LINE_COLOR","rgb(239, 239, 239)"},
     {"SCROLLBAR_HANDLE" ,"rgba(0,0,0,25%)"},
     {"SCROLLBAR_HOVER" ,"rgba(0,0,0,15%)"},
+    {"PICTURE_PATH","none"}
 };
 
 //还需要一个定制化的CONTROL_SELECTED的控制

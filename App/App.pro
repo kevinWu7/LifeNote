@@ -30,6 +30,7 @@ SOURCES += \
     custom_controls/lntextedit.cpp \
     custom_controls/weektoolbutton.cpp \
     custom_controls/roundedtooltip.cpp \
+    custom_controls/lnslider.cpp \
     ui/theme.cpp \
     widgets/themeswitchwidget.cpp \
     widgets/titlebarwidget.cpp \
@@ -58,6 +59,7 @@ HEADERS += \
     custom_controls/lntextedit.h \
     custom_controls/weektoolbutton.h \  \
     custom_controls/roundedtooltip.h \
+    custom_controls/lnslider.h \
     ui/theme.h \
     widgets/themeswitchwidget.h \
     widgets/titlebarwidget.h \

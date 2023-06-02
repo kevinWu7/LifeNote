@@ -21,12 +21,15 @@ class ThemeManager
 public:
     static ThemeManager& getInstance();
     static QString ThemeId;
+    static QString PictureThemeId;
     static double Transparency;
+    static double LeftTransparency;
+    static double RightTransparency;
     // 注册全局事件
     void registerThemeGlobalEvent(themeChangedCallback callback);
     void unregisterThemeGlobalEvent(themeChangedCallback callback);
     void triggerThemeGlobalEvent();
-    void switchTheme(QString themeId,bool isFirstIni=false);
+    void switchTheme(QString themeId,QString picture_ThemeId,bool isFirstIni=false);
     QMainWindow* getCurrentMainWindow();
     std::vector<themeChangedCallback> callbackList;
 private:

@@ -23,7 +23,7 @@ ThemeSwitchWidget::ThemeSwitchWidget(QWidget *parent) :
     ui->transparencyHSlider->setValue(ThemeManager::getInstance().Transparency);
     connect(ui->transparencyHSlider,&QSlider::sliderMoved,this,&ThemeSwitchWidget::transparencySliderMoved);
     connect(ui->transparencyEdit,&QLineEdit::textEdited,this,&ThemeSwitchWidget::transparencyEditEvent);
-    for(int index=0;index<ui->pictureWidget->children().count();index++)
+    for(int index=2;index<ui->pictureWidget->children().count();index++)
     {
         QToolButton* picBtn= util::findWidget<QToolButton>(ui->pictureWidget,"pictureBtn"+QString::number(index));
         if(picBtn)
@@ -36,8 +36,7 @@ ThemeSwitchWidget::ThemeSwitchWidget(QWidget *parent) :
             QIcon btn_icon;
             btn_icon.addFile(backgroundImage);
             picBtn->setIcon(btn_icon);
-            picBtn->setIconSize(QSize(200, 120));
-            picBtn->setProperty("iconPath",backgroundImage);
+            picBtn->setIconSize(QSize(150, 80));
             connect(picBtn,&QToolButton::clicked,this,&ThemeSwitchWidget::pictureBtnClicked);
         }
     }
@@ -62,7 +61,7 @@ void ThemeSwitchWidget::colorButtonClicked()
         auto themeId=button->property("themeId").toString();
         auto color=button->property("color").toString();
 
-        ThemeManager::getInstance().switchTheme(themeId);
+        ThemeManager::getInstance().switchTheme(themeId,ThemeManager::getInstance().PictureThemeId);
 
         logger->log(QString(button->property("color").toString()));
         if(themeId.contains("Red"))
@@ -107,12 +106,10 @@ void ThemeSwitchWidget::transparencyEditEvent()
 void ThemeSwitchWidget::pictureBtnClicked()
 {
    QToolButton *button = qobject_cast<QToolButton*>(sender());
-   QString imgPath= button->property("iconPath").toString();
-   logger->log(imgPath);
-
-   ThemeManager::getInstance().switchTheme(button->objectName().replace("tureBtn",""));
-
+   ThemeManager::getInstance().switchTheme(
+   ThemeManager::getInstance().ThemeId,button->objectName().replace("tureBtn",""));
 }
+
 
 void ThemeSwitchWidget::InitDiyColorButtons()
 {

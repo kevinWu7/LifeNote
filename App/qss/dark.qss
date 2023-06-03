@@ -180,6 +180,10 @@ QTreeView::branch:selected:!active {
 }
 
 
+/*QTreeView::branch::selected{background-color:green;}
+QTreeView::item::selected{background-color:green;} ");*/
+
+
 /* mainwindow */
 QWidget#mainWindowTiitle[platform="windows"]{
     background-color:BACKGROUND_COLOR1;
@@ -255,9 +259,21 @@ QWidget#leftBar  QToolButton#themeSettingBtn{
     padding-bottom: 8px;
     border: none;
     font-size: 13pt;
-    color:CONTROL_POOLTEXT;
+    background-color:transparent;
 }
 
+QWidget#leftBar  QToolButton#systemSettingBtn:checked,
+QWidget#leftBar  QToolButton#themeSettingBtn:checked{
+    min-height: 20px;
+    max-height: 20px;
+    margin: 0px;
+    padding-left: 10px;
+    padding-top: 4px;
+    padding-bottom: 8px;
+    border: none;
+    font-size: 13pt;
+    background-color:CONTROL_SELECTED;
+}
 
 QWidget#editTitleBar {
     background-color:transparent;

@@ -268,6 +268,9 @@
                     <property name="text">
                      <string>设置</string>
                     </property>
+                    <property name="checkable">
+                     <bool>true</bool>
+                    </property>
                    </widget>
                   </item>
                   <item>
@@ -280,6 +283,9 @@
                     </property>
                     <property name="text">
                      <string>换肤</string>
+                    </property>
+                    <property name="checkable">
+                     <bool>true</bool>
                     </property>
                    </widget>
                   </item>

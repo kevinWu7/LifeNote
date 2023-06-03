@@ -109,5 +109,6 @@ public slots:
     void onApplicationQuit();
     void checkinBtn_clicked();
     void themeSettingBtn_clicked();
+    void systemSettingBtn_clicked();
 };
 #endif // MAINWINDOW_H

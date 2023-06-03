@@ -150,10 +150,10 @@ void ThemeManager::switchTheme(QString _themeId,QString picture_ThemeId,bool isF
             path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
             currentTheme=themeLight;
             currentTheme["BACKGROUND_COLOR2"]= getBackGround2(baseBackgroundColor,-20);
-            currentTheme["CONTROL_SELECTED"]= getBackGround2(baseBackgroundColor,-30);
-            currentTheme["CONTROL_NOSELECTED"]= getBackGround2(baseBackgroundColor,-15);
+            currentTheme["CONTROL_SELECTED"]=  util::generateRGBAString("rgb(40,40,40)",0.30);
+            currentTheme["CONTROL_NOSELECTED"]=  util::generateRGBAString("rgb(40,40,40)",0.15);
             currentTheme["CONTROL_POOLTEXT"]= getBackGround2(baseBackgroundColor,-100);
-            currentTheme["SINGLE_LINE_COLOR"]=util::generateRGBAString(currentTheme["CONTROL_SELECTED"],0.5);
+            currentTheme["SINGLE_LINE_COLOR"]=util::generateRGBAString(getBackGround2(baseBackgroundColor,-30),0.5);
             currentTheme["SCROLLBAR_HANDLE"]= getBackGround2(baseBackgroundColor,-50);
             currentTheme["SCROLLBAR_HOVER"]= getBackGround2(currentTheme["SCROLLBAR_HANDLE"],20);
         }
@@ -162,10 +162,10 @@ void ThemeManager::switchTheme(QString _themeId,QString picture_ThemeId,bool isF
             path=QCoreApplication::applicationDirPath()+ "/qss/dark.qss";
             currentTheme=themeDark;
             currentTheme["BACKGROUND_COLOR2"]= getBackGround2(baseBackgroundColor,30);
-            currentTheme["CONTROL_SELECTED"]= getBackGround2(baseBackgroundColor,70);
-            currentTheme["CONTROL_NOSELECTED"]= getBackGround2(baseBackgroundColor,20);
+            currentTheme["CONTROL_SELECTED"]= util::generateRGBAString("rgb(255,255,255)",0.35);
+            currentTheme["CONTROL_NOSELECTED"]= util::generateRGBAString("rgb(255,255,255)",0.15);
             currentTheme["CONTROL_POOLTEXT"]= getBackGround2(baseBackgroundColor,100);
-            currentTheme["SINGLE_LINE_COLOR"]=util::generateRGBAString(currentTheme["CONTROL_SELECTED"],0.5);
+            currentTheme["SINGLE_LINE_COLOR"]=util::generateRGBAString(getBackGround2(baseBackgroundColor,70),0.5);
             currentTheme["SCROLLBAR_HANDLE"]= getBackGround2(baseBackgroundColor,50);
             currentTheme["SCROLLBAR_HOVER"]= getBackGround2(currentTheme["SCROLLBAR_HANDLE"],30);
         }

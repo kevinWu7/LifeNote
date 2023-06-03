@@ -46,8 +46,8 @@ std::map<QString,QString> themeLight={
 //控制哪个主题开始，浅深切换
 std::map<QString, int> diyThemeIndex= {
     {"Red", 2},
-    {"Green", 4},
-    {"TintBlue", 4},
+    {"Green", 5},
+    {"TintBlue", 5},
     {"Blue", 2},
     {"Cyan", 6},
     {"Yellow", 4},

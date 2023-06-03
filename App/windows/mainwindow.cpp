@@ -120,6 +120,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(textEditContainer->ui->logCheck,&QCheckBox::stateChanged,this,&MainWindow::logCheckStateChanged);
     connect(ui->checkinBtn,&QToolButton::clicked,this,&MainWindow::checkinBtn_clicked);
     connect(ui->themeSettingBtn,&QToolButton::clicked,this,&MainWindow::themeSettingBtn_clicked);
+    connect(ui->systemSettingBtn,&QToolButton::clicked,this,&MainWindow::systemSettingBtn_clicked);
     bindThemeChangetCallback=std::bind(&MainWindow::themeChangedUiStatus, this);
     ThemeManager::getInstance().registerThemeGlobalEvent(bindThemeChangetCallback);
     _checkinWidget->setVisible(false);
@@ -387,6 +388,8 @@ void MainWindow::checkinBtn_clicked()
     _checkinWidget->setVisible(true);
     textEditContainer->setVisible(false);
     _themeSwitchWidget->setVisible(false);
+    ui->systemSettingBtn->setChecked(false);
+    ui->themeSettingBtn->setChecked(false);
     _checkinWidget->setFocus();
 }
 
@@ -395,8 +398,16 @@ void MainWindow::themeSettingBtn_clicked()
      _themeSwitchWidget->setVisible(true);
      textEditContainer->setVisible(false);
      _checkinWidget->setVisible(false);
-    _themeSwitchWidget->setFocus();
-    //themeChangedUiStatus();
+     ui->systemSettingBtn->setChecked(false);
+     ui->checkinBtn->setChecked(false);
+     _themeSwitchWidget->setFocus();
+}
+
+void MainWindow::systemSettingBtn_clicked()
+{
+    ui->themeSettingBtn->setChecked(false);
+    ui->checkinBtn->setChecked(false);
+    //_themeSwitchWidget->setFocus();
 }
 
 void MainWindow::onReceiveNewGroupFormData(QString nodeName,int color_index)
@@ -567,6 +578,8 @@ void MainWindow::onTreeWidgetItemClicked(QTreeWidgetItem *item, int column)
         textEditContainer->setVisible(true);
     }
     ui->checkinBtn->setChecked(false);
+    ui->themeSettingBtn->setChecked(false);
+    ui->systemSettingBtn->setChecked(false);
 }
 //切换左侧节点时，保存上一个节点的内容，加载当前节点的内容
 void MainWindow::currentTreeItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)

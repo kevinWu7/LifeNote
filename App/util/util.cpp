@@ -393,15 +393,32 @@ QString util::generateRGBAString(const QString& colorString, float alpha)
     return rgbaString;
 }
 
+//根据rgb(222,31,33),返回可以带透明度的qcolor
 QColor util::generateRGBAColor(const QString& colorString, float alpha)
 {
-    // 解析RGB颜色值
-    QString rgbString = colorString.mid(4, colorString.length() - 5); // 去掉"rgb("和")"
-    QStringList colorComponents = rgbString.split(',');
+    QString colorFormat;
+    QStringList colorComponents;
 
-    if (colorComponents.size() != 3) {
+    if (colorString.startsWith("rgb(")) {
+        // 解析RGB颜色值
+        colorFormat = "rgb";
+        QString rgbString = colorString.mid(4, colorString.length() - 5); // 去掉"rgb("和")"
+        colorComponents = rgbString.split(',');
+    }
+    else if (colorString.startsWith("rgba(")) {
+        // 解析RGBA颜色值
+        colorFormat = "rgba";
+        QString rgbaString = colorString.mid(5, colorString.length() - 6); // 去掉"rgba("和")"
+        colorComponents = rgbaString.split(',');
+    }
+    else {
         // 非法的颜色值格式
-        return QColor(); // Return an invalid QColor
+        return QColor(); // 返回无效的 QColor
+    }
+
+    if (colorComponents.size() != 3 && colorComponents.size() != 4) {
+        // 非法的颜色值格式
+        return QColor(); // 返回无效的 QColor
     }
 
     // 提取颜色分量
@@ -412,10 +429,23 @@ QColor util::generateRGBAColor(const QString& colorString, float alpha)
     // 确保透明度在0到255之间
     int alphaInt = qBound(0, static_cast<int>(alpha * 255), 255);
 
-    // 构建QColor
+    if (colorComponents.size() == 4) {
+        // 提取透明度分量
+        float alphaFloat = colorComponents[3].toFloat();
+
+        // 确保透明度在0.0到1.0之间
+        float alphaClamped = qBound(0.0f, alphaFloat, 1.0f);
+
+        // 将透明度从范围0.0-1.0映射到范围0-255
+        alphaInt = static_cast<int>(alphaClamped * 255);
+    }
+
+    // 构建 QColor
     QColor color(red, green, blue, alphaInt);
     return color;
 }
+
+
 
 QString util::getPlatFormName()
 {

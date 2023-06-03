@@ -169,15 +169,6 @@ QTreeView::item {
 }
 
 
-QTreeView::item:selected:active {
-    background-color:CONTROL_SELECTED;
-}
-
-QTreeView::item:selected:!active {
-    background-color:CONTROL_NOSELECTED;
-}
-
-
 /* mainwindow*/
 QWidget#mainWindowTiitle[platform="windows"]{
     background-color:BACKGROUND_COLOR1;

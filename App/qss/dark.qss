@@ -169,19 +169,13 @@ QTreeView::item {
 }
 
 
-QTreeView::item:selected:active,
-QTreeView::branch:selected:active {
+QTreeView::item:selected:active {
     background-color:CONTROL_SELECTED;
 }
 
-QTreeView::item:selected:!active,
-QTreeView::branch:selected:!active {
+QTreeView::item:selected:!active{
     background-color:CONTROL_NOSELECTED;
 }
-
-
-/*QTreeView::branch::selected{background-color:green;}
-QTreeView::item::selected{background-color:green;} ");*/
 
 
 /* mainwindow */

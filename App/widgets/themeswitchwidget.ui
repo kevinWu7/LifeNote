@@ -1447,7 +1447,7 @@
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>40</width>
+                    <width>0</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -1455,6 +1455,12 @@
                 </item>
                 <item row="2" column="4">
                  <widget class="QToolButton" name="pictureBtn9">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1470,7 +1476,7 @@
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>40</width>
+                    <width>0</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -1478,6 +1484,12 @@
                 </item>
                 <item row="3" column="2">
                  <widget class="QToolButton" name="pictureBtn11">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1488,6 +1500,12 @@
                 </item>
                 <item row="3" column="0">
                  <widget class="QToolButton" name="pictureBtn10">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1498,6 +1516,12 @@
                 </item>
                 <item row="3" column="4">
                  <widget class="QToolButton" name="pictureBtn12">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1508,6 +1532,12 @@
                 </item>
                 <item row="1" column="0">
                  <widget class="QToolButton" name="pictureBtn4">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1518,6 +1548,12 @@
                 </item>
                 <item row="1" column="2">
                  <widget class="QToolButton" name="pictureBtn5">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1533,7 +1569,7 @@
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>40</width>
+                    <width>0</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -1546,7 +1582,7 @@
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>40</width>
+                    <width>0</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -1559,7 +1595,7 @@
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>40</width>
+                    <width>0</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -1567,6 +1603,12 @@
                 </item>
                 <item row="1" column="4">
                  <widget class="QToolButton" name="pictureBtn6">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1582,7 +1624,7 @@
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>40</width>
+                    <width>0</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -1595,7 +1637,7 @@
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>40</width>
+                    <width>0</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -1603,6 +1645,12 @@
                 </item>
                 <item row="2" column="2">
                  <widget class="QToolButton" name="pictureBtn8">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1613,6 +1661,12 @@
                 </item>
                 <item row="0" column="4">
                  <widget class="QToolButton" name="pictureBtn3">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1623,8 +1677,14 @@
                 </item>
                 <item row="0" column="0">
                  <widget class="QToolButton" name="pictureBtn1">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
-                   <string/>
+                   <string>无背景</string>
                   </property>
                   <property name="checkable">
                    <bool>true</bool>
@@ -1633,6 +1693,12 @@
                 </item>
                 <item row="0" column="2">
                  <widget class="QToolButton" name="pictureBtn2">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string/>
                   </property>
@@ -1643,6 +1709,12 @@
                 </item>
                 <item row="2" column="0">
                  <widget class="QToolButton" name="pictureBtn7">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1658,7 +1730,7 @@
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>40</width>
+                    <width>0</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -1666,6 +1738,12 @@
                 </item>
                 <item row="4" column="0">
                  <widget class="QToolButton" name="pictureBtn13">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1676,6 +1754,12 @@
                 </item>
                 <item row="4" column="2">
                  <widget class="QToolButton" name="pictureBtn14">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1686,6 +1770,12 @@
                 </item>
                 <item row="4" column="4">
                  <widget class="QToolButton" name="pictureBtn15">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1701,7 +1791,7 @@
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>40</width>
+                    <width>0</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -1714,7 +1804,7 @@
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>40</width>
+                    <width>0</width>
                     <height>20</height>
                    </size>
                   </property>

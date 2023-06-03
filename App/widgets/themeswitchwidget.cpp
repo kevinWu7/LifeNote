@@ -38,6 +38,12 @@ ThemeSwitchWidget::ThemeSwitchWidget(QWidget *parent) :
     connect(ui->leftTransparencyEdit,&QLineEdit::textEdited,this,&ThemeSwitchWidget::leftTransparencyEditEvent);
     connect(ui->rightTransparencyEdit,&QLineEdit::textEdited,this,&ThemeSwitchWidget::rightTransparencyEditEvent);
 
+    ui->pictureBtn1->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    ui->pictureBtn1->setText("无背景");
+    ui->pictureBtn1->setIcon(QIcon(":/icons/res/note/img.png"));
+    ui->pictureBtn1->setIconSize(QSize(100,50));
+
+    connect( ui->pictureBtn1,&QToolButton::clicked,this,&ThemeSwitchWidget::pictureBtnClicked);
     for(int index=2;index<ui->pictureWidget->children().count();index++)
     {
         QToolButton* picBtn= util::findWidget<QToolButton>(ui->pictureWidget,"pictureBtn"+QString::number(index));
@@ -45,12 +51,12 @@ ThemeSwitchWidget::ThemeSwitchWidget(QWidget *parent) :
         {
             QString backgroundImage= QString(":/imgs/res/images/pic%1.jpg").arg(QString::number(index)); // 替换为你的背景图片路径
             // 设置样式表, 性能很卡，切换纯色主题时会卡死，故换成下面的icon方式
-            //QString style = QString("QToolButton{border-image:url(%1);}").arg(backgroundImage);
-            //picBtn->setStyleSheet(style);
+           /* QString style = QString("background-image:url(%1);").arg(backgroundImage);
+            picBtn->setStyleSheet(style);*/
             QIcon btn_icon;
             btn_icon.addFile(backgroundImage);
             picBtn->setIcon(btn_icon);
-            picBtn->setIconSize(QSize(160, 90));
+            picBtn->setIconSize(QSize(150, 70));
             connect(picBtn,&QToolButton::clicked,this,&ThemeSwitchWidget::pictureBtnClicked);
         }
     }
@@ -164,8 +170,29 @@ void ThemeSwitchWidget::rightTransparencyEditEvent()
 void ThemeSwitchWidget::pictureBtnClicked()
 {
    QToolButton *button = qobject_cast<QToolButton*>(sender());
-   ThemeManager::getInstance().switchTheme(
-   ThemeManager::getInstance().ThemeId,button->objectName().replace("tureBtn",""));
+   ThemeManager::getInstance().switchTheme(ThemeManager::getInstance().ThemeId,button->objectName().replace("tureBtn",""));
+   for(int index=0;index<ui->pictureWidget->children().count();index++)
+   {
+       QToolButton* picBtn= qobject_cast<QToolButton*>(ui->pictureWidget->children().at(index));
+       if(picBtn&&picBtn!=button)
+       {
+           picBtn->setChecked(false);
+       }
+   }
+}
+
+void ThemeSwitchWidget::noPictureBtnClicked()
+{
+    QToolButton *button = qobject_cast<QToolButton*>(sender());
+    ThemeManager::getInstance().switchTheme(ThemeManager::getInstance().ThemeId,"none");
+    for(int index=0;index<ui->pictureWidget->children().count();index++)
+    {
+        QToolButton* picBtn= qobject_cast<QToolButton*>(ui->pictureWidget->children().at(index));
+        if(picBtn&&picBtn!=button)
+        {
+            picBtn->setChecked(false);
+        }
+    }
 }
 
 

@@ -420,30 +420,26 @@ QWidget#ThemeSwitchWidget  QLineEdit#rightTransparencyEdit{
 
 QWidget#ThemeSwitchWidget  QLabel#transparencyRangeEdit,
 QWidget#ThemeSwitchWidget  QLabel#leftTransparencyRangeEdit,
-QWidget#ThemeSwitchWidget  QLabel#rightTransparencyRangeEdit,{
+QWidget#ThemeSwitchWidget  QLabel#rightTransparencyRangeEdit{
     color: CONTROL_POOLTEXT;
     font:12pt;
 }
 
 QWidget#ThemeSwitchWidget   QWidget#pictureWidget QToolButton{
-    width: 160px;
     min-width: 160px;
-    max-width: 160px;
-    height: 90px;
     min-height: 90px;
-    max-height: 90px;
     border-radius: 8px;
 }
 
 QWidget#ThemeSwitchWidget   QWidget#pictureWidget QToolButton:checked{
-    width: 160px;
     min-width: 160px;
-    max-width: 160px;
-    height: 90px;
     min-height: 90px;
-    max-height: 90px;
     border-radius: 8px;
-    border:2px solid CONTROL_SELECTED;
+    background-color:CONTROL_SELECTED;
+}
+
+QWidget#ThemeSwitchWidget QToolButton#pictureBtn1{
+     font-size:15px;
 }
 
 /*NewHabitForm*/

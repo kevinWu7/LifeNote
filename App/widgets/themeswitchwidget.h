@@ -25,7 +25,7 @@ public slots:
     void leftTransparencyEditEvent();
     void rightTransparencyEditEvent();
     void pictureBtnClicked();
-
+    void noPictureBtnClicked();
 private:
     Ui::ThemeSwitchWidget *ui;
     void InitDiyColorButtons();

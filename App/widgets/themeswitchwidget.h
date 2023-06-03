@@ -18,8 +18,12 @@ public:
 
 public slots:
     void colorButtonClicked();
-    void transparencySliderMoved(int value);
+    void transparencySliderMoved();
+    void leftTransparencySliderMoved();
+    void rightTransparencySliderMoved();
     void transparencyEditEvent();
+    void leftTransparencyEditEvent();
+    void rightTransparencyEditEvent();
     void pictureBtnClicked();
 
 private:

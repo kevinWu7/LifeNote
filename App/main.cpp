@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
     ThemeManager::getInstance().ThemeId=themeData.themeId;
     ThemeManager::getInstance().PictureThemeId=themeData.picture_themeId;
     ThemeManager::getInstance().Transparency=themeData.transparency;
+    ThemeManager::getInstance().LeftTransparency=themeData.leftTransparency;
+    ThemeManager::getInstance().RightTransparency=themeData.rightTransparency;
     ThemeManager::getInstance().switchTheme(ThemeManager::getInstance().ThemeId,ThemeManager::getInstance().PictureThemeId,true);
     MainWindow window;
     window.setWindowTitle(WINDOW_TITLE);

@@ -118,23 +118,10 @@ QMainWindow* ThemeManager::getCurrentMainWindow()
 
 void ThemeManager::switchTheme(QString _themeId,QString picture_ThemeId,bool isFirstInit)
 {
-    QString path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
+    QString path;
     QString baseBackgroundColor;
     currentTheme.clear();
-    QString allstyle;
-    QFile f(path);
-    if (!f.exists())
-    {
-        qDebug() << "Unable to set stylesheet, file not found";
-        return;
-    }
-    else
-    {
-        this->ThemeId=_themeId;
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream ts(&f);
-        allstyle=ts.readAll();
-    }
+
     QRegularExpression regex("\\d");
     // 在输入字符串中查找第一个数字出现的位置
     QRegularExpressionMatch match = regex.match(_themeId);
@@ -183,24 +170,31 @@ void ThemeManager::switchTheme(QString _themeId,QString picture_ThemeId,bool isF
             currentTheme["SCROLLBAR_HOVER"]= getBackGround2(currentTheme["SCROLLBAR_HANDLE"],30);
         }
         currentTheme["BACKGROUND_COLOR1"]=baseBackgroundColor;
-        currentTheme["LEFT_BACKGROUND_COLOR1"]=baseBackgroundColor;
-        currentTheme["RIGHT_BACKGROUND_COLOR1"]=baseBackgroundColor;
     }
+    currentTheme["LEFT_BACK_COLOR1"]=util::generateRGBAString(baseBackgroundColor,LeftTransparency/100.0);
+    currentTheme["RIGHT_BACK_COLOR1"]=util::generateRGBAString(baseBackgroundColor,RightTransparency/100.0);
+    QString picPath =QString(":/imgs/res/images/pic%1.jpg").arg(picIndex);
+    currentTheme["PICTURE_PATH"]=picPath;
     if(_themeId!= this->ThemeId)
     {
         themeConfig::getInstance().updateXml("ThemeId",_themeId);
+        this->ThemeId=_themeId;
     }
-    QString picPath =QString(":/imgs/res/images/pic%1.jpg").arg(picIndex);
-    currentTheme["PICTURE_PATH"]=picPath;
     if(picture_ThemeId!=  this->PictureThemeId)
-    {
-        this->PictureThemeId=picture_ThemeId;
+    {//picture_ThemeId 为空，也就是整个为none的情况需要补充
         themeConfig::getInstance().updateXml("PictureThemeId",picture_ThemeId);
-        auto base_color1=currentTheme["BACKGROUND_COLOR1"];
-        currentTheme["BACKGROUND_COLOR1"]=  util::generateRGBAString(base_color1,0.35);
-        //currentTheme["LEFT_BACKGROUND_COLOR1"]=  util::generateRGBAString(base_color1,0.35);
-        //currentTheme["RIGHT_BACKGROUND_COLOR1"]=  util::generateRGBAString(base_color1,0.35);
+        this->PictureThemeId=picture_ThemeId;
     }
+
+    QFile f(path);
+    if (!f.exists())
+    {
+        logger->log("Unable to set stylesheet, file not found");
+        return;
+    }
+    f.open(QFile::ReadOnly | QFile::Text);
+    QTextStream ts(&f);
+    QString allstyle=ts.readAll();
     for(auto item : currentTheme)
     {
         allstyle= allstyle.replace(item.first,item.second);

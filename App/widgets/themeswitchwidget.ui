@@ -360,7 +360,7 @@
                    </size>
                   </property>
                   <property name="minimum">
-                   <number>30</number>
+                   <number>0</number>
                   </property>
                   <property name="maximum">
                    <number>100</number>
@@ -373,7 +373,7 @@
                 <item>
                  <widget class="QLabel" name="leftTransparencyRangeEdit">
                   <property name="text">
-                   <string>有效范围:30~100</string>
+                   <string>有效范围:0~100</string>
                   </property>
                  </widget>
                 </item>
@@ -468,7 +468,7 @@
                    </size>
                   </property>
                   <property name="minimum">
-                   <number>30</number>
+                   <number>0</number>
                   </property>
                   <property name="maximum">
                    <number>100</number>
@@ -481,7 +481,7 @@
                 <item>
                  <widget class="QLabel" name="rightTransparencyRangeEdit">
                   <property name="text">
-                   <string>有效范围:30~100</string>
+                   <string>有效范围:0~100</string>
                   </property>
                  </widget>
                 </item>

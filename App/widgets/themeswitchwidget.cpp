@@ -15,14 +15,29 @@ ThemeSwitchWidget::ThemeSwitchWidget(QWidget *parent) :
     ui->setupUi(this);
     InitSystemColorButtons();
     InitDiyColorButtons();
-    //QIntValidator *validator = new QIntValidator(10, 100, this);
-    //ui->transparencyEdit->setValidator(validator);
     QIntValidator *validator = new QIntValidator(30, 100, this);
     ui->transparencyEdit->setValidator(validator);
+    QIntValidator *leftvalidator = new QIntValidator(0, 100, this);
+    ui->leftTransparencyEdit->setValidator(leftvalidator);
+    QIntValidator *rightvalidator = new QIntValidator(0, 100, this);
+    ui->rightTransparencyEdit->setValidator(rightvalidator);
+
     ui->transparencyEdit->setText(QString::number(ThemeManager::getInstance().Transparency));
+    ui->leftTransparencyEdit->setText(QString::number(ThemeManager::getInstance().LeftTransparency));
+    ui->rightTransparencyEdit->setText(QString::number(ThemeManager::getInstance().RightTransparency));
+
     ui->transparencyHSlider->setValue(ThemeManager::getInstance().Transparency);
-    connect(ui->transparencyHSlider,&QSlider::sliderMoved,this,&ThemeSwitchWidget::transparencySliderMoved);
+    ui->leftTransparencyHSlider->setValue(ThemeManager::getInstance().LeftTransparency);
+    ui->rightTransparencyHSlider->setValue(ThemeManager::getInstance().RightTransparency);
+
+    connect(ui->transparencyHSlider,&QSlider::sliderReleased,this,&ThemeSwitchWidget::transparencySliderMoved);
+    connect(ui->leftTransparencyHSlider,&QSlider::sliderReleased,this,&ThemeSwitchWidget::leftTransparencySliderMoved);
+    connect(ui->rightTransparencyHSlider,&QSlider::sliderReleased,this,&ThemeSwitchWidget::rightTransparencySliderMoved);
+
     connect(ui->transparencyEdit,&QLineEdit::textEdited,this,&ThemeSwitchWidget::transparencyEditEvent);
+    connect(ui->leftTransparencyEdit,&QLineEdit::textEdited,this,&ThemeSwitchWidget::leftTransparencyEditEvent);
+    connect(ui->rightTransparencyEdit,&QLineEdit::textEdited,this,&ThemeSwitchWidget::rightTransparencyEditEvent);
+
     for(int index=2;index<ui->pictureWidget->children().count();index++)
     {
         QToolButton* picBtn= util::findWidget<QToolButton>(ui->pictureWidget,"pictureBtn"+QString::number(index));
@@ -32,11 +47,10 @@ ThemeSwitchWidget::ThemeSwitchWidget(QWidget *parent) :
             // 设置样式表, 性能很卡，切换纯色主题时会卡死，故换成下面的icon方式
             //QString style = QString("QToolButton{border-image:url(%1);}").arg(backgroundImage);
             //picBtn->setStyleSheet(style);
-
             QIcon btn_icon;
             btn_icon.addFile(backgroundImage);
             picBtn->setIcon(btn_icon);
-            picBtn->setIconSize(QSize(150, 80));
+            picBtn->setIconSize(QSize(160, 90));
             connect(picBtn,&QToolButton::clicked,this,&ThemeSwitchWidget::pictureBtnClicked);
         }
     }
@@ -81,12 +95,32 @@ void ThemeSwitchWidget::colorButtonClicked()
     }
 }
 
-void ThemeSwitchWidget::transparencySliderMoved(int value)
+void ThemeSwitchWidget::transparencySliderMoved()
 {
     auto window=util::getCurrentMainWindow();
+    int value= ui->transparencyHSlider->value();
     window->setWindowOpacity(value/100.0);
     ui->transparencyEdit->setText(QString::number(value));
+    ThemeManager::Transparency=value;
     themeConfig::getInstance().updateXml("Transparency",QString::number(value));
+}
+
+void ThemeSwitchWidget::leftTransparencySliderMoved()
+{
+    int value= ui->leftTransparencyHSlider->value();
+    ui->leftTransparencyEdit->setText(QString::number(value));
+    ThemeManager::LeftTransparency=value;
+    themeConfig::getInstance().updateXml("LeftTransparency",QString::number(value));
+    ThemeManager::getInstance().switchTheme(ThemeManager::ThemeId,ThemeManager::PictureThemeId,false);
+}
+
+void ThemeSwitchWidget::rightTransparencySliderMoved()
+{
+    int value= ui->rightTransparencyHSlider->value();
+    ui->rightTransparencyEdit->setText(QString::number(value));
+    ThemeManager::RightTransparency=value;
+    themeConfig::getInstance().updateXml("RightTransparency",QString::number(value));
+    ThemeManager::getInstance().switchTheme(ThemeManager::ThemeId,ThemeManager::PictureThemeId,false);
 }
 
 void ThemeSwitchWidget::transparencyEditEvent()
@@ -95,12 +129,36 @@ void ThemeSwitchWidget::transparencyEditEvent()
      int number=ui->transparencyEdit->text().toInt();
      if(number>=30&&number<=100)
      {
-         ThemeManager::getInstance().Transparency=number;
+         ThemeManager::Transparency=number;
          ui->transparencyHSlider->setValue(number);
          auto window=util::getCurrentMainWindow();
          window->setWindowOpacity(number/100.0);
          themeConfig::getInstance().updateXml("Transparency",QString::number(number));
      }
+}
+
+void ThemeSwitchWidget::leftTransparencyEditEvent()
+{
+    int number=ui->leftTransparencyEdit->text().toInt();
+    if(number>=0&&number<=100)
+    {
+        ThemeManager::LeftTransparency=number;
+        ui->leftTransparencyHSlider->setValue(number);
+        themeConfig::getInstance().updateXml("LeftTransparency",QString::number(number));
+        ThemeManager::getInstance().switchTheme(ThemeManager::ThemeId,ThemeManager::PictureThemeId,false);
+    }
+}
+
+void ThemeSwitchWidget::rightTransparencyEditEvent()
+{
+    int number=ui->rightTransparencyEdit->text().toInt();
+    if(number>=0&&number<=100)
+    {
+        ThemeManager::RightTransparency=number;
+        ui->rightTransparencyHSlider->setValue(number);
+        themeConfig::getInstance().updateXml("RightTransparency",QString::number(number));
+        ThemeManager::getInstance().switchTheme(ThemeManager::ThemeId,ThemeManager::PictureThemeId,false);
+    }
 }
 
 void ThemeSwitchWidget::pictureBtnClicked()

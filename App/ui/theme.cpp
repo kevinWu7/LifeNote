@@ -4,10 +4,14 @@ std::map<QString,QString> currentTheme={
 
 };
 
+//注意！！！！
+//由于qss为replace 替换，所以不能出现key存在包含关系，否则会发现意想不到的错误
+//如一个key为：BACKGROUND_COLOR1，另一个key为：LEFT_BACKGROUND_COLOR1
+//这样会出现LEFT_BACKGROUND_COLOR1被替换为了LEFT_rgb(43,44,45)
 std::map<QString,QString> themeDark={
     {"BACKGROUND_COLOR1","rgb(43,44,45)"},
-    {"LEFT_BACKGROUND_COLOR1","rgb(43,44,45)"},
-    {"RIGHT_BACKGROUND_COLOR1","rgb(43,44,45)"},
+    {"LEFT_BACK_COLOR1","rgb(43,44,45)"},
+    {"RIGHT_BACK_COLOR1","rgb(43,44,45)"},
     {"BACKGROUND_COLOR2", "rgb(63,62,58)"},
     {"CONTROL_SELECTED" , "rgb(72,72,72)"},
     {"CONTROL_NOSELECTED", "rgb(62,62,62)"},
@@ -22,8 +26,8 @@ std::map<QString,QString> themeDark={
 
 std::map<QString,QString> themeLight={
     {"BACKGROUND_COLOR1","rgb(255,255,255)"},
-    {"LEFT_BACKGROUND_COLOR1","rgb(255,255,255)"},
-    {"RIGHT_BACKGROUND_COLOR1","rgb(255,255,255)"},
+    {"LEFT_BACK_COLOR1","rgb(255,255,255)"},
+    {"RIGHT_BACK_COLOR1","rgb(255,255,255)"},
     {"BACKGROUND_COLOR2", "rgb(236,236,236)"},
     {"CONTROL_SELECTED" , "rgb(213, 230, 253)"},
     {"CONTROL_NOSELECTED", "rgb(232,232,232)"},

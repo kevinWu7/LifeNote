@@ -208,7 +208,7 @@ QWidget#mainPage QLineEdit {
 
 
 QWidget#leftBar {
-    background-color:BACKGROUND_COLOR1;
+    background-color:LEFT_BACK_COLOR1;
     border-radius: 7px;
 }
 
@@ -269,7 +269,7 @@ QWidget#titleBar QToolButton:hover {
 }
 
 QWidget#editWidget {
-    background-color: BACKGROUND_COLOR1;
+    background-color: RIGHT_BACK_COLOR1;
     border-radius: 7px;
 }
 
@@ -286,7 +286,7 @@ QWidget#titleBarControl QToolButton {
 }
 
 QWidget#checkinWidget QWidget#mainWidget {
-    background-color: BACKGROUND_COLOR1;
+    background-color: RIGHT_BACK_COLOR1;
     border-radius: 7px;
 }
 
@@ -369,7 +369,7 @@ QWidget#leftNavigateWidget QLabel#countLabel {
 
 /*ThemeSwitchWidget*/
 QWidget#themeScrollAreaContainer{
-   background-color:BACKGROUND_COLOR1;
+   background-color:RIGHT_BACK_COLOR1;
    border-radius: 7px;
 }
 

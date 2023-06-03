@@ -52,13 +52,21 @@ themeData themeConfig::LoadThemeConfig()
             {
                 _data.themeId= reader.readElementText();
             }
-            if(reader.name().toString()=="PictureThemeId")
+            else if(reader.name().toString()=="PictureThemeId")
             {
                 _data.picture_themeId= reader.readElementText();
             }
-            if(reader.name().toString()=="Transparency")
+            else if(reader.name().toString()=="Transparency")
             {
                 _data.transparency= reader.readElementText().toDouble();
+            }
+            else if(reader.name().toString()=="LeftTransparency")
+            {
+                _data.leftTransparency= reader.readElementText().toDouble();
+            }
+            else if(reader.name().toString()=="RightTransparency")
+            {
+                _data.rightTransparency= reader.readElementText().toDouble();
             }
             break;
         case QXmlStreamReader::EndElement:

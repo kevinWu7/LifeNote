@@ -28,7 +28,7 @@ HabitItem::HabitItem(QString name,QWidget *parent) :
 
     // 绑定成员函数到实例
     bindFunctionOfreceiveBtnChecked = std::bind(&HabitItem::receiveBtnChecked, this, std::placeholders::_1);
-    // 注册全局事件
+    // 注册theme全局事件
     CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
     bindFunctionOfreceiveThemeChanged=std::bind(&HabitItem::receiveThemeChanged, this);
     ThemeManager::getInstance().registerThemeGlobalEvent(bindFunctionOfreceiveThemeChanged);

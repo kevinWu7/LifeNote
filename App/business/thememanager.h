@@ -10,8 +10,8 @@ namespace Cocoa
 {
   void changeTitleBarColor(WId winId,QString color);
   void changeTitleBarHeight(WId winId, double height);
-  void changeTitleBarTextColor(WId winId, QString color);
   void setWindowTitleColor(WId winId, const char *color);
+  void setWindowTitleMerged(WId winId);
 }
 #endif
 
@@ -21,11 +21,15 @@ class ThemeManager
 public:
     static ThemeManager& getInstance();
     static QString ThemeId;
+    static QString PictureThemeId;
+    static double Transparency;
+    static double LeftTransparency;
+    static double RightTransparency;
     // 注册全局事件
     void registerThemeGlobalEvent(themeChangedCallback callback);
     void unregisterThemeGlobalEvent(themeChangedCallback callback);
     void triggerThemeGlobalEvent();
-    void switchTheme(QString themeId,QString baseBackgroundColor,bool isFirstIni=false);
+    void switchTheme(QString themeId,QString picture_ThemeId,bool isFirstIni=false);
     QMainWindow* getCurrentMainWindow();
     std::vector<themeChangedCallback> callbackList;
 private:

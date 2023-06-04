@@ -336,7 +336,7 @@ xmlLoadResult CheckinConfig::LoadCheckinConfig()
     //是否是正常结束
     if (reader.error())
     {
-        QString str="Error: "+reader.errorString()+"in file test.xml at line "+QString::number(reader.lineNumber())+
+        QString str="Error: "+reader.errorString()+"checkin.xml loadConfigXML "+QString::number(reader.lineNumber())+
                 ",column "+QString::number(reader.columnNumber());
         logger->log(str);
         result.project_list.clear();

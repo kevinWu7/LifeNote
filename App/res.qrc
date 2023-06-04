@@ -28,7 +28,6 @@
         <file>res/checkin/arrow-left.png</file>
         <file>res/checkin/arrow-right.png</file>
         <file>res/checkin/bowl.png</file>
-        <file>res/note/edit.png</file>
         <file>res/note/delete.svg</file>
         <file>res/note/bold.svg</file>
         <file>res/note/color.svg</file>
@@ -40,11 +39,37 @@
         <file>res/note/underline.svg</file>
         <file>res/note/undo.svg</file>
         <file>res/note/img.png</file>
-        <file>res/system/min.png</file>
-        <file>res/system/close.png</file>
-        <file>res/system/max.png</file>
         <file>res/system/setting.png</file>
         <file>res/system/theme.png</file>
         <file>res/checkin/selected.png</file>
+        <file>res/system/win_close.svg</file>
+        <file>res/system/win_max.svg</file>
+        <file>res/system/win_min.svg</file>
+        <file>res/system/win_restore.svg</file>
+        <file>res/system/logo.png</file>
+        <file>res/system/logo_koda.png</file>
+        <file>res/note/edit.svg</file>
+    </qresource>
+    <qresource prefix="/imgs">
+        <file>res/images/pic3.jpg</file>
+        <file>res/images/pic4.jpg</file>
+        <file>res/images/pic5.jpg</file>
+        <file>res/images/pic6.jpg</file>
+        <file>res/images/pic7.jpg</file>
+        <file>res/images/pic8.jpg</file>
+        <file>res/images/pic2.jpg</file>
+        <file>res/images/pic10.jpg</file>
+        <file>res/images/pic11.jpg</file>
+        <file>res/images/pic13.jpg</file>
+        <file>res/images/pic14.jpg</file>
+        <file>res/images/pic15.jpg</file>
+        <file>res/images/pic12.jpg</file>
+        <file>res/images/pic9.jpg</file>
+        <file>res/images/pic16.jpg</file>
+        <file>res/images/pic17.jpg</file>
+        <file>res/images/pic18.jpg</file>
+        <file>res/images/pic19.jpg</file>
+        <file>res/images/pic20.jpg</file>
+        <file>res/images/pic21.jpg</file>
     </qresource>
 </RCC>

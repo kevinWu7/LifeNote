@@ -5,12 +5,22 @@
 #include <QString>
 
 #define THEME_CONFIG_PATH "/config/theme.xml"
+
+struct themeData
+{
+    QString themeId;
+    QString picture_themeId;
+    double transparency;
+    double leftTransparency;
+    double rightTransparency;
+};
+
 class themeConfig
 {
 public:
     static themeConfig& getInstance();
-    QString LoadThemeConfig();
-    void updateXml(QString themeId);
+    themeData LoadThemeConfig();
+    void updateXml(const QString& fieldType,const QString& value);
 private:
     themeConfig();
     themeConfig(const themeConfig&) = delete;

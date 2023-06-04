@@ -4,12 +4,18 @@
 #include <QTreeWidgetItem>
 #include <QDomElement>
 #include <QMainWindow>
+#include <QMenu>
+#include <QGraphicsDropShadowEffect>
 
 
 #ifdef QT_NO_DEBUG
-#define STORAGE_PATH  QString("/Users/wuchengcheng/Documents/Lifenote_dir")
+    #ifdef Q_OS_MAC
+        #define STORAGE_PATH  QString("/Users/wuchengcheng/Documents/Lifenote_dir")
+    #elif defined(Q_OS_WIN)
+        #define STORAGE_PATH QCoreApplication::applicationDirPath()
+    #endif
 #else
-#define STORAGE_PATH QCoreApplication::applicationDirPath()
+    #define STORAGE_PATH QCoreApplication::applicationDirPath()
 #endif
 
 class util
@@ -37,6 +43,8 @@ public:
     static QMainWindow* getCurrentMainWindow();
     static QString getPlatFormName();
     static QString generateRGBAString(const QString& colorString, float alpha);
+    static QColor generateRGBAColor(const QString& colorString, float alpha);
+    static void ChangeQMenuStyle( QMenu& menu);
     template<typename T>
     static T *findWidget(QWidget *parent, const QString &objectName)
     {
@@ -55,6 +63,22 @@ public:
         }
         return childWidget;
     }
+    template<typename T>
+   static T* findParentWidget(QObject* object)
+    {
+        QObject* parent = object->parent();
+        while (parent)
+        {
+            if (T* typedParent = qobject_cast<T*>(parent))
+                return typedParent;
+
+            parent = parent->parent();
+        }
+
+        return nullptr;
+    }
+
+private:
 
 };
 

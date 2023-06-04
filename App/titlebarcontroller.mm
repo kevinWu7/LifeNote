@@ -37,14 +37,21 @@ void changeTitleBarColor(WId winId, QString color)
     double red=extractValueFromQString(color,0);
     double green=extractValueFromQString(color,1);
     double blue=extractValueFromQString(color,2);
-    window.backgroundColor = [NSColor colorWithRed:red green:green blue:blue alpha:1.];
+    window.backgroundColor = [NSColor colorWithRed:red green:green blue:blue alpha:0.1];
 }
 
-void setWindowTitleColor(WId winId, const char *color) {
+void setWindowTitleMerged(WId winId) {
     if (winId == 0) return;
     NSView* view = (NSView*)winId;
     NSWindow* window = [view window];
-    NSWindowStyleMask windowMask = NSWindowStyleMaskFullSizeContentView ;
+    NSWindowStyleMask windowMask = NSWindowStyleMaskFullSizeContentView
+            | NSWindowStyleMaskBorderless
+            | NSWindowStyleMaskTitled
+            | NSWindowStyleMaskClosable
+            | NSWindowStyleMaskMiniaturizable
+            | NSWindowStyleMaskResizable;
+    [window setStyleMask: windowMask];
+   // NSWindowStyleMask windowMask = NSWindowStyleMaskFullSizeContentView ;
     [window setStyleMask:windowMask];
 }
 
@@ -67,12 +74,5 @@ void changeTitleBarHeight(WId winId, double height)
     // Set new frame for the window
     [window setFrame:newFrame display:YES];
 }
-
-
-
-
-
-
-
 
 }

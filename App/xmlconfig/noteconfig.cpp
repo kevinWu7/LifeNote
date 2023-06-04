@@ -107,7 +107,7 @@ void noteconfig::loadConfigXML(QTreeWidget *tree_widget)
     //是否是正常结束
     if (reader.error())
     {
-        QString str="Error: "+reader.errorString()+"in file test.xml "
+        QString str="Error: "+reader.errorString()+"loadConfigXML noteconfig "
                      "at line "+QString::number(reader.lineNumber())+
                      ",column "+QString::number(reader.columnNumber());
         logger->log(str);

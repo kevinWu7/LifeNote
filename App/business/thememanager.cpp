@@ -2,13 +2,24 @@
 #include <QCoreApplication>
 #include <QApplication>
 #include <QFile>
+#include <QRegularExpression>
 #include "thememanager.h"
 #include "theme.h"
 #include "themeconfig.h""
 #include "util.h"
+#include "logger.h"
 
 ThemeManager* ThemeManager::instance = nullptr;
+#ifdef QT_NO_DEBUG
+QString ThemeManager::ThemeId="light";
+#else
 QString ThemeManager::ThemeId="dark";
+#endif
+QString ThemeManager::PictureThemeId="none";;
+double  ThemeManager::Transparency=1.0;
+double  ThemeManager::LeftTransparency=1.0;
+double  ThemeManager::RightTransparency=1.0;
+
 std::once_flag ThemeManager::onceFlag;
 
 ThemeManager::ThemeManager()
@@ -105,34 +116,44 @@ QMainWindow* ThemeManager::getCurrentMainWindow()
     return mainWindow;
 }
 
-void ThemeManager::switchTheme(QString _themeId,QString baseBackgroundColor,bool isFirstInit)
+void ThemeManager::switchTheme(QString _themeId,QString picture_ThemeId,bool isFirstInit)
 {
     QString path;
-    QString titleColor;
+    QString baseBackgroundColor;
     currentTheme.clear();
-    titleColor=baseBackgroundColor;
+
+    QRegularExpression regex("\\d");
+    // 在输入字符串中查找第一个数字出现的位置
+    QRegularExpressionMatch match = regex.match(_themeId);
+    // 获取左边的颜色部分
+    QString themeLeftColor = _themeId.left( match.capturedStart());
+    QRegularExpressionMatch pic_match = regex.match(picture_ThemeId);
+    QString picIndex = picture_ThemeId.right(picture_ThemeId.length()- pic_match.capturedStart());
     if(_themeId=="dark")
     {
         path=QCoreApplication::applicationDirPath()+ "/qss/dark.qss";
         currentTheme=themeDark;
+        baseBackgroundColor=currentTheme["BACKGROUND_COLOR1"];
     }
     else if(_themeId=="light")
     {
         path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
         currentTheme=themeLight;
+        baseBackgroundColor=currentTheme["BACKGROUND_COLOR1"];
     }
     else  //纯色主题
     {
         int number=_themeId.right(1).toInt();
-        if(number<5)
+        baseBackgroundColor=diyThemeColor[_themeId];
+        if(number<=diyThemeIndex[themeLeftColor])
         {
             path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
             currentTheme=themeLight;
             currentTheme["BACKGROUND_COLOR2"]= getBackGround2(baseBackgroundColor,-20);
-            currentTheme["CONTROL_SELECTED"]= getBackGround2(baseBackgroundColor,-30);
-            currentTheme["CONTROL_NOSELECTED"]= getBackGround2(baseBackgroundColor,-15);
+            currentTheme["CONTROL_SELECTED"]=  util::generateRGBAString("rgb(40,40,40)",0.30);
+            currentTheme["CONTROL_NOSELECTED"]=  util::generateRGBAString("rgb(40,40,40)",0.15);
             currentTheme["CONTROL_POOLTEXT"]= getBackGround2(baseBackgroundColor,-100);
-            currentTheme["SINGLE_LINE_COLOR"]=util::generateRGBAString(currentTheme["CONTROL_SELECTED"],0.5);
+            currentTheme["SINGLE_LINE_COLOR"]=util::generateRGBAString(getBackGround2(baseBackgroundColor,-30),0.5);
             currentTheme["SCROLLBAR_HANDLE"]= getBackGround2(baseBackgroundColor,-50);
             currentTheme["SCROLLBAR_HOVER"]= getBackGround2(currentTheme["SCROLLBAR_HANDLE"],20);
         }
@@ -141,41 +162,50 @@ void ThemeManager::switchTheme(QString _themeId,QString baseBackgroundColor,bool
             path=QCoreApplication::applicationDirPath()+ "/qss/dark.qss";
             currentTheme=themeDark;
             currentTheme["BACKGROUND_COLOR2"]= getBackGround2(baseBackgroundColor,30);
-            currentTheme["CONTROL_SELECTED"]= getBackGround2(baseBackgroundColor,70);
-            currentTheme["CONTROL_NOSELECTED"]= getBackGround2(baseBackgroundColor,20);
+            currentTheme["CONTROL_SELECTED"]= util::generateRGBAString("rgb(255,255,255)",0.35);
+            currentTheme["CONTROL_NOSELECTED"]= util::generateRGBAString("rgb(255,255,255)",0.15);
             currentTheme["CONTROL_POOLTEXT"]= getBackGround2(baseBackgroundColor,100);
-            currentTheme["SINGLE_LINE_COLOR"]=util::generateRGBAString(currentTheme["CONTROL_SELECTED"],0.5);
+            currentTheme["SINGLE_LINE_COLOR"]=util::generateRGBAString(getBackGround2(baseBackgroundColor,70),0.5);
             currentTheme["SCROLLBAR_HANDLE"]= getBackGround2(baseBackgroundColor,50);
             currentTheme["SCROLLBAR_HOVER"]= getBackGround2(currentTheme["SCROLLBAR_HANDLE"],30);
         }
         currentTheme["BACKGROUND_COLOR1"]=baseBackgroundColor;
     }
-    themeConfig::getInstance().updateXml(_themeId);
+    currentTheme["LEFT_BACK_COLOR1"]=util::generateRGBAString(baseBackgroundColor,LeftTransparency/100.0);
+    currentTheme["RIGHT_BACK_COLOR1"]=util::generateRGBAString(baseBackgroundColor,RightTransparency/100.0);
+    QString picPath =QString(":/imgs/res/images/pic%1.jpg").arg(picIndex);
+    currentTheme["PICTURE_PATH"]=picPath;
+    if(_themeId!= this->ThemeId)
+    {
+        themeConfig::getInstance().updateXml("ThemeId",_themeId);
+        this->ThemeId=_themeId;
+    }
+    if(picture_ThemeId!=  this->PictureThemeId)
+    {//picture_ThemeId 为空，也就是整个为none的情况需要补充
+        themeConfig::getInstance().updateXml("PictureThemeId",picture_ThemeId);
+        this->PictureThemeId=picture_ThemeId;
+    }
+
     QFile f(path);
     if (!f.exists())
     {
-        qDebug() << "Unable to set stylesheet, file not found";
+        logger->log("Unable to set stylesheet, file not found");
+        return;
     }
-    else
+    f.open(QFile::ReadOnly | QFile::Text);
+    QTextStream ts(&f);
+    QString allstyle=ts.readAll();
+    for(auto item : currentTheme)
     {
-        this->ThemeId=_themeId;
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream ts(&f);
-
-        QString allstyle=ts.readAll();
-        for(auto item : currentTheme)
-        {
-            allstyle= allstyle.replace(item.first,item.second);
-        };
-        qApp->setStyleSheet(allstyle);
-        auto mainWindow=getCurrentMainWindow();
-        if(mainWindow)
-        {
-           Cocoa::changeTitleBarColor(getCurrentMainWindow()->winId(), titleColor);
-        }
-        if(!isFirstInit)
-        {
-            ThemeManager::getInstance().triggerThemeGlobalEvent();
-        }
+        allstyle= allstyle.replace(item.first,item.second);
+    };
+    qApp->setStyleSheet(allstyle);
+    if(!isFirstInit)
+    {
+        ThemeManager::getInstance().triggerThemeGlobalEvent();
     }
 }
+
+
+
+

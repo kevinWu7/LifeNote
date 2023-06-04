@@ -10,6 +10,12 @@
     <height>580</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -17,7 +23,7 @@
    <property name="autoFillBackground">
     <bool>false</bool>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QVBoxLayout" name="centralwidget_layout">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -38,20 +44,20 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>20</height>
+        <height>23</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>20</height>
+        <height>23</height>
        </size>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QWidget" name="mainPage" native="true">
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="mainPage_layout">
        <property name="leftMargin">
         <number>8</number>
        </property>
@@ -66,6 +72,9 @@
        </property>
        <item>
         <widget class="QSplitter" name="mainSplitter">
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -117,7 +126,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>...</string>
+               <string>打卡记录</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -216,7 +225,7 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_6">
                <property name="spacing">
-                <number>3</number>
+                <number>0</number>
                </property>
                <property name="leftMargin">
                 <number>0</number>
@@ -246,7 +255,7 @@
                    <number>0</number>
                   </property>
                   <property name="bottomMargin">
-                   <number>10</number>
+                   <number>0</number>
                   </property>
                   <item>
                    <widget class="QToolButton" name="systemSettingBtn">
@@ -258,6 +267,9 @@
                     </property>
                     <property name="text">
                      <string>设置</string>
+                    </property>
+                    <property name="checkable">
+                     <bool>true</bool>
                     </property>
                    </widget>
                   </item>
@@ -271,6 +283,9 @@
                     </property>
                     <property name="text">
                      <string>换肤</string>
+                    </property>
+                    <property name="checkable">
+                     <bool>true</bool>
                     </property>
                    </widget>
                   </item>

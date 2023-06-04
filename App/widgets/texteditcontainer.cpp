@@ -197,7 +197,7 @@ void TextEditContainer::textEditCursorPositionChanged()
     ui->italicBtn->setChecked(font.italic());
     ui->underlineBtn->setChecked(font.underline());
 
-    logger->log(std::string("textEditCursorPositionChanged"));
+    logger->log("textEditCursorPositionChanged");
 
 }
 

@@ -9,6 +9,7 @@ CONFIG += c++17
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 ICON = logo.icns
+
 INCLUDEPATH += \
     $$PWD/custom_controls \
     $$PWD/widgets \
@@ -29,6 +30,7 @@ SOURCES += \
     custom_controls/lntextedit.cpp \
     custom_controls/weektoolbutton.cpp \
     custom_controls/roundedtooltip.cpp \
+    custom_controls/lnslider.cpp \
     ui/theme.cpp \
     widgets/themeswitchwidget.cpp \
     widgets/titlebarwidget.cpp \
@@ -57,6 +59,7 @@ HEADERS += \
     custom_controls/lntextedit.h \
     custom_controls/weektoolbutton.h \  \
     custom_controls/roundedtooltip.h \
+    custom_controls/lnslider.h \
     ui/theme.h \
     widgets/themeswitchwidget.h \
     widgets/titlebarwidget.h \
@@ -87,10 +90,11 @@ FORMS += \
     windows/mainwindow.ui \
     windows/newnotegroupform.ui
 
+macx {
 LIBS +=   -framework AppKit  # 链接 Foundation 和 AppKit 框架
 OBJECTIVE_SOURCES += \#引入object-C的类源文件
     titlebarcontroller.mm
-
+}
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -135,6 +139,9 @@ DISTFILES += \
     qss/light.qss \
     todoList.txt
 
-
+#配置win图标
+win32 {
+    RC_ICONS +=logo_win.ico
+}
 
 

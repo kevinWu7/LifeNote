@@ -5,18 +5,16 @@
 #include <QtGlobal>
 #include <QHeaderView>
 #include <QMessageBox>
-#include "logger.h"
 #include "util.h"
 #include "noteconfig.h"
 #include "lntreewidget.h"
+#include "theme.h"
 
 
 LNTreeWidget::LNTreeWidget(QWidget *parent)
     : QTreeWidget(parent)
 {
     setDragEnabled(true);
-
-
     setDragDropMode(QAbstractItemView::DragDrop);
     setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
@@ -48,15 +46,38 @@ LNTreeWidget::LNTreeWidget(QWidget *parent)
     //设置边框不可见
     this->setFrameStyle(QFrame::NoFrame);
 
+    //绑定themechanged事件
+    bFuncThemeChangeCallback=std::bind(&LNTreeWidget::themeChanged,this);
+    ThemeManager::getInstance().registerThemeGlobalEvent(bFuncThemeChangeCallback);
 
-    /*QPalette palette = this->palette();
-    palette.setColor(QPalette::Active, QPalette::Highlight, QColor(186,214,251));
-    palette.setColor(QPalette::Inactive, QPalette::Highlight, QColor(200, 200, 200,70));
-    palette.setColor(QPalette::HighlightedText, QColor(0,0,0));
-    palette.setColor(QPalette::Inactive, QPalette::HighlightedText, QColor(0, 0, 0));
-    this->setPalette(palette);*/
+    QPalette palette = this->palette();
+    auto activeHighLight=util::generateRGBAColor(currentTheme["CONTROL_SELECTED"],1.0);
+    auto inActiveHighLight=util::generateRGBAColor(currentTheme["CONTROL_NOSELECTED"],1.0);
+    palette.setColor(QPalette::Active, QPalette::Highlight, activeHighLight);//item选中时背景色
+    palette.setColor(QPalette::Inactive, QPalette::Highlight,inActiveHighLight);//item选中但失焦时背景色
+    //此处可以修改文本颜色，但是系统默认的已经ok了
+    //palette.setColor(QPalette::HighlightedText, QColor(255,255,0)); //item选中时文字色
+    //palette.setColor(QPalette::Inactive, QPalette::HighlightedText, QColor(160, 0, 0));//item选中但失焦时文字色
+    this->setPalette(palette);
 }
 
+void LNTreeWidget::themeChanged()
+{
+    QPalette palette = this->palette();
+    auto activeHighLight=util::generateRGBAColor(currentTheme["CONTROL_SELECTED"],1.0);
+    auto inActiveHighLight=util::generateRGBAColor(currentTheme["CONTROL_NOSELECTED"],1.0);
+    palette.setColor(QPalette::Active, QPalette::Highlight, activeHighLight);//item选中时背景色
+    palette.setColor(QPalette::Inactive, QPalette::Highlight,inActiveHighLight);//item选中但失焦时背景色
+    this->setPalette(palette);
+}
+
+LNTreeWidget::~LNTreeWidget()
+{
+    if(bFuncThemeChangeCallback)
+    {
+       ThemeManager::getInstance().unregisterThemeGlobalEvent(bFuncThemeChangeCallback);
+    }
+}
 
 void LNTreeWidget::enterEvent(QEnterEvent *event)
 {
@@ -202,7 +223,6 @@ void LNTreeWidget::dropEvent(QDropEvent *event)
             moveResult= QFile::rename(fullPath,tragetFile); //A路径移动到B路径
         }
         std::string str="move node and move file "+ std::string(moveResult ? "true": "false") ;
-        logger->log(str);
         if(!moveResult)
         {
             QMessageBox::warning(this, tr("错误"),tr("\n文件移动失败,无法完成操作"));
@@ -234,5 +254,8 @@ void LNTreeWidget::dropEvent(QDropEvent *event)
 
 void LNTreeWidget::wheelEvent(QWheelEvent* event)
 {
-     QTreeWidget::wheelEvent(event);
+    QTreeWidget::wheelEvent(event);
 }
+
+
+

@@ -1,4 +1,38 @@
 /* 系统控件 */
+QMenu{
+    background-color:BACKGROUND_COLOR1;
+    color:CONTROL_TEXT;
+    font:12px;
+    padding:6px;
+    border-width: 1px;
+    border-color: SINGLE_LINE_COLOR;
+    border-style: solid;
+    border-radius: 6px;
+}
+
+QMenu::item:text {
+        padding-top:6px;
+        padding-bottom:6px;
+        padding-left:4px;
+        padding-right:10px;
+}
+QMenu::item:selected{
+        color:CONTROL_TEXT;
+        background-color: CONTROL_SELECTED;
+        border-radius:3px;
+}
+QMenu::separator{
+        height:1px;
+        background:SINGLE_LINE_COLOR;
+        margin:5px;
+        margin-left:10px;
+        margin-right:10px;
+}
+
+QSplitter::handle{
+   background-color:transparent;
+}
+
 QScrollArea[objectName*="scrollArea"]{
     background-color: transparent;
     border: none;
@@ -37,7 +71,7 @@ QLabel{
 
 QTextEdit {
     border:0px;
-    background-color: BACKGROUND_COLOR1;
+    background-color: transparent;
     color: CONTROL_TEXT;
 }
 
@@ -53,11 +87,18 @@ QRadioButton {
 
 QScrollBar:vertical {
     width: 6px;
-    background: BACKGROUND_COLOR1;
+    background:transparent;
     margin: 0px, 0px, 0px, 0px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
+
+/*在windows下上下两边背景，否则背景色会呈现点阵图*/
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical{
+    background:none;
+}
+
 
 QScrollBar::handle:vertical {
     background: SCROLLBAR_HANDLE;
@@ -83,10 +124,15 @@ QScrollBar::sub-line:vertical {
 
 QScrollBar:horizontal {
     height: 6px;
-    background: BACKGROUND_COLOR1;
+    background: transparent;
     margin: 0px, 0px, 0px, 0px;
     padding-left: 0px;
     padding-right: 0px;
+}
+
+QScrollBar::add-page:horizontal,
+QScrollBar::sub-page:horizontal{
+    background:none;
 }
 
 QScrollBar::handle:horizontal {
@@ -123,42 +169,37 @@ QTreeView::item {
 }
 
 
-QTreeView::item:selected:active,
-QTreeView::branch:selected:active {
-    background-color:CONTROL_SELECTED;
-}
-
-QTreeView::item:selected:!active,
-QTreeView::branch:selected:!active {
-    background-color:CONTROL_NOSELECTED;
-}
 
 
 /* mainwindow */
 QWidget#mainWindowTiitle[platform="windows"]{
     background-color:BACKGROUND_COLOR1;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
 }
-
-QWidget#mainPage QLineEdit {
-    border:0px;
-    background-color: BACKGROUND_COLOR1;
-    color: CONTROL_TEXT;
-}
-
-
 
 QWidget#mainPage[platform="windows"]{
-    background-color:BACKGROUND_COLOR2;
-}
-
-QWidget#mainPage[platform="macos"]{
     background-color:BACKGROUND_COLOR2;
     border-bottom-left-radius: 7px;
     border-bottom-right-radius: 7px;
 }
 
+QWidget#mainPage{
+    background-color:BACKGROUND_COLOR2;
+    border-image:url(PICTURE_PATH);
+}
+
+QWidget#mainPage QLineEdit {
+    border:0px;
+    background-color: transparent;
+    color: CONTROL_TEXT;
+}
+
+
+
+
 QWidget#leftBar {
-    background-color:BACKGROUND_COLOR1;
+    background-color:LEFT_BACK_COLOR1;
     border-radius: 7px;
 }
 
@@ -180,6 +221,19 @@ QWidget#leftBar  QToolButton#checkinBtn{
     padding-bottom: 4px;
     border: none;
     font-size: 13pt;
+    background-color:transparent;
+}
+
+QWidget#leftBar  QToolButton#checkinBtn:checked{
+    min-height: 20px;
+    max-height: 20px;
+    margin: 0px;
+    padding-top: 4px;
+    padding-left: 10px;
+    padding-bottom: 4px;
+    border: none;
+    font-size: 13pt;
+    background-color:CONTROL_SELECTED;
 }
 
 QWidget#leftBar  QToolButton#systemSettingBtn,
@@ -192,12 +246,24 @@ QWidget#leftBar  QToolButton#themeSettingBtn{
     padding-bottom: 8px;
     border: none;
     font-size: 13pt;
-    color:CONTROL_POOLTEXT;
+    background-color:transparent;
 }
 
+QWidget#leftBar  QToolButton#systemSettingBtn:checked,
+QWidget#leftBar  QToolButton#themeSettingBtn:checked{
+    min-height: 20px;
+    max-height: 20px;
+    margin: 0px;
+    padding-left: 10px;
+    padding-top: 4px;
+    padding-bottom: 8px;
+    border: none;
+    font-size: 13pt;
+    background-color:CONTROL_SELECTED;
+}
 
-QWidget#titleBar {
-    background-color:BACKGROUND_COLOR1;
+QWidget#editTitleBar {
+    background-color:transparent;
 }
 
 QWidget#titleBar QToolButton:checked,
@@ -206,7 +272,7 @@ QWidget#titleBar QToolButton:hover {
 }
 
 QWidget#editWidget {
-    background-color: BACKGROUND_COLOR1;
+    background-color: RIGHT_BACK_COLOR1;
     border-radius: 7px;
 }
 
@@ -223,7 +289,7 @@ QWidget#titleBarControl QToolButton {
 }
 
 QWidget#checkinWidget QWidget#mainWidget {
-    background-color: BACKGROUND_COLOR1;
+    background-color: RIGHT_BACK_COLOR1;
     border-radius: 7px;
 }
 
@@ -306,12 +372,12 @@ QWidget#leftNavigateWidget QLabel#countLabel {
 
 /*ThemeSwitchWidget*/
 QWidget#themeScrollAreaContainer{
-   background-color:BACKGROUND_COLOR1;
+   background-color:RIGHT_BACK_COLOR1;
    border-radius: 7px;
 }
 
 QWidget#ThemeSwitchWidget  QWidget#mainSwitchWidget{
-   background-color:BACKGROUND_COLOR1;
+   background-color:transparent;
 }
 
 QWidget#ThemeSwitchWidget  QWidget#diyColorWidget QToolButton{
@@ -344,6 +410,39 @@ QWidget#ThemeSwitchWidget  QWidget#systemThemeWidget QToolButton:checked{
     max-height: 35px;
     border-radius: 8px;
     border:2px solid CONTROL_SELECTED;
+}
+
+QWidget#ThemeSwitchWidget  QLineEdit#transparencyEdit,
+QWidget#ThemeSwitchWidget  QLineEdit#leftTransparencyEdit,
+QWidget#ThemeSwitchWidget  QLineEdit#rightTransparencyEdit{
+    border:0px;
+    background-color: BACKGROUND_COLOR2;
+    color: CONTROL_TEXT;
+    border-radius: 8px;
+}
+
+QWidget#ThemeSwitchWidget  QLabel#transparencyRangeEdit,
+QWidget#ThemeSwitchWidget  QLabel#leftTransparencyRangeEdit,
+QWidget#ThemeSwitchWidget  QLabel#rightTransparencyRangeEdit{
+    color: CONTROL_POOLTEXT;
+    font:12pt;
+}
+
+QWidget#ThemeSwitchWidget   QWidget#pictureWidget QToolButton{
+    min-width: 160px;
+    min-height: 90px;
+    border-radius: 8px;
+}
+
+QWidget#ThemeSwitchWidget   QWidget#pictureWidget QToolButton:checked{
+    min-width: 160px;
+    min-height: 90px;
+    border-radius: 8px;
+    background-color:CONTROL_SELECTED;
+}
+
+QWidget#ThemeSwitchWidget QToolButton#pictureBtn1{
+     font-size:15px;
 }
 
 /*NewHabitForm*/
@@ -429,8 +528,6 @@ QWidget#NewNoteGroupForm QPushButton#cancleBtn{
     border-radius: 5px;
     border-color:SINGLE_LINE_COLOR;
 }
-
-
 
 /* other */
 QWidget#loggerTextEdit {

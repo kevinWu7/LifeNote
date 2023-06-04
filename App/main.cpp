@@ -1,19 +1,28 @@
 #include <QApplication>
 #include "mainwindow.h"
 #include "thememanager.h"
-#include "theme.h"
 #include "themeconfig.h"
+#include "theme.h"
+
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-   //QApplication::setApplicationDisplayName(WINDOW_TITLE);
-    ThemeManager::getInstance().ThemeId=themeConfig::getInstance().LoadThemeConfig();
+    auto themeData=themeConfig::getInstance().LoadThemeConfig();
+    ThemeManager::getInstance().ThemeId=themeData.themeId;
+    ThemeManager::getInstance().PictureThemeId=themeData.picture_themeId;
+    ThemeManager::getInstance().Transparency=themeData.transparency;
+    ThemeManager::getInstance().LeftTransparency=themeData.leftTransparency;
+    ThemeManager::getInstance().RightTransparency=themeData.rightTransparency;
+    ThemeManager::getInstance().switchTheme(ThemeManager::getInstance().ThemeId,ThemeManager::getInstance().PictureThemeId,true);
     MainWindow window;
     window.setWindowTitle(WINDOW_TITLE);
 
-    ThemeManager::getInstance().switchTheme(ThemeManager::getInstance().ThemeId,
-                  diyThemeColor[ThemeManager::getInstance().ThemeId],true);
+    window.setWindowOpacity(ThemeManager::getInstance().Transparency/100.0);
+#ifdef Q_OS_MAC
+    Cocoa::changeTitleBarColor(window.winId(), currentTheme["BACKGROUND_COLOR1"]);
+#endif
     window.show();
     return a.exec();
 }
+

@@ -7,6 +7,7 @@
 #include <QDrag>
 #include <QTimer>
 #include "extraqtreewidgetitem.h"
+#include "thememanager.h"
 
 class LNTreeWidget:public QTreeWidget
 {
@@ -26,6 +27,9 @@ protected:
     //只能在dragMoveEvent中配合这个变量来实现此效果，不断的将目标item添加到vector和将其移除vector这种较为搓的方式来实现
     std::vector<ExtraQTreeWidgetItem*> coloredItem;
     QTimer *timer=nullptr;
+    void themeChanged();
+    themeChangedCallback bFuncThemeChangeCallback;
+    ~LNTreeWidget();
 };
 
 #endif // LNTREEWIDGET_H

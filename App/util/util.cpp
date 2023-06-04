@@ -7,7 +7,7 @@
 #include "logger.h"
 #include "util.h"
 #include "extraqtreewidgetitem.h"
-
+#include "theme.h"
 
 std::map<int,std::string> util::iconMap={
     {0,"computer.png" },{1,"run.png" },{2,"english.png" },{3,"study.png" },{4,"train.png" },
@@ -250,10 +250,10 @@ bool util::isChildItem(QTreeWidgetItem* parentItem, QTreeWidgetItem* childItem)
 }
 
 
+/*勿删
 //根据xml的路径，找出xml的相应节点QDomNode
 //循环遍历xml节点，通过判断节点名是否和path的相应部分匹配，不断向下找
 //为什么写这个方法，是因为原先只能通过在xml中设置属性，通过属性来判断，如下面这段代码，但是这样会导致xml内容臃肿，所以selectSingleNode能让xml看起来更简洁
-/*勿删
  QDomNodeList list = doc.elementsByTagName(path);
  for(int i=0;i<list.size();i++)
  {
@@ -352,7 +352,23 @@ QMainWindow* util::getQMainWindowByWidget(QWidget* widget)
     }
     return mainWindow;
 }
+void util::ChangeQMenuStyle(QMenu& menu)
+{
+    menu.setWindowFlags(menu.windowFlags()  | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
+    menu.setAttribute(Qt::WA_TranslucentBackground,true);
+    //阴影可以通过下方代码设置，但是要配合qss中QMenu{ margin:10px} 来实现，否则阴影没有宽度，则不会显示。
+    /*QGraphicsDropShadowEffect *MenuShadow = new QGraphicsDropShadowEffect();
+    MenuShadow->setOffset(0, 0);
+    MenuShadow->setColor(generateRGBAColor(currentTheme["CONTROL_TEXT"],1));
+    MenuShadow->setBlurRadius(5);
+    if(menu.graphicsEffect())
+    {
+        delete menu.graphicsEffect();
+    }
+    menu.setGraphicsEffect(MenuShadow);*/
+}
 
+//根据rgb，返回rgba
 QString util::generateRGBAString(const QString& colorString, float alpha)
 {
     // 解析RGB颜色值
@@ -377,16 +393,70 @@ QString util::generateRGBAString(const QString& colorString, float alpha)
     return rgbaString;
 }
 
+//根据rgb(222,31,33),返回可以带透明度的qcolor
+QColor util::generateRGBAColor(const QString& colorString, float alpha)
+{
+    QString colorFormat;
+    QStringList colorComponents;
+
+    if (colorString.startsWith("rgb(")) {
+        // 解析RGB颜色值
+        colorFormat = "rgb";
+        QString rgbString = colorString.mid(4, colorString.length() - 5); // 去掉"rgb("和")"
+        colorComponents = rgbString.split(',');
+    }
+    else if (colorString.startsWith("rgba(")) {
+        // 解析RGBA颜色值
+        colorFormat = "rgba";
+        QString rgbaString = colorString.mid(5, colorString.length() - 6); // 去掉"rgba("和")"
+        colorComponents = rgbaString.split(',');
+    }
+    else {
+        // 非法的颜色值格式
+        return QColor(); // 返回无效的 QColor
+    }
+
+    if (colorComponents.size() != 3 && colorComponents.size() != 4) {
+        // 非法的颜色值格式
+        return QColor(); // 返回无效的 QColor
+    }
+
+    // 提取颜色分量
+    int red = colorComponents[0].toInt();
+    int green = colorComponents[1].toInt();
+    int blue = colorComponents[2].toInt();
+
+    // 确保透明度在0到255之间
+    int alphaInt = qBound(0, static_cast<int>(alpha * 255), 255);
+
+    if (colorComponents.size() == 4) {
+        // 提取透明度分量
+        float alphaFloat = colorComponents[3].toFloat();
+
+        // 确保透明度在0.0到1.0之间
+        float alphaClamped = qBound(0.0f, alphaFloat, 1.0f);
+
+        // 将透明度从范围0.0-1.0映射到范围0-255
+        alphaInt = static_cast<int>(alphaClamped * 255);
+    }
+
+    // 构建 QColor
+    QColor color(red, green, blue, alphaInt);
+    return color;
+}
+
+
 
 QString util::getPlatFormName()
 {
+    QString platformName;
 #ifdef Q_OS_MAC
-    return "macos";
-#elif Q_OS_WIN
-    return "windows";
+    platformName = "macos";
+#elif defined(Q_OS_WIN)
+    platformName = "windows";
 #else
-    return "unknown";
+    platformName = "unknown";
 #endif
+    return platformName;
 }
-
 

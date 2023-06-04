@@ -24,16 +24,16 @@ themeConfig& themeConfig::getInstance()
 }
 
 
-QString themeConfig::LoadThemeConfig()
+themeData themeConfig::LoadThemeConfig()
 {
     //设置输入文件
     QString filePath =STORAGE_PATH+ THEME_CONFIG_PATH;
     QFile inputfile(filePath);
-    QString themeId="";
+    themeData _data;
     if(!inputfile.open(QIODevice::ReadOnly))
     {
         logger->log(QString("loadConfigXML: Open checkin.xml file failed"));
-        return themeId;
+        return _data;
     }
     QXmlStreamReader reader(&inputfile);
 
@@ -50,14 +50,23 @@ QString themeConfig::LoadThemeConfig()
         case QXmlStreamReader::StartElement:
             if(reader.name().toString()=="ThemeId")
             {
-                foreach (const QXmlStreamAttribute & attribute, reader.attributes())
-                {
-                    if(attribute.name().toString()=="id""")
-                    {
-                        themeId= attribute.value().toString();
-                        break;
-                    }
-                }
+                _data.themeId= reader.readElementText();
+            }
+            else if(reader.name().toString()=="PictureThemeId")
+            {
+                _data.picture_themeId= reader.readElementText();
+            }
+            else if(reader.name().toString()=="Transparency")
+            {
+                _data.transparency= reader.readElementText().toDouble();
+            }
+            else if(reader.name().toString()=="LeftTransparency")
+            {
+                _data.leftTransparency= reader.readElementText().toDouble();
+            }
+            else if(reader.name().toString()=="RightTransparency")
+            {
+                _data.rightTransparency= reader.readElementText().toDouble();
             }
             break;
         case QXmlStreamReader::EndElement:
@@ -70,43 +79,54 @@ QString themeConfig::LoadThemeConfig()
     //是否是正常结束
     if (reader.error())
     {
-        QString str="Error: "+reader.errorString()+"in file test.xml at line "+QString::number(reader.lineNumber())+
+        QString str="Error: "+reader.errorString()+"LoadThemeConfig at line "+QString::number(reader.lineNumber())+
                 ",column "+QString::number(reader.columnNumber());
         logger->log(str);
-        return themeId;
+        return _data;
     }
     //关闭文件
     inputfile.close();
-    return themeId;
+    return _data;
 }
 
 
-void themeConfig::updateXml(QString themeId)
+void themeConfig::updateXml(const QString& fieldType,const QString& value)
 {
-    QString filePath =STORAGE_PATH+ THEME_CONFIG_PATH;
+    QString filePath = STORAGE_PATH + THEME_CONFIG_PATH;
     QFile file(filePath);
 
-    if(!file.open(QIODevice::ReadOnly))
+    if (!file.open(QIODevice::ReadOnly))
     {
-        logger->log(QString("updateXml:open local xml failed"));
+        logger->log(QString("updateXml: open local xml failed"));
         return;
     }
+
     QDomDocument doc;
-    if(!doc.setContent(&file))//从字节数组中解析XML文档，并将其设置为文档的内容
+    if (!doc.setContent(&file))
     {
-        logger->log(QString("updateXml:set doc content form file failed"));
+        logger->log(QString("updateXml: set doc content from file failed"));
         file.close();
         return;
     }
     file.close();
 
-    QDomNode parentDomElement=util::selectSingleNode("ThemeId",&doc);
-    parentDomElement.toElement().setAttribute("id",themeId);
-    if(!file.open(QFile::WriteOnly|QFile::Truncate))//重写文件，如果不用truncate就是在后面追加内容，就无效了
+    QDomNodeList themeIdNodes = doc.elementsByTagName(fieldType);
+    if (themeIdNodes.size() == 0)
     {
+        logger->log(QString("updateXml: ThemeId node not found"));
         return;
     }
-    QTextStream out_stream(&file);
-    doc.save(out_stream,4);
+
+    QDomElement themeIdElement = themeIdNodes.at(0).toElement();
+    themeIdElement.firstChild().setNodeValue(value);
+
+    if (!file.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        logger->log(QString("updateXml: open local xml for writing failed"));
+        return;
+    }
+
+    QTextStream outStream(&file);
+    doc.save(outStream, 4);
     file.close();
 }

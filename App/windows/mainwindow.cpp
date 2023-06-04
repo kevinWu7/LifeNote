@@ -878,12 +878,23 @@ void MainWindow::toggleMaximized()
         ui->centralwidget->setContentsMargins(5,5,5,5); //设置间隔,实际就是阴影的宽度
         ui->mainWindowTiitle->maxButton->setIcon(util::CreateColorSvgIcon(":/icons/res/system/win_max.svg",color));
         showNormal();
-
+#ifdef Q_OS_WIN
+        auto baseground=currentTheme["BACKGROUND_COLOR1"];
+        auto baseground2=currentTheme["BACKGROUND_COLOR2"];
+        setStyleSheet(QString("QWidget#mainWindowTiitle[platform=windows]{background-color:%1;border-top-left-radius:7px;border-top-right-radius:7px;}"
+                              "QWidget#mainPage[platform=windows]{background-color:%2;border-bottom-left-radius:7px;border-bottom-right-radius:7px;}").arg(baseground,baseground2));
+#endif
     }
     else
     {
         ui->centralwidget->setContentsMargins(0,0,0,0); //设置间隔,实际就是阴影的宽度
         ui->mainWindowTiitle->maxButton->setIcon(util::CreateColorSvgIcon(":/icons/res/system/win_restore.svg",color));
+#ifdef Q_OS_WIN
+        auto baseground=currentTheme["BACKGROUND_COLOR1"];
+        auto baseground2=currentTheme["BACKGROUND_COLOR2"];
+        setStyleSheet(QString("QWidget#mainWindowTiitle[platform=windows]{background-color:%1;border-top-left-radius:0px;border-top-right-radius:0px;}"
+        "QWidget#mainPage[platform=windows]{background-color:%2;border-bottom-left-radius:0px;border-bottom-right-radius:0px;}").arg(baseground,baseground2));
+#endif
         showMaximized();
     }
 }

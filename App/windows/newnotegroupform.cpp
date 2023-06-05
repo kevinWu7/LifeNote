@@ -4,7 +4,7 @@
 #include "ui_newnotegroupform.h"
 
 
-
+#define DEFAULT_NAME "未命名笔记本"
 #define  ROUND_RADIUS 5
 
 NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
@@ -18,6 +18,7 @@ NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
     InitColorPushBtn();
     InitRoundRadius();
     InitEvent();
+    ui->nameLineEdit->setText(DEFAULT_NAME);
 }
 
 void NewNoteGroupForm::InitColorPushBtn()
@@ -105,13 +106,13 @@ void NewNoteGroupForm::okBtn_clicked()
         ui->warningLabel->setVisible(false);
     }
     emit sendParentWindowData(ui->nameLineEdit->text(),color_index);
-    ui->nameLineEdit->setText("");
+    ui->nameLineEdit->setText(DEFAULT_NAME);
     this->setVisible(false);
 }
 
 void NewNoteGroupForm::cancleBtn_clicked()
 {
-    ui->nameLineEdit->setText("");
+    ui->nameLineEdit->setText(DEFAULT_NAME);
     ui->warningLabel->setVisible(false);
     this->setVisible(false);
 }

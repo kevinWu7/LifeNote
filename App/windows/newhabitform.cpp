@@ -19,6 +19,7 @@ NewHabitForm::NewHabitForm(QWidget *parent) :
     InitRoundRadius();
     connect(ui->okBtn,&QPushButton::clicked,this,&NewHabitForm::okBtn_clicked);
     connect(ui->cancleBtn,&QPushButton::clicked,this,&NewHabitForm::cancleBtn_clicked);
+    ui->nameLineEdit->setText(DefaultDisplayTip);
 }
 
 
@@ -89,16 +90,15 @@ void NewHabitForm::okBtn_clicked()
         ui->warningLabel->setText("");
         ui->warningLabel->setVisible(false);
     }
-    ui->nameLabel->setText("请输入项目名称");
     emit sendSelectDataToParent(ui->nameLineEdit->text(),iconIndex,formMode);
-    ui->nameLineEdit->setText("");
+    ui->nameLineEdit->setText(DefaultDisplayTip);
     this->setVisible(false);
     formMode=0;
 }
 
 void NewHabitForm::cancleBtn_clicked()
 {
-    ui->nameLineEdit->setText("");
+    ui->nameLineEdit->setText(DefaultDisplayTip);
     ui->warningLabel->setVisible(false);
     this->setVisible(false);
     formMode=0;

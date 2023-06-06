@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
      ui->mainWindowTiitle->setVisible(false);
      Cocoa::setWindowTitleMerged(winId());
      ui->mainPage_layout->setContentsMargins(8,24,8,8);
+     setStyleSheet("QHeaderView::section { color: red; }"); //
 #endif
 
 #ifdef Q_OS_WIN

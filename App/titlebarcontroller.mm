@@ -53,6 +53,8 @@ void setWindowTitleMerged(WId winId) {
     [window setStyleMask: windowMask];
    // NSWindowStyleMask windowMask = NSWindowStyleMaskFullSizeContentView ;
     [window setStyleMask:windowMask];
+    //设置标题栏透明
+    window.titlebarAppearsTransparent = YES;
 }
 
 

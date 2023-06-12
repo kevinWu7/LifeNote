@@ -30,6 +30,7 @@ enum OperationType
     AddNodeGroup,
     DeleteNode,
     MoveNode,
+    InsertNode, //拖拽时，插入到某两个node之间
     RenameNode,
 };
 

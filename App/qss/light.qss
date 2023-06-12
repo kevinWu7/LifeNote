@@ -61,6 +61,10 @@ QPushButton {
     color:CONTROL_TEXT;
     border: none;
 }
+QMessageBox{
+    background-color:BACKGROUND_COLOR1;
+    color:CONTROL_TEXT;
+}
 
 QLabel{
     background-color: transparent;

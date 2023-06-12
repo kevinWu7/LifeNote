@@ -63,6 +63,10 @@ QPushButton {
     border: none;
 }
 
+QMessageBox{
+    background-color:BACKGROUND_COLOR1;
+    color:CONTROL_TEXT;
+}
 QLabel{
     background-color: transparent;
     color:CONTROL_TEXT;
@@ -167,9 +171,6 @@ QTreeView::item {
     height: 25px;
     color: CONTROL_TEXT;
 }
-
-
-
 
 /* mainwindow */
 QWidget#mainWindowTiitle[platform="windows"]{
@@ -398,7 +399,7 @@ QWidget#ThemeSwitchWidget  QWidget#diyColorWidget QToolButton:checked{
     min-height: 25px;
     max-height: 25px;
     border-radius: 6px;
-    border:2px solid CONTROL_SELECTED;
+    border:1px solid CONTROL_SELECTED;
 }
 
 QWidget#ThemeSwitchWidget  QWidget#systemThemeWidget QToolButton:checked{

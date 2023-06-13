@@ -13,8 +13,17 @@
 #include "util.h"
 #include "theme.h"
 
+
+
+
 class CustomDelegate : public QStyledItemDelegate {
 public:
+    enum UserRoleData
+    {
+        NoLine=0,
+        TopLine=1,
+        BottomLine=2,
+    };
     void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override {
         // 绘制默认项
         QStyledItemDelegate::paint(painter, option, index);
@@ -22,23 +31,22 @@ public:
         // 获取要绘制横线的项的数据
          QVariant data = index.data(Qt::UserRole); // 假设项的数据中包含一个标志用于指示是否绘制横线
 
-         if (data.isValid() && data.toInt()>0)
+         if (data.isValid() && data.toInt()>NoLine)
          {
              // 绘制横线
              QRect rect = option.rect;
              QPen pen(util::generateRGBAColor(currentTheme["CONTROL_TEXT"], 1));  // 创建一个带有指定颜色的 pen
              pen.setWidth(2);  // 设置宽度为 2 像素
              painter->setPen(pen);  // 应用 pen
-             if(data.toInt()==1)
+             if(data.toInt()==TopLine)
              {
                  painter->drawLine(rect.left(), rect.top(), rect.right(), rect.top());
              }
-             else if(data.toInt()==2)
+             else if(data.toInt()==BottomLine)
              {
                  painter->drawLine(rect.left(), rect.bottom(), rect.right(), rect.bottom());
              }
          }
-
     }
 };
 
@@ -54,6 +62,7 @@ protected:
 
     void dragMoveEvent(QDragMoveEvent *event) override;
     void dragLeaveEvent(QDragLeaveEvent *event) override;
+
     void wheelEvent(QWheelEvent* event) override;
   //  bool eventFilter(QObject* obj, QEvent* event) override;
     ExtraQTreeWidgetItem* targetItem=nullptr;

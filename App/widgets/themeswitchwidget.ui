@@ -61,7 +61,7 @@
            <x>0</x>
            <y>0</y>
            <width>590</width>
-           <height>1158</height>
+           <height>1217</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -504,7 +504,7 @@
              </item>
              <item>
               <widget class="QWidget" name="diyColorWidget" native="true">
-               <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0,0,0" columnstretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0">
+               <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0,0,0" columnstretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0">
                 <property name="leftMargin">
                  <number>15</number>
                 </property>
@@ -523,8 +523,8 @@
                 <property name="verticalSpacing">
                  <number>20</number>
                 </property>
-                <item row="3" column="5">
-                 <widget class="QToolButton" name="btnBlue3">
+                <item row="5" column="5">
+                 <widget class="QToolButton" name="btnYellow3">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -533,8 +533,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="8" column="2">
-                 <widget class="QToolButton" name="btnPurple2">
+                <item row="6" column="0">
+                 <widget class="QToolButton" name="btnTintYellow1">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -543,8 +543,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="6" column="11">
-                 <widget class="QToolButton" name="btnTintYellow6">
+                <item row="1" column="7">
+                 <widget class="QToolButton" name="btnGreen4">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -553,18 +553,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="5" column="11">
-                 <widget class="QToolButton" name="btnYellow6">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="7">
-                 <widget class="QToolButton" name="btnTintBlue4">
+                <item row="6" column="9">
+                 <widget class="QToolButton" name="btnTintYellow5">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -583,8 +573,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="8" column="13">
-                 <widget class="QToolButton" name="btnPurple7">
+                <item row="0" column="11">
+                 <widget class="QToolButton" name="btnRed6">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -593,233 +583,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="15">
-                 <widget class="QToolButton" name="btnCyan8">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="5">
-                 <widget class="QToolButton" name="btnTintBlue3">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="11">
-                 <widget class="QToolButton" name="btnTintBlue6">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="9" column="15">
-                 <widget class="QToolButton" name="btnGray8">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="8" column="7">
-                 <widget class="QToolButton" name="btnPurple4">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="15">
-                 <widget class="QToolButton" name="btnYellow8">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="14">
-                 <spacer name="horizontalSpacer_4">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeType">
-                   <enum>QSizePolicy::Expanding</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="2" column="1">
-                 <spacer name="horizontalSpacer_3">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeType">
-                   <enum>QSizePolicy::Expanding</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="9" column="0">
-                 <widget class="QToolButton" name="btnGray1">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="5">
-                 <widget class="QToolButton" name="btnYellow3">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QToolButton" name="btnGreen1">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="9" column="11">
-                 <widget class="QToolButton" name="btnGray6">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="7">
-                 <widget class="QToolButton" name="btnRed4">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="6" column="2">
-                 <widget class="QToolButton" name="btnTintYellow2">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="12">
-                 <spacer name="horizontalSpacer_9">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="8" column="5">
-                 <widget class="QToolButton" name="btnPurple3">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="9" column="9">
-                 <widget class="QToolButton" name="btnGray5">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="5">
-                 <widget class="QToolButton" name="btnCyan3">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="9">
-                 <widget class="QToolButton" name="btnBlue5">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="11">
-                 <widget class="QToolButton" name="btnBlue6">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="7" column="2">
-                 <widget class="QToolButton" name="btnPink2">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QToolButton" name="btnTintBlue1">
+                <item row="6" column="13">
+                 <widget class="QToolButton" name="btnTintYellow7">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -841,8 +606,8 @@
                   </property>
                  </spacer>
                 </item>
-                <item row="0" column="11">
-                 <widget class="QToolButton" name="btnRed6">
+                <item row="6" column="11">
+                 <widget class="QToolButton" name="btnTintYellow6">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -851,8 +616,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="7">
-                 <widget class="QToolButton" name="btnGreen4">
+                <item row="6" column="7">
+                 <widget class="QToolButton" name="btnTintYellow4">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -861,8 +626,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="8" column="15">
-                 <widget class="QToolButton" name="btnPurple8">
+                <item row="5" column="11">
+                 <widget class="QToolButton" name="btnYellow6">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -871,8 +636,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="9">
-                 <widget class="QToolButton" name="btnGreen5">
+                <item row="9" column="11">
+                 <widget class="QToolButton" name="btnGray6">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -881,18 +646,25 @@
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="8">
-                 <spacer name="horizontalSpacer_7">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                <item row="9" column="5">
+                 <widget class="QToolButton" name="btnGray3">
+                  <property name="text">
+                   <string>...</string>
                   </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
+                  <property name="checkable">
+                   <bool>true</bool>
                   </property>
-                 </spacer>
+                 </widget>
+                </item>
+                <item row="4" column="7">
+                 <widget class="QToolButton" name="btnCyan4">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
                 </item>
                 <item row="0" column="2">
                  <widget class="QToolButton" name="btnRed2">
@@ -904,8 +676,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="6" column="0">
-                 <widget class="QToolButton" name="btnTintYellow1">
+                <item row="2" column="11">
+                 <widget class="QToolButton" name="btnTintBlue6">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -914,8 +686,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="11">
-                 <widget class="QToolButton" name="btnGreen6">
+                <item row="9" column="0">
+                 <widget class="QToolButton" name="btnGray1">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -924,8 +696,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="13">
-                 <widget class="QToolButton" name="btnBlue7">
+                <item row="2" column="5">
+                 <widget class="QToolButton" name="btnTintBlue3">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -934,8 +706,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="7" column="9">
-                 <widget class="QToolButton" name="btnPink5">
+                <item row="7" column="0">
+                 <widget class="QToolButton" name="btnPink1">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -944,8 +716,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="2">
-                 <widget class="QToolButton" name="btnCyan2">
+                <item row="9" column="7">
+                 <widget class="QToolButton" name="btnGray4">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -964,8 +736,200 @@
                   </property>
                  </widget>
                 </item>
-                <item row="8" column="0">
-                 <widget class="QToolButton" name="btnPurple1">
+                <item row="4" column="5">
+                 <widget class="QToolButton" name="btnCyan3">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="8" column="2">
+                 <widget class="QToolButton" name="btnPurple2">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="13">
+                 <widget class="QToolButton" name="btnRed7">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="7">
+                 <widget class="QToolButton" name="btnRed4">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="7" column="9">
+                 <widget class="QToolButton" name="btnPink5">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="8" column="5">
+                 <widget class="QToolButton" name="btnPurple3">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="13">
+                 <widget class="QToolButton" name="btnCyan7">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="13">
+                 <widget class="QToolButton" name="btnBlue7">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="12">
+                 <spacer name="horizontalSpacer_9">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="2" column="2">
+                 <widget class="QToolButton" name="btnTintBlue2">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="5">
+                 <widget class="QToolButton" name="btnBlue3">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="7" column="5">
+                 <widget class="QToolButton" name="btnPink3">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="9">
+                 <widget class="QToolButton" name="btnCyan5">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="11">
+                 <widget class="QToolButton" name="btnGreen6">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="9">
+                 <widget class="QToolButton" name="btnTintBlue5">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <spacer name="horizontalSpacer_3">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Expanding</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="2" column="8">
+                 <spacer name="horizontalSpacer_7">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="6" column="5">
+                 <widget class="QToolButton" name="btnTintYellow3">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="9">
+                 <widget class="QToolButton" name="btnYellow5">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -984,8 +948,108 @@
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="9">
-                 <widget class="QToolButton" name="btnRed5">
+                <item row="0" column="5">
+                 <widget class="QToolButton" name="btnRed3">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="7">
+                 <widget class="QToolButton" name="btnTintBlue4">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="9" column="2">
+                 <widget class="QToolButton" name="btnGray2">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="9">
+                 <widget class="QToolButton" name="btnGreen5">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="5">
+                 <widget class="QToolButton" name="btnGreen3">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="13">
+                 <widget class="QToolButton" name="btnYellow7">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="0">
+                 <widget class="QToolButton" name="btnCyan1">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="2">
+                 <widget class="QToolButton" name="btnGreen2">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="7" column="11">
+                 <widget class="QToolButton" name="btnPink6">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="2">
+                 <widget class="QToolButton" name="btnCyan2">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="8" column="13">
+                 <widget class="QToolButton" name="btnPurple7">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1007,8 +1071,8 @@
                   </property>
                  </spacer>
                 </item>
-                <item row="6" column="13">
-                 <widget class="QToolButton" name="btnTintYellow7">
+                <item row="6" column="2">
+                 <widget class="QToolButton" name="btnTintYellow2">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1017,48 +1081,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="5">
-                 <widget class="QToolButton" name="btnRed3">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="0">
-                 <widget class="QToolButton" name="btnCyan1">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="7" column="13">
-                 <widget class="QToolButton" name="btnPink7">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="9" column="5">
-                 <widget class="QToolButton" name="btnGray3">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="13">
-                 <widget class="QToolButton" name="btnGreen7">
+                <item row="8" column="0">
+                 <widget class="QToolButton" name="btnPurple1">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1077,8 +1101,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="11">
-                 <widget class="QToolButton" name="btnCyan6">
+                <item row="7" column="2">
+                 <widget class="QToolButton" name="btnPink2">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1087,38 +1111,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="2">
-                 <widget class="QToolButton" name="btnGreen2">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="15">
-                 <widget class="QToolButton" name="btnGreen8">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="7" column="7">
-                 <widget class="QToolButton" name="btnPink4">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="7" column="0">
-                 <widget class="QToolButton" name="btnPink1">
+                <item row="0" column="9">
+                 <widget class="QToolButton" name="btnRed5">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1137,98 +1131,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="15">
-                 <widget class="QToolButton" name="btnTintBlue8">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="15">
-                 <widget class="QToolButton" name="btnBlue8">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="6" column="9">
-                 <widget class="QToolButton" name="btnTintYellow5">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="7">
-                 <widget class="QToolButton" name="btnCyan4">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="2">
-                 <widget class="QToolButton" name="btnTintBlue2">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="6" column="7">
-                 <widget class="QToolButton" name="btnTintYellow4">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="7" column="11">
-                 <widget class="QToolButton" name="btnPink6">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="6" column="15">
-                 <widget class="QToolButton" name="btnTintYellow8">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="15">
-                 <widget class="QToolButton" name="btnRed8">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="7" column="15">
-                 <widget class="QToolButton" name="btnPink8">
+                <item row="3" column="9">
+                 <widget class="QToolButton" name="btnBlue5">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1247,8 +1151,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="13">
-                 <widget class="QToolButton" name="btnCyan7">
+                <item row="7" column="7">
+                 <widget class="QToolButton" name="btnPink4">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1257,8 +1161,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="4" column="9">
-                 <widget class="QToolButton" name="btnCyan5">
+                <item row="1" column="13">
+                 <widget class="QToolButton" name="btnGreen7">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1267,8 +1171,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="13">
-                 <widget class="QToolButton" name="btnRed7">
+                <item row="8" column="7">
+                 <widget class="QToolButton" name="btnPurple4">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1277,8 +1181,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="5" column="13">
-                 <widget class="QToolButton" name="btnYellow7">
+                <item row="8" column="11">
+                 <widget class="QToolButton" name="btnPurple6">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1287,8 +1191,58 @@
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="5">
-                 <widget class="QToolButton" name="btnGreen3">
+                <item row="5" column="2">
+                 <widget class="QToolButton" name="btnYellow2">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QToolButton" name="btnGreen1">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="11">
+                 <widget class="QToolButton" name="btnBlue6">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="11">
+                 <widget class="QToolButton" name="btnCyan6">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="7">
+                 <widget class="QToolButton" name="btnBlue4">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="7" column="13">
+                 <widget class="QToolButton" name="btnPink7">
                   <property name="text">
                    <string>...</string>
                   </property>
@@ -1317,96 +1271,6 @@
                   </property>
                  </widget>
                 </item>
-                <item row="9" column="7">
-                 <widget class="QToolButton" name="btnGray4">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="9">
-                 <widget class="QToolButton" name="btnTintBlue5">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="7">
-                 <widget class="QToolButton" name="btnBlue4">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="2">
-                 <widget class="QToolButton" name="btnYellow2">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="6" column="5">
-                 <widget class="QToolButton" name="btnTintYellow3">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="9">
-                 <widget class="QToolButton" name="btnYellow5">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="7" column="5">
-                 <widget class="QToolButton" name="btnPink3">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="9" column="2">
-                 <widget class="QToolButton" name="btnGray2">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="8" column="11">
-                 <widget class="QToolButton" name="btnPurple6">
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
                 <item row="2" column="3">
                  <spacer name="horizontalSpacer_5">
                   <property name="orientation">
@@ -1419,6 +1283,26 @@
                    </size>
                   </property>
                  </spacer>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QToolButton" name="btnTintBlue1">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="9" column="9">
+                 <widget class="QToolButton" name="btnGray5">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </widget>
@@ -1446,21 +1330,8 @@
                 <property name="verticalSpacing">
                  <number>30</number>
                 </property>
-                <item row="2" column="1">
-                 <spacer name="horizontalSpacer_12">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>0</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QToolButton" name="pictureBtn7">
+                <item row="2" column="4">
+                 <widget class="QToolButton" name="pictureBtn9">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                     <horstretch>0</horstretch>
@@ -1475,8 +1346,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="4">
-                 <widget class="QToolButton" name="pictureBtn12">
+                <item row="1" column="0">
+                 <widget class="QToolButton" name="pictureBtn4">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                     <horstretch>0</horstretch>
@@ -1491,31 +1362,53 @@
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="1">
-                 <spacer name="horizontalSpacer_11">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                <item row="5" column="4">
+                 <widget class="QToolButton" name="pictureBtn18">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>0</width>
-                    <height>20</height>
-                   </size>
+                  <property name="text">
+                   <string>...</string>
                   </property>
-                 </spacer>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
                 </item>
-                <item row="5" column="3">
-                 <spacer name="horizontalSpacer_20">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                <item row="0" column="4">
+                 <widget class="QToolButton" name="pictureBtn3">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>0</width>
-                    <height>20</height>
-                   </size>
+                  <property name="text">
+                   <string>...</string>
                   </property>
-                 </spacer>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QToolButton" name="pictureBtn2">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
                 </item>
                 <item row="3" column="1">
                  <spacer name="horizontalSpacer_15">
@@ -1530,8 +1423,8 @@
                   </property>
                  </spacer>
                 </item>
-                <item row="0" column="1">
-                 <spacer name="horizontalSpacer_2">
+                <item row="1" column="1">
+                 <spacer name="horizontalSpacer_11">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -1543,8 +1436,34 @@
                   </property>
                  </spacer>
                 </item>
-                <item row="4" column="2">
-                 <widget class="QToolButton" name="pictureBtn14">
+                <item row="1" column="3">
+                 <spacer name="horizontalSpacer_13">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="3" column="3">
+                 <spacer name="horizontalSpacer_16">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="5" column="2">
+                 <widget class="QToolButton" name="pictureBtn17">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                     <horstretch>0</horstretch>
@@ -1559,8 +1478,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="5" column="0">
-                 <widget class="QToolButton" name="pictureBtn16">
+                <item row="4" column="4">
+                 <widget class="QToolButton" name="pictureBtn15">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                     <horstretch>0</horstretch>
@@ -1574,6 +1493,48 @@
                    <bool>true</bool>
                   </property>
                  </widget>
+                </item>
+                <item row="5" column="1">
+                 <spacer name="horizontalSpacer_19">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="6" column="2">
+                 <widget class="QToolButton" name="pictureBtn20">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="1">
+                 <spacer name="horizontalSpacer_21">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
                 </item>
                 <item row="4" column="0">
                  <widget class="QToolButton" name="pictureBtn13">
@@ -1607,172 +1568,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="4">
-                 <widget class="QToolButton" name="pictureBtn3">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="4">
-                 <widget class="QToolButton" name="pictureBtn15">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="2">
-                 <widget class="QToolButton" name="pictureBtn17">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="3">
-                 <spacer name="horizontalSpacer_18">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>0</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="2" column="3">
-                 <spacer name="horizontalSpacer_14">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>0</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="5" column="4">
-                 <widget class="QToolButton" name="pictureBtn18">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="4">
-                 <widget class="QToolButton" name="pictureBtn9">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
                 <item row="1" column="4">
                  <widget class="QToolButton" name="pictureBtn6">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="3">
-                 <spacer name="horizontalSpacer_10">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>0</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QToolButton" name="pictureBtn4">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="3">
-                 <spacer name="horizontalSpacer_13">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>0</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="1" column="2">
-                 <widget class="QToolButton" name="pictureBtn5">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                     <horstretch>0</horstretch>
@@ -1800,37 +1597,8 @@
                   </property>
                  </spacer>
                 </item>
-                <item row="0" column="2">
-                 <widget class="QToolButton" name="pictureBtn2">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item row="5" column="1">
-                 <spacer name="horizontalSpacer_19">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>0</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="3" column="2">
-                 <widget class="QToolButton" name="pictureBtn11">
+                <item row="2" column="2">
+                 <widget class="QToolButton" name="pictureBtn8">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                     <horstretch>0</horstretch>
@@ -1844,6 +1612,61 @@
                    <bool>true</bool>
                   </property>
                  </widget>
+                </item>
+                <item row="3" column="4">
+                 <widget class="QToolButton" name="pictureBtn12">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <spacer name="horizontalSpacer_2">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="2" column="1">
+                 <spacer name="horizontalSpacer_12">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="4" column="3">
+                 <spacer name="horizontalSpacer_18">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
                 </item>
                 <item row="0" column="0">
                  <widget class="QToolButton" name="pictureBtn1">
@@ -1861,8 +1684,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="2" column="2">
-                 <widget class="QToolButton" name="pictureBtn8">
+                <item row="3" column="2">
+                 <widget class="QToolButton" name="pictureBtn11">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                     <horstretch>0</horstretch>
@@ -1877,8 +1700,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="3">
-                 <spacer name="horizontalSpacer_16">
+                <item row="6" column="3">
+                 <spacer name="horizontalSpacer_22">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -1890,8 +1713,21 @@
                   </property>
                  </spacer>
                 </item>
-                <item row="6" column="0">
-                 <widget class="QToolButton" name="pictureBtn19">
+                <item row="5" column="3">
+                 <spacer name="horizontalSpacer_20">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="4" column="2">
+                 <widget class="QToolButton" name="pictureBtn14">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                     <horstretch>0</horstretch>
@@ -1906,8 +1742,8 @@
                   </property>
                  </widget>
                 </item>
-                <item row="6" column="2">
-                 <widget class="QToolButton" name="pictureBtn20">
+                <item row="2" column="0">
+                 <widget class="QToolButton" name="pictureBtn7">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                     <horstretch>0</horstretch>
@@ -1921,6 +1757,32 @@
                    <bool>true</bool>
                   </property>
                  </widget>
+                </item>
+                <item row="0" column="3">
+                 <spacer name="horizontalSpacer_10">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="2" column="3">
+                 <spacer name="horizontalSpacer_14">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
                 </item>
                 <item row="6" column="4">
                  <widget class="QToolButton" name="pictureBtn21">
@@ -1938,31 +1800,53 @@
                   </property>
                  </widget>
                 </item>
-                <item row="6" column="1">
-                 <spacer name="horizontalSpacer_21">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                <item row="5" column="0">
+                 <widget class="QToolButton" name="pictureBtn16">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>0</width>
-                    <height>20</height>
-                   </size>
+                  <property name="text">
+                   <string>...</string>
                   </property>
-                 </spacer>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
                 </item>
-                <item row="6" column="3">
-                 <spacer name="horizontalSpacer_22">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                <item row="1" column="2">
+                 <widget class="QToolButton" name="pictureBtn5">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>0</width>
-                    <height>20</height>
-                   </size>
+                  <property name="text">
+                   <string>...</string>
                   </property>
-                 </spacer>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="0">
+                 <widget class="QToolButton" name="pictureBtn19">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </widget>

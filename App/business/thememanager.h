@@ -37,6 +37,7 @@ private:
     ThemeManager(const ThemeManager&) = delete;
     ThemeManager& operator=(const ThemeManager&) = delete;
     QString getBackGround2(QString baseColor,int diff);
+
     static ThemeManager* instance;
     static std::once_flag onceFlag;
 };

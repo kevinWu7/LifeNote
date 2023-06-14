@@ -161,6 +161,7 @@ void ThemeManager::switchTheme(QString _themeId,QString picture_ThemeId,bool isF
         {
             path=QCoreApplication::applicationDirPath()+ "/qss/dark.qss";
             currentTheme=themeDark;
+
             currentTheme["BACKGROUND_COLOR2"]= getBackGround2(baseBackgroundColor,30);
             currentTheme["CONTROL_SELECTED"]= util::generateRGBAString("rgb(255,255,255)",0.35);
             currentTheme["CONTROL_NOSELECTED"]= util::generateRGBAString("rgb(255,255,255)",0.15);

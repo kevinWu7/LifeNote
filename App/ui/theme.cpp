@@ -49,12 +49,12 @@ std::map<QString, int> diyThemeIndex= {
     {"Green", 4},
     {"TintBlue", 4},
     {"Blue", 2},
-    {"Cyan", 5},
+    {"Cyan", 4},
     {"Yellow", 4},
     {"TintYellow", 4},
-    {"Pink",3},
-    {"Purple", 4},
-    {"Gray", 2},
+    {"Pink",2},
+    {"Purple", 3},
+    {"Gray", 1},
 };
 
 std::map<QString, QString> diyThemeColor = {

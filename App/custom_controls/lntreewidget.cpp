@@ -10,8 +10,6 @@
 #include "noteconfig.h"
 #include "lntreewidget.h"
 #include "theme.h"
-#include "logger.h"
-
 
 
 LNTreeWidget::LNTreeWidget(QWidget *parent)
@@ -61,9 +59,10 @@ LNTreeWidget::LNTreeWidget(QWidget *parent)
     auto inActiveHighLight=util::generateRGBAColor(currentTheme["CONTROL_NOSELECTED"],1.0);
     palette.setColor(QPalette::Active, QPalette::Highlight, activeHighLight);//item选中时背景色
     palette.setColor(QPalette::Inactive, QPalette::Highlight,inActiveHighLight);//item选中但失焦时背景色
-    //此处可以修改文本颜色，但是系统默认的已经ok了
-    //palette.setColor(QPalette::HighlightedText, QColor(255,255,0)); //item选中时文字色
-    //palette.setColor(QPalette::Inactive, QPalette::HighlightedText, QColor(160, 0, 0));//item选中但失焦时文字色
+    //修改文本颜色
+    auto textColor= util::generateRGBAColor(currentTheme["CONTROL_TEXT"],1.0);
+    palette.setColor(QPalette::HighlightedText,ThemeManager::isDarkTheme?textColor:QColor(255,255,255)); //item选中时文字色
+    palette.setColor(QPalette::Inactive, QPalette::HighlightedText, textColor);//item选中但失焦时文字色
     this->setPalette(palette);
 }
 
@@ -74,6 +73,10 @@ void LNTreeWidget::themeChanged()
     auto inActiveHighLight=util::generateRGBAColor(currentTheme["CONTROL_NOSELECTED"],1.0);
     palette.setColor(QPalette::Active, QPalette::Highlight, activeHighLight);//item选中时背景色
     palette.setColor(QPalette::Inactive, QPalette::Highlight,inActiveHighLight);//item选中但失焦时背景色
+    //修改文本颜色
+    auto textColor=util::generateRGBAColor(currentTheme["CONTROL_TEXT"],1.0);
+    palette.setColor(QPalette::HighlightedText,ThemeManager::isDarkTheme?textColor:QColor(255,255,255)); //item选中时文字色
+    palette.setColor(QPalette::Inactive, QPalette::HighlightedText, textColor);//item选中但失焦时文字色
     this->setPalette(palette);
 }
 

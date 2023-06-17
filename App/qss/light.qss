@@ -400,7 +400,7 @@ QWidget#ThemeSwitchWidget  QWidget#diyColorWidget QToolButton:checked{
     min-height: 25px;
     max-height: 25px;
     border-radius: 6px;
-   border:2px solid CONTROL_SELECTED;
+    border:1px solid CONTROL_SELECTED;
 }
 
 QWidget#ThemeSwitchWidget  QWidget#systemThemeWidget QToolButton:checked{

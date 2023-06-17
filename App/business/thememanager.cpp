@@ -153,7 +153,7 @@ void ThemeManager::switchTheme(QString _themeId,QString picture_ThemeId,bool isF
             path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
             currentTheme=themeLight;
             currentTheme["BACKGROUND_COLOR2"]= getBackGround2(baseBackgroundColor,-20);
-            currentTheme["CONTROL_SELECTED"]=  util::generateRGBAString("rgb(80,80,80)",0.3);
+            currentTheme["CONTROL_SELECTED"]=  util::generateRGBAString("rgb(0,0,0)",0.15);
             currentTheme["CONTROL_NOSELECTED"]=  util::generateRGBAString("rgb(80,80,80)",0.1);
             currentTheme["CONTROL_POOLTEXT"]= getBackGround2(baseBackgroundColor,-100);//没什么问题,显示正常
             currentTheme["SINGLE_LINE_COLOR"]=util::generateRGBAString(getBackGround2(baseBackgroundColor,-30),0.7);

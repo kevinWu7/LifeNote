@@ -90,6 +90,7 @@ void NewHabitForm::okBtn_clicked()
         ui->warningLabel->setText("");
         ui->warningLabel->setVisible(false);
     }
+
     emit sendSelectDataToParent(ui->nameLineEdit->text(),iconIndex,formMode);
     ui->nameLineEdit->setText(DefaultDisplayTip);
     this->setVisible(false);

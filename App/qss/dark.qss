@@ -267,8 +267,8 @@ QWidget#editTitleBar {
     background-color:transparent;
 }
 
-QWidget#titleBar QToolButton:checked,
-QWidget#titleBar QToolButton:hover {
+QWidget#editTitleBar QToolButton:checked,
+QWidget#editTitleBar QToolButton:hover {
     background-color:CONTROL_SELECTED;
 }
 

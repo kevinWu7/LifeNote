@@ -20,8 +20,20 @@ NewHabitForm::NewHabitForm(QWidget *parent) :
     connect(ui->okBtn,&QPushButton::clicked,this,&NewHabitForm::okBtn_clicked);
     connect(ui->cancleBtn,&QPushButton::clicked,this,&NewHabitForm::cancleBtn_clicked);
     ui->nameLineEdit->setText(DefaultDisplayTip);
+
+    initRuleWidget();
 }
 
+void NewHabitForm::initRuleWidget()
+{
+    ui->perLineEdit->setText("1");
+    ui->perLineEdit->setAlignment(Qt::AlignmentFlag::AlignCenter);
+  //  ui->timesComboBox->set
+    ui->periodComboBox->addItem("天");
+    ui->periodComboBox->addItem("周");
+    ui->periodComboBox->addItem("月");
+    ui->timesComboBox->addItem("1");
+}
 
 void NewHabitForm::InitRoundRadius()
 {

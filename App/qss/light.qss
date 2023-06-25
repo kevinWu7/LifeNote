@@ -1,4 +1,26 @@
 /* 系统控件*/
+QComboBox{
+  color:CONTROL_TEXT;
+  background:BACKGROUND_COLOR2;
+  font-size:13px;
+  padding: 0px 6px 0px 12px;
+  border-radius:5px;
+}
+QComboBox::drop-down {
+    border:none;
+}
+QComboBox::down-arrow {
+    max-width:55px;
+    image:url(:/icons/res/note/dropdown_dark.png);
+}
+
+QComboBox QAbstractItemView{
+  background-color:BACKGROUND_COLOR1;
+  min-width:60px;
+  font-size:13px;
+  border:none;
+}
+
 QMenu{
     background-color:BACKGROUND_COLOR1;
     color:CONTROL_TEXT;
@@ -476,6 +498,10 @@ QWidget#NewHabitForm QLabel#warningLabel{
     color:CONTROL_WARNINGTEXT;
 }
 
+QWidget#NewHabitForm QWidget#ruleWidget QLabel{
+    color:CONTROL_TEXT;
+    font-size:13px;
+}
 
 QWidget#NewHabitForm QPushButton#okBtn{
     background-color:BACKGROUND_COLOR2;

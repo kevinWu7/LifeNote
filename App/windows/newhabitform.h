@@ -29,6 +29,7 @@ public slots:
 private:
     Ui::NewHabitForm *ui;
     void initIConBtn();
+    void initRuleWidget();
     int iconIndex=0;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;

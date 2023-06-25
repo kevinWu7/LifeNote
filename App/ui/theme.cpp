@@ -9,18 +9,18 @@ std::map<QString,QString> currentTheme={
 //如一个key为：BACKGROUND_COLOR1，另一个key为：LEFT_BACKGROUND_COLOR1
 //这样会出现LEFT_BACKGROUND_COLOR1被替换为了LEFT_rgb(43,44,45)
 std::map<QString,QString> themeDark={
-    {"BACKGROUND_COLOR1","rgb(0,0,0)"},
-    {"LEFT_BACK_COLOR1","rgb(0,0,0)"},
-    {"RIGHT_BACK_COLOR1","rgb(0,0,0)"},
-    {"BACKGROUND_COLOR2", "rgb(63,62,58)"},
+    {"BACKGROUND_COLOR1","rgb(44,44,44)"},
+    {"LEFT_BACK_COLOR1","rgb(44,44,44)"},
+    {"RIGHT_BACK_COLOR1","rgb(44,44,44)"},
+    {"BACKGROUND_COLOR2", "rgb(72,73,76)"},
     {"CONTROL_SELECTED" , "rgba(255,255,255,0.3)"},
     {"CONTROL_NOSELECTED", "rgba(255,255,255,0.1)"},
     {"CONTROL_TEXT","rgb(255,255,255)"},
     {"CONTROL_WARNINGTEXT","rgb(255,255,255)"}, //警告色
     {"CONTROL_POOLTEXT","rgb(160,160,160)"}, //浅文字
-    {"SINGLE_LINE_COLOR" ,"rgb(72,72,72)"},
-    {"SCROLLBAR_HANDLE" ,"rgba(86,86,86,80%)"},
-    {"SCROLLBAR_HOVER" ,"rgb(86,86,86)"},
+    {"SINGLE_LINE_COLOR" ,"rgb(82,82,92)"},
+    {"SCROLLBAR_HANDLE" ,"rgba(96,96,106,80%)"},
+    {"SCROLLBAR_HOVER" ,"rgb(96,96,106)"},
     {"PICTURE_PATH","none"}
 };
 
@@ -123,9 +123,9 @@ std::map<QString, QString> diyThemeColor = {
     {"Purple7", "rgb(52,33,73)"},
     {"Gray1", "rgb(207,208,209)"},
     {"Gray2", "rgb(156,156,158)"},
-    {"Gray3", "rgb(110,110,114)"},
-    {"Gray4", "rgb(85,87,92)"},
-    {"Gray5", "rgb(64,65,70)"},
-    {"Gray6", "rgb(58,59,64)"},
-    {"Gray7", "rgb(42,43,46)"},
+    {"Gray3", "rgb(120,120,124)"},
+    {"Gray4", "rgb(95,97,102)"},
+    {"Gray5", "rgb(74,75,80)"},
+    {"Gray6", "rgb(68,69,74)"},
+    {"Gray7", "rgb(52,53,56)"},
 };

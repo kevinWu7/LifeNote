@@ -19,7 +19,9 @@ QComboBox::down-arrow {
 QComboBox QAbstractItemView{
   background-color:BACKGROUND_COLOR1;
   min-width:60px;
+  color:CONTROL_TEXT;
   font-size:13px;
+  border:none;
 }
 
 QMenu{
@@ -433,7 +435,7 @@ QWidget#ThemeSwitchWidget  QWidget#systemThemeWidget QToolButton:checked{
     min-height: 35px;
     max-height: 35px;
     border-radius: 8px;
-    border:2px solid CONTROL_SELECTED;
+    border:1px solid CONTROL_SELECTED;
 }
 
 QWidget#ThemeSwitchWidget  QLineEdit#transparencyEdit,

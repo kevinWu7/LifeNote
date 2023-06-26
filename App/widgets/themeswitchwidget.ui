@@ -373,7 +373,7 @@
                 <item>
                  <widget class="QLabel" name="leftTransparencyRangeEdit">
                   <property name="text">
-                   <string>有效范围:0~100</string>
+                   <string>有效范围: 0 ~100</string>
                   </property>
                  </widget>
                 </item>
@@ -481,7 +481,7 @@
                 <item>
                  <widget class="QLabel" name="rightTransparencyRangeEdit">
                   <property name="text">
-                   <string>有效范围:0~100</string>
+                   <string>有效范围: 0 ~100</string>
                   </property>
                  </widget>
                 </item>
@@ -504,7 +504,7 @@
              </item>
              <item>
               <widget class="QWidget" name="diyColorWidget" native="true">
-               <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0,0,0" columnstretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0">
+               <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0,0,0" columnstretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0">
                 <property name="leftMargin">
                  <number>15</number>
                 </property>

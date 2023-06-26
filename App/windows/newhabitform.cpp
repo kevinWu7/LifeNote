@@ -22,13 +22,15 @@ NewHabitForm::NewHabitForm(QWidget *parent) :
     ui->nameLineEdit->setText(DefaultDisplayTip);
 
     initRuleWidget();
+   // connect(ui->periodComboBox,&QComboBox::currentIndexChanged,this,&NewHabitForm::periodComboCurIndexChanged);
 }
+
+
 
 void NewHabitForm::initRuleWidget()
 {
     ui->perLineEdit->setText("1");
     ui->perLineEdit->setAlignment(Qt::AlignmentFlag::AlignCenter);
-  //  ui->timesComboBox->set
     ui->periodComboBox->addItem("天");
     ui->periodComboBox->addItem("周");
     ui->periodComboBox->addItem("月");

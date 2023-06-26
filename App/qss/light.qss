@@ -105,6 +105,7 @@ QLineEdit {
     border:0px;
     background-color:BACKGROUND_COLOR2;
     color: CONTROL_TEXT;
+    border-radius:4px;
 }
 
 QRadioButton {

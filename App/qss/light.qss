@@ -3,8 +3,8 @@ QComboBox{
   color:CONTROL_TEXT;
   background:BACKGROUND_COLOR2;
   font-size:13px;
-  padding: 0px 6px 0px 12px;
-  border-radius:5px;
+  padding: 0px 4px 0px 12px;
+  border-radius:4px;
 }
 QComboBox::drop-down {
     border:none;

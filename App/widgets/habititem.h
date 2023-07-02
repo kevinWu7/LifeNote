@@ -6,6 +6,7 @@
 #include "checkinconfig.h"
 #include "calendarcentral.h"
 #include "thememanager.h"
+
 namespace Ui {
 class HabitItem;
 }
@@ -25,6 +26,7 @@ public:
     void InitCheckinBtn(const std::vector<checkin_dateitem*> &checkinItems);
     bool isSelected=false;//是否被光标选中
     QString projectName;
+    CheckinRule* checkinRule=nullptr;
     int iconIndex=0;
     void InitWeekButtons();
 public slots:

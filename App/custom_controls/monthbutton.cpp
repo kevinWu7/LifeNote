@@ -50,7 +50,7 @@ const QDate &monthButton::getDate()
 
 void monthButton::receiveBtnChecked(checkin_dateitem* dateItem)
 {
-    if(dateItem->sender==1||dateItem->project_name!=project_name)
+    if(dateItem->sender==senderBtn::monthBtn||dateItem->project_name!=project_name)
     {
         return;
     }
@@ -70,7 +70,7 @@ void monthButton::monthButton_clicked()
     item->date=currentDate;
     item->tips="";
     item->ischecked=isChecked;
-    item->sender=1;
+    item->sender=senderBtn::monthBtn;
     item->project_name=project_name;
 
     if(isChecked)
@@ -116,7 +116,7 @@ void monthButton::setMonthButtonClicked(bool _ischeck)
         {
             if(currentDate.month()!= currendDisplayDate.month())
             {
-                updateColorStyle("rgba(72,114,251,0.6)","white","normal");
+                updateColorStyle("rgb(72,114,251)","rgba(255,255,255,0.6)","normal");
             }
             else
             {

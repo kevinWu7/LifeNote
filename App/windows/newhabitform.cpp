@@ -2,6 +2,7 @@
 #include "util.h"
 #include "newhabitform.h"
 #include "ui_newhabitform.h"
+#include "logger.h""
 
 
 #define DefaultDisplayTip "未命名项目"
@@ -22,15 +23,43 @@ NewHabitForm::NewHabitForm(QWidget *parent) :
     ui->nameLineEdit->setText(DefaultDisplayTip);
 
     initRuleWidget();
-   // connect(ui->periodComboBox,&QComboBox::currentIndexChanged,this,&NewHabitForm::periodComboCurIndexChanged);
+    connect(ui->periodComboBox,&QComboBox::currentIndexChanged,this,&NewHabitForm::periodComboCurIndexChanged);
+    connect(ui->timesComboBox,&QComboBox::currentIndexChanged,this,&NewHabitForm::periodComboCurIndexChanged);
+
 }
 
+
+void NewHabitForm::periodComboCurIndexChanged()
+{
+    auto index=ui->periodComboBox->currentIndex();
+    logger->log(QString::number(index));
+    if(index==0)//天
+    {
+        ui->timesComboBox->clear();
+        ui->timesComboBox->addItem("1");
+    }
+    else if(index==1)//周
+    {
+        ui->timesComboBox->clear();
+        for(int i=1;i<8;i++)
+        {
+           ui->timesComboBox->addItem(QString::number(i));
+        }
+    }
+    else if(index==2)//月
+    {
+        ui->timesComboBox->clear();
+        for(int i=1;i<11;i++)
+        {
+           ui->timesComboBox->addItem(QString::number(i));
+        }
+    }
+}
 
 
 void NewHabitForm::initRuleWidget()
 {
-    ui->perLineEdit->setText("1");
-    ui->perLineEdit->setAlignment(Qt::AlignmentFlag::AlignCenter);
+
     ui->periodComboBox->addItem("天");
     ui->periodComboBox->addItem("周");
     ui->periodComboBox->addItem("月");

@@ -11,10 +11,6 @@ WeekToolButton::WeekToolButton(QWidget *parent,bool _ischecked)
      initBaseStyleSheet();
      updateSizeStyle(16);
      isChecked=_ischecked;
-     // 绑定成员函数到实例
-     bindFunctionOfreceiveBtnChecked = std::bind(&WeekToolButton::receiveBtnChecked, this, std::placeholders::_1);
-     // 注册全局事件
-     CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
 }
 
 void WeekToolButton::initBaseStyleSheet()
@@ -40,7 +36,7 @@ void WeekToolButton::updateSizeStyle(int size)
 
 void WeekToolButton::receiveBtnChecked(checkin_dateitem* dateItem)
 {
-    if(dateItem->sender==0 ||dateItem->project_name!=project_name)
+    if(dateItem->sender==senderBtn::weekBtn||dateItem->project_name!=project_name)
     {
         return;
     }
@@ -58,7 +54,7 @@ void WeekToolButton::WeekButton_clicked()
     item->tips="";
     item->ischecked=isChecked;
     item->project_name=project_name;
-    item->sender=0;
+    item->sender=senderBtn::weekBtn;
     if(isChecked)
     {
         CheckinConfig::getInstance().updateDetailXml(CheckinAction,item);
@@ -106,7 +102,6 @@ void WeekToolButton::setWeekButtonClicked(bool _ischecked)
 
 WeekToolButton::~WeekToolButton()
 {
-    CalendarCentral::getInstance().unregisterGlobalEvent(bindFunctionOfreceiveBtnChecked);
     RoundedToolTipHelper::installHelper(this);
 }
 

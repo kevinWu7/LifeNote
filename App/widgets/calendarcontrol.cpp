@@ -4,6 +4,7 @@
 #include "ui_calendarcontrol.h"
 #include "recorditem.h"
 #include "roundedtooltiphelper.h"
+#include "calendarcentral.h"
 
 
 CalendarControl::CalendarControl(QWidget *parent) :
@@ -40,10 +41,54 @@ CalendarControl::CalendarControl(QWidget *parent) :
     ui->recordItem1->setRecordType(RecordType::TotalCheckinCount);
     ui->recordItem2->setRecordType(RecordType::NewContinuousCheckin);
     ui->recordItem3->setRecordType(RecordType::CurrentMonthRatio);
+
+    // 绑定成员函数到实例
+    bindFunctionOfreceiveBtnChecked = std::bind(&CalendarControl::receiveBtnChecked, this, std::placeholders::_1);
+    // 注册全局事件
+    CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
 }
 
-void CalendarControl::setHabitItem(const std::vector<checkin_dateitem *> &checkinItems,QString projectName,int iconIndex)
+void CalendarControl::receiveBtnChecked(checkin_dateitem * dateItem)
 {
+    if(dateItem->sender==senderBtn::weekBtn)
+    {
+        for(int i=0;i<ui->mainGridWidget->layout()->count();i++)
+        {
+            monthButton* btn= dynamic_cast<monthButton*>(ui->mainGridWidget->layout()->itemAt(i)->widget());
+            QDate date=btn->getDate();
+            if (date == dateItem->date)
+            {
+                btn->setMonthButtonClicked(dateItem->ischecked);
+
+                auto result= CheckinConfig::getInstance().LoadCheckinConfig();
+                std::vector<checkin_dateitem*> checkin_list=result.checkin_map[dateItem->project_name];
+                if(checkinRule->period==WeekPeriod||checkinRule->period==MonthPeriod)
+                {
+                    if(checkin_list.size()>=checkinRule->Times)
+                    {
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+std::vector<checkin_dateitem*> CalendarControl::GetPeriodDates(CheckinPeriod period,const std::vector<checkin_dateitem *> &checkinItems)
+{
+
+}
+
+void CalendarControl::CheckinAll(const std::vector<checkin_dateitem *> &checkinItems)
+{
+
+}
+
+
+void CalendarControl::setHabitItem(const std::vector<checkin_dateitem *> &checkinItems,QString projectName,int iconIndex,CheckinRule* m_checkinRule)
+{
+    project_name=projectName;
+    checkinRule=m_checkinRule;
     InitCheckinMonthBtn(checkinItems,projectName);
     //设置图标 和项目名
     if(iconIndex==-1)
@@ -212,7 +257,7 @@ void CalendarControl::fillDateTomainGrid(QDate startDate)
              }
              if(currentMonth_date[index].month()!=currendDisplayDate.month())
              {
-                 monthBtn->setStyleSheet("color:rgb(158,158,158);");
+                monthBtn->setStyleSheet("color:rgb(158,158,158);");
                  continue;
              }
              monthBtn->setStyleSheet("color:black;");
@@ -223,5 +268,6 @@ void CalendarControl::fillDateTomainGrid(QDate startDate)
 
 CalendarControl::~CalendarControl()
 {
+    CalendarCentral::getInstance().unregisterGlobalEvent(bindFunctionOfreceiveBtnChecked);
     delete ui;
 }

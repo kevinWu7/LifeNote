@@ -33,7 +33,7 @@ checkinWidget::checkinWidget(QWidget *parent) :
     connect(ui->addItemBtn,&QToolButton::clicked,this,&checkinWidget::addItemBtn_clicked);
 
     auto result= CheckinConfig::getInstance().LoadCheckinConfig();
-    ui->calendarWidget->setHabitItem({},"",-1);
+    ui->calendarWidget->setHabitItem({},"",-1,nullptr);
     //加载habititem
     for(auto item :result.project_list)
     {
@@ -43,7 +43,7 @@ checkinWidget::checkinWidget(QWidget *parent) :
         {
             currentHabit=habit;
             habit->setHabitSelected(true);
-            ui->calendarWidget->setHabitItem(result.checkin_map[item->project_name],item->project_name,habit->iconIndex);
+            ui->calendarWidget->setHabitItem(result.checkin_map[item->project_name],item->project_name,habit->iconIndex,habit->checkinRule);
         }
         connect(habit,&HabitItem::customContextMenuRequested,this,&checkinWidget::onRightMenuRequested);
     }
@@ -124,7 +124,7 @@ void checkinWidget::onMenuDelete()
         }
     }
     //若删除光了，设置一个空的habitItem。
-    ui->calendarWidget->setHabitItem({},"",-1);
+    ui->calendarWidget->setHabitItem({},"",-1,nullptr);
 }
 
 void checkinWidget::timerOutTriggered()
@@ -252,7 +252,7 @@ void checkinWidget::setSelectedHabit(HabitItem *habit)
         if(item->selected)//切换右侧日历本到选中的habit
         {
             ui->calendarWidget->setHabitItem(result.checkin_map[item->project_name],
-                    item->project_name, habit->iconIndex);
+                    item->project_name, habit->iconIndex,habit->checkinRule);
         }
     }
 }

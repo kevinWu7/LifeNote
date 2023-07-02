@@ -23,7 +23,6 @@ signals:
 private :
     bool isChecked=false;
     void receiveBtnChecked(checkin_dateitem* dateItem);
-    std::function<void(checkin_dateitem *)> bindFunctionOfreceiveBtnChecked;
     QDate currentDate;
     void initBaseStyleSheet();
     void updateSizeStyle(int size);

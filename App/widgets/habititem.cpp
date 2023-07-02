@@ -75,12 +75,10 @@ void HabitItem::InitCheckinBtn(const std::vector<checkin_dateitem *> &checkinIte
         {
             btn->setWeekButtonClicked(true);
             checkedCount++;
-            logger->log(QString("%1 %2 set is true").arg(projectName).arg(date.toString()));
         }
         else
         {
             btn->setWeekButtonClicked(false);
-            logger->log(QString("%1 %2 set is false").arg(projectName).arg(date.toString()));
         }
     }
     ui->countLabel->setText(QString("%1").arg(checkedCount));

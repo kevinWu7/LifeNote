@@ -56,5 +56,19 @@ enum NodeType
     ParentNode,
 };
 
+enum CheckinPeriod
+{
+    DayPeriod,
+    WeekPeriod,
+    MonthPeriod,
+};
+
+class CheckinRule
+{
+public:
+    CheckinPeriod period=DayPeriod;
+    int Times=1;
+};
+
 
 #endif // BASEINFO_H

@@ -30,9 +30,11 @@ private:
     Ui::NewHabitForm *ui;
     void initIConBtn();
     void initRuleWidget();
+    void periodComboCurIndexChanged();
     int iconIndex=0;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
+
 
     //记录鼠标，窗口位置
     QPointF windowPos;

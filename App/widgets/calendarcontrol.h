@@ -27,16 +27,16 @@ public:
     void receiveBtnChecked(checkin_dateitem * item);
 private:
     Ui::CalendarControl *ui;
-    QDate currendDisplayDate;//当前展示的日期
+    QDate currentFirstDisplayDate;//当前面板的当月第一天
     void cacheAllDate();
     void initMonthBtnEvent();
     void monthBtn_clicked();
     void arrowLeftBtn_clicked();
     void arrowRightBtn_clicked();
     void fillDateTomainGrid(QDate startDate);
-    void CheckinAll(const std::vector<checkin_dateitem *> &checkinItems);//满足周期打卡条件后，全部选中
+    void CheckinAllPeriodBtn(QDate checkedBtn,const std::vector<checkin_dateitem *> &checkinItems);//满足周期打卡条件后，全部选中
     //根据规则周期，筛选出范围内的日期。checkinItems是所有的打卡日期，返回则是当前比如6月份内的打卡日期
-    std::vector<checkin_dateitem*> GetPeriodDates(CheckinPeriod period,const std::vector<checkin_dateitem *> &checkinItems);
+    std::vector<QDate> GetPeriodDates(CheckinPeriod period,QDate checkedDate, const std::vector<checkin_dateitem *> &checkinItems);
     std::vector<QDate> vector_allcache_date;
     std::vector<QDate> currentMonth_date;
     std::function<void(checkin_dateitem *)> bindFunctionOfreceiveBtnChecked;

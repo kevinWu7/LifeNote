@@ -24,8 +24,7 @@ NewHabitForm::NewHabitForm(QWidget *parent) :
 
     initRuleWidget();
     connect(ui->periodComboBox,&QComboBox::currentIndexChanged,this,&NewHabitForm::periodComboCurIndexChanged);
-    connect(ui->timesComboBox,&QComboBox::currentIndexChanged,this,&NewHabitForm::periodComboCurIndexChanged);
-
+    //connect(ui->timesComboBox,&QComboBox::currentIndexChanged,this,&NewHabitForm::timesComboCurIndexChanged);
 }
 
 
@@ -59,7 +58,6 @@ void NewHabitForm::periodComboCurIndexChanged()
 
 void NewHabitForm::initRuleWidget()
 {
-
     ui->periodComboBox->addItem("天");
     ui->periodComboBox->addItem("周");
     ui->periodComboBox->addItem("月");
@@ -76,7 +74,7 @@ void NewHabitForm::InitRoundRadius()
     setMask(region);
 }
 
-void NewHabitForm::setEditMode(QString name, int iconIndex)
+void NewHabitForm::setEditMode(QString name, int iconIndex,CheckinRule *rule)
 {
     formMode=1;
     ui->nameLabel->setText("请输入新的项目名");
@@ -86,6 +84,9 @@ void NewHabitForm::setEditMode(QString name, int iconIndex)
     {
         toolBtn->click();
     }
+    ui->periodComboBox->setCurrentIndex(rule->period);
+    ui->timesComboBox->setCurrentText(QString::number(rule->Times));
+    logger->log(QString::number(ui->timesComboBox->currentIndex()));
 }
 void NewHabitForm::initIConBtn()
 {
@@ -133,10 +134,14 @@ void NewHabitForm::okBtn_clicked()
         ui->warningLabel->setText("");
         ui->warningLabel->setVisible(false);
     }
-
-    emit sendSelectDataToParent(ui->nameLineEdit->text(),iconIndex,formMode);
+    CheckinRule * rule =new CheckinRule;
+    rule->Times=ui->timesComboBox->currentText().toInt();
+    rule->period= static_cast<CheckinPeriod>(ui->periodComboBox->currentIndex());
+    emit sendSelectDataToParent(ui->nameLineEdit->text(),iconIndex,formMode, rule);
     ui->nameLineEdit->setText(DefaultDisplayTip);
     this->setVisible(false);
+    ui->periodComboBox->setCurrentIndex(0);
+    ui->timesComboBox->setCurrentIndex(0);
     formMode=0;
 }
 
@@ -145,6 +150,8 @@ void NewHabitForm::cancleBtn_clicked()
     ui->nameLineEdit->setText(DefaultDisplayTip);
     ui->warningLabel->setVisible(false);
     this->setVisible(false);
+    ui->periodComboBox->setCurrentIndex(0);
+    ui->timesComboBox->setCurrentIndex(0);
     formMode=0;
 }
 void NewHabitForm::mousePressEvent(QMouseEvent *event)

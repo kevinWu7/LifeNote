@@ -29,6 +29,7 @@ struct project_info
     QString iconIndex;
     bool selected;
     QString type;
+    CheckinRule *rule;
 };
 
 struct xmlLoadResult

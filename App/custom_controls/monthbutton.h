@@ -20,7 +20,7 @@ public:
      ~monthButton();
 private:
      void monthButton_clicked();
-     std::function<void(checkin_dateitem *)> bindFunctionOfreceiveBtnChecked;
+    // std::function<void(checkin_dateitem *)> bindFunctionOfreceiveBtnChecked;
      QDate currentDate;//记录当前按钮保存的日期
      QString baseStyleSheet;
      void initBaseStyleSheet();

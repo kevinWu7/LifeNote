@@ -17,6 +17,8 @@
 #define NODENAME_CHECKINDATE "checkin"
 #define ATTRIBUTE_NAME "name"
 #define ATTRIBUTE_DATE "date"
+#define ATTRIBUTE_RULE_PERIOD "rule_peroid"
+#define ATTRIBUTE_RULE_TIMES "rule_time"
 #define ATTRIBUTE_TIP "tip"
 #define ATTRIBUTE_TYPE "type"
 #define ATTRIBUTE_ISCHECKED "ischeckd"
@@ -58,9 +60,9 @@ enum NodeType
 
 enum CheckinPeriod
 {
-    DayPeriod,
-    WeekPeriod,
-    MonthPeriod,
+    DayPeriod=0,
+    WeekPeriod=1,
+    MonthPeriod=2,
 };
 
 class CheckinRule

@@ -9,9 +9,8 @@ monthButton::monthButton(QWidget *parent ,bool _ischecked)
     this->setIconSize(QSize(24,24));
     isChecked=_ischecked;
     // 绑定成员函数到实例
-    bindFunctionOfreceiveBtnChecked = std::bind(&monthButton::receiveBtnChecked, this, std::placeholders::_1);
-    // 注册全局事件
-    CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
+    //bindFunctionOfreceiveBtnChecked = std::bind(&monthButton::receiveBtnChecked, this, std::placeholders::_1);
+    //CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
     initBaseStyleSheet();
     updateColorStyle("rgb(239,239,239)","rgb(158,158,158)","normal");
 }
@@ -48,7 +47,7 @@ const QDate &monthButton::getDate()
     return currentDate;
 }
 
-void monthButton::receiveBtnChecked(checkin_dateitem* dateItem)
+/*void monthButton::receiveBtnChecked(checkin_dateitem* dateItem)
 {
     if(dateItem->sender==senderBtn::monthBtn||dateItem->project_name!=project_name)
     {
@@ -58,7 +57,7 @@ void monthButton::receiveBtnChecked(checkin_dateitem* dateItem)
     {
         setMonthButtonClicked(dateItem->ischecked);
     }
-}
+}*/
 
 
 
@@ -130,6 +129,6 @@ void monthButton::setMonthButtonClicked(bool _ischeck)
 monthButton::~monthButton()
 {
     // 注销全局事件
-    CalendarCentral::getInstance().unregisterGlobalEvent(bindFunctionOfreceiveBtnChecked);
+    //CalendarCentral::getInstance().unregisterGlobalEvent(bindFunctionOfreceiveBtnChecked);
 }
 

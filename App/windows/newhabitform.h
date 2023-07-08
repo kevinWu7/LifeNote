@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QMouseEvent>
+#include "baseinfo.h"
 
 namespace Ui {
 class NewHabitForm;
@@ -16,10 +17,10 @@ public:
     explicit NewHabitForm(QWidget *parent = nullptr);
     ~NewHabitForm();
     void InitRoundRadius();
-    void setEditMode(QString name,int iconIndex);
+    void setEditMode(QString name,int iconIndex,CheckinRule* rule);
 
 signals:
-    void sendSelectDataToParent(QString name ,int iconIndex,int formMode);
+    void sendSelectDataToParent(QString name ,int iconIndex,int formMode,CheckinRule* rule);
 
 public slots:
     void okBtn_clicked();

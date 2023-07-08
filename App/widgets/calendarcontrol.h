@@ -23,7 +23,7 @@ public:
     QString project_name;
     CheckinRule* checkinRule;
     void setHabitItem(const std::vector<checkin_dateitem *> &checkinItems,QString projectName,int iconIndex,CheckinRule* checkinRule);//设置为当前选中项目
-    void editHabitItem(QString projectName,int iconIndex);//编辑habit，需要对应修改CalendarControl
+    void editHabitItem(QString projectName,int iconIndex,CheckinRule* rule);//编辑habit，需要对应修改CalendarControl
     void receiveBtnChecked(checkin_dateitem * item);
 private:
     Ui::CalendarControl *ui;

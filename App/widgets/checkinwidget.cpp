@@ -100,7 +100,7 @@ void checkinWidget::onMenuEdit()
     {
          habitForm->move(this->window()->frameGeometry().topLeft() +this->window()->rect().center() -habitForm->rect().center());//使子窗体居中
     }
-    habitForm->setEditMode(currentHabit->projectName,currentHabit->iconIndex);
+    habitForm->setEditMode(currentHabit->projectName,currentHabit->iconIndex,currentHabit->checkinRule);
     habitForm->show();
 
 }
@@ -182,7 +182,7 @@ HabitItem* checkinWidget::addHabitItem(project_info *project)
     logger->log(QString(project->project_name));
     HabitItem *habit =new HabitItem(project->project_name);
     habit->setIconIndex(project->iconIndex.toInt());
-
+    habit->checkinRule=project->rule;
     int index = ui->leftNavigateWidget->layout()->count()-1; // Replace with the desired index where you want to insert the item
     QBoxLayout *boxLayout = dynamic_cast<QBoxLayout*>(ui->leftNavigateWidget->layout());
     if (boxLayout)
@@ -193,14 +193,16 @@ HabitItem* checkinWidget::addHabitItem(project_info *project)
     return habit;
 }
 
-void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex,int formMode)
+void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex,int formMode,CheckinRule *rule)
 {
     if(formMode==0) //新建habit
     {
         project_info *project=new project_info; //这里需要释放或者改成直接创建，否则会导致内存泄漏
         project->iconIndex=QString::number(iconIndex);
         project->project_name=name;
+        project->rule=rule;
         HabitItem *habit= addHabitItem(project);
+        habit->checkinRule=rule;
         CheckinConfig::getInstance().updateHabitXml(AddHabit, project);
         connect(habit,&HabitItem::customContextMenuRequested,this,&checkinWidget::onRightMenuRequested);
         setSelectedHabit(habit);
@@ -213,11 +215,12 @@ void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex,int fo
         currentHabit->setIconIndex(iconIndex);
         currentHabit->setProjectName(name);
         currentHabit->InitWeekButtons();
-
-        ui->calendarWidget->editHabitItem(name,iconIndex);
+        currentHabit->checkinRule=rule;
+        ui->calendarWidget->editHabitItem(name,iconIndex,rule);
         project_info *new_project=new project_info;
         new_project->iconIndex=QString::number(iconIndex);
         new_project->project_name=name;
+        new_project->rule=rule;
         CheckinConfig::getInstance().updateHabitXmlInEditMode(EditHabit, new_project,old_project);
     }
 }

@@ -65,7 +65,7 @@ void CalendarControl::receiveBtnChecked(checkin_dateitem * dateItem)
             {
                 if(checkitem->date==date)
                 {
-                    btn->setMonthButtonClicked(checkitem->ischecked);
+                    btn->setMonthButtonClicked(true);
                 }
             }
             for(auto togetherCheck : period_datelist)
@@ -156,12 +156,13 @@ void CalendarControl::setHabitItem(const std::vector<checkin_dateitem *> &checki
     ui->recordItem3->setCheckinData(checkinItems);
 }
 
-void CalendarControl::editHabitItem(QString projectName, int iconIndex)
+void CalendarControl::editHabitItem(QString projectName, int iconIndex,CheckinRule *rule)
 {
     //设置图标 和项目名
     auto icon=QString::fromStdString(util::iconMap[iconIndex]);
     ui->projectIconBtn->setIcon(QIcon(QString(":/icons/res/checkin/%1").arg(icon)));
     ui->projectLabel->setText(projectName);
+    checkinRule=rule;
     for(int i=0;i<ui->mainGridWidget->layout()->count();i++)
     {
         monthButton* btn= dynamic_cast<monthButton*>(ui->mainGridWidget->layout()->itemAt(i)->widget());

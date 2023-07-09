@@ -25,6 +25,7 @@ public:
     void setHabitItem(const std::vector<checkin_dateitem *> &checkinItems,QString projectName,int iconIndex,CheckinRule* checkinRule);//设置为当前选中项目
     void editHabitItem(QString projectName,int iconIndex,CheckinRule* rule);//编辑habit，需要对应修改CalendarControl
     void receiveBtnChecked(checkin_dateitem * item);
+    void ReSetCheckinStatus(checkin_dateitem * dateItem);
 private:
     Ui::CalendarControl *ui;
     QDate currentFirstDisplayDate;//当前面板的当月第一天
@@ -36,7 +37,7 @@ private:
     void fillDateTomainGrid(QDate startDate);
     void CheckinAllPeriodBtn(QDate checkedBtn,const std::vector<checkin_dateitem *> &checkinItems);//满足周期打卡条件后，全部选中
     //根据规则周期，筛选出范围内的日期。checkinItems是所有的打卡日期，返回则是当前比如6月份内的打卡日期
-    std::vector<QDate> GetPeriodDates(CheckinPeriod period,QDate checkedDate, const std::vector<checkin_dateitem *> &checkinItems);
+    std::vector<QDate> GetPeriodDates(CheckinPeriod period,QDate checkedDate, const std::vector<checkin_dateitem *> &checkinItems,bool isCheckd);
     std::vector<QDate> vector_allcache_date;
     std::vector<QDate> currentMonth_date;
     std::function<void(checkin_dateitem *)> bindFunctionOfreceiveBtnChecked;

@@ -25,8 +25,6 @@ CalendarControl::CalendarControl(QWidget *parent) :
     ui->projectIconBtn->setIconSize(QSize(30,30));
     ui->projectLabel->setFont(QFont("Arial", 22, QFont::Normal));
 
-
-
     //设置label的文字居中对齐
     for(int i=0;i<ui->weekDayWidget->layout()->count();i++)
     {
@@ -50,60 +48,66 @@ CalendarControl::CalendarControl(QWidget *parent) :
 
 void CalendarControl::receiveBtnChecked(checkin_dateitem * dateItem)
 {
-    if(dateItem->sender==senderBtn::weekBtn)
+    ReSetCheckinStatus(dateItem);
+}
+
+void CalendarControl::ReSetCheckinStatus(checkin_dateitem * dateItem)
+{
+    auto result= CheckinConfig::getInstance().LoadCheckinConfig();
+    std::vector<checkin_dateitem*> checkin_list=result.checkin_map[dateItem->project_name];
+    //当配置文件中当前周期的签到数达到规则中的数据，则将该周期全部打卡
+    //比如规则为每月打卡5天，找到配置文件中当月的所有打卡日期，若超过5，则将该月全部打卡
+    auto uncheck_datelist=GetPeriodDates(checkinRule->period, dateItem->date,checkin_list,false);
+    auto check_datelist=GetPeriodDates(checkinRule->period, dateItem->date,checkin_list,true);
+    for(int i=0;i<ui->mainGridWidget->layout()->count();i++)
     {
-        auto result= CheckinConfig::getInstance().LoadCheckinConfig();
-        std::vector<checkin_dateitem*> checkin_list=result.checkin_map[dateItem->project_name];
-        //当配置文件中当前周期的签到数达到规则中的数据，则将该周期全部打卡
-        //比如规则为每月打卡5天，找到配置文件中当月的所有打卡日期，若超过5，则将该月全部打卡
-        auto period_datelist=GetPeriodDates(checkinRule->period, dateItem->date,checkin_list);
-        for(int i=0;i<ui->mainGridWidget->layout()->count();i++)
+        monthButton* btn= dynamic_cast<monthButton*>(ui->mainGridWidget->layout()->itemAt(i)->widget());
+        QDate buttonDate=btn->getDate();
+        //将传入的单独的日期先打卡
+        if(dateItem->date==buttonDate)
         {
-            monthButton* btn= dynamic_cast<monthButton*>(ui->mainGridWidget->layout()->itemAt(i)->widget());
-            QDate date=btn->getDate();
-            for(auto checkitem :checkin_list)
+            btn->setMonthButtonClicked(dateItem->ischecked);
+        }
+        //判断是否满足条件
+        bool is_auto_checked=check_datelist.size()>=checkinRule->Times;
+        for(auto togetherCheck : uncheck_datelist)
+        {
+            if(togetherCheck==buttonDate)
             {
-                if(checkitem->date==date)
-                {
-                    btn->setMonthButtonClicked(true);
-                }
-            }
-            for(auto togetherCheck : period_datelist)
-            {
-                if(togetherCheck==date)
-                {
-                    btn->setMonthButtonClicked(true);
-                }
+                btn->setMonthButtonClicked(false,is_auto_checked);
             }
         }
     }
 }
 
-std::vector<QDate> CalendarControl::GetPeriodDates(CheckinPeriod period,QDate checkedDate,const std::vector<checkin_dateitem *> &checkinItems)
+//isCheckd=true 返回周期范围内已经签到的
+//false 返回周期范围内未签到的
+std::vector<QDate> CalendarControl::GetPeriodDates(CheckinPeriod period,QDate checkedDate,const std::vector<checkin_dateitem *> &checkinItems,bool isCheckd)
 {
-    std::vector<QDate> matchingDates;
+    std::vector<QDate> unCheckingDates;
+    std::vector<QDate> CheckingDates;
+    // 将checkinItems中的日期转为QDate对象，并存储到另一个向量中
+    std::vector<QDate> tempList;
+    for (auto item : checkinItems)
+    {
+        tempList.push_back(item->date);
+    }
     if(period==MonthPeriod)
     {
-        int targetYear = checkedDate.year();
-        int targetMonth = checkedDate.month();
-
-        // 将checkinItems中的日期转为QDate对象，并存储到另一个向量中
-        std::vector<QDate> checkinDates;
-        for (auto item : checkinItems)
-        {
-            checkinDates.push_back(item->date);
-        }
 
         // 遍历checkinItems中的日期
-        for (QDate date = checkedDate.addDays(1 - checkedDate.day());
-             date <= checkedDate.addDays(checkedDate.daysInMonth() - checkedDate.day());
-             date = date.addDays(1))
+        auto minMonthDay=checkedDate.addDays(1 - checkedDate.day()); //x月1号
+        auto maxMonthDay=checkedDate.addDays(checkedDate.daysInMonth() - checkedDate.day()); //x月30号
+        for (QDate date =minMonthDay;date <= maxMonthDay ; date = date.addDays(1))
         {
             // 检查日期是否属于checkinItems中的日期，如果不属于，则添加到matchingDates中
-            if (date.year() == targetYear && date.month() == targetMonth &&
-                    std::find(checkinDates.begin(), checkinDates.end(), date) == checkinDates.end())
+            if (std::find(tempList.begin(), tempList.end(), date) == tempList.end())
             {
-                matchingDates.push_back(date);
+                unCheckingDates.push_back(date);
+            }
+            else
+            {
+                CheckingDates.push_back(date);
             }
         }
     }
@@ -112,24 +116,21 @@ std::vector<QDate> CalendarControl::GetPeriodDates(CheckinPeriod period,QDate ch
         QDate startDate = checkedDate.addDays(-checkedDate.dayOfWeek() + 1);
         QDate endDate = startDate.addDays(6);
 
-        // 将checkinItems中的日期转为QDate对象，并存储到另一个向量中
-        std::vector<QDate> checkinDates;
-        for (auto item: checkinItems)
-        {
-            checkinDates.push_back(item->date);
-        }
-
         // 遍历当前周的日期范围
         for (QDate date = startDate; date <= endDate; date = date.addDays(1))
         {
             // 检查日期是否属于checkinItems中的日期，如果不属于，则添加到matchingDates中
-            if (std::find(checkinDates.begin(), checkinDates.end(), date) == checkinDates.end())
+            if (std::find(tempList.begin(), tempList.end(), date) == tempList.end())
             {
-                matchingDates.push_back(date);
+                unCheckingDates.push_back(date);
+            }
+            else
+            {
+                CheckingDates.push_back(date);
             }
         }
     }
-    return matchingDates;
+    return isCheckd? CheckingDates:unCheckingDates;
 }
 
 

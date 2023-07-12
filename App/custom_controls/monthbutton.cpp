@@ -12,31 +12,30 @@ monthButton::monthButton(QWidget *parent ,bool _ischecked)
     //bindFunctionOfreceiveBtnChecked = std::bind(&monthButton::receiveBtnChecked, this, std::placeholders::_1);
     //CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
     initBaseStyleSheet();
-    updateColorStyle("rgb(239,239,239)","rgb(158,158,158)","normal","12");
+    updateColorStyle("rgb(239,239,239)","rgb(158,158,158)","normal");
 }
 
 void monthButton::initBaseStyleSheet()
 {
-       baseStyleSheet = QString("QToolButton{"
-                                "border: none;"
-                                "width: %1 ; min-width: %1; max-width: %1;"
-                                "height: %1 ; min-height: %1; max-height: %1;"
-                                "border-radius: %2;"
-                                "padding: 0;"
-                                "margin: 0;}").arg("36px","18px");
+    baseStyleSheet = QString("QToolButton{"
+                                 "border: none;"
+                                 "width: %1 ; min-width: %1; max-width: %1;"
+                                 "height: %1 ; min-height: %1; max-height: %1;"
+                                 "border-radius: %2;"
+                                 "font-size: 12px;"
+                                 "padding: 0;"
+                                 "margin: 0;}").arg("32px","16px");
 };
 
-void monthButton::updateColorStyle(QString background,QString textColor,QString font_weight,QString font_size)
+void monthButton::updateColorStyle(QString background,QString textColor,QString font_weight)
 {
       QString colorStyleSheet = QString("QToolButton"
                                        "{background-color:%1;"
                                        "color:%2;"
-                                       "font-weight: %3;"
-                                       "font-size:%4}")
-                                       .arg(background,textColor,font_weight,font_size);
+                                       "font-weight: %3;}")
+                                       .arg(background,textColor,font_weight);
       setStyleSheet(baseStyleSheet + colorStyleSheet);
 }
-
 void monthButton::setDate(const QDate &date)
 {
     currentDate=date;
@@ -46,20 +45,6 @@ const QDate &monthButton::getDate()
 {
     return currentDate;
 }
-
-/*void monthButton::receiveBtnChecked(checkin_dateitem* dateItem)
-{
-    if(dateItem->sender==senderBtn::monthBtn||dateItem->project_name!=project_name)
-    {
-        return;
-    }
-    if(dateItem->date== currentDate)
-    {
-        setMonthButtonClicked(dateItem->ischecked);
-    }
-}*/
-
-
 
 void monthButton::monthButton_clicked()
 {
@@ -87,16 +72,16 @@ void monthButton::setMonthButtonClicked(bool _ischeck,bool is_auto_checked)
 {
     QDate _currentDate=QDate::currentDate();
     QString background=_ischeck?"rgb(72,114,251)":"rgb(239,239,239)";
-    background=is_auto_checked?"rgba(72,114,251,0.3)" :background;
+    background=is_auto_checked?"rgb(132,174,255)" :background;
     if(currentDate==_currentDate)
     {
         if(!_ischeck)
         {
-            updateColorStyle(background,"orange","bold","13px");
+            updateColorStyle(background,"orange","bold");
         }
         else
         {
-            updateColorStyle(background,"orange","bold","13px");
+            updateColorStyle(background,"orange","bold");
         }
     }
     else
@@ -105,22 +90,22 @@ void monthButton::setMonthButtonClicked(bool _ischeck,bool is_auto_checked)
         {
             if(_ischeck||is_auto_checked)
             {
-                updateColorStyle(background,"rgba(255,255,255,0.7)","normal","9px");
+                updateColorStyle(background,"white","normal");
             }
             else
             {
-                updateColorStyle(background,"rgb(148,148,148)","normal","9px");
+                updateColorStyle(background,"rgb(158,158,158)","normal");
             }
         }
         else
         {
             if(_ischeck||is_auto_checked)
             {
-                updateColorStyle(background,"white","normal","13px");
+                updateColorStyle(background,"white","normal");
             }
             else
             {
-                updateColorStyle(background,"black","normal","13px");
+                updateColorStyle(background,"black","normal");
             }
         }
     }

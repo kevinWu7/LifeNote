@@ -24,7 +24,7 @@ private:
      QDate currentDate;//记录当前按钮保存的日期
      QString baseStyleSheet;
      void initBaseStyleSheet();
-     void updateColorStyle(QString background,QString textColor,QString font_weight,QString font_size);
+     void updateColorStyle(QString background,QString textColor,QString font_weight);
 };
 
 #endif // MONTHBUTTON_H

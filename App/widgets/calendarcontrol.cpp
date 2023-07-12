@@ -53,6 +53,10 @@ void CalendarControl::receiveBtnChecked(checkin_dateitem * dateItem)
 
 void CalendarControl::ReSetCheckinStatus(checkin_dateitem * dateItem)
 {
+    if(dateItem->project_name!=project_name)
+    {
+        return;
+    }
     auto result= CheckinConfig::getInstance().LoadCheckinConfig();
     std::vector<checkin_dateitem*> checkin_list=result.checkin_map[dateItem->project_name];
     //当配置文件中当前周期的签到数达到规则中的数据，则将该周期全部打卡
@@ -94,7 +98,6 @@ std::vector<QDate> CalendarControl::GetPeriodDates(CheckinPeriod period,QDate ch
     }
     if(period==MonthPeriod)
     {
-
         // 遍历checkinItems中的日期
         auto minMonthDay=checkedDate.addDays(1 - checkedDate.day()); //x月1号
         auto maxMonthDay=checkedDate.addDays(checkedDate.daysInMonth() - checkedDate.day()); //x月30号

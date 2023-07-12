@@ -29,13 +29,14 @@ public:
     CheckinRule* checkinRule=nullptr;
     int iconIndex=0;
     void InitWeekButtons();
+    void ReSetCheckinStatus(checkin_dateitem * dateItem);
 public slots:
     //void OnReceiveWeekBtnClicked(QDate date,bool ischecked);
 signals:
     void triggerMousePressEvent(HabitItem *habit);
 private:
     Ui::HabitItem *ui;
-
+    std::vector<QDate> GetPeriodDates(QDate checkedDate,const std::vector<checkin_dateitem *> &checkinItems,bool isCheckd);
     checkBtnCallback bindFunctionOfreceiveBtnChecked;
     themeChangedCallback bindFunctionOfreceiveThemeChanged;
     void receiveBtnChecked(checkin_dateitem* dateItem);

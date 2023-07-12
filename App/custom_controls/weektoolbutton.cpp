@@ -34,17 +34,6 @@ void WeekToolButton::updateSizeStyle(int size)
       this->setIconSize(QSize(size,size));
 }
 
-void WeekToolButton::receiveBtnChecked(checkin_dateitem* dateItem)
-{
-    if(dateItem->sender==senderBtn::weekBtn||dateItem->project_name!=project_name)
-    {
-        return;
-    }
-    if(dateItem->date== currentDate)
-    {
-       setWeekButtonClicked(dateItem->ischecked);
-    }
-}
 
 void WeekToolButton::WeekButton_clicked()
 {
@@ -87,7 +76,7 @@ const QDate& WeekToolButton::getDate()
 
 
 //仅仅改变ui状态
-void WeekToolButton::setWeekButtonClicked(bool _ischecked)
+void WeekToolButton::setWeekButtonClicked(bool _ischecked,bool is_auto_checked)
 {
     if(_ischecked)
     {
@@ -96,6 +85,10 @@ void WeekToolButton::setWeekButtonClicked(bool _ischecked)
     else
     {
          this->setIcon(QIcon());
+    }
+    if(is_auto_checked)
+    {
+        this->setIcon(QIcon(":/icons/res/checkin/selected.png"));
     }
     isChecked=_ischecked;
 }

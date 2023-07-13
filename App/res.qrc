@@ -24,7 +24,6 @@
         <file>res/note/recycle.png</file>
         <file>res/note/search.png</file>
         <file>res/note/today.png</file>
-        <file>res/checkin/tick.png</file>
         <file>res/checkin/arrow-left.png</file>
         <file>res/checkin/arrow-right.png</file>
         <file>res/checkin/bowl.png</file>
@@ -41,7 +40,6 @@
         <file>res/note/img.png</file>
         <file>res/system/setting.png</file>
         <file>res/system/theme.png</file>
-        <file>res/checkin/selected.png</file>
         <file>res/system/win_close.svg</file>
         <file>res/system/win_max.svg</file>
         <file>res/system/win_min.svg</file>
@@ -51,6 +49,9 @@
         <file>res/note/edit.svg</file>
         <file>res/note/dropdown_dark.png</file>
         <file>res/note/dropdown_light.png</file>
+        <file>res/checkin/tick.svg</file>
+        <file>res/checkin/tick_1.svg</file>
+        <file>res/checkin/tick_3.svg</file>
     </qresource>
     <qresource prefix="/imgs">
         <file>res/images/pic3.jpg</file>

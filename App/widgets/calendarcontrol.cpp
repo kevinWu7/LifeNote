@@ -73,7 +73,7 @@ void CalendarControl::ReSetCheckinStatus(checkin_dateitem * dateItem)
             btn->setMonthButtonClicked(dateItem->ischecked);
         }
         //判断是否满足条件
-        bool is_auto_checked=check_datelist.size()>=checkinRule->Times;
+        bool is_auto_checked=check_datelist.size()>=checkinRule->Times&&checkinRule->period!=CheckinPeriod::DayPeriod;
         for(auto togetherCheck : uncheck_datelist)
         {
             if(togetherCheck==buttonDate)
@@ -143,6 +143,8 @@ void CalendarControl::setHabitItem(const std::vector<checkin_dateitem *> &checki
     project_name=projectName;
     checkinRule=m_checkinRule;
     InitCheckinMonthBtn(checkinItems,projectName);
+
+
     //设置图标 和项目名
     if(iconIndex==-1)
     {
@@ -154,10 +156,14 @@ void CalendarControl::setHabitItem(const std::vector<checkin_dateitem *> &checki
         ui->projectIconBtn->setIcon(QIcon(QString(":/icons/res/checkin/%1").arg(icon)));
     }
 
+
+
     ui->projectLabel->setText(projectName);
     ui->recordItem1->setCheckinData(checkinItems);
     ui->recordItem2->setCheckinData(checkinItems);
     ui->recordItem3->setCheckinData(checkinItems);
+
+
 }
 
 void CalendarControl::editHabitItem(QString projectName, int iconIndex,CheckinRule *rule)
@@ -194,6 +200,50 @@ void CalendarControl::InitCheckinMonthBtn(const std::vector<checkin_dateitem *> 
             btn->setMonthButtonClicked(false);
         }
     }
+    if(checkinRule==nullptr)
+    {
+        return;
+    }
+    if(checkinRule->period==CheckinPeriod::MonthPeriod)
+    {
+        InitAutoCheckinStatus(startDate,checkinItems);
+        InitAutoCheckinStatus(currentFirstDisplayDate,checkinItems);
+        InitAutoCheckinStatus(startDate.addDays(41),checkinItems);
+    }
+    else if(checkinRule->period==CheckinPeriod::WeekPeriod)
+    {
+        for(int i=0;i<6;i++)
+        {
+            InitAutoCheckinStatus(startDate.addDays(7*i),checkinItems);
+        }
+    }
+}
+
+void CalendarControl::InitAutoCheckinStatus(QDate current_date,const std::vector<checkin_dateitem *> &checkinItems)
+{
+    //当配置文件中当前周期的签到数达到规则中的数据，则将该周期全部打卡
+    //比如规则为每月打卡5天，找到配置文件中当月的所有打卡日期，若超过5，则将该月全部打卡
+    auto uncheck_datelist=GetPeriodDates(checkinRule->period, current_date,checkinItems,false);
+    auto check_datelist=GetPeriodDates(checkinRule->period, current_date,checkinItems,true);
+    //判断是否满足条件
+    bool is_auto_checked=check_datelist.size()>=checkinRule->Times&&checkinRule->period!=CheckinPeriod::DayPeriod;
+    if(!is_auto_checked)
+    {
+        return;
+    }
+    for(int i=0;i<ui->mainGridWidget->layout()->count();i++)
+    {
+        monthButton* btn= dynamic_cast<monthButton*>(ui->mainGridWidget->layout()->itemAt(i)->widget());
+        QDate buttonDate=btn->getDate();
+
+        for(auto togetherCheck : uncheck_datelist)
+        {
+            if(togetherCheck==buttonDate)
+            {
+                btn->setMonthButtonClicked(false,is_auto_checked);
+            }
+        }
+    }
 }
 
 void  CalendarControl::arrowLeftBtn_clicked()
@@ -210,7 +260,7 @@ void  CalendarControl::arrowLeftBtn_clicked()
     // 计算日期间距
     int weekDistance= currentFirstDisplayDate.dayOfWeek()-1;
 
-    QDate startDate = currentFirstDisplayDate.addDays(-(weekDistance));
+    startDate = currentFirstDisplayDate.addDays(-(weekDistance));
     fillDateTomainGrid(startDate);
     //设置checked状态
     auto result= CheckinConfig::getInstance().LoadCheckinConfig();
@@ -236,7 +286,7 @@ void  CalendarControl::arrowRightBtn_clicked()
     }
     // 计算日期间距
     int weekDistance= currentFirstDisplayDate.dayOfWeek()-1;
-    QDate startDate = currentFirstDisplayDate.addDays(-(weekDistance));
+    startDate = currentFirstDisplayDate.addDays(-(weekDistance));
     fillDateTomainGrid(startDate);
     //设置checked状态
     auto result= CheckinConfig::getInstance().LoadCheckinConfig();
@@ -262,7 +312,7 @@ void CalendarControl::initCurrentMonth()
     int weekDay= currentFirstDisplayDate.dayOfWeek();
     int weekDistance= weekDay-1;
 
-    QDate startDate = currentDate.addDays(-(daysDifference + weekDistance));
+    startDate = currentDate.addDays(-(daysDifference + weekDistance));
     fillDateTomainGrid(startDate);
 }
 

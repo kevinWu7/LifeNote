@@ -26,9 +26,11 @@ public:
     void editHabitItem(QString projectName,int iconIndex,CheckinRule* rule);//编辑habit，需要对应修改CalendarControl
     void receiveBtnChecked(checkin_dateitem * item);
     void ReSetCheckinStatus(checkin_dateitem * dateItem);
+    void InitAutoCheckinStatus(QDate  dateItem,const std::vector<checkin_dateitem *> &checkinItems);
 private:
     Ui::CalendarControl *ui;
     QDate currentFirstDisplayDate;//当前面板的当月第一天
+    QDate startDate;//当前面板的第一天，有可能是上个月，有可能是这个月
     void cacheAllDate();
     void initMonthBtnEvent();
     void monthBtn_clicked();

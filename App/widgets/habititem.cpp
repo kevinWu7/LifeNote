@@ -61,6 +61,9 @@ void HabitItem::mousePressEvent(QMouseEvent *event)
 //将habit中的btn初始化是否checked
 void HabitItem::InitCheckinBtn(const std::vector<checkin_dateitem *> &checkinItems)
 {
+    auto uncheck_datelist=GetPeriodDates(QDate::currentDate(),checkinItems,false);
+    auto check_datelist=GetPeriodDates(QDate::currentDate(),checkinItems,true);
+    bool is_auto_checked=check_datelist.size()>=checkinRule->Times&&checkinRule->period!=CheckinPeriod::DayPeriod;
     for(int i=0;i<ui->weekWidget->layout()->count();i++)
     {
         WeekToolButton* btn= dynamic_cast<WeekToolButton*>(ui->weekWidget->layout()->itemAt(i)->widget());
@@ -79,6 +82,18 @@ void HabitItem::InitCheckinBtn(const std::vector<checkin_dateitem *> &checkinIte
         else
         {
             btn->setWeekButtonClicked(false);
+        }
+        //当配置文件中当前周期的签到数达到规则中的数据，则将该周期全部打卡
+        //比如规则为每月打卡5天，找到配置文件中当月的所有打卡日期，若超过5，则将该月全部打卡
+        if(is_auto_checked)
+        {
+            for(auto togetherCheck : uncheck_datelist)
+            {
+                if(togetherCheck==date)
+                {
+                    btn->setWeekButtonClicked(false,is_auto_checked);
+                }
+            }
         }
     }
     ui->countLabel->setText(QString("%1").arg(checkedCount));
@@ -146,12 +161,12 @@ void HabitItem::ReSetCheckinStatus(checkin_dateitem * dateItem)
         WeekToolButton* btn= dynamic_cast<WeekToolButton*>(ui->weekWidget->layout()->itemAt(i)->widget());
         QDate buttonDate=btn->getDate();
         //将传入的单独的日期先打卡
-        if(dateItem->date==buttonDate&& dateItem->sender==senderBtn::monthBtn)
+        if(dateItem->date==buttonDate)
         {
             btn->setWeekButtonClicked(dateItem->ischecked);
         }
         //判断是否满足条件
-        bool is_auto_checked=check_datelist.size()>=checkinRule->Times;
+        bool is_auto_checked=check_datelist.size()>=checkinRule->Times&&checkinRule->period!=CheckinPeriod::DayPeriod;
         for(auto togetherCheck : uncheck_datelist)
         {
             if(togetherCheck==buttonDate)

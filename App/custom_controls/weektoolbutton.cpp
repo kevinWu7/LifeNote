@@ -2,6 +2,7 @@
 #include "weektoolbutton.h"
 #include "calendarcentral.h"
 #include "roundedtooltiphelper.h"
+#include "util.h"
 
 
 WeekToolButton::WeekToolButton(QWidget *parent,bool _ischecked)
@@ -37,7 +38,7 @@ void WeekToolButton::updateSizeStyle(int size)
 
 void WeekToolButton::WeekButton_clicked()
 {
-    setWeekButtonClicked(!isChecked);
+    isChecked=!isChecked;
     checkin_dateitem *item =new checkin_dateitem;
     item->date=currentDate;
     item->tips="";
@@ -80,7 +81,7 @@ void WeekToolButton::setWeekButtonClicked(bool _ischecked,bool is_auto_checked)
 {
     if(_ischecked)
     {
-         this->setIcon(QIcon(":/icons/res/checkin/tick.png"));
+         this->setIcon(QIcon(":/icons/res/checkin/tick.svg"));
     }
     else
     {
@@ -88,7 +89,7 @@ void WeekToolButton::setWeekButtonClicked(bool _ischecked,bool is_auto_checked)
     }
     if(is_auto_checked)
     {
-        this->setIcon(QIcon(":/icons/res/checkin/selected.png"));
+         this->setIcon(QIcon(":/icons/res/checkin/tick_1.svg"));
     }
     isChecked=_ischecked;
 }

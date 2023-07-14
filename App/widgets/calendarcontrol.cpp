@@ -38,7 +38,7 @@ CalendarControl::CalendarControl(QWidget *parent) :
     initCurrentMonth();
     ui->recordItem1->setRecordType(RecordType::TotalCheckinCount);
     ui->recordItem2->setRecordType(RecordType::NewContinuousCheckin);
-    ui->recordItem3->setRecordType(RecordType::CurrentMonthRatio);
+    ui->recordItem3->setRecordType(RecordType::TotalCheckinRatio);
 
     // 绑定成员函数到实例
     bindFunctionOfreceiveBtnChecked = std::bind(&CalendarControl::receiveBtnChecked, this, std::placeholders::_1);

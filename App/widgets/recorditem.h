@@ -34,8 +34,8 @@ public:
 
 private:
     Ui::RecordItem *ui;
-    QDate getWeekFirstDay(QDate date);
-    std::vector<checkin_dateitem*>  getAllWeekDay(const std::vector<checkin_dateitem *> &checkinItems);
+    QDate getFirstPeriodDay(QDate date);
+    std::vector<checkin_dateitem*>  getAllPeriodDay(const std::vector<checkin_dateitem *> &checkinItems);
     int find_max_consecutive_dates(const std::vector<checkin_dateitem*>& items);
     int find_current_consecutive_dates(const std::vector<checkin_dateitem*>& items);
     double calculate_current_month_ratio(const std::vector<checkin_dateitem*>& items);

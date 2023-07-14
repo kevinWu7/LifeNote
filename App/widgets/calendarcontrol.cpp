@@ -157,13 +157,13 @@ void CalendarControl::setHabitItem(const std::vector<checkin_dateitem *> &checki
     }
 
 
-
+    ui->recordItem1->checkinRule=m_checkinRule;
+    ui->recordItem2->checkinRule=m_checkinRule;
+    ui->recordItem3->checkinRule=m_checkinRule;
     ui->projectLabel->setText(projectName);
     ui->recordItem1->setCheckinData(checkinItems);
     ui->recordItem2->setCheckinData(checkinItems);
     ui->recordItem3->setCheckinData(checkinItems);
-
-
 }
 
 void CalendarControl::editHabitItem(QString projectName, int iconIndex,CheckinRule *rule)

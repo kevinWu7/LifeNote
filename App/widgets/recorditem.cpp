@@ -9,6 +9,7 @@ RecordItem::RecordItem(QWidget *parent) :
     ui(new Ui::RecordItem)
 {
     ui->setupUi(this);
+
     ui->numberLabel->setFont(QFont("Arial", 25, QFont::Normal));
     ui->textLabel->setFont(QFont("Arial", 12, QFont::Normal));
 
@@ -30,6 +31,41 @@ void RecordItem::setRecordType(RecordType type)
     record_type=type;
 }
 
+QDate RecordItem::getWeekFirstDay(QDate date)
+{
+    int currentDayOfWeek = date.dayOfWeek();
+    QDate firstDay = date.addDays(-currentDayOfWeek + 1);
+    return firstDay;
+}
+
+std::vector<checkin_dateitem*>  RecordItem::getAllWeekDay(const std::vector<checkin_dateitem *> &checkinItems)
+{
+    std::map<QDate,int> firstMap;
+    for(auto item :checkinItems)
+    {
+       auto firstDay= getWeekFirstDay(item->date);
+       if(firstMap.count(firstDay)==0)
+       {
+           firstMap[firstDay]=1;
+       }
+       else
+       {
+           firstMap[firstDay]=firstMap[firstDay]+1;
+       }
+    }
+    std::vector<checkin_dateitem*> monthVec;
+    for(auto keyvalue:firstMap)
+    {
+        if(keyvalue.second>=checkinRule->Times)
+        {
+            checkin_dateitem *checkin=new checkin_dateitem;
+            checkin->date=keyvalue.first;
+            monthVec.push_back(checkin);
+        }
+    }
+    return monthVec;
+}
+
 void RecordItem::setCheckinData(const std::vector<checkin_dateitem *> &checkinItems)
 {
     if(record_type==TotalCheckinCount)
@@ -39,7 +75,20 @@ void RecordItem::setCheckinData(const std::vector<checkin_dateitem *> &checkinIt
     }
     else if(record_type==NewContinuousCheckin)
     {
-        int continuousCount=find_current_consecutive_dates(checkinItems);
+        int continuousCount=0;
+        if(checkinRule==nullptr)
+        {
+            return;
+        }
+        if(checkinRule->period==CheckinPeriod::DayPeriod)
+        {
+            continuousCount=find_current_consecutive_dates(checkinItems);
+        }
+        else if(checkinRule->period==CheckinPeriod::WeekPeriod)
+        {
+             auto monthVec=getAllWeekDay(checkinItems);
+             continuousCount=find_current_consecutive_dates(monthVec);
+        }
         ui->numberLabel->setText(QString::number(continuousCount));
     }
     else if(record_type==CurrentMonthRatio)
@@ -136,22 +185,25 @@ int RecordItem::find_current_consecutive_dates(const std::vector<checkin_dateite
     std::sort(sorted_items.begin(), sorted_items.end(), [](checkin_dateitem* a, checkin_dateitem* b){
        return  a->date < b->date;
     });
-
+    int intervalCount=checkinRule->period==CheckinPeriod::WeekPeriod?7:1;
     int current_consecutive_dates = 1; // 初始值设为1，因为至少包含一个最大日期
-    QDate currentDate = QDate::currentDate();
+    QDate currentDate = getWeekFirstDay(QDate::currentDate());
     QDate maxDate = sorted_items[sorted_items.size()-1]->date;
 
     // 如果最大日期大于今天，则从最大日期开始计算连续天数
-      if (maxDate > currentDate) {
+      if (maxDate > currentDate)
+      {
           currentDate = maxDate;
-      } else if (maxDate < currentDate.addDays(-1)) {
+      }
+      else if (maxDate < currentDate.addDays(-intervalCount))
+      {
           // 如果最大日期为前天，则直接返回0
           return 0;
       }
     // 计算连续存在的天数
     for (size_t i = sorted_items.size()-1; i >0; --i)
     {
-        if (sorted_items[i]->date == sorted_items[i - 1]->date.addDays(1))
+        if (sorted_items[i]->date == sorted_items[i - 1]->date.addDays(intervalCount))
         {
             // 如果当前日期和前一个日期相差一天，那么增加连续日期计数
             ++current_consecutive_dates;

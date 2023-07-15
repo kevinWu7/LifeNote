@@ -89,7 +89,7 @@ void WeekToolButton::setWeekButtonClicked(bool _ischecked,bool is_auto_checked)
     }
     if(is_auto_checked)
     {
-         this->setIcon(QIcon(":/icons/res/checkin/tick_1.svg"));
+         this->setIcon(util::CreateColorSvgIcon(":/icons/res/checkin/tick.svg","rgb(132,174,255)"));
     }
     isChecked=_ischecked;
 }

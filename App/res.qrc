@@ -50,8 +50,6 @@
         <file>res/note/dropdown_dark.png</file>
         <file>res/note/dropdown_light.png</file>
         <file>res/checkin/tick.svg</file>
-        <file>res/checkin/tick_1.svg</file>
-        <file>res/checkin/tick_3.svg</file>
     </qresource>
     <qresource prefix="/imgs">
         <file>res/images/pic3.jpg</file>

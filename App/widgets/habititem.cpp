@@ -166,7 +166,8 @@ void HabitItem::ReSetCheckinStatus(checkin_dateitem * dateItem)
             btn->setWeekButtonClicked(dateItem->ischecked);
         }
         //判断是否满足条件
-        bool is_auto_checked=check_datelist.size()>=checkinRule->Times&&checkinRule->period!=CheckinPeriod::DayPeriod;
+        bool is_auto_checked
+                =check_datelist.size()>=checkinRule->Times&&checkinRule->period!=CheckinPeriod::DayPeriod;
         for(auto togetherCheck : uncheck_datelist)
         {
             if(togetherCheck==buttonDate)

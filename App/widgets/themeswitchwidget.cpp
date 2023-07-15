@@ -90,7 +90,7 @@ void ThemeSwitchWidget::colorButtonClicked()
         }
         else
         {
-            button->setIcon(QIcon(":/icons/res/checkin/tick_3.svg"));
+            button->setIcon(util::CreateColorSvgIcon(":/icons/res/checkin/tick.svg","rgb(224,133,75)"));
         }
         if(currentCheckedBtn&&currentCheckedBtn!=button)
         {
@@ -216,7 +216,7 @@ void ThemeSwitchWidget::InitDiyColorButtons()
                 }
                 else
                 {
-                    button->setIcon(QIcon(":/icons/res/checkin/tick_3.svg"));
+                    button->setIcon(util::CreateColorSvgIcon(":/icons/res/checkin/tick.svg","rgb(224,133,75)"));
                 }
                 button->setChecked(true);
                 currentCheckedBtn=button;
@@ -242,13 +242,13 @@ void ThemeSwitchWidget::InitSystemColorButtons()
     ui->lightSystemBtn->setProperty("color",themeLight["BACKGROUND_COLOR1"]);
     if("dark"==ThemeManager::getInstance().ThemeId)
     {
-         ui->darkSystemBtn->setIcon(QIcon(":/icons/res/checkin/tick_3.svg"));
+         ui->darkSystemBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/checkin/tick.svg","rgb(224,133,75)"));
          ui->darkSystemBtn->setChecked(true);
          currentCheckedBtn=ui->darkSystemBtn;
     }
     else if("light"==ThemeManager::getInstance().ThemeId)
     {
-         ui->lightSystemBtn->setIcon(QIcon(":/icons/res/checkin/tick_3.svg"));
+         ui->lightSystemBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/checkin/tick.svg","rgb(224,133,75)"));
          ui->lightSystemBtn->setChecked(true);
          currentCheckedBtn=ui->lightSystemBtn;
     }

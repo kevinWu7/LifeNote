@@ -173,11 +173,21 @@ void CalendarControl::editHabitItem(QString projectName, int iconIndex,CheckinRu
     ui->projectIconBtn->setIcon(QIcon(QString(":/icons/res/checkin/%1").arg(icon)));
     ui->projectLabel->setText(projectName);
     checkinRule=rule;
+
     for(int i=0;i<ui->mainGridWidget->layout()->count();i++)
     {
         monthButton* btn= dynamic_cast<monthButton*>(ui->mainGridWidget->layout()->itemAt(i)->widget());
         btn->project_name=projectName;
     }
+    auto result= CheckinConfig::getInstance().LoadCheckinConfig();
+    //当规则发生改变时，重新设置按钮状态
+    InitCheckinMonthBtn(result.checkin_map[projectName],projectName);
+    ui->recordItem1->checkinRule=checkinRule;
+    ui->recordItem2->checkinRule=checkinRule;
+    ui->recordItem3->checkinRule=checkinRule;
+    ui->recordItem1->setCheckinData(result.checkin_map[projectName]);
+    ui->recordItem2->setCheckinData(result.checkin_map[projectName]);
+    ui->recordItem3->setCheckinData(result.checkin_map[projectName]);
 }
 
 void CalendarControl::InitCheckinMonthBtn(const std::vector<checkin_dateitem *> &checkinItems,QString projectName)

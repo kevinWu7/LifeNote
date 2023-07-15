@@ -72,7 +72,7 @@ void monthButton::setMonthButtonClicked(bool _ischeck,bool is_auto_checked)
 {
     QDate _currentDate=QDate::currentDate();
     QString background=_ischeck?"rgb(72,114,251)":"rgb(239,239,239)";
-    background=is_auto_checked?"rgb(132,174,255)" :background;
+    background=is_auto_checked?"rgba(132,174,255,0.9)" :background;
     if(currentDate==_currentDate)
     {
         if(!_ischeck)

@@ -209,19 +209,25 @@ void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex,int fo
     }
     else //编辑habit
     {
+
         project_info *old_project=new project_info;
         old_project->iconIndex=QString::number(currentHabit->iconIndex);
         old_project->project_name=currentHabit->projectName;
-        currentHabit->setIconIndex(iconIndex);
-        currentHabit->setProjectName(name);
-        currentHabit->InitWeekButtons();
-        currentHabit->checkinRule=rule;
-        ui->calendarWidget->editHabitItem(name,iconIndex,rule);
         project_info *new_project=new project_info;
         new_project->iconIndex=QString::number(iconIndex);
         new_project->project_name=name;
         new_project->rule=rule;
         CheckinConfig::getInstance().updateHabitXmlInEditMode(EditHabit, new_project,old_project);
+
+        currentHabit->setIconIndex(iconIndex);
+        currentHabit->setProjectName(name);
+        currentHabit->checkinRule=rule;
+        currentHabit->InitWeekButtons();
+        auto result= CheckinConfig::getInstance().LoadCheckinConfig();
+        currentHabit->InitCheckinBtn(result.checkin_map[name]);
+
+        ui->calendarWidget->editHabitItem(name,iconIndex,rule);
+
     }
 }
 

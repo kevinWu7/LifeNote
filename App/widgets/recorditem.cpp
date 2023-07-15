@@ -126,7 +126,7 @@ void RecordItem::setCheckinData(const std::vector<checkin_dateitem *> &checkinIt
         if(checkinRule->period==CheckinPeriod::DayPeriod)
         {
             // 计算并返回比率
-            allCount= sorted_items[0]->date.daysTo(maxDate);
+            allCount= sorted_items[0]->date.daysTo(maxDate)+1;
             auto ratio= static_cast<double>(checkinItems.size())/static_cast<double>(allCount);
             percentage = std::round(ratio * 100.0) ;
         }

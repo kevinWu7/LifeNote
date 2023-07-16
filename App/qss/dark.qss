@@ -1,4 +1,29 @@
-/* 系统控件 */
+/* 系统控件*/
+QComboBox {
+  color:CONTROL_TEXT;
+  background:BACKGROUND_COLOR2;
+  font-size:13px;
+  padding: 0px 4px 0px 12px; /*顺序为上-右-下-左*/
+  border-radius:4px;
+}
+
+QComboBox::drop-down {
+    border:none;
+}
+
+QComboBox::down-arrow {
+    max-width:55px;
+    image:url(:/icons/res/note/dropdown_light.png);
+}
+
+QComboBox QAbstractItemView{
+  background-color:BACKGROUND_COLOR1;
+  min-width:60px;
+  color:CONTROL_TEXT;
+  font-size:13px;
+  border:none;
+}
+
 QMenu{
     background-color:BACKGROUND_COLOR1;
     color:CONTROL_TEXT;
@@ -63,6 +88,10 @@ QPushButton {
     border: none;
 }
 
+QMessageBox{
+    background-color:BACKGROUND_COLOR1;
+    color:CONTROL_TEXT;
+}
 QLabel{
     background-color: transparent;
     color:CONTROL_TEXT;
@@ -79,6 +108,7 @@ QLineEdit {
     border:0px;
     background-color:BACKGROUND_COLOR2;
     color: CONTROL_TEXT;
+    border-radius:4px;
 }
 
 QRadioButton {
@@ -167,9 +197,6 @@ QTreeView::item {
     height: 25px;
     color: CONTROL_TEXT;
 }
-
-
-
 
 /* mainwindow */
 QWidget#mainWindowTiitle[platform="windows"]{
@@ -266,8 +293,8 @@ QWidget#editTitleBar {
     background-color:transparent;
 }
 
-QWidget#titleBar QToolButton:checked,
-QWidget#titleBar QToolButton:hover {
+QWidget#editTitleBar QToolButton:checked,
+QWidget#editTitleBar QToolButton:hover {
     background-color:CONTROL_SELECTED;
 }
 
@@ -398,7 +425,7 @@ QWidget#ThemeSwitchWidget  QWidget#diyColorWidget QToolButton:checked{
     min-height: 25px;
     max-height: 25px;
     border-radius: 6px;
-    border:2px solid CONTROL_SELECTED;
+    border:1px solid CONTROL_TEXT;
 }
 
 QWidget#ThemeSwitchWidget  QWidget#systemThemeWidget QToolButton:checked{
@@ -409,7 +436,7 @@ QWidget#ThemeSwitchWidget  QWidget#systemThemeWidget QToolButton:checked{
     min-height: 35px;
     max-height: 35px;
     border-radius: 8px;
-    border:2px solid CONTROL_SELECTED;
+    border:1px solid CONTROL_TEXT;
 }
 
 QWidget#ThemeSwitchWidget  QLineEdit#transparencyEdit,
@@ -470,8 +497,14 @@ QWidget#NewHabitForm QLabel{
     font-size:11px;
 }
 
+
 QWidget#NewHabitForm QLabel#warningLabel{
     color:CONTROL_WARNINGTEXT;
+}
+
+QWidget#NewHabitForm QWidget#ruleWidget QLabel{
+    color:CONTROL_TEXT;
+    font-size:13px;
 }
 
 QWidget#NewHabitForm QPushButton#okBtn{
@@ -489,6 +522,7 @@ QWidget#NewHabitForm QPushButton#cancleBtn{
     border-radius: 5px;
     border-color:SINGLE_LINE_COLOR;
 }
+
 
 
 /*NewNoteGroupForm*/

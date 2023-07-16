@@ -3,4 +3,6 @@
 ExtraQTreeWidgetItem::ExtraQTreeWidgetItem(NodeType type)
 {
     nodeType=type;
+
+
 }

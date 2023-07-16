@@ -28,8 +28,8 @@ HabitItem::HabitItem(QString name,QWidget *parent) :
 
     // 绑定成员函数到实例
     bindFunctionOfreceiveBtnChecked = std::bind(&HabitItem::receiveBtnChecked, this, std::placeholders::_1);
-    // 注册theme全局事件
     CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
+
     bindFunctionOfreceiveThemeChanged=std::bind(&HabitItem::receiveThemeChanged, this);
     ThemeManager::getInstance().registerThemeGlobalEvent(bindFunctionOfreceiveThemeChanged);
 }
@@ -61,6 +61,9 @@ void HabitItem::mousePressEvent(QMouseEvent *event)
 //将habit中的btn初始化是否checked
 void HabitItem::InitCheckinBtn(const std::vector<checkin_dateitem *> &checkinItems)
 {
+    auto uncheck_datelist=GetPeriodDates(QDate::currentDate(),checkinItems,false);
+    auto check_datelist=GetPeriodDates(QDate::currentDate(),checkinItems,true);
+    bool is_auto_checked=check_datelist.size()>=checkinRule->Times&&checkinRule->period!=CheckinPeriod::DayPeriod;
     for(int i=0;i<ui->weekWidget->layout()->count();i++)
     {
         WeekToolButton* btn= dynamic_cast<WeekToolButton*>(ui->weekWidget->layout()->itemAt(i)->widget());
@@ -75,12 +78,22 @@ void HabitItem::InitCheckinBtn(const std::vector<checkin_dateitem *> &checkinIte
         {
             btn->setWeekButtonClicked(true);
             checkedCount++;
-            logger->log(QString("%1 %2 set is true").arg(projectName).arg(date.toString()));
         }
         else
         {
             btn->setWeekButtonClicked(false);
-            logger->log(QString("%1 %2 set is false").arg(projectName).arg(date.toString()));
+        }
+        //当配置文件中当前周期的签到数达到规则中的数据，则将该周期全部打卡
+        //比如规则为每月打卡5天，找到配置文件中当月的所有打卡日期，若超过5，则将该月全部打卡
+        if(is_auto_checked)
+        {
+            for(auto togetherCheck : uncheck_datelist)
+            {
+                if(togetherCheck==date)
+                {
+                    btn->setWeekButtonClicked(false,is_auto_checked);
+                }
+            }
         }
     }
     ui->countLabel->setText(QString("%1").arg(checkedCount));
@@ -98,7 +111,72 @@ void HabitItem::InitWeekButtons()
         btn->setToolTip(thisWeek[i].toString("M月d号 ddd"));
     }
 }
+//isCheckd=true 返回周期范围内已经签到的
+//false 返回周期范围内未签到的
+std::vector<QDate> HabitItem::GetPeriodDates(QDate checkedDate,const std::vector<checkin_dateitem *> &checkinItems,bool isCheckd)
+{
+    std::vector<QDate> unCheckingDates;
+    std::vector<QDate> CheckingDates;
+    // 将checkinItems中的日期转为QDate对象，并存储到另一个向量中
+    std::vector<QDate> tempList;
+    for (auto item : checkinItems)
+    {
+        tempList.push_back(item->date);
+    }
 
+    QDate startDate = checkedDate.addDays(-checkedDate.dayOfWeek() + 1);
+    QDate endDate = startDate.addDays(6);
+
+    // 遍历当前周的日期范围
+    for (QDate date = startDate; date <= endDate; date = date.addDays(1))
+    {
+        // 检查日期是否属于checkinItems中的日期，如果不属于，则添加到matchingDates中
+        if (std::find(tempList.begin(), tempList.end(), date) == tempList.end())
+        {
+            unCheckingDates.push_back(date);
+        }
+        else
+        {
+            CheckingDates.push_back(date);
+        }
+    }
+    return isCheckd? CheckingDates:unCheckingDates;
+}
+
+
+void HabitItem::ReSetCheckinStatus(checkin_dateitem * dateItem)
+{
+    if(dateItem->project_name!=projectName)
+    {
+        return;
+    }
+    auto result= CheckinConfig::getInstance().LoadCheckinConfig();
+    std::vector<checkin_dateitem*> checkin_list=result.checkin_map[dateItem->project_name];
+    //当配置文件中当前周期的签到数达到规则中的数据，则将该周期全部打卡
+    //比如规则为每月打卡5天，找到配置文件中当月的所有打卡日期，若超过5，则将该月全部打卡
+    auto uncheck_datelist=GetPeriodDates(dateItem->date,checkin_list,false);
+    auto check_datelist=GetPeriodDates( dateItem->date,checkin_list,true);
+    for(int i=0;i<ui->weekWidget->layout()->count();i++)
+    {
+        WeekToolButton* btn= dynamic_cast<WeekToolButton*>(ui->weekWidget->layout()->itemAt(i)->widget());
+        QDate buttonDate=btn->getDate();
+        //将传入的单独的日期先打卡
+        if(dateItem->date==buttonDate)
+        {
+            btn->setWeekButtonClicked(dateItem->ischecked);
+        }
+        //判断是否满足条件
+        bool is_auto_checked
+                =check_datelist.size()>=checkinRule->Times&&checkinRule->period!=CheckinPeriod::DayPeriod;
+        for(auto togetherCheck : uncheck_datelist)
+        {
+            if(togetherCheck==buttonDate)
+            {
+                btn->setWeekButtonClicked(false,is_auto_checked);
+            }
+        }
+    }
+}
 
 //当按钮点击时，更新右侧x/7 label
 void HabitItem::receiveBtnChecked(checkin_dateitem *dateItem)
@@ -107,6 +185,7 @@ void HabitItem::receiveBtnChecked(checkin_dateitem *dateItem)
     {
         return;
     }
+
     for(int i=0;i<ui->weekWidget->layout()->count();i++)
     {
         WeekToolButton* btn= dynamic_cast<WeekToolButton*>(ui->weekWidget->layout()->itemAt(i)->widget());
@@ -118,6 +197,7 @@ void HabitItem::receiveBtnChecked(checkin_dateitem *dateItem)
             break;
         }
     }
+    ReSetCheckinStatus(dateItem);
 }
 
 void HabitItem::setHabitSelected(bool isSelect)

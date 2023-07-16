@@ -163,10 +163,21 @@ void noteconfig::updateXml(OperationType type,QTreeWidgetItem *currentNode,QTree
         QDomNode domElement=util::selectSingleNode(path,&doc);
         //remove the currentNode
         domElement.parentNode().removeChild(domElement);
-        //recyledomNode  add the current
-        auto recylePath=util::treeItemToNodePath(newNode);
-        QDomNode recyleDomNode=util::selectSingleNode(recylePath,&doc);
-        recyleDomNode.appendChild(domElement);
+        //newdomNode  add the current
+        auto newPath=util::treeItemToNodePath(newNode);
+        QDomNode newDomNode=util::selectSingleNode(newPath,&doc);
+        newDomNode.appendChild(domElement);
+    }
+    else if(type==InsertNode)
+    {
+        auto path=util::treeItemToNodePath(currentNode);
+        QDomNode domElement=util::selectSingleNode(path,&doc);
+        //remove the currentNode
+        domElement.parentNode().removeChild(domElement);
+        //newdomNode  add the current
+        auto newPath=util::treeItemToNodePath(newNode);
+        QDomNode newDomNode=util::selectSingleNode(newPath,&doc);
+        newDomNode.parentNode().insertBefore(domElement,newDomNode);
     }
     else if(type==DeleteNode)
     {

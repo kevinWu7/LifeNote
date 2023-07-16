@@ -33,7 +33,7 @@ checkinWidget::checkinWidget(QWidget *parent) :
     connect(ui->addItemBtn,&QToolButton::clicked,this,&checkinWidget::addItemBtn_clicked);
 
     auto result= CheckinConfig::getInstance().LoadCheckinConfig();
-    ui->calendarWidget->setHabitItem({},"",-1);
+    ui->calendarWidget->setHabitItem({},"",-1,nullptr);
     //加载habititem
     for(auto item :result.project_list)
     {
@@ -43,7 +43,7 @@ checkinWidget::checkinWidget(QWidget *parent) :
         {
             currentHabit=habit;
             habit->setHabitSelected(true);
-            ui->calendarWidget->setHabitItem(result.checkin_map[item->project_name],item->project_name,habit->iconIndex);
+            ui->calendarWidget->setHabitItem(result.checkin_map[item->project_name],item->project_name,habit->iconIndex,habit->checkinRule);
         }
         connect(habit,&HabitItem::customContextMenuRequested,this,&checkinWidget::onRightMenuRequested);
     }
@@ -100,7 +100,7 @@ void checkinWidget::onMenuEdit()
     {
          habitForm->move(this->window()->frameGeometry().topLeft() +this->window()->rect().center() -habitForm->rect().center());//使子窗体居中
     }
-    habitForm->setEditMode(currentHabit->projectName,currentHabit->iconIndex);
+    habitForm->setEditMode(currentHabit->projectName,currentHabit->iconIndex,currentHabit->checkinRule);
     habitForm->show();
 
 }
@@ -124,7 +124,7 @@ void checkinWidget::onMenuDelete()
         }
     }
     //若删除光了，设置一个空的habitItem。
-    ui->calendarWidget->setHabitItem({},"",-1);
+    ui->calendarWidget->setHabitItem({},"",-1,nullptr);
 }
 
 void checkinWidget::timerOutTriggered()
@@ -182,7 +182,7 @@ HabitItem* checkinWidget::addHabitItem(project_info *project)
     logger->log(QString(project->project_name));
     HabitItem *habit =new HabitItem(project->project_name);
     habit->setIconIndex(project->iconIndex.toInt());
-
+    habit->checkinRule=project->rule;
     int index = ui->leftNavigateWidget->layout()->count()-1; // Replace with the desired index where you want to insert the item
     QBoxLayout *boxLayout = dynamic_cast<QBoxLayout*>(ui->leftNavigateWidget->layout());
     if (boxLayout)
@@ -193,32 +193,41 @@ HabitItem* checkinWidget::addHabitItem(project_info *project)
     return habit;
 }
 
-void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex,int formMode)
+void checkinWidget::onReceiveNewHabitFormData(QString name, int iconIndex,int formMode,CheckinRule *rule)
 {
     if(formMode==0) //新建habit
     {
         project_info *project=new project_info; //这里需要释放或者改成直接创建，否则会导致内存泄漏
         project->iconIndex=QString::number(iconIndex);
         project->project_name=name;
+        project->rule=rule;
         HabitItem *habit= addHabitItem(project);
+        habit->checkinRule=rule;
         CheckinConfig::getInstance().updateHabitXml(AddHabit, project);
         connect(habit,&HabitItem::customContextMenuRequested,this,&checkinWidget::onRightMenuRequested);
         setSelectedHabit(habit);
     }
     else //编辑habit
     {
+
         project_info *old_project=new project_info;
         old_project->iconIndex=QString::number(currentHabit->iconIndex);
         old_project->project_name=currentHabit->projectName;
-        currentHabit->setIconIndex(iconIndex);
-        currentHabit->setProjectName(name);
-        currentHabit->InitWeekButtons();
-
-        ui->calendarWidget->editHabitItem(name,iconIndex);
         project_info *new_project=new project_info;
         new_project->iconIndex=QString::number(iconIndex);
         new_project->project_name=name;
+        new_project->rule=rule;
         CheckinConfig::getInstance().updateHabitXmlInEditMode(EditHabit, new_project,old_project);
+
+        currentHabit->setIconIndex(iconIndex);
+        currentHabit->setProjectName(name);
+        currentHabit->checkinRule=rule;
+        currentHabit->InitWeekButtons();
+        auto result= CheckinConfig::getInstance().LoadCheckinConfig();
+        currentHabit->InitCheckinBtn(result.checkin_map[name]);
+
+        ui->calendarWidget->editHabitItem(name,iconIndex,rule);
+
     }
 }
 
@@ -252,7 +261,7 @@ void checkinWidget::setSelectedHabit(HabitItem *habit)
         if(item->selected)//切换右侧日历本到选中的habit
         {
             ui->calendarWidget->setHabitItem(result.checkin_map[item->project_name],
-                    item->project_name, habit->iconIndex);
+                    item->project_name, habit->iconIndex,habit->checkinRule);
         }
     }
 }

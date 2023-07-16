@@ -151,6 +151,7 @@ void TextEditContainer::onFontReduceBtn_clicked()
 void TextEditContainer::initfontCombobox()
 {
     ui->fontComboBox->clear();
+
     for(const QString &afont : util::fontVector)
     {
         ui->fontComboBox->addItem(afont);

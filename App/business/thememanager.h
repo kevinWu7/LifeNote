@@ -22,9 +22,11 @@ public:
     static ThemeManager& getInstance();
     static QString ThemeId;
     static QString PictureThemeId;
+    static bool isDarkTheme; //是否为深色系皮肤,目前仅用于选中节点后，文字高亮
     static double Transparency;
     static double LeftTransparency;
     static double RightTransparency;
+
     // 注册全局事件
     void registerThemeGlobalEvent(themeChangedCallback callback);
     void unregisterThemeGlobalEvent(themeChangedCallback callback);
@@ -37,6 +39,7 @@ private:
     ThemeManager(const ThemeManager&) = delete;
     ThemeManager& operator=(const ThemeManager&) = delete;
     QString getBackGround2(QString baseColor,int diff);
+
     static ThemeManager* instance;
     static std::once_flag onceFlag;
 };

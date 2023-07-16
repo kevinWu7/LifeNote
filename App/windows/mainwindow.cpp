@@ -385,6 +385,11 @@ void MainWindow::onAddnewBtn_clicked()
 
 void MainWindow::checkinBtn_clicked()
 {
+    if(!ui->checkinBtn->isChecked())
+    {
+        ui->checkinBtn->setChecked(true);
+        return;
+    }
     _checkinWidget->setVisible(true);
     textEditContainer->setVisible(false);
     _themeSwitchWidget->setVisible(false);
@@ -395,6 +400,11 @@ void MainWindow::checkinBtn_clicked()
 
 void MainWindow::themeSettingBtn_clicked()
 {
+    if(!ui->themeSettingBtn->isChecked())
+    {
+        ui->themeSettingBtn->setChecked(true);
+        return;
+    }
      _themeSwitchWidget->setVisible(true);
      textEditContainer->setVisible(false);
      _checkinWidget->setVisible(false);
@@ -405,6 +415,7 @@ void MainWindow::themeSettingBtn_clicked()
 
 void MainWindow::systemSettingBtn_clicked()
 {
+
     ui->themeSettingBtn->setChecked(false);
     ui->checkinBtn->setChecked(false);
     //_themeSwitchWidget->setFocus();

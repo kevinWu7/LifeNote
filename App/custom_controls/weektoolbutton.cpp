@@ -2,6 +2,7 @@
 #include "weektoolbutton.h"
 #include "calendarcentral.h"
 #include "roundedtooltiphelper.h"
+#include "util.h"
 
 
 WeekToolButton::WeekToolButton(QWidget *parent,bool _ischecked)
@@ -11,10 +12,6 @@ WeekToolButton::WeekToolButton(QWidget *parent,bool _ischecked)
      initBaseStyleSheet();
      updateSizeStyle(16);
      isChecked=_ischecked;
-     // 绑定成员函数到实例
-     bindFunctionOfreceiveBtnChecked = std::bind(&WeekToolButton::receiveBtnChecked, this, std::placeholders::_1);
-     // 注册全局事件
-     CalendarCentral::getInstance().registerGlobalEvent(bindFunctionOfreceiveBtnChecked);
 }
 
 void WeekToolButton::initBaseStyleSheet()
@@ -38,27 +35,16 @@ void WeekToolButton::updateSizeStyle(int size)
       this->setIconSize(QSize(size,size));
 }
 
-void WeekToolButton::receiveBtnChecked(checkin_dateitem* dateItem)
-{
-    if(dateItem->sender==0 ||dateItem->project_name!=project_name)
-    {
-        return;
-    }
-    if(dateItem->date== currentDate)
-    {
-       setWeekButtonClicked(dateItem->ischecked);
-    }
-}
 
 void WeekToolButton::WeekButton_clicked()
 {
-    setWeekButtonClicked(!isChecked);
+    isChecked=!isChecked;
     checkin_dateitem *item =new checkin_dateitem;
     item->date=currentDate;
     item->tips="";
     item->ischecked=isChecked;
     item->project_name=project_name;
-    item->sender=0;
+    item->sender=senderBtn::weekBtn;
     if(isChecked)
     {
         CheckinConfig::getInstance().updateDetailXml(CheckinAction,item);
@@ -91,22 +77,25 @@ const QDate& WeekToolButton::getDate()
 
 
 //仅仅改变ui状态
-void WeekToolButton::setWeekButtonClicked(bool _ischecked)
+void WeekToolButton::setWeekButtonClicked(bool _ischecked,bool is_auto_checked)
 {
     if(_ischecked)
     {
-         this->setIcon(QIcon(":/icons/res/checkin/tick.png"));
+         this->setIcon(QIcon(":/icons/res/checkin/tick.svg"));
     }
     else
     {
          this->setIcon(QIcon());
+    }
+    if(is_auto_checked)
+    {
+         this->setIcon(util::CreateColorSvgIcon(":/icons/res/checkin/tick.svg","rgb(132,174,255)"));
     }
     isChecked=_ischecked;
 }
 
 WeekToolButton::~WeekToolButton()
 {
-    CalendarCentral::getInstance().unregisterGlobalEvent(bindFunctionOfreceiveBtnChecked);
     RoundedToolTipHelper::installHelper(this);
 }
 

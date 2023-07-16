@@ -203,7 +203,7 @@ bool util::copyDir(const QString &source, const QString &destination, bool overr
     if (!dstPath.endsWith(QDir::separator()))
         dstPath += QDir::separator();
 
-    bool error = false;
+    bool error = true; //false代表失败，ture代表成功
     QStringList fileNames = directory.entryList(QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden);
     for (QStringList::size_type i=0; i != fileNames.size(); ++i)
     {
@@ -227,13 +227,14 @@ bool util::copyDir(const QString &source, const QString &destination, bool overr
         {
             QDir dstDir(dstFilePath);
             dstDir.mkpath(dstFilePath);
-            if (!copyDir(srcFilePath, dstFilePath, override))
+            error=copyDir(srcFilePath, dstFilePath, override);
+            if(!error)
             {
-                error = true;
+                return false;
             }
         }
     }
-    return !error;
+    return error;
 }
 
 bool util::isChildItem(QTreeWidgetItem* parentItem, QTreeWidgetItem* childItem)

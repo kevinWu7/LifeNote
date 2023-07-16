@@ -49,6 +49,8 @@ void CheckinConfig::updateHabitXmlInEditMode(HabitOperationType type,project_inf
             {
                 childElement.setAttribute(ATTRIBUTE_NAME,project->project_name);
                 childElement.setAttribute(ATTRIBUTE_ICONINDEX,project->iconIndex);
+                childElement.setAttribute(ATTRIBUTE_RULE_PERIOD,project->rule->period);
+                childElement.setAttribute(ATTRIBUTE_RULE_TIMES,project->rule->Times);
             }
         }
         QDomNode parentDetailDomElement=util::selectSingleNode(NODENAME_DETAILPROJECT,&doc);
@@ -95,9 +97,11 @@ void CheckinConfig::updateHabitXml(HabitOperationType type,project_info * projec
         QDomNode parentDomElement=util::selectSingleNode(NODENAME_TOTALPROJECT,&doc);
         QDomElement newDomElement=doc.createElement(NODENAME_PROJECT);
         parentDomElement.appendChild(newDomElement);
-        newDomElement.setAttribute(ATTRIBUTE_NAME,project->project_name);
+        newDomElement.setAttribute(ATTRIBUTE_RULE_PERIOD,project->rule->period);
+        newDomElement.setAttribute(ATTRIBUTE_RULE_TIMES,project->rule->Times);
         newDomElement.setAttribute(ATTRIBUTE_ICONINDEX,project->iconIndex);
         newDomElement.setAttribute(ATTRIBUTE_TYPE,project->type);
+        newDomElement.setAttribute(ATTRIBUTE_NAME,project->project_name);
         //添加detailProject
         QDomNode detailParentDomElement=util::selectSingleNode(NODENAME_DETAILPROJECT,&doc);
         QDomElement detailNewDomElement=doc.createElement(NODENAME_PROJECT);
@@ -266,19 +270,28 @@ xmlLoadResult CheckinConfig::LoadCheckinConfig()
                     if(isTotalProjectRange)
                     {
                         project_info *project = new project_info;
+                        project->rule=new CheckinRule;
                         foreach (const QXmlStreamAttribute & attribute, reader.attributes())
                         {
                             if(attribute.name().toString()==ATTRIBUTE_NAME)
                             {
                                 project->project_name= attribute.value().toString();
                             }
-                            if(attribute.name().toString()==ATTRIBUTE_ICONINDEX)
+                            else if(attribute.name().toString()==ATTRIBUTE_ICONINDEX)
                             {
                                 project->iconIndex= attribute.value().toString();
                             }
-                            if(attribute.name().toString()==ATTRIBUTE_SELECTED)
+                            else if(attribute.name().toString()==ATTRIBUTE_SELECTED)
                             {
                                 project->selected=attribute.value().toString()=="true";
+                            }
+                            else if(attribute.name().toString()==ATTRIBUTE_RULE_PERIOD)
+                            {
+                                project->rule->period= static_cast<CheckinPeriod>(attribute.value().toInt());
+                            }
+                            else if(attribute.name().toString()==ATTRIBUTE_RULE_TIMES)
+                            {
+                                project->rule->Times= attribute.value().toInt();
                             }
                         }
                         result.project_list.push_back(project);

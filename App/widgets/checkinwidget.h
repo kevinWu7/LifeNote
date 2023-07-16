@@ -35,7 +35,7 @@ public slots:
 
 private:
     Ui::checkinWidget *ui;
-    void onReceiveNewHabitFormData(QString name, int iconIndex,int formMode);
+    void onReceiveNewHabitFormData(QString name, int iconIndex,int formMode,CheckinRule *rule);
     void initHabitRightMenu();
     HabitItem* addHabitItem(project_info *project);
     void onReceiveHabitMousePressed(HabitItem *habit);

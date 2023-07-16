@@ -4,7 +4,7 @@
 #include "ui_newnotegroupform.h"
 
 
-
+#define DEFAULT_NAME "未命名笔记本"
 #define  ROUND_RADIUS 5
 
 NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
@@ -18,6 +18,7 @@ NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
     InitColorPushBtn();
     InitRoundRadius();
     InitEvent();
+    ui->nameLineEdit->setText(DEFAULT_NAME);
 }
 
 void NewNoteGroupForm::InitColorPushBtn()
@@ -80,15 +81,21 @@ NewNoteGroupForm::~NewNoteGroupForm()
 
 void NewNoteGroupForm::mousePressEvent(QMouseEvent *event)
 {
-    this->windowPos = this->pos();       // 获得部件当前位置
-    this->mousePos = event->globalPosition(); // 获得鼠标位置
-    this->dPos = mousePos - windowPos;   // 移动后部件所在的位置
+    if (ui->nameLabel->geometry().contains(event->pos()))
+    {
+        this->windowPos = this->pos();       // 获得部件当前位置
+        this->mousePos = event->globalPosition(); // 获得鼠标位置
+        this->dPos = mousePos - windowPos;   // 移动后部件所在的位置
+    }
 }
 
 void NewNoteGroupForm::mouseMoveEvent(QMouseEvent *event)
 {
-    this->move(event->globalPosition().x() - this->dPos.x(),
-               event->globalPosition().y() - this->dPos.y());
+    if (ui->nameLabel->geometry().contains(event->pos()))
+    {
+        this->move(event->globalPosition().x() - this->dPos.x(),
+                   event->globalPosition().y() - this->dPos.y());
+    }
 }
 
 void NewNoteGroupForm::okBtn_clicked()
@@ -105,13 +112,13 @@ void NewNoteGroupForm::okBtn_clicked()
         ui->warningLabel->setVisible(false);
     }
     emit sendParentWindowData(ui->nameLineEdit->text(),color_index);
-    ui->nameLineEdit->setText("");
+    ui->nameLineEdit->setText(DEFAULT_NAME);
     this->setVisible(false);
 }
 
 void NewNoteGroupForm::cancleBtn_clicked()
 {
-    ui->nameLineEdit->setText("");
+    ui->nameLineEdit->setText(DEFAULT_NAME);
     ui->warningLabel->setVisible(false);
     this->setVisible(false);
 }

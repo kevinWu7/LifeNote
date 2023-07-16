@@ -5,7 +5,7 @@
 #include <QRegularExpression>
 #include "thememanager.h"
 #include "theme.h"
-#include "themeconfig.h""
+#include "themeconfig.h"
 #include "util.h"
 #include "logger.h"
 
@@ -19,6 +19,7 @@ QString ThemeManager::PictureThemeId="none";;
 double  ThemeManager::Transparency=1.0;
 double  ThemeManager::LeftTransparency=1.0;
 double  ThemeManager::RightTransparency=1.0;
+bool ThemeManager::isDarkTheme=true;
 
 std::once_flag ThemeManager::onceFlag;
 
@@ -134,12 +135,14 @@ void ThemeManager::switchTheme(QString _themeId,QString picture_ThemeId,bool isF
         path=QCoreApplication::applicationDirPath()+ "/qss/dark.qss";
         currentTheme=themeDark;
         baseBackgroundColor=currentTheme["BACKGROUND_COLOR1"];
+        isDarkTheme=true;
     }
     else if(_themeId=="light")
     {
         path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
         currentTheme=themeLight;
         baseBackgroundColor=currentTheme["BACKGROUND_COLOR1"];
+        isDarkTheme=false;
     }
     else  //纯色主题
     {
@@ -150,24 +153,23 @@ void ThemeManager::switchTheme(QString _themeId,QString picture_ThemeId,bool isF
             path=QCoreApplication::applicationDirPath()+ "/qss/light.qss";
             currentTheme=themeLight;
             currentTheme["BACKGROUND_COLOR2"]= getBackGround2(baseBackgroundColor,-20);
-            currentTheme["CONTROL_SELECTED"]=  util::generateRGBAString("rgb(40,40,40)",0.30);
-            currentTheme["CONTROL_NOSELECTED"]=  util::generateRGBAString("rgb(40,40,40)",0.15);
-            currentTheme["CONTROL_POOLTEXT"]= getBackGround2(baseBackgroundColor,-100);
-            currentTheme["SINGLE_LINE_COLOR"]=util::generateRGBAString(getBackGround2(baseBackgroundColor,-30),0.5);
+            currentTheme["CONTROL_POOLTEXT"]= getBackGround2(baseBackgroundColor,-100);//没什么问题,显示正常
+            currentTheme["SINGLE_LINE_COLOR"]=util::generateRGBAString(getBackGround2(baseBackgroundColor,-30),0.7);
             currentTheme["SCROLLBAR_HANDLE"]= getBackGround2(baseBackgroundColor,-50);
             currentTheme["SCROLLBAR_HOVER"]= getBackGround2(currentTheme["SCROLLBAR_HANDLE"],20);
+            isDarkTheme=false;
         }
         else
         {
             path=QCoreApplication::applicationDirPath()+ "/qss/dark.qss";
             currentTheme=themeDark;
+
             currentTheme["BACKGROUND_COLOR2"]= getBackGround2(baseBackgroundColor,30);
-            currentTheme["CONTROL_SELECTED"]= util::generateRGBAString("rgb(255,255,255)",0.35);
-            currentTheme["CONTROL_NOSELECTED"]= util::generateRGBAString("rgb(255,255,255)",0.15);
             currentTheme["CONTROL_POOLTEXT"]= getBackGround2(baseBackgroundColor,100);
-            currentTheme["SINGLE_LINE_COLOR"]=util::generateRGBAString(getBackGround2(baseBackgroundColor,70),0.5);
+            currentTheme["SINGLE_LINE_COLOR"]=util::generateRGBAString(getBackGround2(baseBackgroundColor,70),0.7);
             currentTheme["SCROLLBAR_HANDLE"]= getBackGround2(baseBackgroundColor,50);
             currentTheme["SCROLLBAR_HOVER"]= getBackGround2(currentTheme["SCROLLBAR_HANDLE"],30);
+            isDarkTheme=true;
         }
         currentTheme["BACKGROUND_COLOR1"]=baseBackgroundColor;
     }

@@ -17,6 +17,8 @@
 #define NODENAME_CHECKINDATE "checkin"
 #define ATTRIBUTE_NAME "name"
 #define ATTRIBUTE_DATE "date"
+#define ATTRIBUTE_RULE_PERIOD "rule_peroid"
+#define ATTRIBUTE_RULE_TIMES "rule_time"
 #define ATTRIBUTE_TIP "tip"
 #define ATTRIBUTE_TYPE "type"
 #define ATTRIBUTE_ISCHECKED "ischeckd"
@@ -30,6 +32,7 @@ enum OperationType
     AddNodeGroup,
     DeleteNode,
     MoveNode,
+    InsertNode, //拖拽时，插入到某两个node之间
     RenameNode,
 };
 
@@ -53,6 +56,20 @@ enum NodeType
 {
     ChildNode,
     ParentNode,
+};
+
+enum CheckinPeriod
+{
+    DayPeriod=0,
+    WeekPeriod=1,
+    MonthPeriod=2,
+};
+
+class CheckinRule
+{
+public:
+    CheckinPeriod period=DayPeriod;
+    int Times=1;
 };
 
 

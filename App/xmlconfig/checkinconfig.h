@@ -8,7 +8,11 @@
 
 #define CHECKIN_CONFIG_PATH "/config/checkin.xml"
 
-
+enum senderBtn
+{
+    weekBtn=0,
+    monthBtn=1,
+};
 
 struct checkin_dateitem
 {
@@ -16,7 +20,7 @@ struct checkin_dateitem
     QDate date;
     bool ischecked;
     QString tips;
-    int sender;//0代表weekbtn，1代表monthbtn
+    senderBtn sender;
 };
 
 struct project_info
@@ -25,6 +29,7 @@ struct project_info
     QString iconIndex;
     bool selected;
     QString type;
+    CheckinRule *rule;
 };
 
 struct xmlLoadResult

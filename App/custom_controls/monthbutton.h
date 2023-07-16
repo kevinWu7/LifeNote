@@ -14,13 +14,13 @@ public:
      const QDate& getDate();
      QDate currendDisplayDate; //保存当前页面的月份第一天
      void receiveBtnChecked(checkin_dateitem* dateItem);
-     void setMonthButtonClicked(bool _ischeck);
+     void setMonthButtonClicked(bool _ischeck,bool is_auto_checked=false);
      bool isChecked=false;
      QString project_name;
      ~monthButton();
 private:
      void monthButton_clicked();
-     std::function<void(checkin_dateitem *)> bindFunctionOfreceiveBtnChecked;
+    // std::function<void(checkin_dateitem *)> bindFunctionOfreceiveBtnChecked;
      QDate currentDate;//记录当前按钮保存的日期
      QString baseStyleSheet;
      void initBaseStyleSheet();

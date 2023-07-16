@@ -8,6 +8,47 @@
 #include <QTimer>
 #include "extraqtreewidgetitem.h"
 #include "thememanager.h"
+#include <QStyledItemDelegate>
+#include <QPainter>
+#include "util.h"
+#include "theme.h"
+
+
+
+
+class CustomDelegate : public QStyledItemDelegate {
+public:
+    enum UserRoleData
+    {
+        NoLine=0,
+        TopLine=1,
+        BottomLine=2,
+    };
+    void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override {
+        // 绘制默认项
+        QStyledItemDelegate::paint(painter, option, index);
+
+        // 获取要绘制横线的项的数据
+         QVariant data = index.data(Qt::UserRole); // 假设项的数据中包含一个标志用于指示是否绘制横线
+
+         if (data.isValid() && data.toInt()>NoLine)
+         {
+             // 绘制横线
+             QRect rect = option.rect;
+             QPen pen(util::generateRGBAColor(currentTheme["CONTROL_TEXT"], 1));  // 创建一个带有指定颜色的 pen
+             pen.setWidth(2);  // 设置宽度为 2 像素
+             painter->setPen(pen);  // 应用 pen
+             if(data.toInt()==TopLine)
+             {
+                 painter->drawLine(rect.left(), rect.top(), rect.right(), rect.top());
+             }
+             else if(data.toInt()==BottomLine)
+             {
+                 painter->drawLine(rect.left(), rect.bottom(), rect.right(), rect.bottom());
+             }
+         }
+    }
+};
 
 class LNTreeWidget:public QTreeWidget
 {
@@ -18,17 +59,19 @@ protected:
     void leaveEvent(QEvent *event) override;
     void dropEvent(QDropEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
+
     void dragMoveEvent(QDragMoveEvent *event) override;
     void dragLeaveEvent(QDragLeaveEvent *event) override;
+
     void wheelEvent(QWheelEvent* event) override;
-    //TODO:新增一个coloredItem全局变量，目的是为了实时更新拖动到目标item时
-    //目标item能够改变背景色为灰色，并且在移除目标item时，能够重新变回白色
-    //但是暂时无法在dragEnterEvent中实现该效果(dragEnterEvent中无法获取目标item，是由TreeWidget重写该方法，所以只会进一次)
-    //只能在dragMoveEvent中配合这个变量来实现此效果，不断的将目标item添加到vector和将其移除vector这种较为搓的方式来实现
-    std::vector<ExtraQTreeWidgetItem*> coloredItem;
+  //  bool eventFilter(QObject* obj, QEvent* event) override;
+    ExtraQTreeWidgetItem* targetItem=nullptr;
+    QRect draggingLineRect;
+    void traverseTreeWidgetItems(QTreeWidgetItem *item);
     QTimer *timer=nullptr;
     void themeChanged();
     themeChangedCallback bFuncThemeChangeCallback;
+    CustomDelegate delegate;
     ~LNTreeWidget();
 };
 

@@ -81,15 +81,21 @@ NewNoteGroupForm::~NewNoteGroupForm()
 
 void NewNoteGroupForm::mousePressEvent(QMouseEvent *event)
 {
-    this->windowPos = this->pos();       // 获得部件当前位置
-    this->mousePos = event->globalPosition(); // 获得鼠标位置
-    this->dPos = mousePos - windowPos;   // 移动后部件所在的位置
+    if (ui->nameLabel->geometry().contains(event->pos()))
+    {
+        this->windowPos = this->pos();       // 获得部件当前位置
+        this->mousePos = event->globalPosition(); // 获得鼠标位置
+        this->dPos = mousePos - windowPos;   // 移动后部件所在的位置
+    }
 }
 
 void NewNoteGroupForm::mouseMoveEvent(QMouseEvent *event)
 {
-    this->move(event->globalPosition().x() - this->dPos.x(),
-               event->globalPosition().y() - this->dPos.y());
+    if (ui->nameLabel->geometry().contains(event->pos()))
+    {
+        this->move(event->globalPosition().x() - this->dPos.x(),
+                   event->globalPosition().y() - this->dPos.y());
+    }
 }
 
 void NewNoteGroupForm::okBtn_clicked()

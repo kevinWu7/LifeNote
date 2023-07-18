@@ -2,7 +2,7 @@
 #include "util.h"
 #include "newhabitform.h"
 #include "ui_newhabitform.h"
-#include "logger.h""
+#include "logger.h"
 
 
 #define DefaultDisplayTip "未命名项目"
@@ -15,7 +15,7 @@ NewHabitForm::NewHabitForm(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setWindowModality(Qt::ApplicationModal);
-
+    setFixedSize(this->width(), this->height()); //禁止缩放
     initIConBtn();
     InitRoundRadius();
     connect(ui->okBtn,&QPushButton::clicked,this,&NewHabitForm::okBtn_clicked);
@@ -154,10 +154,12 @@ void NewHabitForm::cancleBtn_clicked()
     ui->timesComboBox->setCurrentIndex(0);
     formMode=0;
 }
+
 void NewHabitForm::mousePressEvent(QMouseEvent *event)
 {
-    if (ui->nameLabel->geometry().contains(event->pos()))
+    if(event->pos().y()>0&&event->pos().y()<30)
     {
+        isDrag=true;
         this->windowPos = this->pos();       // 获得部件当前位置
         this->mousePos = event->globalPosition(); // 获得鼠标位置
         this->dPos = mousePos - windowPos;   // 移动后部件所在的位置
@@ -166,11 +168,16 @@ void NewHabitForm::mousePressEvent(QMouseEvent *event)
 
 void NewHabitForm::mouseMoveEvent(QMouseEvent *event)
 {
-    if (ui->nameLabel->geometry().contains(event->pos()))
+    if(isDrag)
     {
-        this->move(event->globalPosition().x() - this->dPos.x(),
-            event->globalPosition().y() - this->dPos.y());
+         this->move(event->globalPosition().x() - this->dPos.x(),
+               event->globalPosition().y() - this->dPos.y());
     }
+}
+
+void NewHabitForm::mouseReleaseEvent(QMouseEvent *event)
+{
+    isDrag=false;
 }
 
 NewHabitForm::~NewHabitForm()

@@ -24,11 +24,13 @@ public:
     void InitRoundRadius();
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
 
     //记录鼠标，窗口位置
     QPointF windowPos;
     QPointF mousePos;
     QPointF dPos;
+    bool isDrag=false;
 
     void cancleBtn_clicked();
     void okBtn_clicked();

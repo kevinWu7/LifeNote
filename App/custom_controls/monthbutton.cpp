@@ -1,5 +1,6 @@
 #include "monthbutton.h"
 #include "calendarcentral.h"
+#include "theme.h"
 
 
 monthButton::monthButton(QWidget *parent ,bool _ischecked)
@@ -71,7 +72,7 @@ void monthButton::monthButton_clicked()
 void monthButton::setMonthButtonClicked(bool _ischeck,bool is_auto_checked)
 {
     QDate _currentDate=QDate::currentDate();
-    QString background=_ischeck?"rgb(72,114,251)":"rgb(239,239,239)";
+    QString background=_ischeck? currentTheme["CHECKIN_BACKGROUND"]:"rgb(239,239,239)";
     background=is_auto_checked?"rgba(132,174,255,0.9)" :background;
     if(currentDate==_currentDate)
     {

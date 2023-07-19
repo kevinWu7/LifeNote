@@ -86,11 +86,11 @@ void ThemeSwitchWidget::colorButtonClicked()
         logger->log(QString(button->property("color").toString()));
         if(themeId.contains("Red"))
         {
-            button->setIcon(QIcon(":/icons/res/checkin/tick.svg"));
+            button->setIcon(util::CreateColorSvgIcon(":/icons/res/checkin/selected.svg",currentTheme["CHECKIN_BACKGROUND"]));
         }
         else
         {
-            button->setIcon(util::CreateColorSvgIcon(":/icons/res/checkin/tick.svg","rgb(224,133,75)"));
+            button->setIcon(QIcon(":/icons/res/checkin/selected.svg"));
         }
         if(currentCheckedBtn&&currentCheckedBtn!=button)
         {
@@ -207,16 +207,16 @@ void ThemeSwitchWidget::InitDiyColorButtons()
             button->setProperty("themeId",colorKry.first);
             button->setProperty("color",colorKry.second);
             button->setText("");
-            button->setIconSize(QSize(12,12));
+            button->setIconSize(QSize(14,14));
             if(colorKry.first==ThemeManager::getInstance().ThemeId)
             {
                 if(ThemeManager::getInstance().ThemeId.contains("Red"))
                 {
-                    button->setIcon(QIcon(":/icons/res/checkin/tick.svg"));
+                    button->setIcon(util::CreateColorSvgIcon(":/icons/res/checkin/selected.svg",currentTheme["CHECKIN_BACKGROUND"]));
                 }
                 else
                 {
-                    button->setIcon(util::CreateColorSvgIcon(":/icons/res/checkin/tick.svg","rgb(224,133,75)"));
+                    button->setIcon(QIcon(":/icons/res/checkin/selected.svg"));
                 }
                 button->setChecked(true);
                 currentCheckedBtn=button;
@@ -242,13 +242,13 @@ void ThemeSwitchWidget::InitSystemColorButtons()
     ui->lightSystemBtn->setProperty("color",themeLight["BACKGROUND_COLOR1"]);
     if("dark"==ThemeManager::getInstance().ThemeId)
     {
-         ui->darkSystemBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/checkin/tick.svg","rgb(224,133,75)"));
+         ui->darkSystemBtn->setIcon(QIcon(":/icons/res/checkin/selected.svg"));
          ui->darkSystemBtn->setChecked(true);
          currentCheckedBtn=ui->darkSystemBtn;
     }
     else if("light"==ThemeManager::getInstance().ThemeId)
     {
-         ui->lightSystemBtn->setIcon(util::CreateColorSvgIcon(":/icons/res/checkin/tick.svg","rgb(224,133,75)"));
+         ui->lightSystemBtn->setIcon(QIcon(":/icons/res/checkin/selected.svg"));
          ui->lightSystemBtn->setChecked(true);
          currentCheckedBtn=ui->lightSystemBtn;
     }

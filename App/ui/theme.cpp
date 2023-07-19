@@ -21,7 +21,8 @@ std::map<QString,QString> themeDark={
     {"SINGLE_LINE_COLOR" ,"rgb(82,82,92)"},
     {"SCROLLBAR_HANDLE" ,"rgba(96,96,106,80%)"},
     {"SCROLLBAR_HOVER" ,"rgb(96,96,106)"},
-    {"PICTURE_PATH","none"}
+    {"PICTURE_PATH","none"},
+    {"CHECKIN_BACKGROUND","rgb(72,114,251)"} //签到通用背景色
 };
 
 std::map<QString,QString> themeLight={
@@ -37,7 +38,8 @@ std::map<QString,QString> themeLight={
     {"SINGLE_LINE_COLOR","rgb(239, 239, 239)"},
     {"SCROLLBAR_HANDLE" ,"rgba(0,0,0,25%)"},
     {"SCROLLBAR_HOVER" ,"rgba(0,0,0,15%)"},
-    {"PICTURE_PATH","none"}
+    {"PICTURE_PATH","none"},
+    {"CHECKIN_BACKGROUND","rgb(72,114,251)"} //签到通用背景色
 };
 
 //还需要一个定制化的CONTROL_SELECTED的控制

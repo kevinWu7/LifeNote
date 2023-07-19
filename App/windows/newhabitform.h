@@ -35,12 +35,13 @@ private:
     int iconIndex=0;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
-
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
     //记录鼠标，窗口位置
     QPointF windowPos;
     QPointF mousePos;
     QPointF dPos;
+    bool isDrag=false;
 
     bool formMode=0;//0代表是新建habit，1代表是修改habit，默认为0
 };

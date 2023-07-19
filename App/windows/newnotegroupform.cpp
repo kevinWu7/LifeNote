@@ -14,7 +14,7 @@ NewNoteGroupForm::NewNoteGroupForm(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setWindowModality(Qt::ApplicationModal);
-
+    setFixedSize(this->width(), this->height()); //禁止缩放
     InitColorPushBtn();
     InitRoundRadius();
     InitEvent();
@@ -81,8 +81,9 @@ NewNoteGroupForm::~NewNoteGroupForm()
 
 void NewNoteGroupForm::mousePressEvent(QMouseEvent *event)
 {
-    if (ui->nameLabel->geometry().contains(event->pos()))
+    if(event->pos().y()>0&&event->pos().y()<30)
     {
+        isDrag=true;
         this->windowPos = this->pos();       // 获得部件当前位置
         this->mousePos = event->globalPosition(); // 获得鼠标位置
         this->dPos = mousePos - windowPos;   // 移动后部件所在的位置
@@ -91,11 +92,16 @@ void NewNoteGroupForm::mousePressEvent(QMouseEvent *event)
 
 void NewNoteGroupForm::mouseMoveEvent(QMouseEvent *event)
 {
-    if (ui->nameLabel->geometry().contains(event->pos()))
+    if(isDrag)
     {
-        this->move(event->globalPosition().x() - this->dPos.x(),
-                   event->globalPosition().y() - this->dPos.y());
+         this->move(event->globalPosition().x() - this->dPos.x(),
+               event->globalPosition().y() - this->dPos.y());
     }
+}
+
+void NewNoteGroupForm::mouseReleaseEvent(QMouseEvent *event)
+{
+    isDrag=false;
 }
 
 void NewNoteGroupForm::okBtn_clicked()

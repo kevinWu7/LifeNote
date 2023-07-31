@@ -146,7 +146,7 @@ void LNTreeWidget::dragMoveEvent(QDragMoveEvent *event)
            targetItem->setBackground(0,QBrush(util::generateRGBAColor(currentTheme["CONTROL_SELECTED"],0.8)));
         }
 
-        this->expandItem(targetItem);
+       // this->expandItem(targetItem);
     }
     // 调用递归函数开始遍历，将背景色全部设为透明，并将上次的横线残留删除
     for (int i = 0; i < topLevelItemCount(); ++i) {

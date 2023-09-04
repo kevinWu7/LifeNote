@@ -110,6 +110,18 @@ RESOURCES += \
 # 配置file_copies
 CONFIG += file_copies
 
+
+win32 {
+    # 在Windows下设置运行时路径
+    CONFIG(release, debug|release):{
+        OUTPUT_COMPILE_PATH= $$OUT_PWD/release
+        QMAKE_RPATHDIR += $$OUT_PWD/release/libs
+    } else {
+        OUTPUT_COMPILE_PATH= $$OUT_PWD/debug
+        QMAKE_RPATHDIR += $$OUT_PWD/debug/libs
+    }
+}
+
 # 创建 transfer 自定义变量
 # 配置需要复制的文件或目录（支持通配符）
 configtransfer.files = $$PWD/config # $$PWD 表示工程源代码所在目录
@@ -121,9 +133,9 @@ libsTransfer.files = $$PWD/libs     # 这里设置你的 qss 文件夹路径
 
 # 配置需要复制的目标目录，$$OUT_PWD 含义为程序输出目录
 win32 {
-     configtransfer.path = $$OUT_PWD/debug
-     qssTransfer.path = $$OUT_PWD/debug
-     libsTransfer.path = $$OUT_PWD/debug
+     configtransfer.path =$$OUTPUT_COMPILE_PATH
+     qssTransfer.path = $$OUTPUT_COMPILE_PATH
+     libsTransfer.path =$$OUTPUT_COMPILE_PATH
 }
 macx {
      configtransfer.path = $$OUT_PWD/App.app/Contents/MacOS
@@ -136,23 +148,7 @@ COPIES += configtransfer
 COPIES += qssTransfer # 添加 qss 文件夹到拷贝列表
 COPIES += libsTransfer
 
-win32 {
-    # 在Windows下设置运行时路径
-    CONFIG(release, debug|release): {
-        # 在Release模式下使用$$OUT_PWD
-        QMAKE_RPATHDIR += $$OUT_PWD/libs
-    } else {
-        # 在Debug模式下使用$$OUT_PWD/debug
-        QMAKE_RPATHDIR += $$OUT_PWD/debug/libs
-    }
-    CONFIG(debug, debug|release): {
-        # 在Debug模式下使用$$OUT_PWD/debug
-        QMAKE_RPATHDIR += $$OUT_PWD/debug/libs
-    } else {
-        # 在Release模式下使用$$OUT_PWD
-        QMAKE_RPATHDIR += $$OUT_PWD/libs
-    }
-}
+
 
 
 DISTFILES += \

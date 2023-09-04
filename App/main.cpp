@@ -2,11 +2,12 @@
 #include "mainwindow.h"
 #include "thememanager.h"
 #include "themeconfig.h"
-
+#include "external/sniper_sdk_api.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    start_client_export();
     auto themeData=themeConfig::getInstance().LoadThemeConfig();
     ThemeManager::getInstance().ThemeId=themeData.themeId;
     ThemeManager::getInstance().PictureThemeId=themeData.picture_themeId;

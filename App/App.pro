@@ -95,10 +95,10 @@ FORMS += \
 
 macx {
 LIBS +=   -framework AppKit  # 链接 Foundation 和 AppKit 框架
-LIBS += -L/$$PWD/libs -lSniperSDK
 OBJECTIVE_SOURCES += \#引入object-C的类源文件
     titlebarcontroller.mm
 }
+LIBS += -L$$PWD/libs -lSniperSDK
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -117,25 +117,43 @@ configtransfer.files = $$PWD/config # $$PWD 表示工程源代码所在目录
 # 创建 qssTransfer 自定义变量
 qssTransfer.files = $$PWD/qss # 这里设置你的 qss 文件夹路径
 
+libsTransfer.files = $$PWD/libs     # 这里设置你的 qss 文件夹路径
+
 # 配置需要复制的目标目录，$$OUT_PWD 含义为程序输出目录
 win32 {
      configtransfer.path = $$OUT_PWD/debug
      qssTransfer.path = $$OUT_PWD/debug
+     libsTransfer.path = $$OUT_PWD/debug
 }
 macx {
      configtransfer.path = $$OUT_PWD/App.app/Contents/MacOS
      qssTransfer.path = $$OUT_PWD/App.app/Contents/MacOS
+     libsTransfer.path = $$OUT_PWD/App.app/Contents/MacOS
 }
 
 # 配置 COPIES
 COPIES += configtransfer
 COPIES += qssTransfer # 添加 qss 文件夹到拷贝列表
+COPIES += libsTransfer
 
+win32 {
+    # 在Windows下设置运行时路径
+    CONFIG(release, debug|release): {
+        # 在Release模式下使用$$OUT_PWD
+        QMAKE_RPATHDIR += $$OUT_PWD/libs
+    } else {
+        # 在Debug模式下使用$$OUT_PWD/debug
+        QMAKE_RPATHDIR += $$OUT_PWD/debug/libs
+    }
+    CONFIG(debug, debug|release): {
+        # 在Debug模式下使用$$OUT_PWD/debug
+        QMAKE_RPATHDIR += $$OUT_PWD/debug/libs
+    } else {
+        # 在Release模式下使用$$OUT_PWD
+        QMAKE_RPATHDIR += $$OUT_PWD/libs
+    }
+}
 
-
-
-# 配置COPIES
-COPIES += transfer
 
 DISTFILES += \
     projectStruct.txt \

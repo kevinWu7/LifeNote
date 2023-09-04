@@ -5,6 +5,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 
 
+
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
@@ -18,7 +19,8 @@ INCLUDEPATH += \
     $$PWD/xmlconfig \
     $$PWD/business \
     $$PWD/util \
-    $$PWD/ui
+    $$PWD/ui \
+    $$PWD/external
 
 SOURCES += \
     business/calendarcentral.cpp \
@@ -77,7 +79,8 @@ HEADERS += \
     util/logger.h \
     xmlconfig/noteconfig.h \
     xmlconfig/themeconfig.h \
-    xmlconfig/checkinconfig.h
+    xmlconfig/checkinconfig.h \
+    external/sniper_sdk_api.h
 
 FORMS += \
     widgets/themeswitchwidget.ui \
@@ -92,6 +95,7 @@ FORMS += \
 
 macx {
 LIBS +=   -framework AppKit  # 链接 Foundation 和 AppKit 框架
+LIBS += -L/$$PWD/libs -lSniperSDK
 OBJECTIVE_SOURCES += \#引入object-C的类源文件
     titlebarcontroller.mm
 }

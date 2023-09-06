@@ -97,8 +97,12 @@ macx {
 LIBS +=   -framework AppKit  # 链接 Foundation 和 AppKit 框架
 OBJECTIVE_SOURCES += \#引入object-C的类源文件
     titlebarcontroller.mm
+    LIBS += -L$$PWD/libs/macx -lSniperSDK
 }
-LIBS += -L$$PWD/libs -lSniperSDK
+win32 {
+    LIBS += -L$$PWD/libs/windows -lSniperSDK
+}
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -107,9 +111,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     res.qrc
-# 配置file_copies
-CONFIG += file_copies
-
 
 win32 {
     # 在Windows下设置运行时路径
@@ -121,27 +122,32 @@ win32 {
         QMAKE_RPATHDIR += $$OUT_PWD/debug/libs
     }
 }
+macx {
+    # 设置运行时路径
+    QMAKE_LFLAGS += -Wl,-rpath,@executable_path/../Frameworks
+}
 
-# 创建 transfer 自定义变量
 # 配置需要复制的文件或目录（支持通配符）
 configtransfer.files = $$PWD/config # $$PWD 表示工程源代码所在目录
-
 # 创建 qssTransfer 自定义变量
 qssTransfer.files = $$PWD/qss # 这里设置你的 qss 文件夹路径
-
-libsTransfer.files = $$PWD/libs     # 这里设置你的 qss 文件夹路径
 
 # 配置需要复制的目标目录，$$OUT_PWD 含义为程序输出目录
 win32 {
      configtransfer.path =$$OUTPUT_COMPILE_PATH
      qssTransfer.path = $$OUTPUT_COMPILE_PATH
+     libsTransfer.files = $$PWD/libs/windows
      libsTransfer.path =$$OUTPUT_COMPILE_PATH
 }
 macx {
      configtransfer.path = $$OUT_PWD/App.app/Contents/MacOS
      qssTransfer.path = $$OUT_PWD/App.app/Contents/MacOS
-     libsTransfer.path = $$OUT_PWD/App.app/Contents/MacOS
+     libsTransfer.files = $$PWD/libs/macx/*.dylib
+     libsTransfer.path = $$OUT_PWD/App.app/Contents/Frameworks
+
 }
+
+
 
 # 配置 COPIES
 COPIES += configtransfer

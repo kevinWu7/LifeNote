@@ -112,6 +112,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     res.qrc
 
+# 启用文件拷贝
+CONFIG += file_copies
+
 win32 {
     # 在Windows下设置运行时路径
     CONFIG(release, debug|release):{
@@ -144,7 +147,6 @@ macx {
      qssTransfer.path = $$OUT_PWD/App.app/Contents/MacOS
      libsTransfer.files = $$PWD/libs/macx/*.dylib
      libsTransfer.path = $$OUT_PWD/App.app/Contents/Frameworks
-
 }
 
 

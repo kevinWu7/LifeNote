@@ -116,7 +116,6 @@ bool util::isStartWidthDigit(const QString& nodeName)
 
 QIcon util::CreateColorSvgIcon(const QString &path,const QString &color,const QString &opacity)
 {
-    logger->log(QString("createcolor"));
     // open svg resource load contents to qbytearray
     QFile file(path);
     file.open(QIODevice::ReadOnly);

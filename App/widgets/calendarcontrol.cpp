@@ -359,7 +359,6 @@ void CalendarControl::fillDateTomainGrid(QDate startDate)
          if (monthBtn)
          {
              QString dayNumber=QString::number(currentMonth_date[index].day());
-             qDebug() << "Days dayNumber:" << dayNumber;
              monthBtn->setText(dayNumber);
              monthBtn->setDate(currentMonth_date[index]);
              monthBtn->currendDisplayDate=currentFirstDisplayDate;

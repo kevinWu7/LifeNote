@@ -19,3 +19,4 @@ UI             theme.h             否         主题颜色        (跨平台，
 基础信息         base               否         基础信息描述     (跨平台，跨项目组）
 
 xml_config 放在哪里？
+mac dmg包中，需要将qss，config等配置文件放到maxos目录之外，新建一个目录，macos主要存放可执行文件

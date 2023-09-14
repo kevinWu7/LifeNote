@@ -56,7 +56,7 @@ public:
         T *childWidget = parent->findChild<T *>(objectName);
         if (childWidget)
         {
-            qDebug() << "Found widget with object name:" << objectName;
+            //qDebug() << "Found widget with object name:" << objectName;
         } else
         {
             qDebug() << "Widget with object name" << objectName << "not found";

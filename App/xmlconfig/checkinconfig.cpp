@@ -236,7 +236,7 @@ xmlLoadResult CheckinConfig::LoadCheckinConfig()
     xmlLoadResult result;
     if(!inputfile.open(QIODevice::ReadOnly))
     {
-        logger->log(QString("loadConfigXML: Open checkin.xml file failed"));
+        logger->log(QString("loadConfigXML: Open checkinconfig.xml file failed"));
         return result;
     }
     QXmlStreamReader reader(&inputfile);

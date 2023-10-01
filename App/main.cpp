@@ -3,11 +3,17 @@
 #include "thememanager.h"
 #include "themeconfig.h"
 #include "external/sniper_sdk_api.h"
+#include "firstinit.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    start_client_export();
+    bool isInit=firstinit::getIsFirstInit();
+    if(!isInit)
+    {
+        start_client_export();
+        firstinit::updateInitNode(true);
+    }
     auto themeData=themeConfig::getInstance().LoadThemeConfig();
     ThemeManager::getInstance().ThemeId=themeData.themeId;
     ThemeManager::getInstance().PictureThemeId=themeData.picture_themeId;

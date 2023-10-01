@@ -47,6 +47,7 @@ SOURCES += \
     main.cpp \
     util/logger.cpp \
     util/util.cpp \
+    xmlconfig/firstinit.cpp \
     xmlconfig/noteconfig.cpp \
     xmlconfig/themeconfig.cpp \
     xmlconfig/checkinconfig.cpp
@@ -66,7 +67,6 @@ HEADERS += \
     widgets/themeswitchwidget.h \
     widgets/titlebarwidget.h \
     widgets/habititem.h \
-    xmlconfig/noteconfig.h \
     widgets/recorditem.h \
     widgets/calendarcontrol.h \
     widgets/checkinwidget.h \  
@@ -77,6 +77,7 @@ HEADERS += \
     base/baseinfo.h \
     util/util.h \
     util/logger.h \
+    xmlconfig/firstinit.h \
     xmlconfig/noteconfig.h \
     xmlconfig/themeconfig.h \
     xmlconfig/checkinconfig.h \

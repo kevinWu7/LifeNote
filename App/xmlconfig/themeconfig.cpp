@@ -32,7 +32,7 @@ themeData themeConfig::LoadThemeConfig()
     themeData _data;
     if(!inputfile.open(QIODevice::ReadOnly))
     {
-        logger->log(QString("loadConfigXML: Open checkin.xml file failed"));
+        logger->log(QString("loadConfigXML: Open themeconfig.xml file failed"));
         return _data;
     }
     QXmlStreamReader reader(&inputfile);

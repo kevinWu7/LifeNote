@@ -118,28 +118,58 @@ void TextEditContainer::onPictureBtn_clicked()
 
 void TextEditContainer::InsertImageDialog()
 {
-    QString selectFilter="IMAGE (*.png *.jpg *jpeg *.bmp *.gif)\n";
     QString file = QFileDialog::getOpenFileName(this, tr("Select an image"),
-                                                "/", tr("IMAGE (*.png *.jpg *jpeg *.bmp *.gif)\n"),&selectFilter);
+                                                QDir::homePath(), tr("IMAGE (*.png *.jpg *jpeg *.bmp *.gif)"));
 
-    QUrl Uri ( QString ( "file://%1" ).arg ( file ) );
-    QImage image = QImageReader ( file ).read();
+    QUrl Uri = QUrl::fromLocalFile(file);
+    QImage image = QImageReader(file).read();
 
-    QTextDocument * textDocument = ui->textEdit->document();
-    textDocument->addResource( QTextDocument::ImageResource, Uri, QVariant ( image ) );
-    QTextCursor cursor = ui->textEdit->textCursor();
-    QTextImageFormat imageFormat;
-    imageFormat.setWidth( image.width() );
-    imageFormat.setHeight( image.height() );
-    imageFormat.setName( Uri.toString() );
-    cursor.insertImage(imageFormat);
+    if (!image.isNull())
+    {
+        QTextDocument *textDocument = ui->textEdit->document();
+
+        // Calculate a reasonable display size based on the image's aspect ratio
+        QSizeF imageSize(image.width(), image.height());
+        QSizeF viewportSize(ui->textEdit->viewport()->size());
+        QSizeF displaySize ;
+        //大于显示窗口，则缩小。若小于显示窗口的尺寸，则保持不变
+        if( imageSize.width()> viewportSize.width()*displayImgRatio||imageSize.height()>viewportSize.height()*displayImgRatio)
+        {
+            // Calculate the scaling factor for both width and height
+            qreal widthScaleFactor = viewportSize.width()*displayImgRatio / imageSize.width();
+            qreal heightScaleFactor = viewportSize.height()*displayImgRatio/ imageSize.height();
+
+            // Use the minimum scaling factor to maintain aspect ratio
+            qreal scaleFactor = qMin(widthScaleFactor, heightScaleFactor);
+
+            // Calculate the display size
+            displaySize = QSizeF(imageSize.width() * scaleFactor, imageSize.height() * scaleFactor);
+        }
+        else
+        {
+            displaySize= QSizeF(imageSize.width() , imageSize.height() );
+        }
+        // Add the image as a resource
+        textDocument->addResource(QTextDocument::ImageResource, Uri, QVariant(image));
+
+        // Insert the image with the calculated size
+        QTextCursor cursor = ui->textEdit->textCursor();
+        QTextImageFormat imageFormat;
+        imageFormat.setWidth(displaySize.width());
+        imageFormat.setHeight(displaySize.height());
+        imageFormat.setName(Uri.toString());
+        cursor.insertImage(imageFormat);
+    } else {
+        // 处理图像插入失败的情况
+    }
 }
+
 
 
 void TextEditContainer::onFontAddBtn_clicked()
 {
-     size_t realIndex=ui->fontComboBox->currentIndex();
-     ui->fontComboBox->setCurrentIndex(realIndex==util::fontVector.size()-1?realIndex:realIndex+1);
+    size_t realIndex=ui->fontComboBox->currentIndex();
+    ui->fontComboBox->setCurrentIndex(realIndex==util::fontVector.size()-1?realIndex:realIndex+1);
 }
 
 void TextEditContainer::onFontReduceBtn_clicked()

@@ -36,6 +36,7 @@ private:
     void initfontCombobox();
     void themeChangedUpdateUiStatus();
     themeChangedCallback bindThemeChangetCallback;
+    double displayImgRatio=0.8;//图片尺寸缩放附加比例
 };
 
 #endif // TEXTEDITCONTAINER_H

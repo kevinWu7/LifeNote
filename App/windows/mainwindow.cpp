@@ -12,6 +12,7 @@
 #include "noteconfig.h"
 #include "thememanager.h"
 #include "theme.h"
+#include "external/export_api_sniper_sdk.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -908,6 +909,14 @@ void MainWindow::toggleMaximized()
 #endif
         showMaximized();
     }
+}
+
+
+
+void MainWindow::connected_success()
+{
+    logger->log("连接成功!");
+    send_message_export("GET_ALL_FILE/n");
 }
 
 

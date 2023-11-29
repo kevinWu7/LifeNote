@@ -2,17 +2,17 @@
 #include "mainwindow.h"
 #include "thememanager.h"
 #include "themeconfig.h"
-#include "external/sniper_sdk_api.h"
+#include "external/export_api_sniper_sdk.h"
 #include "firstinit.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     bool isInit=firstinit::getIsFirstInit();
-    if(!isInit)
+   // if(!isInit)
     {
-        start_client_export();
-        firstinit::updateInitNode(true);
+       connect_to_server_async_export("127.0.0.1","18889",&MainWindow::connected_success);
+     // firstinit::updateInitNode(true);
     }
     auto themeData=themeConfig::getInstance().LoadThemeConfig();
     ThemeManager::getInstance().ThemeId=themeData.themeId;

@@ -40,6 +40,10 @@ public:
 //重写键盘函数
 public:
     void keyPressEvent(QKeyEvent *event) override;
+    //连接服务端成功的回调函数
+    //该函数必须为静态，否则会报无法将（void (MainWindow::*)()）转换为普通的函数指针（void (*)()）
+    static void connected_success();
+
 
 private:
     Ui::MainWindow *ui;

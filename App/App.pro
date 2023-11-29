@@ -81,7 +81,7 @@ HEADERS += \
     xmlconfig/noteconfig.h \
     xmlconfig/themeconfig.h \
     xmlconfig/checkinconfig.h \
-    external/sniper_sdk_api.h
+    external/export_api_sniper_sdk.h
 
 FORMS += \
     widgets/themeswitchwidget.ui \

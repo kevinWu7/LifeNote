@@ -916,7 +916,7 @@ void MainWindow::toggleMaximized()
 void MainWindow::connected_success()
 {
     logger->log("连接成功!");
-    send_message_export("GET_ALL_FILE/n");
+    send_message_export("GET_ALL_FILE\n");
 }
 
 

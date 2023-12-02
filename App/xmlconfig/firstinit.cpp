@@ -77,9 +77,16 @@ void firstinit::updateInitNode(bool isInit)
         return;
     }
     file.close();
-    QDomNode currentDomElement=util::selectSingleNode("FirstInit",&doc);
 
-    currentDomElement.toElement().setAttribute("FirstInit",isInit?"true":"false");
+    QDomNodeList currentDomElement = doc.elementsByTagName("FirstInit");
+    if (currentDomElement.size() == 0)
+    {
+        logger->log(QString("updateXml: firstInit node not found"));
+        return;
+    }
+
+    QDomElement initElement = currentDomElement.at(0).toElement();
+    initElement.firstChild().setNodeValue(isInit?"true":"false");
 
     if(!file.open(QFile::WriteOnly|QFile::Truncate))//重写文件，如果不用truncate就是在后面追加内容，就无效了
     {

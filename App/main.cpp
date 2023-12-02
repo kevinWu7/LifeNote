@@ -9,11 +9,15 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     bool isInit=firstinit::getIsFirstInit();
-   // if(!isInit)
+    if(!isInit) //未初始化，全量更新
     {
        //此句代码会阻塞，直到获取发送get_all_File后，返回消息。
-       connect_to_server_async_export("127.0.0.1","18889",&MainWindow::connected_success);
-     // firstinit::updateInitNode(true);
+      connect_to_server_async_export("127.0.0.1","18889",&MainWindow::connected_success);
+      firstinit::updateInitNode(true);
+    }
+    else//已初始化过，差量更新
+    {
+
     }
     auto themeData=themeConfig::getInstance().LoadThemeConfig();
     ThemeManager::getInstance().ThemeId=themeData.themeId;
